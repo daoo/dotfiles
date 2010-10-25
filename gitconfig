@@ -1,0 +1,12 @@
+[core]
+  editor = vim
+[color]
+  branch = auto
+  diff = auto
+  interactive = auto
+  status = auto
+[alias]
+  st = status
+  ci = commit
+  co = checkout
+  w = whatchanged
