@@ -44,6 +44,8 @@ alias la='ls -a'
 alias lla='ls -lha'
 
 alias '..'='cd ..'
+alias '....'='cd ../..'
+alias '......'='cd ../../..'
 
 alias :q="echo 'you are not in vim anymore' ; echo ''"
 alias :w="echo 'you are not in vim anymore' ; echo ''"
