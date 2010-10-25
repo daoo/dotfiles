@@ -1,0 +1,28 @@
+urxvt*background: #242424
+urxvt*foreground: #f6f3e8
+urxvt*font: xft:Monospace:size=8
+urxvt*scrollBar: false
+urxvt*scrollBar_right: false
+urxvt*saveLines: 10000
+urxvt*visualBell: false
+urxvt*urgentOnBell: true
+urxvt*buffered: true
+
+scratchpad*background: #242424
+scratchpad*foreground: #f6f3e8
+scratchpad*font: xft:Monospace:size=8
+scratchpad*scrollBar: false
+scratchpad*scrollBar_right: false
+scratchpad*saveLines: 10000
+scratchpad*visualBell: false
+scratchpad*urgentOnBell: true
+scratchpad*buffered: true
+
+! Green
+*color10: #95e454
+! Blue
+*color12: #8ac6f2
+! Red
+*color9: #e5786d
+! Magneta
+*color13: #b187bf
