@@ -2,19 +2,26 @@ set nocompatible
 set backup
 set backupdir=~/.vim/tmp/
 
-set laststatus=2
-set statusline=%F%m%r%h%w%y\ %{fugitive#statusline()}%=\ col:%c%V\ ascii:%b\ pos:%o\ lin:%l\,%L\ %P
-
 " Color scheme
 colorscheme wombat
 sy on
 syntax on
 
-" Line numbers
+" Visual
 set number
 set ruler
 set showcmd
 set nowrap
+set novisualbell
+
+set laststatus=2
+set statusline=%F%m%r%h%w%y\ %{fugitive#statusline()}%=\ col:%c%V\ ascii:%b\ pos:%o\ lin:%l\,%L\ %P
+
+set hlsearch
+
+" Buffers
+set autowrite
+set hidden
 
 " Indentation
 set autoindent
