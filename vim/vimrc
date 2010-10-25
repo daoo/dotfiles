@@ -1,0 +1,65 @@
+set nocompatible
+set backup
+set backupdir=~/.vim/tmp/
+
+set laststatus=2
+set statusline=%F%m%r%h%w%y\ %{fugitive#statusline()}%=\ col:%c%V\ ascii:%b\ pos:%o\ lin:%l\,%L\ %P
+
+" Color scheme
+colorscheme wombat
+sy on
+syntax on
+
+" Line numbers
+set number
+set ruler
+set showcmd
+set nowrap
+
+" Indentation
+set autoindent
+set smartindent
+
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+
+" Plugins
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+
+filetype on
+filetype indent on
+filetype plugin on
+
+" Keys
+inoremap  <Up>     <NOP>
+inoremap  <Down>   <NOP>
+inoremap  <Left>   <NOP>
+inoremap  <Right>  <NOP>
+noremap   <Up>     <NOP>
+noremap   <Down>   <NOP>
+noremap   <Left>   <NOP>
+noremap   <Right>  <NOP>
+
+inoremap <C-Right> <NOP>
+inoremap <C-Left> <NOP>
+inoremap <Home> <NOP>
+inoremap <End> <NOP>
+noremap <C-Right> <NOP>
+noremap <C-Left> <NOP>
+noremap <Home> <NOP>
+noremap <End> <NOP>
+
+inoremap <Insert> <NOP>
+inoremap <Del> <NOP>
+inoremap <PageUp> <NOP>
+inoremap <PageDown> <NOP>
+noremap <Insert> <NOP>
+noremap <Del> <NOP>
+noremap <PageUp> <NOP>
+noremap <PageDown> <NOP>
+
+inoremap <Esc> <NOP>
+noremap <Esc> <NOP>
