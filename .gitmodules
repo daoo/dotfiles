@@ -4,3 +4,6 @@
 [submodule "vim/bundle/nerdtree"]
 	path = vim/bundle/nerdtree
 	url = http://github.com/scrooloose/nerdtree.git
+[submodule "vim/bundle/clang_complete"]
+	path = vim/bundle/clang_complete
+	url = http://github.com/Rip-Rip/clang_complete.git
