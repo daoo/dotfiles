@@ -17,8 +17,6 @@ set novisualbell
 set laststatus=2
 set statusline=%F%m%r%h%w%y\ %{fugitive#statusline()}%=\ col:%c%V\ ascii:%b\ pos:%o\ lin:%l\,%L\ %P
 
-set hlsearch
-
 " Buffers
 set autowrite
 set hidden
