@@ -13,6 +13,7 @@ set ruler
 set showcmd
 set nowrap
 set novisualbell
+set scrolloff=5
 
 set laststatus=2
 set statusline=%F%m%r%h%w%y\ %{fugitive#statusline()}%=\ col:%c%V\ ascii:%b\ pos:%o\ lin:%l\,%L\ %P
