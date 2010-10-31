@@ -30,6 +30,7 @@ setopt nobeep
 
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
+EDITOR=vim
 PATH=$PATH:~/.bin/
 
 # Aliases
