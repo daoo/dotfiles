@@ -41,6 +41,8 @@ filetype plugin on
 
 " Keys
 map ,cd :cd %:p:h<CR>
+vnoremap x "_x
+vnoremap X "_X
 
 inoremap  <Up>     <NOP>
 inoremap  <Down>   <NOP>
