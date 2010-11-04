@@ -1,0 +1,15 @@
+background no
+out_to_console yes
+out_to_x no
+#override_utf8_locale yes
+update_interval 2
+short_units yes
+use_spacer none
+
+TEXT
+^i($HOME/.xmonad/icons/wifi_03.xbm) ${wireless_link_qual_perc wlan0}% \
+^i($HOME/.xmonad/icons/cpu.xbm) ${cpu}% \
+^i($HOME/.xmonad/icons/mem.xbm) ${memperc}% \
+^i($HOME/.xmonad/icons/net_down_03.xbm) ${downspeed wlan0} \
+^i($HOME/.xmonad/icons/net_up_03.xbm) ${upspeed wlan0} \
+^i($HOME/.xmonad/icons/clock.xbm) ${time %a %b %d %H:%M} \
