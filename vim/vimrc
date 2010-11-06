@@ -41,6 +41,8 @@ filetype plugin on
 
 " Keys
 map ,cd :cd %:p:h<CR>
+map ,fa :Tabularize assignment<CR>
+
 vnoremap x "_x
 vnoremap X "_X
 
