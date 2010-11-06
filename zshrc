@@ -18,7 +18,7 @@ case "$TERM" in
   ;;
 esac
 
-# History and stuff
+# History
 HISTFILE=~/.zhistory
 HISTSIZE=10000
 SAVEHIST=10000
@@ -26,12 +26,23 @@ setopt appendhistory
 setopt histignoredups
 setopt incappendhistory
 
+# Stuff
 setopt nobeep
 
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 EDITOR=vim
+PAGER=less
 PATH=$PATH:~/.bin/
+
+# man colors 
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;38;5;74m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[38;5;246m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[04;38;5;146m'
 
 # Aliases
 alias grep='grep --color=auto'
