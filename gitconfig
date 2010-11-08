@@ -11,3 +11,6 @@
   ci = commit
   co = checkout
   w = whatchanged
+[user]
+	name = daoo
+	email = daoo314@gmail.com

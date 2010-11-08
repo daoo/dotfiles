@@ -1,0 +1,26 @@
+#!/bin/bash
+
+rnd() {
+  echo `</dev/urandom tr -dc A-Za-z0-9 | head -c16`
+}
+
+NAME="$(basename "$@")"
+ARCHIVE=$(readlink -f "$@")
+CURRENTDIR="$(dirname "$(readlink -f "$@")")"
+
+echo "Extracting..."
+TMPDIR=`mktemp -d "/tmp/aedit-XXXXXXXX"`
+atool --extract-to=$TMPDIR "$@"
+
+echo "Launching shell..."
+cd "$TMPDIR"
+$SHELL
+
+echo "Repacking..."
+cp "$ARCHIVE" "/tmp/$NAME.`rnd`"
+apack -f "$ARCHIVE" `ls $TMPDIR`
+
+echo "Done."
+rm -r "$TMPDIR"
+cd "$CURRENTDIR"
+

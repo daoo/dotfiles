@@ -1,0 +1,13 @@
+#!/bin/sh
+
+DIR="/media/sdc1/media/Wallpapers/"
+FILES=`find "$DIR" -not -type d -iname '*.jpg' -or -iname '*.png' -or -iname '*.jpeg'`
+COUNT=`echo "$FILES" | wc -l`
+
+((NUM=RANDOM%COUNT+1))
+
+#IMG=`echo "$FILES" | grep -n . | grep "^$NUM:" | sed 's/[0-9]*://'`
+IMG=`echo "$FILES" | shuf -n 1`
+
+echo "$IMG"
+
