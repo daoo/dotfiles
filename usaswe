@@ -1,0 +1,14 @@
+default
+partial alphanumeric_keys
+xkb_symbols "euro" {
+
+    name[Group1]= "USA - Customized";
+
+    include "us(basic)"
+
+    include "level3(ralt_switch)"
+
+    key <AC01> { [ a , A , adiaeresis   , Adiaeresis] };
+    key <AD09> { [ o , O , odiaeresis   , Odiaeresis ] };
+    key <AC04> { [ f , F , aring        , Aring  		]	};
+};

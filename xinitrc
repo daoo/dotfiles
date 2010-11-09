@@ -1,7 +1,7 @@
 xsetroot -cursor_name left_ptr
 
 xmodmap -e "clear Lock"
-xmodmap ~/.mine.xmodmap
+setxkbmap usaswe
 
 feh --bg-tile "`random-wallpaper`"
 
