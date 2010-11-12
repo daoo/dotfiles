@@ -29,11 +29,13 @@ setopt incappendhistory
 # Stuff
 setopt nobeep
 
-WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
-EDITOR=vim
-PAGER=less
-PATH=$PATH:~/.bin/
+export EDITOR=vim
+export PAGER=less
+export PATH=$PATH:~/.bin/
+
+export LESS='FiX'
 
 # man colors 
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -62,8 +64,7 @@ alias '......'='cd ../../..'
 alias :q="echo 'you are not in vim anymore' ; echo ''"
 alias :w="echo 'you are not in vim anymore' ; echo ''"
 
-alias rtfm='man'
-alias nomnom='killall'
+alias bell="echo -e '\a'"
 
 # Functions
 chalmers() {
