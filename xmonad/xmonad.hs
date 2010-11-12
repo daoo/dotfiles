@@ -24,12 +24,12 @@ import XMonad.Util.WindowProperties
 
 -- Manage Hook
 myManageHook = composeAll . concat $
-  [ [ className =? i --> doFloat        | i <- myClassFloats ]
-  , [ className =? c --> doShift "[im]" | c <- myClassChatShifts ]
+  [ [className =? a --> doShift "[im]" | a <- myIMs]
+  , [myFloats       --> doFloat]
   ]
   where
-    myClassFloats     = ["Wine", "MPlayer"]
-    myClassChatShifts = ["Pidgin", "Skype"]
+    myFloats = (className =? "Firefox" <&&> resource =? "Dialog") <||> className =? "MPlayer"
+    myIMs    = ["Pidgin", "Skype"]
 
 -- Layout Hook
 myIMLayout = named "IM Grid" $ reflectHoriz $ withIM ratio rosters Grid
@@ -43,26 +43,26 @@ myDefaultLayouts = tiled ||| Mirror tiled ||| Full
   where
     tiled = Tall 1 (3.0/100.0) (1.0/2.0)
 
-myAmbiguity = (B.Combine B.Union B.Never B.OtherIndicated)
+myAmbiguity  = (B.Combine B.Union B.Never B.OtherIndicated)
 myLayoutHook = onWorkspace "[im]" (B.noBorders $ avoidStruts $ myIMLayout) $
                onWorkspace "[fullscreen]" (B.noBorders $ Full) $
                (B.lessBorders myAmbiguity $ avoidStruts $ myDefaultLayouts)
 
 -- Log Hook
 myLogHook :: Handle -> X ()
-myLogHook h = dynamicLogWithPP $ defaultPP
-  { ppUrgent          = c2 redColor . dzenStrip
-  , ppCurrent         = c1 greenColor
-  , ppVisible         = c1 blueColor 
-  , ppHidden          = c1 fgColor . noNSP
-  , ppTitle           = c1 fgColor
-  , ppWsSep           = " "
-  , ppSep             = " | "
-  , ppOutput          = hPutStrLn h
+myLogHook h   = dynamicLogWithPP $ defaultPP
+  { ppUrgent  = c2 redColor . dzenStrip
+  , ppCurrent = c1 greenColor
+  , ppVisible = c1 blueColor
+  , ppHidden  = c1 fgColor . noNSP
+  , ppTitle   = c1 fgColor
+  , ppWsSep   = " "
+  , ppSep     = " | "
+  , ppOutput  = hPutStrLn h
   }
   where
-    c1 c = dzenColor c ""
-    c2 c = dzenColor "" c
+    c1 c     = dzenColor c ""
+    c2 c     = dzenColor "" c
     noNSP ws = if ws == "NSP" then "" else ws
 
 -- Simple
@@ -70,7 +70,7 @@ myDmenu = "exec `dmenu_path | dmenu -i -fn '" ++ myFont ++ "' -nb '" ++ bgColor 
 
 barDefault = "-fn '" ++ myFont ++ "' -bg '" ++ bgColor ++ "' -fg '" ++ fgColor ++ "'"
 
-myLeftBar = "dzen2 -p -ta l -x 0 -y 0 -w 1200 " ++ barDefault
+myLeftBar  = "dzen2 -p -ta l -x 0 -y 0 -w 1200 " ++ barDefault
 myRightBar = "conky -c ~/.xmonad/dzen_conkyrc | dzen2 -p -ta r -x 1200 -y 0 -w 720 " ++ barDefault
 
 myWorkspaces = [ "[im]", "[web]", "[code]", "[code2]", "[other]", "[music]", "[fullscreen]", "[8]", "[9]" ]
@@ -80,11 +80,11 @@ myModKey = mod4Mask
 
 myFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 
-fgColor = "#f6f3e8"
-bgColor = "#242424"
-redColor = "#e5786d"
+fgColor    = "#f6f3e8"
+bgColor    = "#242424"
+redColor   = "#e5786d"
 greenColor = "#95e454"
-blueColor = "#8ac6f2"
+blueColor  = "#8ac6f2"
 
 -- Keys
 keysToAdd x = [ ((modMask x, xK_b), withFocused toggleBorder)
