@@ -8,6 +8,7 @@ import XMonad
 import XMonad.Actions.NoBorders
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout
 import XMonad.Layout.Combo
@@ -28,7 +29,7 @@ myManageHook = composeAll . concat $
   , [myFloats       --> doFloat]
   ]
   where
-    myFloats = (className =? "Firefox" <&&> resource =? "Dialog") <||> className =? "MPlayer"
+    myFloats = ((className =? "Minefield" <||> className =? "Firefox") <&&> className /=? "Navigator") <||> className =? "MPlayer"
     myIMs    = ["Pidgin", "Skype"]
 
 -- Layout Hook
