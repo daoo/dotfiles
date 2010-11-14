@@ -84,7 +84,7 @@ bindkey '[7~' beginning-of-line
 bindkey '[8~' end-of-line
 bindkey '[3~' delete-char
 bindkey 'Oc'  forward-word
-bindkey 'OD'  backward-word
+bindkey 'Od'  backward-word
 bindkey ''    backward-kill-word
 bindkey '[3^' kill-word
 bindkey ''    history-search-backward
