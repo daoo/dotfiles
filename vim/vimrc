@@ -17,11 +17,11 @@ set novisualbell
 set scrolloff=5
 
 set laststatus=2
-set statusline=%F%m%r%h%w%y\ %{fugitive#statusline()}%=\ col:%c%V\ ascii:%b\ pos:%o\ lin:%l\,%L\ %P
+"set statusline=%F%m%r%h%w%y\ %{fugitive#statusline()}%=\ col:%c%V\ ascii:%b\ pos:%o\ lin:%l\/%L\ %P
 
 " Buffers
-set autowrite
-set hidden
+"set autowrite
+"set hidden
 
 " Indentation
 set autoindent
@@ -33,19 +33,19 @@ set softtabstop=2
 set expandtab
 
 " Plugins
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+"call pathogen#runtime_append_all_bundles()
+"call pathogen#helptags()
 
 filetype on
 filetype indent on
 filetype plugin on
 
 " Keys
-map ,cd :cd %:p:h<CR>
-map ,fa :Tabularize assignment<CR>
+"map ,cd :cd %:p:h<CR>
+"map ,fa :Tabularize assignment<CR>
 
-vnoremap x "_x
-vnoremap X "_X
+"vnoremap x "_x
+"vnoremap X "_X
 
 inoremap  <Up>     <NOP>
 inoremap  <Down>   <NOP>
@@ -74,5 +74,3 @@ noremap <Del> <NOP>
 noremap <PageUp> <NOP>
 noremap <PageDown> <NOP>
 
-inoremap <Esc> <NOP>
-noremap <Esc> <NOP>
