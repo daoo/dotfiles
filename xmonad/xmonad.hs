@@ -93,7 +93,8 @@ keysToAdd x = [ ((modMask x, xK_b), withFocused toggleBorder)
               , ((modMask x, xK_p), spawn myDmenu)
               , ((modMask x, xK_quoteleft), scratchpadSpawnActionTerminal myTerm)
               , ((modMask x, xK_section), scratchpadSpawnActionTerminal myTerm)
-              , ((modMask x, xK_g), spawn "~/.bin/toggle-keymaps")
+              , ((modMask x, xK_y), spawn "setxkbmap usaswe")
+              , ((modMask x, xK_u), spawn "setxkbmap us -variant colemak")
               , ((modMask x, xK_f), spawn "xscreensaver-command --lock")
               ]
 
