@@ -80,15 +80,15 @@ ff() {
 }
 
 # Keys
-bindkey '[7~'   beginning-of-line
-bindkey '[8~'   end-of-line
-bindkey '\e[3~'   delete-char
-bindkey '\e[1;5C' forward-word
-bindkey '\e[1;5D' backward-word
-bindkey '\eOc'    forward-word
-bindkey '\eOd'    backward-word
-bindkey '^H'      backward-kill-word
-bindkey '\e[3^'   kill-word
+bindkey '[7~' beginning-of-line
+bindkey '[8~' end-of-line
+bindkey '[3~' delete-char
+bindkey 'Oc'  forward-word
+bindkey 'OD'  backward-word
+bindkey ''    backward-kill-word
+bindkey '[3^' kill-word
+bindkey ''    history-search-backward
+bindkey ''    history-incremental-search-backward
 
 # Completion
 autoload -U compinit
