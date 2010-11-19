@@ -29,7 +29,7 @@ myManageHook = composeAll . concat $
   , [myFloats       --> doFloat]
   ]
   where
-    myFloats = ((className =? "Minefield" <||> className =? "Firefox") <&&> className /=? "Navigator") <||> className =? "MPlayer"
+    myFloats = (className /=? "Navigator" <&&> (className =? "Minefield" <||> className =? "Firefox")) <||> className =? "MPlayer"
     myIMs    = ["Pidgin", "Skype"]
 
 -- Layout Hook
@@ -93,6 +93,7 @@ keysToAdd x = [ ((modMask x, xK_b), withFocused toggleBorder)
               , ((modMask x, xK_p), spawn myDmenu)
               , ((modMask x, xK_quoteleft), scratchpadSpawnActionTerminal myTerm)
               , ((modMask x, xK_section), scratchpadSpawnActionTerminal myTerm)
+              , ((modMask x, xK_x), spawn "firefox-nightly")
               , ((modMask x, xK_y), spawn "setxkbmap usaswe")
               , ((modMask x, xK_u), spawn "setxkbmap us -variant colemak")
               , ((modMask x, xK_f), spawn "xscreensaver-command --lock")
