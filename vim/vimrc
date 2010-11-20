@@ -43,8 +43,9 @@ filetype plugin on
 " Keys
 map ,cd :cd %:p:h<CR>
 map ,fa :Tabularize assignment<CR>
-nmap <C-Up> ddkP
-nmap <C-Down> ddp
+map <C-i> i<Space><Esc>r
+map <C-Up> ddkP
+map <C-Down> ddp
 
 vnoremap x "_x
 vnoremap X "_X
