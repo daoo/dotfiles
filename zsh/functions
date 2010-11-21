@@ -1,0 +1,14 @@
+#!/bin/zsh
+
+chalmers() {
+  ssh lalti@remote$(($RANDOM % 4 + 1)).student.chalmers.se $*
+}
+
+f() {
+  find . -iname "*$@*"
+}
+
+ff() {
+  find . -iname "*$@*" -not -type d
+}
+

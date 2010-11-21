@@ -1,0 +1,45 @@
+#!/bin/zsh
+
+# PS1 and Title
+if [ "$SSH_CLIENT" != "" ]; then
+  # Connected through ssh
+  PS1='%n@%m:%~$ '
+else
+  PS1='%n:%~$ '
+fi
+
+case "$TERM" in
+  xterm*|*rxvt*)
+    # Set the title
+    precmd () {print -Pn "\e]0;%n@%m: %~\a"}
+  ;;
+esac
+
+# History
+HISTFILE=~/.zhistory
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+setopt histignoredups
+setopt incappendhistory
+
+# Stuff
+setopt nobeep
+
+export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
+export EDITOR=vim
+export PAGER=less
+export PATH=$PATH:~/.bin/
+
+export LESS='FiX'
+
+# man colors 
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;38;5;74m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[38;5;246m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[04;38;5;146m'
+

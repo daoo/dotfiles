@@ -1,0 +1,21 @@
+#!/bin/zsh
+
+alias grep='grep --color=auto'
+alias ls='ls --color=auto'
+alias tree='tree -C'
+alias pacman='pacman-color'
+
+alias l='ls'
+alias ll='ls -lh'
+alias la='ls -a'
+alias lla='ls -lha'
+
+alias '..'='cd ..'
+alias '....'='cd ../..'
+alias '......'='cd ../../..'
+
+alias :q="echo 'you are not in vim anymore' ; echo ''"
+alias :w="echo 'you are not in vim anymore' ; echo ''"
+
+alias bell="echo -e '\a'"
+

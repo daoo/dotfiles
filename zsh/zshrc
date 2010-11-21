@@ -1,0 +1,11 @@
+#!/bin/zsh
+
+# Skip all this for non-interactive shells
+[[ -z "$PS1" ]] && return
+
+. ~/dotfiles/zsh/config
+. ~/dotfiles/zsh/aliases
+. ~/dotfiles/zsh/binds
+. ~/dotfiles/zsh/autocompletion
+. ~/dotfiles/zsh/functions
+
