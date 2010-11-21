@@ -25,12 +25,14 @@ import XMonad.Util.WindowProperties
 
 -- Manage Hook
 myManageHook = composeAll . concat $
-  [ [className =? a --> doShift "[im]" | a <- myIMs]
+  [ [className =? a --> doShift "[im]"    | a <- myIMs]
+  , [className =? b --> doShift "[music]" | b <- myMusics]
   , [myFloats       --> doFloat]
   ]
   where
     myFloats = (className /=? "Navigator" <&&> (className =? "Minefield" <||> className =? "Firefox")) <||> className =? "MPlayer"
     myIMs    = ["Pidgin", "Skype"]
+    myMusics = ["spotify-win"]
 
 -- Layout Hook
 myIMLayout = named "IM Grid" $ reflectHoriz $ withIM ratio rosters Grid
