@@ -7,3 +7,6 @@
 [submodule "vim/bundle/tabular"]
 	path = vim/bundle/tabular
 	url = http://github.com/godlygeek/tabular.git
+[submodule "vim/bundle/clang_complete"]
+	path = vim/bundle/clang_complete
+	url = http://github.com/Rip-Rip/clang_complete.git
