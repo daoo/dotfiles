@@ -19,20 +19,22 @@ import XMonad.Layout.Named
 import qualified XMonad.Layout.NoBorders as B
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Reflect
+import qualified XMonad.StackSet as W
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad 
 import XMonad.Util.WindowProperties
 
 -- Manage Hook
 myManageHook = composeAll . concat $
-  [ [className =? a --> doShift "[im]"    | a <- myIMs]
-  , [className =? b --> doShift "[music]" | b <- myMusics]
-  , [myFloats       --> doFloat]
+  [ [ className =? a --> doShift "[im]"    | a <- myIMs ]
+  , [ className =? b --> doShift "[music]" | b <- myMusics ]
+  , [ myFloats       --> doFloat ]
+  , [ isFullscreen   --> (doF W.focusDown <+> doFullFloat) ]
   ]
   where
-    myFloats = (className /=? "Navigator" <&&> (className =? "Minefield" <||> className =? "Firefox")) <||> className =? "MPlayer"
-    myIMs    = ["Pidgin", "Skype"]
-    myMusics = ["spotify-win"]
+    myFloats = ( className /=? "Navigator" <&&> className =? "Minefield" ) <||> className =? "MPlayer"
+    myIMs    = [ "Pidgin", "Skype" ]
+    myMusics = [ "spotify-win" ]
 
 -- Layout Hook
 myIMLayout = named "IM Grid" $ reflectHoriz $ withIM ratio rosters Grid
