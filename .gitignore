@@ -1,9 +1,8 @@
 *.swp
+xmonad/xmonad
+xmonad/xmonad-x86_64-linux
 xmonad/xmonad.errors
-xmonad/icons
 xmonad/xmonad.hi
 xmonad/xmonad.o
-xmonad/xmonad-x86_64-linux
+xmonad/icons
 vim/.netrwhist
-vim/eclim
-vim/plugin
