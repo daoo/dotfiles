@@ -32,7 +32,7 @@ export EDITOR=vim
 export PAGER=less
 export PATH=$PATH:~/.bin/
 
-export LESS='FiX'
+export LESS='FiXer'
 
 # man colors 
 export LESS_TERMCAP_mb=$'\E[01;31m'

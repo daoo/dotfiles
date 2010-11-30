@@ -1,16 +1,16 @@
 [core]
-  editor = vim
+  editor   = vim
   autocrlf = input
 [color]
-  branch = auto
-  diff = auto
+  branch      = auto
+  diff        = auto
   interactive = auto
-  status = auto
+  status      = auto
 [alias]
   st = status
   ci = commit
   co = checkout
-  w = whatchanged
+  w  = whatchanged
 [user]
-	name = daoo
+	name  = daoo
 	email = daoo314@gmail.com
