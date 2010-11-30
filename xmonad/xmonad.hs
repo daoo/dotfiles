@@ -26,11 +26,10 @@ import XMonad.Util.WindowProperties
 
 -- Manage Hook
 myManageHook = composeAll . concat $
-  [ [ className =? a                                         --> doShift "[im]" | a <- imShifts ]
-  , [ className =? a                                         --> doShift "[music]" | a <- musicShifts ]
-  , [ className =? "Minefield" <&&> className =? "Minefield" --> doFloat ]
-  , [ className =? a                                         --> doFloat | a <- floats ]
-  , [ isFullscreen                                            --> (doF W.focusDown <+> doFullFloat) ]
+  [ [ className =? a --> doShift "[im]"    | a <- imShifts ]
+  , [ className =? a --> doShift "[music]" | a <- musicShifts ]
+  , [ className =? a --> doFloat           | a <- floats ]
+  , [ isFullscreen   --> (doF W.focusDown <+> doFullFloat) ]
   ]
   where
     floats      = [ "MPlayer" ]
