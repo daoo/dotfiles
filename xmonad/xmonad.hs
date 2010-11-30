@@ -26,15 +26,16 @@ import XMonad.Util.WindowProperties
 
 -- Manage Hook
 myManageHook = composeAll . concat $
-  [ [ className =? a --> doShift "[im]"    | a <- myIMs ]
-  , [ className =? b --> doShift "[music]" | b <- myMusics ]
-  , [ myFloats       --> doFloat ]
-  , [ isFullscreen   --> (doF W.focusDown <+> doFullFloat) ]
+  [ [ className =? a                                         --> doShift "[im]" | a <- imShifts ]
+  , [ className =? a                                         --> doShift "[music]" | a <- musicShifts ]
+  , [ className =? "Minefield" <&&> className =? "Minefield" --> doFloat ]
+  , [ className =? a                                         --> doFloat | a <- floats ]
+  , [ isFullscreen                                            --> (doF W.focusDown <+> doFullFloat) ]
   ]
   where
-    myFloats = ( className /=? "Navigator" <&&> className =? "Minefield" ) <||> className =? "MPlayer"
-    myIMs    = [ "Pidgin", "Skype" ]
-    myMusics = [ "spotify-win" ]
+    floats      = [ "MPlayer" ]
+    imShifts    = [ "Pidgin", "Skype" ]
+    musicShifts = [ "spotify-win" ]
 
 -- Layout Hook
 myIMLayout = named "IM Grid" $ reflectHoriz $ withIM ratio rosters Grid
