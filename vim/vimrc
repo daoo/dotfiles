@@ -47,6 +47,7 @@ let g:clang_conceal_snippets=1
 " Keys
 map ,cd :cd %:p:h<CR>
 map ,fa :Tabularize assignment<CR>
+map ,tw :ToggleWord<CR>
 map <C-i> i<Space><Esc>r
 map <C-Up> ddkP
 map <C-Down> ddp
