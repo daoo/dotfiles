@@ -8,12 +8,16 @@ colorscheme wombat
 sy on
 syntax on
 
+" Disable error bells
+set noerrorbells
+set visualbell
+set t_vb=
+
 " Visual
 set number
 set ruler
 set showcmd
 set nowrap
-set novisualbell
 set scrolloff=5
 
 set laststatus=2
