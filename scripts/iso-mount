@@ -1,0 +1,4 @@
+#!/bin/sh
+
+mount -o loop -t iso9660 $@
+
