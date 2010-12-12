@@ -28,7 +28,7 @@ myManageHook = composeAll . concat $
   , [ isFullscreen   --> (doF W.focusDown <+> doFullFloat) ]
   ]
   where
-    floats      = [ "MPlayer" ]
+    floats      = [ "MPlayer", "explorer.exe" ]
     imShifts    = [ "Pidgin", "Skype" ]
     musicShifts = [ "spotify-win" ]
 
