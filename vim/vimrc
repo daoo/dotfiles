@@ -4,7 +4,7 @@ set backupdir=~/.vim/tmp/
 set directory=~/.vim/tmp/
 
 " Color scheme
-colorscheme wombat
+colorscheme tango-morning
 sy on
 syntax on
 
