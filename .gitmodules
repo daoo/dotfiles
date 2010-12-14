@@ -13,3 +13,6 @@
 [submodule "vim/bundle/toggle_words"]
 	path = vim/bundle/toggle_words
 	url = https://github.com/vim-scripts/toggle_words.vim.git
+[submodule "vim/bundle/snipmate"]
+	path = vim/bundle/snipmate
+	url = https://github.com/msanders/snipmate.vim.git
