@@ -74,7 +74,7 @@ barDefault = "-fn '" ++ barFont ++ "' -bg '" ++ barBgColor ++ "' -fg '" ++ barFg
 myLeftBar  = "dzen2 -p -ta l -x 0 -y 0 -w 1200 " ++ barDefault
 myRightBar = "conky -c ~/.xmonad/dzen_conkyrc | dzen2 -p -ta r -x 1200 -y 0 -w 720 " ++ barDefault
 
-myWorkspaces :: [String]
+myWorkspaces :: [WorkspaceId]
 myWorkspaces = [ "[im]", "[web]", "[code]", "[code2]", "[other]", "[music]", "[fullscreen]", "[8]", "[9]" ]
 
 myModKey :: KeyMask
@@ -92,6 +92,13 @@ barBlueColor  = "#8ac6f2"
 
 spConfig :: XPConfig
 spConfig = defaultXPConfig
+  { font    = barFont
+  , bgColor = barBgColor
+  , fgColor = barFgColor
+  , bgHLight = barGreenColor
+  , position = Top
+  , promptBorderWidth = 0
+  }
 
 -- Keys
 keysToAdd x = [ ((modMask x, xK_b), withFocused toggleBorder)
