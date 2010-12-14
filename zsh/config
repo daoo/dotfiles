@@ -28,6 +28,7 @@ setopt nobeep
 
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
+export BROWSER=firefox-nightly
 export EDITOR=vim
 export PAGER=less
 export PATH=$PATH:~/.bin/
