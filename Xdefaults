@@ -1,6 +1,6 @@
 urxvt*background: #242424
 urxvt*foreground: #f6f3e8
-urxvt*font: xft:Monospace:size=8
+urxvt*font: xft:Monospace:size=10
 urxvt*scrollBar: false
 urxvt*scrollBar_right: false
 urxvt*saveLines: 10000
