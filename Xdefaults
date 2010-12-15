@@ -10,7 +10,7 @@ urxvt*buffered: true
 
 scratchpad*background: #242424
 scratchpad*foreground: #f6f3e8
-scratchpad*font: xft:Monospace:size=8
+scratchpad*font: xft:Monospace:size=10
 scratchpad*scrollBar: false
 scratchpad*scrollBar_right: false
 scratchpad*saveLines: 10000
