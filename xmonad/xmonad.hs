@@ -3,6 +3,7 @@ import Data.Ratio
 import System.IO
 import XMonad
 import XMonad.Actions.NoBorders
+import XMonad.Actions.FloatKeys
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -28,7 +29,7 @@ myManageHook = composeAll . concat $
   , [ isFullscreen   --> (doF W.focusDown <+> doFullFloat) ]
   ]
   where
-    floats      = [ "MPlayer", "explorer.exe" ]
+    floats      = [ "MPlayer", "Wine" ]
     imShifts    = [ "Pidgin", "Skype" ]
     musicShifts = [ "spotify-win" ]
 
@@ -106,10 +107,8 @@ keysToAdd x = [ ((modMask x, xK_b), withFocused toggleBorder)
               , ((modMask x, xK_p), shellPrompt spConfig)
               , ((modMask x, xK_quoteleft), scratchpadSpawnActionTerminal myTerm)
               , ((modMask x, xK_section), scratchpadSpawnActionTerminal myTerm)
-              , ((modMask x, xK_x), spawn "firefox-nightly")
-              , ((modMask x, xK_y), spawn "setxkbmap usaswe")
-              , ((modMask x, xK_u), spawn "setxkbmap us -variant colemak")
               , ((modMask x, xK_f), spawn "xscreensaver-command --lock")
+              , ((modMask x, xK_a), withFocused (keysMoveWindowTo (960, 540) (1 % 2, 1 % 2)))
               ]
 
 main :: IO ()
