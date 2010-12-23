@@ -1,3 +1,5 @@
+#!/bin/sh
+
 xrandr --output DVI-0 --mode 1920x1080 --left-of DVI-1
 
 xsetroot -cursor_name left_ptr
@@ -12,4 +14,5 @@ feh --bg-tile "`random-wallpaper`"
 parcellite -d -n &
 pidgin &
 
-xmonad
+#xmonad
+exec subtle
