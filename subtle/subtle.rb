@@ -4,9 +4,7 @@
 
 sublet :clock do
   interval      30
-  foreground    "#eeeeee"
-  background    "#000000"
-  format_string "%H:%M:%S"
+  format_string "%H:%M %Y-%m-%d"
 end
 
 #
@@ -30,7 +28,7 @@ set :outline, 0
 
 screen 1 do
   stipple false
-  top     [ :views, :title, :spacer, :tray, :sublets, :clock ]
+  top     [ :views, :title, :spacer, :tray, :sublets ]
   bottom  [ ]
 end
 
@@ -70,7 +68,7 @@ color :views_bg,        "#202020"
 color :views_border,    "#303030"
 
 # Colors of sublets
-color :sublets_fg,      "#757575"
+color :sublets_fg,      "#b8b8b8"
 color :sublets_bg,      "#202020"
 color :sublets_border,  "#303030"
 
