@@ -8,4 +8,5 @@
 . ~/dotfiles/zsh/binds
 . ~/dotfiles/zsh/autocompletion
 . ~/dotfiles/zsh/functions
+. ~/dotfiles/zsh/bundle/syntax/live-command-coloring.sh
 
