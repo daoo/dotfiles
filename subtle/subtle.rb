@@ -162,16 +162,10 @@ grab "A-Tab" do |c|
 end
 
 # Switch current view
-grab "W-1", :ViewSwitch1
-grab "W-2", :ViewSwitch2
-grab "W-3", :ViewSwitch3
-grab "W-4", :ViewSwitch4
-grab "W-5", :ViewSwitch5
-grab "W-6", :ViewSwitch6
-grab "W-7", :ViewSwitch7
-grab "W-8", :ViewSwitch8
-grab "W-9", :ViewSwitch9
-grab "W-0", :ViewSwitch0
+views = [:ViewSwitch0, :ViewSwitch1, :ViewSwitch2, :ViewSwitch3, :ViewSwitch4, :ViewSwitch5, :ViewSwitch6, :ViewSwitch7, :ViewSwitch8, :ViewSwitch9]
+views.each_with_index do |v, i|
+  grab "W-#{i}", v
+end
 
 grab "KP_Add",      :ViewNext
 grab "KP_Subtract", :ViewPrev
