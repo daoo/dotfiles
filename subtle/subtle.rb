@@ -147,6 +147,20 @@ gravity :pidgin_chat,      [   0,   0,  80, 100 ]
 # == Grabs
 #
 
+# ALT-Tab
+grab "A-Tab" do |c|
+  sel     = 0
+  clients = Subtlext::Client.visible
+
+  clients.each_index do |idx|
+    if(clients[idx].id == c.id)
+      sel = idx + 1 if(idx < clients.size - 1)
+    end
+  end
+
+  clients[sel].focus
+end
+
 # Switch current view
 grab "W-1", :ViewSwitch1
 grab "W-2", :ViewSwitch2
