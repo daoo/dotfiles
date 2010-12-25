@@ -150,11 +150,11 @@ gravity :pidgin_chat,      [   0,   0,  80, 100 ]
 # ALT-Tab
 grab "A-Tab" do |c|
   sel     = 0
-  clients = Subtlext::Client.visible
+  clients = Subtlext::View.current.clients
 
   clients.each_index do |idx|
-    if(clients[idx].id == c.id)
-      sel = idx + 1 if(idx < clients.size - 1)
+    if (clients[idx].id == c.id)
+      sel = idx + 1 if (idx < clients.size - 1)
     end
   end
 
