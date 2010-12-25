@@ -19,6 +19,3 @@
 [submodule "vim/bundle/taglist"]
 	path = vim/bundle/taglist
 	url = https://github.com/vim-scripts/taglist.vim.git
-[submodule "zsh/bundle/syntax"]
-	path = zsh/bundle/syntax
-	url = git://gist.github.com/752727.git
