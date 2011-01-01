@@ -1,4 +1,25 @@
 #
+# == Hooks
+#
+
+on :client_create do |c|
+  cur = Subtlext::View.current
+
+  # Check for empty tags
+  if(c.tags.empty?)
+    t = Subtlext::Tag[cur.name] rescue nil
+
+    # Create new tag
+    if(t.nil?)
+      t = Subtlext::Tag.new(cur.name)
+      t.save
+    end 
+
+    c + t
+  end
+end
+
+#
 # == Sublets
 #
 
@@ -167,17 +188,33 @@ views.each_with_index do |v, i|
   grab "W-#{i}", v
 end
 
-grab "KP_Add",      :ViewNext
-grab "KP_Subtract", :ViewPrev
-
 # Move mouse to screen1, screen2, ...
 #grab "W-A-1", :ScreenJump1
 #grab "W-A-2", :ScreenJump2
 #grab "W-A-3", :ScreenJump3
 #grab "W-A-4", :ScreenJump4
 
-grab "W-C-q", :SubtleReload
-grab "W-C-S-q", :SubtleRestart
+def validSyntax()
+  out = `ruby -c ~/.config/subtle/subtle.rb`
+  return out.chop.downcase == "syntax ok"
+end
+
+grab "W-C-q" do |c|
+  if validSyntax()
+    Subtlext::Subtle.reload()
+  else
+    puts "Incorrect Syntax, not reloading."
+  end
+end
+
+grab "W-C-S-q" do |c|
+  if validSyntax()
+    Subtlext::Subtle.restart()
+  else
+    puts "Incorrect Syntax, not restarting."
+  end
+end
+
 grab "W-C-r", :SubtleQuit
 
 grab "W-B1", :WindowMove
@@ -186,15 +223,15 @@ grab "W-B3", :WindowResize
 grab "W-f", :WindowFloat
 grab "W-space", :WindowFull
 grab "W-s", :WindowStick
-grab "W-r", :WindowRaise
-grab "W-l", :WindowLower
+grab "W-k", :WindowRaise
+grab "W-j", :WindowLower
 
 grab "W-Left",  :WindowLeft
 grab "W-Down",  :WindowDown
 grab "W-Up",    :WindowUp
 grab "W-Right", :WindowRight
 
-grab "W-S-k", :WindowKill
+grab "W-S-c", :WindowKill
 
 # Cycle between given gravities
 grab "W-KP_7", [ :top_left,     :top_left66,     :top_left33     ]
@@ -207,10 +244,23 @@ grab "W-KP_1", [ :bottom_left,  :bottom_left66,  :bottom_left33  ]
 grab "W-KP_2", [ :bottom,       :bottom66,       :bottom33       ]
 grab "W-KP_3", [ :bottom_right, :bottom_right66, :bottom_right33 ]
 
-# Exec programs
 grab "W-Return", "urxvt"
+grab "W-quoteleft" do
+  tag = Subtlext::Tag.find( "scratchpad" )
+  if tag and not tag.clients.empty?
+    client = tag.clients[0]
+    tag.clients.each do |c|
+      if c.hidden?
+        c.show()
+      else
+        c.hide()
+      end
+    end
+  else
+    Subtlext::Subtle.spawn( "urxvt -name scratchpad" )
+  end
+end
 
-# Run Ruby lambdas
 grab "S-F2" do |c|
   puts c.name
 end
@@ -220,29 +270,18 @@ end
 #
 
 # Simple tags
-tag "terms",   "xterm|[u]?rxvt"
+#tag "terms",   "xterm|[u]?rxvt"
 tag "browser", "firefox|navigator"
 tag "other",   "Transmission"
+tag "music",   "Spotify.*"
+tag "editor1", "Eclipse"
+tag "editor2", "[g]?vim"
 
-# Placement
-tag "editor1" do
-  match "Eclipse"
-  resize true
-end
-
-tag "editor2" do
-  match  "[g]?vim"
-  resize true
-end
-
-tag "music" do
-  match "Spotify.*"
-  resize true
-end
-
-tag "fixed" do
-  geometry [ 10, 10, 100, 100 ]
-  stick    true
+tag "scratchpad" do
+  match "scratchpad"
+  float  true
+  stick  true
+  gravity :center33
 end
 
 tag "resize" do
@@ -310,7 +349,7 @@ view "other", "other"
 #
 
 begin
-  require "/stuff/software/subtle/subtle-contrib/ruby/launcher.rb"
+  require "/stuff/programming/ruby/launcher/launcher.rb"
 rescue LoadError => error
   puts error
 end
