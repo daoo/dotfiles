@@ -194,8 +194,7 @@ end
 #grab "W-A-4", :ScreenJump4
 
 def validSyntax()
-  out = `ruby -c ~/.config/subtle/subtle.rb`
-  return out.chop.downcase == "syntax ok"
+  return `ruby -c ~/.config/subtle/subtle.rb`.chop.downcase == "syntax ok"
 end
 
 grab "W-C-q" do |c|
@@ -251,10 +250,10 @@ grab "W-b" do
     tag.clients.each do |c|
       puts c.flags
       if c.hidden?
-        #c.show()
+        c.show()
         #c.focus()
       else
-        #c.hide()
+        c.hide()
       end
     end
   else
@@ -271,32 +270,22 @@ end
 #
 
 # Simple tags
-#tag "terms",   "xterm|[u]?rxvt"
-tag "browser", "firefox|navigator"
-tag "other",   "transmission"
-tag "music",   "spotify.*"
-tag "editor1", "eclipse"
-tag "editor2", "[g]?vim"
+tag "terms"      , "xterm|[u]?rxvt"
+tag "browser"    , "firefox|navigator"
+tag "other"      , "transmission"
+tag "music"      , "spotify"
+tag "editor1"    , "eclipse"
+tag "editor2"    , "gvim"
+tag "scratchpad" , "scratchpad"
 
-tag "scratchpad" do
-  match "scratchpad"
-  #stick  true
-  float   true
-  gravity :center33
-end
-
+# Modes
 tag "resize" do
-  match "gvim|Spotify.*"
+  match "gvim"
   resize true
 end
 
-tag "gravity" do
-  gravity :center
-end
-
-# Modes
 tag "stick" do
-  match "mplayer"
+  match "mplayer|scratchpad"
   float true
   stick true
 end
@@ -318,13 +307,15 @@ tag "pidgin_roster" do
 end
 
 # Gimp
+tag "gimp", "gimp.*"
+
 tag "gimp_image" do
   match   :role => "gimp-image-window"
   gravity :gimp_image
 end
 
 tag "gimp_toolbox" do
-  match   :role => "gimp-toolbox$"
+  match   :role => "gimp-toolbox"
   gravity :gimp_toolbox
 end
 
@@ -338,12 +329,12 @@ end
 #
 
 view "im",    "pidgin_.*"
-view "terms", "terms|default|gimp_.*"
+view "terms", "terms|default"
 view "www",   "browser"
 view "dev",   "editor1"
 view "dev2",  "editor2"
 view "music", "music"
-view "other", "other"
+view "other", "other|gimp"
 
 #
 # == Launcher
@@ -359,4 +350,3 @@ grab "W-p" do
   Launcher::Launcher.instance.run
 end
 
-# vim:ts=2:bs=2:sw=2:et:fdm=marker
