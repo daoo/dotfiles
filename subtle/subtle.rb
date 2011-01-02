@@ -109,7 +109,6 @@ color :separator,       "#757575"
 #
 # == Gravities
 #
-
 # Top left
 gravity :top_left,       [   0,   0,  50,  50 ]
 gravity :top_left66,     [   0,   0,  50,  66 ]
@@ -245,15 +244,17 @@ grab "W-KP_2", [ :bottom,       :bottom66,       :bottom33       ]
 grab "W-KP_3", [ :bottom_right, :bottom_right66, :bottom_right33 ]
 
 grab "W-Return", "urxvt"
-grab "W-quoteleft" do
+grab "W-b" do
   tag = Subtlext::Tag.find( "scratchpad" )
   if tag and not tag.clients.empty?
     client = tag.clients[0]
     tag.clients.each do |c|
+      puts c.flags
       if c.hidden?
-        c.show()
+        #c.show()
+        #c.focus()
       else
-        c.hide()
+        #c.hide()
       end
     end
   else
@@ -272,15 +273,15 @@ end
 # Simple tags
 #tag "terms",   "xterm|[u]?rxvt"
 tag "browser", "firefox|navigator"
-tag "other",   "Transmission"
-tag "music",   "Spotify.*"
-tag "editor1", "Eclipse"
+tag "other",   "transmission"
+tag "music",   "spotify.*"
+tag "editor1", "eclipse"
 tag "editor2", "[g]?vim"
 
 tag "scratchpad" do
   match "scratchpad"
-  float  true
-  stick  true
+  #stick  true
+  float   true
   gravity :center33
 end
 
