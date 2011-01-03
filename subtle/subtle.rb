@@ -6,7 +6,7 @@ on :client_create do |c|
   cur = Subtlext::View.current
 
   # Check for empty tags
-  if(c.tags.empty?)
+  if c.tags.empty?
     t = Subtlext::Tag[cur.name] rescue nil
 
     # Create new tag
@@ -17,6 +17,11 @@ on :client_create do |c|
 
     c + t
   end
+end
+
+$previous_view = nil
+on :view_jump do |v|
+  $previous_view = Subtlext::View.current
 end
 
 #
@@ -50,12 +55,6 @@ set :outline, 0
 screen 1 do
   stipple false
   top     [ :views, :title, :spacer, :tray, :sublets ]
-  bottom  [ ]
-end
-
-screen 2 do
-  stipple false
-  top     [ ]
   bottom  [ ]
 end
 
@@ -187,31 +186,31 @@ views.each_with_index do |v, i|
   grab "W-#{i}", v
 end
 
-# Move mouse to screen1, screen2, ...
-#grab "W-A-1", :ScreenJump1
-#grab "W-A-2", :ScreenJump2
-#grab "W-A-3", :ScreenJump3
-#grab "W-A-4", :ScreenJump4
-
-def validSyntax()
-  return `ruby -c ~/.config/subtle/subtle.rb`.chop.downcase == "syntax ok"
-end
-
-grab "W-C-q" do |c|
-  if validSyntax()
-    Subtlext::Subtle.reload()
-  else
-    puts "Incorrect Syntax, not reloading."
+grab "W-w" do
+  if $previous_view
+    $previous_view.jump
   end
 end
 
-grab "W-C-S-q" do |c|
-  if validSyntax()
-    Subtlext::Subtle.restart()
-  else
-    puts "Incorrect Syntax, not restarting."
-  end
-end
+#def validSyntax()
+#  return `ruby -c ~/.config/subtle/subtle.rb`.chop.downcase == "syntax ok"
+#end
+#
+#grab "W-C-q" do |c|
+#  if validSyntax()
+#    Subtlext::Subtle.reload()
+#  else
+#    puts "Incorrect Syntax, not reloading."
+#  end
+#end
+#
+#grab "W-C-S-q" do |c|
+#  if validSyntax()
+#    Subtlext::Subtle.restart()
+#  else
+#    puts "Incorrect Syntax, not restarting."
+#  end
+#end
 
 grab "W-C-r", :SubtleQuit
 
@@ -263,6 +262,11 @@ end
 
 grab "S-F2" do |c|
   puts c.name
+
+  out = [c.name,
+         c.tags.join( ", " ) ].join( "\n" )
+
+  Subtlext::Subtle.spawn( "xmessage '#{out}' -buttons Okay" )
 end
 
 #
@@ -285,7 +289,7 @@ tag "resize" do
 end
 
 tag "stick" do
-  match "mplayer|scratchpad"
+  match "mplayer|scratchpad|xmessage"
   float true
   stick true
 end
