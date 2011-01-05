@@ -21,7 +21,9 @@ end
 
 $previous_view = nil
 on :view_jump do |v|
-  $previous_view = Subtlext::View.current
+  if Subtlext::View.current != $previous_view
+    $previous_view = Subtlext::View.current
+  end
 end
 
 #
@@ -217,9 +219,9 @@ grab "W-C-r", :SubtleQuit
 grab "W-B1", :WindowMove
 grab "W-B3", :WindowResize
 
-grab "W-f", :WindowFloat
-grab "W-space", :WindowFull
-grab "W-s", :WindowStick
+grab "W-u", :WindowFloat
+grab "W-i", :WindowFull
+grab "W-o", :WindowStick
 grab "W-k", :WindowRaise
 grab "W-j", :WindowLower
 
@@ -241,7 +243,10 @@ grab "W-KP_1", [ :bottom_left,  :bottom_left66,  :bottom_left33  ]
 grab "W-KP_2", [ :bottom,       :bottom66,       :bottom33       ]
 grab "W-KP_3", [ :bottom_right, :bottom_right66, :bottom_right33 ]
 
+# Programs
 grab "W-Return", "urxvt"
+grab "W-x", "gvim"
+grab "W-z", ENV["BROWSER"]
 grab "W-b" do
   tag = Subtlext::Tag.find( "scratchpad" )
   if tag and not tag.clients.empty?
@@ -260,15 +265,25 @@ grab "W-b" do
   end
 end
 
-grab "S-F2" do |c|
+# Multimedia keys
+grab "XF86AudioMute", "amixer set Master toggle"
+
+# Window Info
+grab "W-v" do |c|
   puts c.name
 
-  out = [ "wm_name:  %s" % [c.name]
-        , "wm_class: %s" % [c.instance]
-        , "wm_role:  %s" % [c.role]
-        , ""
-        , "tags:     %s" % [c.tags.join( ", " )]
-        , "flags:    %s" % [c.flags]
+  out = [ "wm_name:  %s" % c.name,
+          "wm_class: %s" % c.instance,
+          "wm_role:  %s" % c.role,
+          "winid:    %s" % c.win,
+          "",
+          "tags:     %s" % c.tags.join( ", " ),
+          "views:    %s" % c.views.map { |v| v.name }.join( ", " ),
+          "",
+          "flags:    %#b" % c.flags,
+          "float:    %s" % c.is_float?,
+          "stick:    %s" % c.is_full?,
+          "full:     %s" % c.is_float?
         ].join( "\n" )
 
   Subtlext::Subtle.spawn( "xmessage '#{out}' -buttons Okay" )
@@ -277,31 +292,61 @@ end
 #
 # == Tags
 #
+tag "terms" do
+  match "xterm|[u]?rxvt"
+  gravity :center
+end
 
-# Simple tags
-tag "terms"      , "xterm|[u]?rxvt"
-tag "browser"    , "firefox|navigator"
-tag "other"      , "transmission"
-tag "music"      , "spotify"
-tag "editor1"    , "eclipse"
-tag "editor2"    , "gvim"
-tag "scratchpad" , "scratchpad"
+tag "browser" do
+  match "firefox|navigator|browser"
+  gravity :center
+end
 
-# Modes
-tag "resize" do
+tag "editor0" do
+  match "eclipse"
+  gravity :center
+end
+
+tag "editor1" do
   match "gvim"
   resize true
 end
 
-tag "stick" do
-  match "mplayer|scratchpad|xmessage"
-  float true
-  stick true
+tag "music" do
+  match "spotify"
+  gravity :center
+  resize false
 end
 
-tag "float" do
-  match "display"
+tag "other" do
+  match "transmission"
+end
+
+tag "xmessage" do
+  match "xmessage"
+  stick true
   float true
+end
+
+tag "scratchpad" do
+  match "scratchpad"
+  #stick true
+  float true
+  urgent true
+  gravity :center33
+end
+
+tag "mplayer" do
+  match "mplayer"
+  stick true
+  float true
+  urgent true
+end
+
+tag "sticknfloat" do
+  match "display|subtle|dialog|preferences"
+  float true
+  stick true
 end
 
 # IM
@@ -340,8 +385,8 @@ end
 view "im",    "pidgin_.*"
 view "terms", "terms|default"
 view "www",   "browser"
-view "dev",   "editor1"
-view "dev2",  "editor2"
+view "dev",   "editor0"
+view "dev2",  "editor1"
 view "music", "music"
 view "other", "other|gimp"
 
