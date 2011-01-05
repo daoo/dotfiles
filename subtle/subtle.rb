@@ -263,11 +263,13 @@ end
 grab "S-F2" do |c|
   puts c.name
 
-  out = ["wm_name:  %s" % [c.name],
-         "wm_class: %s" % [c.instance],
-         "wm_role:  %s" % [c.role],
-         "",
-         "tags:     %s" % [c.tags.join( ", " )] ].join( "\n" )
+  out = [ "wm_name:  %s" % [c.name]
+        , "wm_class: %s" % [c.instance]
+        , "wm_role:  %s" % [c.role]
+        , ""
+        , "tags:     %s" % [c.tags.join( ", " )]
+        , "flags:    %s" % [c.flags]
+        ].join( "\n" )
 
   Subtlext::Subtle.spawn( "xmessage '#{out}' -buttons Okay" )
 end
