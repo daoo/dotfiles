@@ -247,13 +247,13 @@ grab "W-b" do
   if tag and not tag.clients.empty?
     client = tag.clients[0]
     tag.clients.each do |c|
-      puts c.flags
       if c.hidden?
         c.show()
         #c.focus()
       else
         c.hide()
       end
+      c.update()
     end
   else
     Subtlext::Subtle.spawn( "urxvt -name scratchpad" )
