@@ -15,7 +15,7 @@ on :client_create do |c|
       t.save
     end 
 
-    c + t
+    c.tag( t )
   end
 end
 
