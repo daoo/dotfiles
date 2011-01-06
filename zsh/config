@@ -31,8 +31,13 @@ export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 export BROWSER=firefox-nightly
 export EDITOR=vim
 export PAGER=less
-export PATH=~/bin/:$PATH
 export LESS='FiXer'
+
+# Only add ~/bin/ to $PATH if not already there
+echo "$PATH" | grep -q "$HOME/bin"
+if [ $? -ne 0 ]; then
+  export PATH=~/bin/:$PATH
+fi
 
 # man colors 
 export LESS_TERMCAP_mb=$'\E[01;31m'
