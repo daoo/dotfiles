@@ -244,9 +244,10 @@ grab "W-KP_2", [ :bottom,       :bottom66,       :bottom33       ]
 grab "W-KP_3", [ :bottom_right, :bottom_right66, :bottom_right33 ]
 
 # Programs
+$browser = ENV["BROWSER"]
 grab "W-Return", "urxvt"
 grab "W-x", "gvim"
-grab "W-z", ENV["BROWSER"]
+grab "W-z", $browser
 grab "W-b" do
   tag = Subtlext::Tag.find( "scratchpad" )
   if tag and not tag.clients.empty?
@@ -396,11 +397,15 @@ view "other", "other|gimp"
 
 begin
   require "/stuff/software/subtle/subtle-contrib/ruby/launcher.rb"
+  Subtle::Contrib::Launcher.fonts = [
+    "xft:DejaVu Sans Mono:pixelsize=80:antialias=true",
+    "xft:DejaVu Sans Mono:pixelsize=12:antialias=true"
+  ]
 rescue LoadError => error
   puts error
 end
 
 grab "W-p" do
-  Launcher::Launcher.instance.run
+  Subtle::Contrib::Launcher.run
 end
 
