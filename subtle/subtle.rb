@@ -319,7 +319,7 @@ tag "music" do
 end
 
 tag "other" do
-  match "transmission"
+  match "transmission|virtualbox"
 end
 
 tag "xmessage" do
@@ -395,7 +395,7 @@ view "other", "other|gimp"
 #
 
 begin
-  require "/stuff/programming/ruby/launcher/launcher.rb"
+  require "/stuff/software/subtle/subtle-contrib/ruby/launcher.rb"
 rescue LoadError => error
   puts error
 end
