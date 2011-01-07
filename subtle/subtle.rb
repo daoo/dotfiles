@@ -2,27 +2,12 @@
 # == Hooks
 #
 
-on :client_create do |c|
-  cur = Subtlext::View.current
-
-  # Check for empty tags
-  if c.tags.empty?
-    t = Subtlext::Tag[cur.name] rescue nil
-
-    # Create new tag
-    if(t.nil?)
-      t = Subtlext::Tag.new(cur.name)
-      t.save
-    end 
-
-    c.tag( t )
-  end
-end
-
 $previous_view = nil
 on :view_jump do |v|
-  if Subtlext::View.current != $previous_view
-    $previous_view = Subtlext::View.current
+  if not $previous_view
+    $previous_view = v
+  elsif $previous_view.name != v.name
+    $previous_view = v
   end
 end
 
@@ -271,8 +256,6 @@ grab "XF86AudioMute", "amixer set Master toggle"
 
 # Window Info
 grab "W-v" do |c|
-  puts c.name
-
   out = [ "wm_name:  %s" % c.name,
           "wm_class: %s" % c.instance,
           "wm_role:  %s" % c.role,
@@ -287,7 +270,7 @@ grab "W-v" do |c|
           "full:     %s" % c.is_float?
         ].join( "\n" )
 
-  Subtlext::Subtle.spawn( "xmessage '#{out}' -buttons Okay" )
+  xmessage( out )
 end
 
 #
@@ -295,7 +278,7 @@ end
 #
 tag "terms" do
   match "xterm|[u]?rxvt"
-  gravity :center
+  #gravity :center
 end
 
 tag "browser" do
@@ -407,5 +390,13 @@ end
 
 grab "W-p" do
   Subtle::Contrib::Launcher.run
+end
+
+#
+# == Other
+#
+
+def xmessage( msg, buttons = ["Okay"] )
+  Subtlext::Subtle.spawn( "xmessage '#{msg}' -buttons #{buttons.join( "," )}" )
 end
 
