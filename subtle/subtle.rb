@@ -153,20 +153,6 @@ gravity :pidgin_chat,      [   0,   0,  80, 100 ]
 # == Grabs
 #
 
-# ALT-Tab
-grab "A-Tab" do |c|
-  sel     = 0
-  clients = Subtlext::View.current.clients
-
-  clients.each_index do |idx|
-    if (clients[idx].id == c.id)
-      sel = idx + 1 if (idx < clients.size - 1)
-    end
-  end
-
-  clients[sel].focus
-end
-
 # Switch current view
 views = [:ViewSwitch0, :ViewSwitch1, :ViewSwitch2, :ViewSwitch3, :ViewSwitch4, :ViewSwitch5, :ViewSwitch6, :ViewSwitch7, :ViewSwitch8, :ViewSwitch9]
 views.each_with_index do |v, i|
@@ -207,8 +193,34 @@ grab "W-B3", :WindowResize
 grab "W-u", :WindowFloat
 grab "W-i", :WindowFull
 grab "W-o", :WindowStick
-grab "W-k", :WindowRaise
-grab "W-j", :WindowLower
+grab "W-j" do |c|
+  sel     = 0
+  clients = Subtlext::Client.visible()
+
+  clients.each_index do |i|
+    if clients[i].id == c.id
+      sel = i + 1
+      break
+    end
+  end
+
+  clients[sel % clients.size].focus()
+end
+
+grab "W-k" do |c|
+  sel     = 0
+  clients = Subtlext::Client.visible()
+
+  clients.each_index do |i|
+    if clients[i].id == c.id
+      sel = i - 1
+      break
+    end
+  end
+
+  clients[sel % clients.size].focus()
+end
+
 
 grab "W-Left",  :WindowLeft
 grab "W-Down",  :WindowDown
@@ -237,7 +249,7 @@ grab "W-b" do
   tag = Subtlext::Tag.find( "scratchpad" )
   if tag and not tag.clients.empty?
     client = tag.clients[0]
-    tag.clients.each do |c|
+  tag.clients.each do |c|
       if c.hidden?
         c.show()
         #c.focus()
@@ -260,6 +272,7 @@ grab "W-v" do |c|
           "wm_class: %s" % c.instance,
           "wm_role:  %s" % c.role,
           "winid:    %s" % c.win,
+          "id:       %s" % c.id,
           "",
           "tags:     %s" % c.tags.join( ", " ),
           "views:    %s" % c.views.map { |v| v.name }.join( ", " ),
