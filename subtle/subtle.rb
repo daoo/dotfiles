@@ -5,9 +5,9 @@
 $previous_view = nil
 on :view_jump do |v|
   if not $previous_view
-    $previous_view = v
-  elsif $previous_view.name != v.name
-    $previous_view = v
+    $previous_view = Subtlext::View.current
+  elsif $previous_view.name != Subtlext::View.current.name
+    $previous_view = Subtlext::View.current
   end
 end
 
