@@ -315,7 +315,6 @@ end
 
 tag "xmessage" do
   match "xmessage"
-  stick true
   float true
 end
 
