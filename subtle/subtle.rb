@@ -221,12 +221,6 @@ grab "W-k" do |c|
   clients[sel % clients.size].focus()
 end
 
-
-grab "W-Left",  :WindowLeft
-grab "W-Down",  :WindowDown
-grab "W-Up",    :WindowUp
-grab "W-Right", :WindowRight
-
 grab "W-S-c", :WindowKill
 
 # Cycle between given gravities
@@ -341,7 +335,7 @@ tag "mplayer" do
 end
 
 tag "sticknfloat" do
-  match "display|subtle|dialog|preferences"
+  match "display|dialog|preferences"
   float true
   stick true
 end
