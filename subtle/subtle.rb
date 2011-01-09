@@ -271,6 +271,9 @@ grab "W-v" do |c|
           "tags:     %s" % c.tags.join( ", " ),
           "views:    %s" % c.views.map { |v| v.name }.join( ", " ),
           "",
+          "geometry: %s" % c.geometry.to_s,
+          "gravity:  %s" % c.gravity.to_s,
+          "",
           "flags:    %#b" % c.flags,
           "float:    %s" % c.is_float?,
           "stick:    %s" % c.is_full?,
@@ -285,7 +288,8 @@ end
 #
 tag "terms" do
   match "xterm|[u]?rxvt"
-  #gravity :center
+  exclude :instance => "scratchpad"
+  gravity :center
 end
 
 tag "browser" do
@@ -301,27 +305,30 @@ end
 tag "editor1" do
   match "gvim"
   resize true
+  gravity :center
 end
 
 tag "music" do
   match "spotify"
   gravity :center
-  resize false
 end
 
 tag "other" do
   match "transmission|virtualbox"
+  gravity :center
 end
 
 tag "xmessage" do
   match "xmessage"
   float true
+  stick true
 end
 
 tag "scratchpad" do
-  match "scratchpad"
+  match :instance => "scratchpad"
   #stick true
-  float true
+  #float true
+  resize false
   urgent true
   gravity :center33
 end
@@ -334,7 +341,9 @@ tag "mplayer" do
 end
 
 tag "sticknfloat" do
-  match "display|dialog|preferences"
+  match "display|dialog|subtly|subtle|preferences"
+  match :type => :dialog
+  match :type => :splash
   float true
   stick true
 end
@@ -373,12 +382,13 @@ end
 #
 
 view "im",    "pidgin_.*"
-view "terms", "terms|default"
+view "terms", "terms"
 view "www",   "browser"
 view "dev",   "editor0"
 view "dev2",  "editor1"
 view "music", "music"
 view "other", "other|gimp"
+view "void",  "default"
 
 #
 # == Launcher
