@@ -349,6 +349,8 @@ tag "sticknfloat" do
 end
 
 # IM
+tag "pidgin", "new_mail_detailed"
+
 tag "pidgin_chat" do
   match   :role => "conversation"
   gravity :pidgin_chat
@@ -381,7 +383,7 @@ end
 # == Views
 #
 
-view "im",    "pidgin_.*"
+view "im",    "pidgin.*"
 view "terms", "terms"
 view "www",   "browser"
 view "dev",   "editor0"
