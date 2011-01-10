@@ -239,6 +239,7 @@ $browser = ENV["BROWSER"]
 grab "W-Return", "urxvt"
 grab "W-x", "gvim"
 grab "W-z", $browser
+grab "W-n", "xscreensaver-command --lock"
 grab "W-b" do
   tag = Subtlext::Tag.find( "scratchpad" )
   if tag and not tag.clients.empty?
@@ -349,7 +350,7 @@ tag "sticknfloat" do
 end
 
 # IM
-tag "pidgin", "new_mail_detailed"
+tag "pidgin", "new_mail_detailed|pidgin"
 
 tag "pidgin_chat" do
   match   :role => "conversation"
