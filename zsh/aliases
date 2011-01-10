@@ -19,3 +19,4 @@ alias :w="echo 'you are not in vim anymore' ; echo ''"
 
 alias bell="echo -e '\a'"
 
+alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
