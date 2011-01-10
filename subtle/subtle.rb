@@ -398,6 +398,9 @@ view "void",  "default"
 
 begin
   require "/stuff/software/subtle/subtle-contrib/ruby/launcher.rb"
+
+  Subtle::Contrib::Launcher.paths = [ "/usr/bin", "~/bin" ]
+
   Subtle::Contrib::Launcher.fonts = [
     "xft:DejaVu Sans Mono:pixelsize=80:antialias=true",
     "xft:DejaVu Sans Mono:pixelsize=12:antialias=true"
