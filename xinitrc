@@ -13,6 +13,7 @@ feh --bg-tile "`random-wallpaper`"
 
 parcellite -d -n &
 pidgin &
+dropboxd &
 
 #xmonad
 exec subtle
