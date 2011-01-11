@@ -277,8 +277,8 @@ grab "W-v" do |c|
           "",
           "flags:    %#b" % c.flags,
           "float:    %s" % c.is_float?,
-          "stick:    %s" % c.is_full?,
-          "full:     %s" % c.is_float?
+          "stick:    %s" % c.is_stick?,
+          "full:     %s" % c.is_full?
         ].join( "\n" )
 
   xmessage( out )
