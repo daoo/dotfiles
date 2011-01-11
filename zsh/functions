@@ -12,3 +12,10 @@ ff() {
   find . -iname "*$@*" -not -type d
 }
 
+db-share() {
+  file_name=$(basename "$1")
+  file_path="/storage/dropbox/Public/$file_name"
+  cp "$1" "$file_path"
+  
+  dropbox puburl "$file_path"
+}
