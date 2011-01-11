@@ -299,8 +299,7 @@ tag "browser" do
 end
 
 tag "editor0" do
-  match "eclipse"
-  gravity :center
+  match "eclipse|.*Intellij.*"
 end
 
 tag "editor1" do
@@ -321,15 +320,15 @@ end
 
 tag "xmessage" do
   match "xmessage"
-  float true
+  #float true
+  urgent true
   stick true
+  gravity :center33
 end
 
 tag "scratchpad" do
   match :instance => "scratchpad"
-  #stick true
-  #float true
-  resize false
+  stick true
   urgent true
   gravity :center33
 end
