@@ -11,6 +11,15 @@ on :view_jump do |v|
   end
 end
 
+on :client_create do |c|
+  if c.has_tag?( "scratchpad" )
+    view = Subtlext::View.current
+    view.tag( view.name ) unless view.tags.include?( view.name )
+    c.tags = [ "scratchpad", view.name ]
+    c.gravity = :center33 # TOOD: Hack, use proper tagging
+  end
+end
+
 #
 # == Sublets
 #
@@ -240,22 +249,26 @@ grab "W-Return", "urxvt"
 grab "W-x", "gvim"
 grab "W-z", $browser
 grab "W-n", "xscreensaver-command --lock"
-grab "W-b" do
-  tag = Subtlext::Tag.find( "scratchpad" )
-  if tag and not tag.clients.empty?
-    client = tag.clients[0]
-  tag.clients.each do |c|
-      if c.hidden?
-        c.show()
-        #c.focus()
-      else
-        c.hide()
-      end
-      c.update()
-    end
-  else
+grab "W-grave" do
+  tag  = Subtlext::Tag[ "scratchpad" ]
+  view = Subtlext::View.current
+  if not tag or tag.clients.empty?
     Subtlext::Subtle.spawn( "urxvt -name scratchpad" )
+  else
+    client = tag.clients[0]
+    if client.has_tag?( view.name )
+      # Hide
+      client.tags = [ "scratchpad", "none" ]
+    else
+      # Move to current
+      view.tag( view.name ) unless view.tags.include?( view.name )
+      client.tags = [ "scratchpad", view.name ]
+    end
   end
+end
+
+grab "W-h" do |c|
+  c.hide()
 end
 
 # Multimedia keys
@@ -287,8 +300,15 @@ end
 #
 # == Tags
 #
-tag "terms" do
-  match "xterm|[u]?rxvt"
+
+tag "scratchpad" do
+  match :instance => "scratchpad"
+  urgent true
+  gravity :center33
+end
+
+tag "urxvt" do
+  match "urxvt"
   exclude :instance => "scratchpad"
   gravity :center
 end
@@ -308,7 +328,7 @@ tag "editor1" do
   gravity :center
 end
 
-tag "music" do
+tag "spotify" do
   match "spotify"
   gravity :center
 end
@@ -323,13 +343,6 @@ tag "xmessage" do
   #float true
   urgent true
   stick true
-  gravity :center33
-end
-
-tag "scratchpad" do
-  match :instance => "scratchpad"
-  stick true
-  urgent true
   gravity :center33
 end
 
@@ -382,16 +395,37 @@ end
 #
 # == Views
 #
+view "im"    , "pidgin.*"
+view "terms" , "urxvt"
+view "www"   , "browser"
+view "dev"   , "editor0"
+view "dev2"  , "editor1"
+view "music" , "spotify"
+view "other" , "gimp"
+view "void"  , "default"
 
-view "im",    "pidgin.*"
-view "terms", "terms"
-view "www",   "browser"
-view "dev",   "editor0"
-view "dev2",  "editor1"
-view "music", "music"
-view "other", "other|gimp"
-view "void",  "default"
+def ensure_tag( name )
+  if not Subtlext::Tag[ name ]
+    t = Subtlext::Tag.new( name )
+    t.save
+    
+    return t
+  end
 
+  return Subtlext::Tag[ name ]
+end
+
+on :start do
+  # Misc tags
+  all = ensure_tag( "all" )
+  ensure_tag( "none" )
+
+  Subtlext::View.all.each do |v|
+    v.tag( [ all ] )
+
+    ensure_tag( v.name )
+  end
+end
 #
 # == Launcher
 #
