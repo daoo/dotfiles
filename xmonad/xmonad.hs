@@ -98,10 +98,6 @@ barDefault = "-fn '" ++ panelFont ++ "' -bg '" ++ panelBg ++ "' -fg '" ++ panelF
 myLeftBar  = "dzen2 -p -ta l -x 0 -y 0 -w 1200 " ++ barDefault
 myRightBar = "conky -c ~/.xmonad/dzen_conkyrc | dzen2 -p -ta r -x 1200 -y 0 -w 720 " ++ barDefault
 
-myModKey :: KeyMask
-myModKey = mod4Mask
-
-
 spConfig :: XPConfig
 spConfig = defaultXPConfig
   { font              = panelFont
@@ -126,6 +122,9 @@ keysToAdd x = [ ((modMask x, xK_b), withFocused toggleBorder)
               ]
 
 -- Misc
+myModKey :: KeyMask
+myModKey = mod4Mask
+
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = [ "im", "web", "code", "code2", "other", "music", "fullscreen", "void" ]
 
