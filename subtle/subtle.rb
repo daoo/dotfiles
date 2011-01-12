@@ -257,7 +257,7 @@ grab "W-grave" do
   if not tag or tag.clients.empty?
     Subtlext::Subtle.spawn( "urxvt -name scratchpad" )
   else
-    client = tag.clients[0]
+    client = tag.clients.first
     if client.has_tag?( view.name )
       # Hide
       client.tags = [ "scratchpad", "none" ]
@@ -362,6 +362,7 @@ tag "sticknfloat" do
   match :type => :splash
   float true
   stick true
+  urgent true
 end
 
 # IM
