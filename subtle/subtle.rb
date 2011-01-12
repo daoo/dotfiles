@@ -1,6 +1,31 @@
 #
-# == Logging
+# == Functions
 #
+
+def ensure_tag( name )
+  if not Subtlext::Tag[ name ]
+    t = Subtlext::Tag.new( name )
+    t.save
+    
+    return t
+  end
+
+  return Subtlext::Tag[ name ]
+end
+
+def create_tags()
+  all = ensure_tag( "all" )
+  ensure_tag( "none" )
+
+  Subtlext::View.all.each do |v|
+    v.tag( [ all ] )
+
+    ensure_tag( v.name )
+  end
+
+  Subtlext::View.current.jump
+end
+
 def log( msg )
   puts "subtle: #{msg}"
 end
@@ -28,6 +53,25 @@ on :client_create do |c|
     view.tag( view.name ) unless view.tags.include?( view.name )
     c.tags = [ "scratchpad", view.name ]
   end
+end
+
+on :reload do
+  create_tags()
+
+  tag = Subtlext::Tag[ "scratchpad" ]
+  if tag
+    if tag.clients and not tag.clients.empty?
+      client = tag.clients.first
+      if client.has_tag?( "default" )
+        client.tags = [ "scratchpad", "none" ]
+      end
+    end
+  end
+end
+
+
+on :start do
+  create_tags()
 end
 
 #
@@ -404,32 +448,10 @@ view "terms" , "urxvt"
 view "www"   , "browser"
 view "dev"   , "editor0"
 view "dev2"  , "editor1"
-view "music" , "spotify|tuxguitar"
 view "other" , "gimp"
+view "music" , "spotify|tuxguitar"
 view "void"  , "default"
 
-def ensure_tag( name )
-  if not Subtlext::Tag[ name ]
-    t = Subtlext::Tag.new( name )
-    t.save
-    
-    return t
-  end
-
-  return Subtlext::Tag[ name ]
-end
-
-on :start do
-  # Misc tags
-  all = ensure_tag( "all" )
-  ensure_tag( "none" )
-
-  Subtlext::View.all.each do |v|
-    v.tag( [ all ] )
-
-    ensure_tag( v.name )
-  end
-end
 #
 # == Launcher
 #
