@@ -196,26 +196,6 @@ grab "W-w" do
   end
 end
 
-#def validSyntax()
-#  return `ruby -c ~/.config/subtle/subtle.rb`.chop.downcase == "syntax ok"
-#end
-#
-#grab "W-C-q" do |c|
-#  if validSyntax()
-#    Subtlext::Subtle.reload()
-#  else
-#    puts "Incorrect Syntax, not reloading."
-#  end
-#end
-#
-#grab "W-C-S-q" do |c|
-#  if validSyntax()
-#    Subtlext::Subtle.restart()
-#  else
-#    puts "Incorrect Syntax, not restarting."
-#  end
-#end
-
 grab "W-C-r", :SubtleQuit
 
 grab "W-B1", :WindowMove
