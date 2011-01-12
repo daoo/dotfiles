@@ -20,96 +20,118 @@ import qualified XMonad.StackSet as W
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad 
 
+-- Theme
+winBorderFocused = "#303030"
+winBorderNormal = "#202020"
+
+panelFg = "#b8b8b8"
+panelBg = "#202020"
+
+titleFg    = "#fecf35"
+titleBg    = "#202020"
+focusFg    = "#fecf35"
+focusBg    = "#202020"
+urgentFg   = "#ff9800"
+urgentBg   = "#202020"
+occupiedFg = "#b8b8b8"
+occupiedBg = "#202020"
+viewsFg    = "#757575"
+viewsBg    = "#202020"
+
+panelFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+
 -- Manage Hook
 myManageHook :: ManageHook
 myManageHook = composeAll . concat $
-  [ [ className =? a --> doShift "[im]"    | a <- imShifts ]
-  , [ className =? a --> doShift "[music]" | a <- musicShifts ]
-  , [ className =? a --> doFloat           | a <- floats ]
-  , [ isFullscreen   --> (doF W.focusDown <+> doFullFloat) ]
+  [ moveTo "im"    [ "Pidgin", "Skype" ]
+  , moveTo "web"   [ "Firefox", "Navigator" ]
+  , moveTo "code"  [ "Gvim" ]
+  , moveTo "music" [ "spotify-win", "tuxguitar" ]
+
+  , floatThose [ "MPlayer", "Wine", "xmessage" ]
+
+  , [ isFullscreen --> (doF W.focusDown <+> doFullFloat) ]
   ]
   where
-    floats      = [ "MPlayer", "Wine" ]
-    imShifts    = [ "Pidgin", "Skype" ]
-    musicShifts = [ "spotify-win" ]
+    moveTo w s   = [className =? a --> doShift w | a <- s]
+    floatThose s = [className =? a --> doFloat | a <- s]
 
 -- Layout Hook
-myIMLayout = named "IM Grid" $ reflectHoriz $ withIM ratio rosters Grid
+myLayoutHook = onWorkspace "im" imLHook $
+               onWorkspace "fullscreen" fullscreenLHook $
+               defaultLHook
   where
-    ratio   = 1 % 7
-    rosters = pidgin
-    pidgin  = (ClassName "Pidgin") `And` (Role "buddy_list")
-    --skype   = (Title "daoo-- - Skype™ (Beta)")
+    imLHook         = B.noBorders $ avoidStruts $ imLayout
+    fullscreenLHook = B.noBorders $ Full 
+    defaultLHook    = B.lessBorders ambiguity $ avoidStruts $ defaultLayout
 
-myDefaultLayouts = tiled ||| Mirror tiled ||| Full
-  where
-    tiled = Tall 1 (3.0/100.0) (1.0/2.0)
+    ambiguity  = (B.Combine B.Union B.Never B.OtherIndicated)
 
-myAmbiguity :: B.Ambiguity
-myAmbiguity  = (B.Combine B.Union B.Never B.OtherIndicated)
-myLayoutHook = onWorkspace "[im]" (B.noBorders $ avoidStruts $ myIMLayout) $
-               onWorkspace "[fullscreen]" (B.noBorders $ Full) $
-               (B.lessBorders myAmbiguity $ avoidStruts $ myDefaultLayouts)
+    defaultLayout = tiled ||| Mirror tiled ||| Full
+    tiled         = Tall 1 (3.0/100.0) (1.0/2.0)
+
+    imLayout = named "IM Grid" $ reflectHoriz $ withIM (1%7) rosters Grid
+    rosters  = (ClassName "Pidgin") `And` (Role "buddy_list")
 
 -- Log Hook
 myLogHook :: Handle -> X ()
-myLogHook h   = dynamicLogWithPP $ defaultPP
-  { ppUrgent  = c2 barRedColor . dzenStrip
-  , ppCurrent = c1 barGreenColor
-  , ppVisible = c1 barBlueColor
-  , ppHidden  = c1 barFgColor . noNSP
-  , ppTitle   = c1 barFgColor
-  , ppWsSep   = " "
-  , ppSep     = " | "
-  , ppOutput  = hPutStrLn h
+myLogHook h           = dynamicLogWithPP $ defaultPP
+  { ppUrgent          = color urgentFg urgentBg . dzenStrip
+  , ppCurrent         = color focusFg focusBg
+  , ppVisible         = color occupiedFg occupiedBg
+  , ppHidden          = color occupiedFg occupiedBg . noNSP
+  , ppHiddenNoWindows = color viewsFg viewsBg
+  , ppTitle           = color titleFg titleBg
+  , ppWsSep           = " "
+  , ppSep             = " | "
+  , ppOutput          = hPutStrLn h
   }
   where
-    c1 c     = dzenColor c ""
-    c2 c     = dzenColor "" c
-    noNSP ws = if ws == "NSP" then "" else ws
+    color       = dzenColor
+    noNSP ws    = asd (ws == "NSP") "" ws
+    asd exp a b = if exp then a else b -- TODO: Find better name
 
--- Simple
+-- Bars
 barDefault, myLeftBar, myRightBar :: String
-barDefault = "-fn '" ++ barFont ++ "' -bg '" ++ barBgColor ++ "' -fg '" ++ barFgColor ++ "'"
+barDefault = "-fn '" ++ panelFont ++ "' -bg '" ++ panelBg ++ "' -fg '" ++ panelFg ++ "'"
 
 myLeftBar  = "dzen2 -p -ta l -x 0 -y 0 -w 1200 " ++ barDefault
 myRightBar = "conky -c ~/.xmonad/dzen_conkyrc | dzen2 -p -ta r -x 1200 -y 0 -w 720 " ++ barDefault
 
-myWorkspaces :: [WorkspaceId]
-myWorkspaces = [ "[im]", "[web]", "[code]", "[code2]", "[other]", "[music]", "[fullscreen]", "[8]", "[9]" ]
-
 myModKey :: KeyMask
 myModKey = mod4Mask
 
-myTerm, barFgColor, barBgColor, barRedColor, barGreenColor, barBlueColor, barFont :: String
-myTerm = "urxvt"
-
-barFont       = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
-barFgColor    = "#f6f3e8"
-barBgColor    = "#242424"
-barRedColor   = "#e5786d"
-barGreenColor = "#95e454"
-barBlueColor  = "#8ac6f2"
 
 spConfig :: XPConfig
 spConfig = defaultXPConfig
-  { font    = barFont
-  , bgColor = barBgColor
-  , fgColor = barFgColor
-  , bgHLight = barGreenColor
-  , position = Top
+  { font              = panelFont
+  , bgColor           = panelBg
+  , fgColor           = panelFg
+  , bgHLight          = focusFg
+  , position          = Top
   , promptBorderWidth = 0
   }
 
 -- Keys
+keysToAdd :: XConfig l -> [((KeyMask, KeySym), X ())]
 keysToAdd x = [ ((modMask x, xK_b), withFocused toggleBorder)
               , ((modMask x, xK_z), focusUrgent)
               , ((modMask x, xK_p), shellPrompt spConfig)
-              , ((modMask x, xK_quoteleft), scratchpadSpawnActionTerminal myTerm)
+              , ((modMask x, xK_grave), scratchpadSpawnActionTerminal myTerm)
               , ((modMask x, xK_section), scratchpadSpawnActionTerminal myTerm)
               , ((modMask x, xK_f), spawn "xscreensaver-command --lock")
               , ((modMask x, xK_a), withFocused (keysMoveWindowTo (960, 540) (1 % 2, 1 % 2)))
+              , ((modMask x, xK_z), spawn "firefox-nightly")
+              , ((modMask x, xK_x), spawn "gvim")
               ]
+
+-- Misc
+myWorkspaces :: [WorkspaceId]
+myWorkspaces = [ "im", "web", "code", "code2", "other", "music", "fullscreen", "void" ]
+
+myTerm = "urxvt"
+
+-- Main
 
 main :: IO ()
 main = do
@@ -120,8 +142,8 @@ main = do
     { terminal           = myTerm
     , modMask            = myModKey
     , borderWidth        = 1
-    , normalBorderColor  = barFgColor
-    , focusedBorderColor = barBlueColor 
+    , normalBorderColor  = winBorderNormal
+    , focusedBorderColor = winBorderFocused 
     , workspaces         = myWorkspaces
 
     , manageHook = myManageHook <+> manageDocks <+> scratchpadManageHookDefault
