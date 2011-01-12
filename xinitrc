@@ -15,5 +15,5 @@ parcellite -d -n &
 pidgin &
 dropboxd &
 
-#xmonad
-exec subtle
+xmonad
+#exec subtle
