@@ -50,10 +50,21 @@ let g:clang_conceal_snippets=1
 let g:clang_hl_errors=1
 let g:clang_use_snipmate=1
 
+" Commands
+function! TabMessage(cmd)
+  redir => message
+  silent execute a:cmd
+  redir END
+  tabnew
+  silent put=message
+  set nomodified
+endfunction
+command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
+
 " Keys
 map ,cd :cd %:p:h<CR>
 map ,fa :Tabularize assignment<CR>
-map ,fc :Tabularize comma_left<CR>
+map ,fc :Tabularize /,/r0l1<CR>
 map ,tw :ToggleWord<CR>
 map <C-i> i<Space><Esc>r
 map <C-Up> ddkP
