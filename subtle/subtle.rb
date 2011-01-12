@@ -1,4 +1,15 @@
 #
+# == Logging
+#
+def log( msg )
+  puts "subtle: #{msg}"
+end
+
+def tag_exists?( tag )
+  return Subtlext::Tag[ tag ] ? 'Yes' : 'No'
+end
+
+#
 # == Hooks
 #
 
@@ -16,7 +27,6 @@ on :client_create do |c|
     view = Subtlext::View.current
     view.tag( view.name ) unless view.tags.include?( view.name )
     c.tags = [ "scratchpad", view.name ]
-    c.gravity = :center33 # TOOD: Hack, use proper tagging
   end
 end
 
@@ -27,6 +37,18 @@ end
 sublet :clock do
   interval      30
   format_string "%H:%M %Y-%m-%d"
+end
+
+sublet :cpu do
+  interval 10
+end
+
+sublet :memory do
+  interval 10
+end
+
+sublet :wifi do
+  interval 10
 end
 
 #
@@ -41,7 +63,7 @@ set :resize, false
 set :padding, [ 0, 0, 0, 0 ]
 set :font, "xft:sans-8"
 set :gap, 0
-set :separator, "|"
+set :separator, ""
 set :outline, 0
 
 #
@@ -267,10 +289,6 @@ grab "W-grave" do
   end
 end
 
-grab "W-h" do |c|
-  c.hide()
-end
-
 # Multimedia keys
 grab "XF86AudioMute", "amixer set Master toggle"
 
@@ -325,6 +343,11 @@ end
 tag "editor1" do
   match "gvim"
   resize true
+  gravity :center
+end
+
+tag "tuxguitar" do
+  match "tuxguitar"
   gravity :center
 end
 
@@ -400,7 +423,7 @@ view "terms" , "urxvt"
 view "www"   , "browser"
 view "dev"   , "editor0"
 view "dev2"  , "editor1"
-view "music" , "spotify"
+view "music" , "spotify|tuxguitar"
 view "other" , "gimp"
 view "void"  , "default"
 
