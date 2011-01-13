@@ -108,14 +108,15 @@ spConfig = defaultXPConfig
 
 -- Keys
 keysToAdd :: XConfig l -> [((KeyMask, KeySym), X ())]
-keysToAdd x = [ ((modMask x, xK_b), withFocused toggleBorder)
-              , ((modMask x, xK_p), shellPrompt spConfig)
-              , ((modMask x, xK_grave), scratchpadSpawnActionTerminal myTerm)
-              , ((modMask x, xK_f), spawn "xscreensaver-command --lock")
-              , ((modMask x, xK_z), spawn "firefox-nightly")
-              , ((modMask x, xK_x), spawn "gvim")
-              , ((modMask x, xK_w), toggleWS)
-              ]
+keysToAdd x = map (\ (k, a) -> ((modMask x, k), a) ) $
+  [ (xK_b, withFocused toggleBorder)
+  , (xK_p, shellPrompt spConfig)
+  , (xK_grave, scratchpadSpawnActionTerminal myTerm)
+  , (xK_f, spawn "xscreensaver-command --lock")
+  , (xK_z, spawn myBrowser)
+  , (xK_x, spawn myEditor)
+  , (xK_w, toggleWS)
+  ]
 
 -- Misc
 myModKey :: KeyMask
@@ -124,7 +125,9 @@ myModKey = mod4Mask
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = [ "im", "web", "code", "code2", "other", "music", "fullscreen", "void" ]
 
-myTerm = "urxvt"
+myTerm    = "urxvt"
+myBrowser = "firefox-nightly"
+myEditor  = "gvim"
 
 -- Main
 
