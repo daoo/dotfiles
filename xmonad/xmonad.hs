@@ -2,6 +2,7 @@ import qualified Data.Map as M
 import Data.Ratio ((%))
 import System.IO (Handle)
 import XMonad
+import XMonad.Actions.CycleWS (toggleWS)
 import XMonad.Actions.NoBorders
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -113,6 +114,7 @@ keysToAdd x = [ ((modMask x, xK_b), withFocused toggleBorder)
               , ((modMask x, xK_f), spawn "xscreensaver-command --lock")
               , ((modMask x, xK_z), spawn "firefox-nightly")
               , ((modMask x, xK_x), spawn "gvim")
+              , ((modMask x, xK_w), toggleWS)
               ]
 
 -- Misc
