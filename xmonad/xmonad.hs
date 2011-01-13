@@ -1,32 +1,28 @@
 import qualified Data.Map as M
-import Data.Ratio
-import System.IO
+import Data.Ratio ((%))
+import System.IO (Handle)
 import XMonad
 import XMonad.Actions.NoBorders
-import XMonad.Actions.FloatKeys
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.UrgencyHook hiding (Never)
 import XMonad.Layout.Grid
 import XMonad.Layout.IM
-import XMonad.Layout.Named
-import qualified XMonad.Layout.NoBorders as B
-import XMonad.Layout.PerWorkspace
+import XMonad.Layout.Named (named)
+import XMonad.Layout.NoBorders
+import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.Reflect
 import XMonad.Prompt
-import XMonad.Prompt.Shell
-import qualified XMonad.StackSet as W
+import XMonad.Prompt.Shell (shellPrompt)
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad 
 
 -- Theme
 winBorderFocused = "#303030"
-winBorderNormal = "#202020"
+winBorderNormal  = "#202020"
 
-panelFg = "#b8b8b8"
-panelBg = "#202020"
-
+panelFg    = "#b8b8b8"
+panelBg    = "#202020"
 titleFg    = "#fecf35"
 titleBg    = "#202020"
 focusFg    = "#fecf35"
@@ -44,28 +40,29 @@ panelFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 myManageHook :: ManageHook
 myManageHook = composeAll . concat $
   [ moveTo "im"    [ "Pidgin", "Skype" ]
-  , moveTo "web"   [ "Firefox", "Navigator" ]
-  , moveTo "code"  [ "Gvim" ]
+  , moveTo "web"   [ "Navigator" ]
+  , moveTo "code"  [ "gvim" ]
+  , moveTo "code2" [ "Eclipse" ]
   , moveTo "music" [ "spotify-win", "tuxguitar" ]
+  , moveTo "void"  [ "explorer.exe" ]
 
   , floatThose [ "MPlayer", "Wine", "xmessage" ]
-
-  , [ isFullscreen --> (doF W.focusDown <+> doFullFloat) ]
   ]
   where
-    moveTo w s   = [className =? a --> doShift w | a <- s]
-    floatThose s = [className =? a --> doFloat | a <- s]
+    moveTo w s   = map (\a -> match a --> doShift w) s
+    floatThose s = map (\a -> match a --> doFloat) s
+    match a      = appName =? a <||> className =? a
 
 -- Layout Hook
 myLayoutHook = onWorkspace "im" imLHook $
                onWorkspace "fullscreen" fullscreenLHook $
                defaultLHook
   where
-    imLHook         = B.noBorders $ avoidStruts $ imLayout
-    fullscreenLHook = B.noBorders $ Full 
-    defaultLHook    = B.lessBorders ambiguity $ avoidStruts $ defaultLayout
+    imLHook         = noBorders $ avoidStruts $ imLayout
+    fullscreenLHook = noBorders $ Full 
+    defaultLHook    = lessBorders ambiguity $ avoidStruts $ defaultLayout
 
-    ambiguity  = (B.Combine B.Union B.Never B.OtherIndicated)
+    ambiguity  = (Combine Union Never OtherIndicated)
 
     defaultLayout = tiled ||| Mirror tiled ||| Full
     tiled         = Tall 1 (3.0/100.0) (1.0/2.0)
@@ -111,12 +108,9 @@ spConfig = defaultXPConfig
 -- Keys
 keysToAdd :: XConfig l -> [((KeyMask, KeySym), X ())]
 keysToAdd x = [ ((modMask x, xK_b), withFocused toggleBorder)
-              , ((modMask x, xK_z), focusUrgent)
               , ((modMask x, xK_p), shellPrompt spConfig)
               , ((modMask x, xK_grave), scratchpadSpawnActionTerminal myTerm)
-              , ((modMask x, xK_section), scratchpadSpawnActionTerminal myTerm)
               , ((modMask x, xK_f), spawn "xscreensaver-command --lock")
-              , ((modMask x, xK_a), withFocused (keysMoveWindowTo (960, 540) (1 % 2, 1 % 2)))
               , ((modMask x, xK_z), spawn "firefox-nightly")
               , ((modMask x, xK_x), spawn "gvim")
               ]
