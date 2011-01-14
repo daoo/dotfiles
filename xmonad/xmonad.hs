@@ -45,14 +45,14 @@ myManageHook = composeAll . concat $
   , moveTo "code"  [ "gvim" ]
   , moveTo "code2" [ "Eclipse" ]
   , moveTo "music" [ "spotify-win", "tuxguitar" ]
-  , moveTo "void"  [ "explorer.exe" ]
+  , moveTo "void"  [ "explorer.exe", "transmission-gtk" ]
 
   , floatThose [ "MPlayer", "Wine", "xmessage" ]
   ]
   where
-    moveTo w s   = map (\a -> match a --> doShift w) s
-    floatThose s = map (\a -> match a --> doFloat) s
-    match a      = appName =? a <||> className =? a
+    moveTo w   = map (\a -> match a --> doShift w)
+    floatThose = map (\a -> match a --> doFloat)
+    match a    = appName =? a <||> className =? a
 
 -- Layout Hook
 myLayoutHook = onWorkspace "im" imLHook $
