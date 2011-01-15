@@ -85,9 +85,9 @@ myLogHook h           = dynamicLogWithPP $ defaultPP
   , ppOutput          = hPutStrLn h
   }
   where
-    color       = dzenColor
-    noNSP ws    = asd (ws == "NSP") "" ws
-    asd exp a b = if exp then a else b -- TODO: Find better name
+    color     = dzenColor
+    noNSP ws  = c (ws == "NSP") "" ws
+    c exp a b = if exp then a else b -- TODO: Find better name
 
 -- Bars
 barDefault, myLeftBar, myRightBar :: String
@@ -123,7 +123,7 @@ myModKey :: KeyMask
 myModKey = mod4Mask
 
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = [ "im", "web", "code", "code2", "other", "music", "fullscreen", "void" ]
+myWorkspaces = [ "im", "web", "code", "code2", "other", "music", "full", "void" ]
 
 myTerm    = "urxvt"
 myBrowser = "firefox-nightly"
