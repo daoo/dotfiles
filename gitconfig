@@ -11,6 +11,7 @@
   ci = commit
   co = checkout
   w  = whatchanged
+  lg = log --pretty=oneline
 [user]
 	name  = daoo
 	email = daoo314@gmail.com
