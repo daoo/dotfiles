@@ -7,11 +7,12 @@
   interactive = auto
   status      = auto
 [alias]
+  df = diff
   st = status
   ci = commit
   co = checkout
   w  = whatchanged
-  lg = log --pretty=oneline
+  lg = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 [user]
 	name  = daoo
 	email = daoo314@gmail.com
