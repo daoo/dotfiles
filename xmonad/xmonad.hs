@@ -108,14 +108,16 @@ spConfig = defaultXPConfig
 
 -- Keys
 keysToAdd :: XConfig l -> [((KeyMask, KeySym), X ())]
-keysToAdd x = map (\ (k, a) -> ((modMask x, k), a) ) $
+keysToAdd conf@(XConfig {XMonad.modMask = modMask}) = map (\ (k, a) -> ((modMask, k), a) ) $
   [ (xK_b, withFocused toggleBorder)
+  , (xK_w, toggleWS)
+
   , (xK_p, shellPrompt spConfig)
   , (xK_grave, scratchpadSpawnActionTerminal myTerm)
   , (xK_f, spawn "xscreensaver-command --lock")
   , (xK_z, spawn myBrowser)
   , (xK_x, spawn myEditor)
-  , (xK_w, toggleWS)
+  , (xK_Return, spawn $ XMonad.terminal conf)
   ]
 
 -- Misc
