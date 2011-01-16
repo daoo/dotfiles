@@ -58,6 +58,7 @@ map ,tw :ToggleWord<CR>
 map <C-i> i<Space><Esc>r
 map <C-Up> ddkP
 map <C-Down> ddp
+map <C-s> :w<CR>
 
 vnoremap x "_x
 vnoremap X "_X
