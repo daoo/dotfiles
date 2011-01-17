@@ -5,6 +5,7 @@ import XMonad
 import XMonad.Actions.CycleWS (toggleWS)
 import XMonad.Actions.NoBorders
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook hiding (Never)
 import XMonad.Layout.Grid
@@ -13,6 +14,7 @@ import XMonad.Layout.Named (named)
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.Reflect
+import XMonad.Layout.Simplest
 import XMonad.Prompt
 import XMonad.Prompt.Shell (shellPrompt)
 import XMonad.Util.Run
@@ -49,6 +51,7 @@ myManageHook = composeAll . concat $
 
   , floats wmClass [ "MPlayer", "Wine", "xmessage" ]
   , floats res [ "Dialog" ]
+  , [ isFullscreen --> doFullFloat ]
   ]
   where
     moves w  = map (\a -> wmClass a --> doShift w)
@@ -59,12 +62,12 @@ myManageHook = composeAll . concat $
 
 -- Layout Hook
 myLayoutHook = onWorkspace "im" imLHook $
-               onWorkspace "fullscreen" fullscreenLHook $
+               onWorkspace "full" fullscreenLHook $
                defaultLHook
   where
     imLHook         = noBorders $ avoidStruts $ imLayout
     fullscreenLHook = noBorders $ Full 
-    defaultLHook    = lessBorders ambiguity $ avoidStruts $ defaultLayout
+    defaultLHook    = lessBorders ambiguity $ avoidStruts defaultLayout
 
     ambiguity  = (Combine Union Never OtherIndicated)
 
