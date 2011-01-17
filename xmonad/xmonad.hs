@@ -40,19 +40,22 @@ panelFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 -- Manage Hook
 myManageHook :: ManageHook
 myManageHook = composeAll . concat $
-  [ moveTo "im"    [ "Pidgin", "Skype" ]
-  , moveTo "web"   [ "Navigator" ]
-  , moveTo "code"  [ "gvim" ]
-  , moveTo "code2" [ "Eclipse" ]
-  , moveTo "music" [ "spotify-win", "tuxguitar" ]
-  , moveTo "void"  [ "explorer.exe", "transmission-gtk" ]
+  [ moves "im"    [ "Pidgin", "Skype" ]
+  , moves "web"   [ "firefox-bin", "Firefox", "Navigator" ]
+  , moves "code"  [ "gvim" ]
+  , moves "code2" [ "Eclipse" ]
+  , moves "music" [ "spotify-win", "tuxguitar" ]
+  , moves "void"  [ "explorer.exe", "transmission-gtk" ]
 
-  , floatThose [ "MPlayer", "Wine", "xmessage" ]
+  , floats wmClass [ "MPlayer", "Wine", "xmessage" ]
+  , floats res [ "Dialog" ]
   ]
   where
-    moveTo w   = map (\a -> match a --> doShift w)
-    floatThose = map (\a -> match a --> doFloat)
-    match a    = appName =? a <||> className =? a
+    moves w  = map (\a -> wmClass a --> doShift w)
+    floats m = map (\a -> m a --> doFloat)
+
+    wmClass a = appName =? a <||> className =? a
+    res a     = resource =? a
 
 -- Layout Hook
 myLayoutHook = onWorkspace "im" imLHook $
