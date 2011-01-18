@@ -16,4 +16,4 @@ pidgin &
 dropboxd &
 
 xmonad
-#exec subtle
+
