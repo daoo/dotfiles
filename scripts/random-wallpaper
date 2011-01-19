@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DIR="/media/storage/media/Wallpapers/"
+DIR="$1"
 FILES=`find "$DIR" -not -type d -iname '*.jpg' -or -iname '*.png' -or -iname '*.jpeg'`
 COUNT=`echo "$FILES" | wc -l`
 
