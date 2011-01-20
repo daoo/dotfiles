@@ -28,15 +28,19 @@ setopt nobeep
 
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
-export BROWSER=firefox-nightly
-export EDITOR=vim
-export PAGER=less
+export TERMINAL='urxvt'
+case "$HOST" in
+  "voff") export BROWSER='firefox' ;;
+  "kvack") export BROWSER='firefox-nightly' ;;
+esac
+export EDITOR='vim'
+export PAGER='less'
 export LESS='FiXer'
 
 # Only add ~/bin/ to $PATH if not already there
 echo "$PATH" | grep -q "$HOME/bin"
 if [ $? -ne 0 ]; then
-  export PATH=~/bin/:$PATH
+  export PATH="$HOME/bin/:$PATH"
 fi
 
 # man colors 
