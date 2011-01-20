@@ -1,6 +1,7 @@
 import qualified Data.Map as M
 import Data.Ratio ((%))
 import System.IO (Handle)
+import System.Environment
 import XMonad
 import XMonad.Actions.CycleWS (toggleWS)
 import XMonad.Actions.NoBorders
@@ -19,6 +20,12 @@ import XMonad.Prompt
 import XMonad.Prompt.Shell (shellPrompt)
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad 
+
+data Config = Config {
+  browser :: String,
+  term :: String,
+  editor :: String
+} deriving (Show)
 
 -- Theme
 winBorderFocused = "#303030"
@@ -114,17 +121,17 @@ spConfig = defaultXPConfig
   }
 
 -- Keys
-keysToAdd :: XConfig l -> [((KeyMask, KeySym), X ())]
-keysToAdd conf@(XConfig {XMonad.modMask = modMask}) = map (\ (k, a) -> ((modMask, k), a) ) $
+keysToAdd :: Config -> KeyMask -> [((KeyMask, KeySym), X ())]
+keysToAdd cfg modMask = map (\ (k, a) -> ((modMask, k), a) ) $
   [ (xK_b, withFocused toggleBorder)
   , (xK_w, toggleWS)
 
   , (xK_p, shellPrompt spConfig)
-  , (xK_grave, scratchpadSpawnActionTerminal myTerm)
+  , (xK_grave, scratchpadSpawnActionTerminal $ term cfg)
   , (xK_f, spawn "xscreensaver-command --lock")
-  , (xK_z, spawn myBrowser)
-  , (xK_x, spawn myEditor)
-  , (xK_Return, spawn $ XMonad.terminal conf)
+  , (xK_z, spawn $ browser cfg)
+  , (xK_x, spawn $ editor cfg)
+  , (xK_Return, spawn $ term cfg)
   ]
 
 -- Misc
@@ -134,10 +141,6 @@ myModKey = mod4Mask
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = [ "im", "web", "code", "code2", "other", "music", "full", "void" ]
 
-myTerm    = "urxvt"
-myBrowser = "firefox-nightly"
-myEditor  = "gvim"
-
 -- Main
 
 main :: IO ()
@@ -145,8 +148,16 @@ main = do
   spawn myRightBar
   d <- spawnPipe myLeftBar
 
+  b <- getEnvDefault "BROWSER" "firefox"
+  e <- getEnvDefault "GUI_EDITOR" "gvim"
+  t <- getEnvDefault "TERMINAL" "urxvt"
+
+  let cfg = Config { term = t , browser = b , editor = e }
+  let a x = M.fromList $ keysToAdd cfg (modMask x)
+  let k x = M.union (a x) (keys defaultConfig x)
+
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
-    { terminal           = myTerm
+    { terminal           = t
     , modMask            = myModKey
     , borderWidth        = 1
     , normalBorderColor  = winBorderNormal
@@ -160,7 +171,7 @@ main = do
     , focusFollowsMouse = False
     , keys              = k
     }
-  where
-    k x = M.union (a x) (keys defaultConfig x)
-    a x = M.fromList $ keysToAdd x
+
+getEnvDefault :: String -> String -> IO String
+getEnvDefault env def = getEnv env `catch` (\_ -> return def)
 
