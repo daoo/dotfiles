@@ -7,12 +7,11 @@ xsetroot -cursor_name left_ptr
 xmodmap -e "clear Lock"
 setxkbmap usaswe
 
-case "$HOST"
-  voff)
-    WALLPAPERDIR="~/media/wallpapers/"
-  ;;
+HOST="$(/bin/hostname)"
+case $HOST in
+  "voff") feh --bg-tile "$(random-wallpaper $HOME/media/wallpapers/)" ;;
+  "kvack") feh --bg-tile "$(random-wallpaper /storage/media/Wallpapers/)" ;;
 esac
-feh --bg-tile "$(random-wallpaper $WALLPAPERDIR)"
 
 /usr/bin/xscreensaver -no-splash &
 
