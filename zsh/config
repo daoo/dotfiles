@@ -33,6 +33,7 @@ case "$HOST" in
   "voff") export BROWSER='firefox' ;;
   "kvack") export BROWSER='firefox-nightly' ;;
 esac
+export GUI_EDITOR='gvim'
 export EDITOR='vim'
 export PAGER='less'
 export LESS='FiXer'
