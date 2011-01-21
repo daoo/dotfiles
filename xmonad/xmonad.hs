@@ -53,7 +53,7 @@ myManageHook = composeAll . concat $
   , moves "web"   [ "firefox-bin", "Firefox", "Navigator" ]
   , moves "code"  [ "gvim" ]
   , moves "code2" [ "Eclipse" ]
-  , moves "music" [ "spotify-win", "tuxguitar" ]
+  , moves "music" [ "spotify-win", "spotify.exe", "tuxguitar" ]
   , moves "void"  [ "explorer.exe", "transmission-gtk" ]
 
   , floats wmClass [ "MPlayer", "Wine", "xmessage" ]
