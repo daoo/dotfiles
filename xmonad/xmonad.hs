@@ -100,8 +100,7 @@ myLogHook h           = dynamicLogWithPP $ defaultPP
   }
   where
     color     = dzenColor
-    noNSP ws  = c (ws == "NSP") "" ws
-    c exp a b = if exp then a else b -- TODO: Find better name
+    noNSP ws  = if (ws == "NSP") then "" else ws
 
 -- Bars
 barDefault, myLeftBar, myRightBar :: String
