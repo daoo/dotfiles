@@ -3,7 +3,6 @@ import Data.Ratio ((%))
 import System.IO (Handle)
 import System.Environment
 import XMonad
-import XMonad.Actions.CycleWS (toggleWS)
 import XMonad.Actions.NoBorders
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers
@@ -20,6 +19,7 @@ import XMonad.Prompt
 import XMonad.Prompt.Shell (shellPrompt)
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad 
+import qualified XMonad.StackSet as W
 
 data Config = Config {
   browser :: String,
@@ -133,6 +133,9 @@ keysToAdd cfg modMask = map (\ (k, a) -> ((modMask, k), a) ) $
   , (xK_x, spawn $ editor cfg)
   , (xK_Return, spawn $ term cfg)
   ]
+
+toggleWS = windows $ W.view =<< W.tag . head . filter ((\ x -> x /= "NSP") . W.tag) . W.hidden
+
 
 -- Misc
 myModKey :: KeyMask
