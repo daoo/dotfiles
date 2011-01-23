@@ -135,7 +135,6 @@ keysToAdd cfg modMask = map (\ (k, a) -> ((modMask, k), a) ) $
   where
     toggleWS = windows $ W.view =<< W.tag . head . filter ((\ x -> x /= "NSP") . W.tag) . W.hidden
 
-
 -- Misc
 myModKey :: KeyMask
 myModKey = mod4Mask
