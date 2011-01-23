@@ -132,8 +132,8 @@ keysToAdd cfg modMask = map (\ (k, a) -> ((modMask, k), a) ) $
   , (xK_x, spawn $ editor cfg)
   , (xK_Return, spawn $ term cfg)
   ]
-
-toggleWS = windows $ W.view =<< W.tag . head . filter ((\ x -> x /= "NSP") . W.tag) . W.hidden
+  where
+    toggleWS = windows $ W.view =<< W.tag . head . filter ((\ x -> x /= "NSP") . W.tag) . W.hidden
 
 
 -- Misc
