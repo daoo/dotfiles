@@ -121,16 +121,18 @@ spConfig = defaultXPConfig
 
 -- Keys
 keysToAdd :: Config -> KeyMask -> [((KeyMask, KeySym), X ())]
-keysToAdd cfg modMask = map (\ (k, a) -> ((modMask, k), a) ) $
-  [ (xK_b, withFocused toggleBorder)
-  , (xK_w, toggleWS)
+keysToAdd cfg modMask =
+  [ ((modMask, xK_b), withFocused toggleBorder)
+  , ((modMask, xK_w), toggleWS)
 
-  , (xK_p, shellPrompt spConfig)
-  , (xK_grave, scratchpadSpawnActionTerminal $ term cfg)
-  , (xK_f, spawn "xscreensaver-command --lock")
-  , (xK_z, spawn $ browser cfg)
-  , (xK_x, spawn $ editor cfg)
-  , (xK_Return, spawn $ term cfg)
+  , ((modMask, xK_p), shellPrompt spConfig)
+  , ((modMask, xK_grave), scratchpadSpawnActionTerminal $ term cfg)
+  , ((modMask, xK_f), spawn "xscreensaver-command --lock")
+  , ((modMask, xK_z), spawn $ browser cfg)
+  , ((modMask, xK_x), spawn $ editor cfg)
+  , ((modMask, xK_Return), spawn $ term cfg)
+
+  , ((0, 0x1008ff12), spawn "amixer set Master toggle")
   ]
   where
     toggleWS = windows $ W.view =<< W.tag . head . filter ((\ x -> x /= "NSP") . W.tag) . W.hidden
