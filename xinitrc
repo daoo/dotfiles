@@ -4,8 +4,11 @@
 
 xsetroot -cursor_name left_ptr
 
-xmodmap -e "clear Lock"
-setxkbmap usaswe
+if [[ -f "/usr/share/X11/xkb/symbols/usaswe" ]]; then
+  setxkbmap usaswe
+fi
+xmodmap -e "remove Lock = Caps_Lock"
+xmodmap -e "keysym Caps_Lock = Return"
 
 HOST="$(/bin/hostname)"
 case $HOST in
