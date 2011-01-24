@@ -1,3 +1,4 @@
+import Control.Concurrent (threadDelay)
 import qualified Data.Map as M
 import Data.Ratio ((%))
 import System.IO (Handle)
@@ -132,7 +133,8 @@ keysToAdd cfg modMask =
   , ((modMask, xK_x), spawn $ editor cfg)
   , ((modMask, xK_Return), spawn $ term cfg)
 
-  , ((0, 0x1008ff12), spawn "amixer set Master toggle")
+  -- Multimedia keys
+  , ((0, 0x1008ff12), spawn "amixer set Master toggle") -- XF86AudioMute
   ]
   where
     toggleWS = windows $ W.view =<< W.tag . head . filter ((\ x -> x /= "NSP") . W.tag) . W.hidden
@@ -148,14 +150,21 @@ myWorkspaces = [ "im", "web", "code", "code2", "other", "music", "full", "void" 
 
 main :: IO ()
 main = do
+  -- Make sure all bars are gone
+  spawn "killall dzen2 conky"
+  threadDelay 1000
+
+  -- Spawn bars
   spawn myRightBar
   d <- spawnPipe myLeftBar
 
+  -- Get some info
   b <- getEnvDefault "BROWSER" "firefox"
   e <- getEnvDefault "GUI_EDITOR" "gvim"
   t <- getEnvDefault "TERMINAL" "urxvt"
-
   let cfg = Config { term = t , browser = b , editor = e }
+
+  -- Setup keys
   let a x = M.fromList $ keysToAdd cfg (modMask x)
   let k x = M.union (a x) (keys defaultConfig x)
 
