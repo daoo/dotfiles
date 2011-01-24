@@ -77,11 +77,11 @@ myLayoutHook = onWorkspace "im" imLHook $
     fullscreenLHook = noBorders $ fullFirstLayout 
     defaultLHook    = lessBorders ambiguity $ avoidStruts defaultLayout
 
-    ambiguity  = (Combine Union Never OtherIndicated)
+    ambiguity = (Combine Union Never OtherIndicated)
 
     fullFirstLayout = Full ||| tiled ||| Mirror tiled
-    defaultLayout = tiled ||| Mirror tiled ||| Full
-    tiled         = Tall 1 (3.0/100.0) (1.0/2.0)
+    defaultLayout   = tiled ||| Mirror tiled ||| Full
+    tiled           = Tall 1 (3.0/100.0) (1.0/2.0)
 
     imLayout = named "IM Grid" $ reflectHoriz $ withIM (1%7) rosters Grid
     rosters  = (ClassName "Pidgin") `And` (Role "buddy_list")
