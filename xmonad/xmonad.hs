@@ -57,7 +57,7 @@ myManageHook = composeAll . concat $
   , moves "music" [ "spotify-win", "spotify.exe", "tuxguitar" ]
   , moves "void"  [ "explorer.exe", "transmission-gtk" ]
 
-  , floats wmClass [ "MPlayer", "Wine", "xmessage" ]
+  , floats wmClass [ "MPlayer", "xmessage" ]
   , floats res [ "Dialog" ]
   , [ isFullscreen --> doFullFloat ]
   ]
