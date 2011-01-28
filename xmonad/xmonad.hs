@@ -1,6 +1,7 @@
 import Control.Concurrent (threadDelay)
 import qualified Data.Map as M
 import Data.Ratio ((%))
+import Network.BSD
 import System.IO (Handle)
 import System.Environment
 import XMonad
@@ -23,6 +24,7 @@ import XMonad.Util.Scratchpad
 import qualified XMonad.StackSet as W
 
 data Config = Config {
+  host :: String,
   browser :: String,
   term :: String,
   editor :: String
@@ -152,17 +154,18 @@ main :: IO ()
 main = do
   -- Make sure all bars are gone
   spawn "killall dzen2 conky"
-  threadDelay 1000
+  threadDelay 1250
 
   -- Spawn bars
   spawn myRightBar
   d <- spawnPipe myLeftBar
 
   -- Get some info
+  h <- getHostName
   b <- getEnvDefault "BROWSER" "firefox"
   e <- getEnvDefault "GUI_EDITOR" "gvim"
   t <- getEnvDefault "TERMINAL" "urxvt"
-  let cfg = Config { term = t , browser = b , editor = e }
+  let cfg = Config { host = h, term = t , browser = b , editor = e }
 
   -- Setup keys
   let a x = M.fromList $ keysToAdd cfg (modMask x)
