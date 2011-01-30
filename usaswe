@@ -8,7 +8,7 @@ xkb_symbols "euro" {
 
     include "level3(ralt_switch)"
 
-    key <AC01> { [ a , A , adiaeresis   , Adiaeresis] };
-    key <AD09> { [ o , O , odiaeresis   , Odiaeresis ] };
-    key <AC04> { [ f , F , aring        , Aring  		]	};
+    key <AC11> { [apostrophe,  quotedbl,  adiaeresis, Adiaeresis] };
+    key <AC10> { [semicolon,   colon,     odiaeresis, Odiaeresis] };
+    key <AD11> { [bracketleft, braceleft, aring,      Aring]	};
 };
