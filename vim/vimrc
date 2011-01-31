@@ -51,10 +51,11 @@ let g:clang_hl_errors=1
 let g:clang_use_snipmate=1
 
 " Keys
-map ,cd :cd %:p:h<CR>
-map ,fa :Tabularize assignment<CR>
-map ,fc :Tabularize /,/r0l1<CR>
-map ,tw :ToggleWord<CR>
+let mapleader=","
+
+map <Leader>cd :cd %:p:h<CR>
+map <Leader>fa :Tabularize assignment<CR>
+map <Leader>fc :Tabularize /,/r0l1<CR>
 map <C-i> i<Space><Esc>r
 map <C-Up> ddkP
 map <C-Down> ddp
