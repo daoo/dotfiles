@@ -60,6 +60,7 @@ map <C-i> i<Space><Esc>r
 map <C-Up> ddkP
 map <C-Down> ddp
 map <C-s> :w<CR>
+imap <C-s> <Esc>:w<CR>i
 
 vnoremap x "_x
 vnoremap X "_X
