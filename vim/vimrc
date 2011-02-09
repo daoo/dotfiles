@@ -56,6 +56,7 @@ let mapleader=","
 map <Leader>cd :cd %:p:h<CR>
 map <Leader>fa :Tabularize assignment<CR>
 map <Leader>fc :Tabularize /,/r0l1<CR>
+map <Leader>tn :NERDTreeToggle<CR>
 map <C-i> i<Space><Esc>r
 map <C-Up> ddkP
 map <C-Down> ddp
