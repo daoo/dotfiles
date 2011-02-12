@@ -30,8 +30,7 @@ export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 export TERMINAL='urxvt'
 case "$HOST" in
-  "voff") export BROWSER='firefox-beta-bin' ;;
-  "kvack") export BROWSER='firefox-nightly' ;;
+  "voff"|"kvack") export BROWSER='firefox-beta-bin' ;;
 esac
 export GUI_EDITOR='gvim'
 export EDITOR='vim'

@@ -13,7 +13,7 @@ xmodmap -e "keysym Caps_Lock = Return"
 HOST="$(/bin/hostname)"
 case $HOST in
   "voff") feh --bg-tile "$(random-wallpaper $HOME/media/wallpapers/)" ;;
-  "kvack") feh --bg-tile "$(random-wallpaper /storage/media/Wallpapers/)" ;;
+  "kvack") feh --bg-tile "$(random-wallpaper /storage/media/wallpapers/)" ;;
 esac
 
 /usr/bin/xscreensaver -no-splash &
