@@ -5,6 +5,7 @@ import Network.BSD
 import System.IO (Handle)
 import System.Environment
 import XMonad
+import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.NoBorders
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers
@@ -125,8 +126,12 @@ spConfig = defaultXPConfig
 -- Keys
 keysToAdd :: Config -> KeyMask -> [((KeyMask, KeySym), X ())]
 keysToAdd cfg modMask =
-  [ ((modMask, xK_b), withFocused toggleBorder)
+  [ ((modMask, xK_e), withFocused toggleBorder)
   , ((modMask, xK_w), toggleWS)
+
+  , ((modMask, xK_b), removeWorkspace )
+  , ((modMask, xK_n), selectWorkspace spConfig )
+  , ((modMask, xK_m), withWorkspace spConfig (windows . W.shift) )
 
   , ((modMask, xK_p), shellPrompt spConfig)
   , ((modMask, xK_grave), scratchpadSpawnActionTerminal $ term cfg)
