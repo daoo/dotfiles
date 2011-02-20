@@ -22,5 +22,9 @@ parcellite -d -n &
 pidgin &
 dropboxd &
 
+if [ "$(ls -A ~/.config/transmission/torrents/)" ]; then
+  transmission-gtk &
+fi
+
 xmonad
 
