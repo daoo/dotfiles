@@ -157,10 +157,6 @@ myWorkspaces = [ "im", "web", "code", "code2", "other", "music", "full", "void" 
 
 main :: IO ()
 main = do
-  -- Make sure all bars are gone
-  spawn "killall dzen2 conky"
-  threadDelay 1250
-
   -- Spawn bars
   spawn myRightBar
   d <- spawnPipe myLeftBar
