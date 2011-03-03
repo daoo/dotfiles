@@ -27,7 +27,12 @@ ln -s "$SOURCE/xinitrc" "$DEST/.xinitrc"
 
 echo "firefox..."
 PROF=$(find $DEST/.mozilla/firefox -maxdepth 1 -name '*default*')
-for file in $(find $SOURCE/firefox/searchplugins -not -type d); do
-  cp "$file" "$PROF/searchplugins/"
+for file in $(ls $SOURCE/firefox/searchplugins); do
+  ln -s "$SOURCE/firefox/searchplugins/$file" "$PROF/searchplugins/$file"
+done
+
+echo "bin..."
+for file in $(ls $SOURCE/scripts/); do
+  ln -s "$SOURCE/scripts/$file" "$BIN/$file"
 done
 
