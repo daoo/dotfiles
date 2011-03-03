@@ -1,5 +1,5 @@
 <SearchPlugin xmlns="http://www.mozilla.org/2006/browser/search/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/">
-<os:ShortName>Wikipedia (en)</os:ShortName>
+<os:ShortName>SSL Wikipedia (english)</os:ShortName>
 <os:Description>Return articles from english wikipedia using https url</os:Description>
 <os:InputEncoding>UTF-8</os:InputEncoding>
 <os:Image width="16" height="16">data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAABzklEQVQ4y6WTL6vycBTHP9stgmETGWIaF6bFNA0qWMQZxDIQ34cv4WLwDYhJsK1o0CQKDhUMNllQg2tiERQUBMGwGx7Y83i9T/LArxzO+XK+f36CKIoeb5TIm/U+QKFQwLIshsMhhUIBgGq1ynA4pF6vo2kaAPV6Hcuy0DQNTdNoNptYloVo2zbr9RpVVX3UXq8HQKVSAUBRFO73O7PZDNd1uVwuAMxmsz8Uut0usixjmiaKogDQ7/eRZRld1/n8/CQajdJut5/Ob7fbfAiC8HU+n0mlUpRKJcbjMYfDgev1SjKZxDRNbrcbq9WKzWYDQDab5Xg8stls/orY6XQAMAwDANd16ff7xGIxEomET0tRFNLpNOfz+dkF27ZxHIdcLucLN51OWS6XhEIh/2xJkggEAti2/WrjYrHAMAx0XX/iqqqq71A+n2e/3/+eg0ajwW6388XUdR3HcTidTpim6VMYDAb+zocgCF//gsiyTCqVIhKJcDweGQwGSJJEuVzm8XgQDAYZj8f/T+JutyMcDvsZcF2X+XwOQK1WYzKZ/IiiKHo/32g08kajkRePx/1eq9Xyttvty+yvAMVi0ctkMk+9eDzuFYvFl1nh3e/8DVlGxpnqRIOzAAAAAElFTkSuQmCC</os:Image>
