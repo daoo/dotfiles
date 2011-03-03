@@ -45,10 +45,11 @@ filetype indent on
 filetype plugin on
 
 let g:clang_complete_auto=0
-let g:clang_complete_copen=1
+let g:clang_complete_copen=0
 let g:clang_conceal_snippets=1
-let g:clang_hl_errors=1
-let g:clang_use_snipmate=1
+let g:clang_hl_errors=0
+let g:clang_snippets=0
+let g:clang_use_library=1
 
 " Keys
 let mapleader=","
