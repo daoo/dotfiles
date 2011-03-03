@@ -26,5 +26,9 @@ if [ "$(ls -A ~/.config/transmission/torrents/)" ]; then
   transmission-gtk &
 fi
 
+if [ $HOST = "kvack" ]; then
+  start-pulseaudio-x11
+fi
+
 xmonad
 
