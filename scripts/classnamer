@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+curl "http://www.classnamer.com/" -s | grep '<p id="classname">' | sed 's/.*<p id="classname">\(.*\)<\/p>/\1/'
