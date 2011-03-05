@@ -1,24 +1,34 @@
 #!/bin/bash
 
+# Check for atool
+ATOOL="$(which atool)"
+if [ $? -ne 0 ]; then
+  echo "atool not found"
+  exit
+fi
+
 rnd() {
   echo `</dev/urandom tr -dc A-Za-z0-9 | head -c16`
 }
 
+# Some basic information about the archive
 NAME="$(basename "$@")"
 ARCHIVE=$(readlink -f "$@")
 CURRENTDIR="$(dirname "$(readlink -f "$@")")"
 
 echo "Extracting..."
+# Extract to a tmp dir
 TMPDIR=`mktemp -d "/tmp/aedit-XXXXXXXX"`
-atool --extract-to=$TMPDIR "$@"
+$ATOOL --extract-to=$TMPDIR "$@"
 
 echo "Launching shell..."
+# Start a new shell in the tmp directory
 cd "$TMPDIR"
 $SHELL
 
 echo "Repacking..."
 cp "$ARCHIVE" "/tmp/$NAME.`rnd`"
-apack -f "$ARCHIVE" `ls $TMPDIR`
+$ATOOL -a -f "$ARCHIVE" $(ls $TMPDIR)
 
 echo "Done."
 rm -r "$TMPDIR"
