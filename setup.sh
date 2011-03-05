@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 SOURCE="$HOME/dotfiles"
 DEST="$HOME"
@@ -7,6 +7,7 @@ BIN="$HOME/bin"
 echo "vim..."
 ln -s "$SOURCE/vim/vimrc" "$DEST/.vimrc"
 ln -s "$SOURCE/vim/gvimrc" "$DEST/.gvimrc"
+ln -s "$SOURCE/vim/" "$DEST/.vim"
 mkdir -p "$SOURCE/vim/tmp"
 
 echo "git..."
@@ -17,7 +18,7 @@ echo "zsh..."
 ln -s "$SOURCE/zsh/zshrc" "$DEST/.zshrc"
 
 echo "xmonad..."
-ln -s "$SOURCE/xmonad/" "$DEST/.xmonad"
+ln -s "$SOURCE/xmonad" "$DEST/.xmonad"
 
 echo "Xdefaults..."
 ln -s "$SOURCE/Xdefaults" "$DEST/.Xdefaults"
@@ -27,9 +28,7 @@ ln -s "$SOURCE/xinitrc" "$DEST/.xinitrc"
 
 echo "firefox..."
 PROF=$(find $DEST/.mozilla/firefox -maxdepth 1 -name '*default*')
-for file in $(ls $SOURCE/firefox/searchplugins); do
-  ln -s "$SOURCE/firefox/searchplugins/$file" "$PROF/searchplugins/$file"
-done
+ln -s "$SOURCE/firefox/searchplugins" "$PROF/searchplugins"
 
 echo "bin..."
 for file in $(ls $SOURCE/scripts/); do
