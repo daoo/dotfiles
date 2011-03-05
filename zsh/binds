@@ -1,5 +1,17 @@
 #!/bin/zsh
 
-bindkey ''    history-search-backward
-bindkey ''    history-incremental-search-backward
+bindkey '' history-search-backward
+bindkey '' history-search-forward
+bindkey '' history-incremental-search-backward
+bindkey '' push-line
+
+bindkey '[7~' beginning-of-line
+bindkey '[8^' end-of-line
+bindkey 'Od'  backward-word
+bindkey 'Oc'  forward-word
+
+bindkey '^[[3~' delete-char
+bindkey '[3^' delete-word
+bindkey ''    backward-kill-word
+bindkey ''    backward-delete-char
 
