@@ -29,6 +29,7 @@ ln -s "$SOURCE/xinitrc" "$DEST/.xinitrc"
 echo "firefox..."
 PROF=$(find $DEST/.mozilla/firefox -maxdepth 1 -name '*default*')
 ln -s "$SOURCE/firefox/searchplugins" "$PROF/searchplugins"
+ln -s "$SOURCE/firefox/user.js/" "$PROF/user.js"
 
 echo "bin..."
 for file in $(ls $SOURCE/scripts/); do
