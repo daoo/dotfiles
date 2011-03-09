@@ -36,7 +36,9 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 
-" Plugins
+" Plugins and extras
+so ~/.vim/functions
+
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
@@ -50,6 +52,9 @@ let g:clang_conceal_snippets=1
 let g:clang_hl_errors=0
 let g:clang_snippets=0
 let g:clang_use_library=1
+
+autocmd BufReadPost *.cpp,*.h call FoldCopyright()
+autocmd BufWritePost ~/.vimrc so ~/.vimrc
 
 " Keys
 let mapleader=","
