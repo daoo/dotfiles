@@ -28,14 +28,16 @@ setopt nobeep
 
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
-export TERMINAL='urxvt'
+export TERMINAL="urxvt"
+export SCREENSAVER="xscreensaver-command --lock"
+export MEDIAPLAYER="rhythmbox"
+export GUI_EDITOR="gvim"
 case "$HOST" in
-  "voff"|"kvack") export BROWSER='firefox-beta-bin' ;;
+  "voff"|"kvack") export BROWSER="firefox-beta-bin" ;;
 esac
-export GUI_EDITOR='gvim'
-export EDITOR='vim'
-export PAGER='less'
-export LESS='FiXer'
+export EDITOR="vim"
+export PAGER="less"
+export LESS="FiXer"
 
 # Only add ~/bin/ to $PATH if not already there
 echo "$PATH" | grep -q "$HOME/bin"
