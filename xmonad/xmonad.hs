@@ -4,13 +4,27 @@ import Data.Ratio ((%))
 import Network.BSD
 import System.IO (Handle)
 import System.Environment
+
+-- Xmonad
 import XMonad
+import XMonad.Prompt
+import XMonad.Prompt.Shell (shellPrompt)
+import XMonad.Util.Run
+import XMonad.Util.Scratchpad 
+import qualified XMonad.StackSet as W
+
+-- Actions
 import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.NoBorders
+import XMonad.Actions.GridSelect
+
+-- Hooks
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook hiding (Never)
+
+-- Layouts
 import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import XMonad.Layout.Named (named)
@@ -18,17 +32,14 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.Reflect
 import XMonad.Layout.Simplest
-import XMonad.Prompt
-import XMonad.Prompt.Shell (shellPrompt)
-import XMonad.Util.Run
-import XMonad.Util.Scratchpad 
-import qualified XMonad.StackSet as W
 
 data Config = Config {
   host :: String,
   browser :: String,
   term :: String,
-  editor :: String
+  editor :: String,
+  lock :: String,
+  mediaplayer :: String
 } deriving (Show)
 
 -- Theme
@@ -57,7 +68,7 @@ myManageHook = composeAll . concat $
   , moves "web"   [ "firefox-bin", "Firefox", "Navigator" ]
   , moves "code"  [ "gvim" ]
   , moves "code2" [ "Eclipse" ]
-  , moves "music" [ "spotify-win", "spotify.exe", "tuxguitar" ]
+  , moves "music" [ "tuxguitar", "rhythmbox" ]
   , moves "void"  [ "explorer.exe", "transmission-gtk" ]
 
   , floats wmClass [ "MPlayer", "xmessage" ]
@@ -127,21 +138,24 @@ spConfig = defaultXPConfig
 keysToAdd :: Config -> KeyMask -> [((KeyMask, KeySym), X ())]
 keysToAdd cfg modMask =
   [ ((modMask, xK_e), withFocused toggleBorder)
-  , ((modMask, xK_w), toggleWS)
+  , ((modMask, xK_s), toggleWS)
+  , ((modMask, xK_g), goToSelected defaultGSConfig)
 
+  -- Dynamic Workspaces
   , ((modMask, xK_b), removeWorkspace )
   , ((modMask, xK_n), selectWorkspace spConfig )
   , ((modMask, xK_m), withWorkspace spConfig (windows . W.shift) )
 
+  -- Terminals and stuff
   , ((modMask, xK_p), shellPrompt spConfig)
   , ((modMask, xK_grave), scratchpadSpawnActionTerminal $ term cfg)
-  , ((modMask, xK_f), spawn "xscreensaver-command --lock")
-  , ((modMask, xK_z), spawn $ browser cfg)
-  , ((modMask, xK_x), spawn $ editor cfg)
   , ((modMask, xK_Return), spawn $ term cfg)
 
-  -- Multimedia keys
-  , ((0, 0x1008ff12), spawn "amixer set Master toggle") -- XF86AudioMute
+  -- Software
+  , ((modMask, xK_z), spawn $ browser cfg)
+  , ((modMask, xK_x), spawn $ editor cfg)
+  , ((modMask, xK_c), spawn $ lock cfg)
+  , ((modMask, xK_v), spawn $ mediaplayer cfg)
   ]
   where
     toggleWS = windows $ W.view =<< W.tag . head . filter ((\ x -> x /= "NSP") . W.tag) . W.hidden
@@ -166,7 +180,9 @@ main = do
   b <- getEnvDefault "BROWSER" "firefox"
   e <- getEnvDefault "GUI_EDITOR" "gvim"
   t <- getEnvDefault "TERMINAL" "urxvt"
-  let cfg = Config { host = h, term = t , browser = b , editor = e }
+  l <- getEnvDefault "SCREENSAVER" ""
+  m <- getEnvDefault "MEDIAPLAYER" ""
+  let cfg = Config { host = h, term = t , browser = b , editor = e, lock = l, mediaplayer = m }
 
   -- Setup keys
   let a x = M.fromList $ keysToAdd cfg (modMask x)
