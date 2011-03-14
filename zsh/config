@@ -25,16 +25,7 @@ setopt incappendhistory
 
 # Stuff
 setopt nobeep
-
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
-
-export TERMINAL="urxvt"
-export SCREENSAVER="xscreensaver-command --lock"
-export MEDIAPLAYER="rhythmbox"
-export GUI_EDITOR="gvim"
-case "$HOST" in
-  "voff"|"kvack") export BROWSER="firefox-beta-bin" ;;
-esac
 export EDITOR="vim"
 export PAGER="less"
 export LESS="FiXer"

@@ -1,5 +1,16 @@
 #!/bin/sh
 
+# Config
+export TERMINAL="urxvt"
+export GUI_EDITOR="gvim"
+case "$HOST" in
+  "voff"|"kvack")
+    export MEDIAPLAYER="rhythmbox"
+    export BROWSER="firefox-beta-bin"
+    export SCREENSAVER="xscreensaver-command --lock"
+  ;;
+esac
+
 #xrandr --output DVI-0 --mode 1920x1080 --left-of DVI-1
 
 xsetroot -cursor_name left_ptr
