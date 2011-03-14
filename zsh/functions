@@ -12,11 +12,3 @@ ff() {
   find . -iname "*$@*" -not -type d
 }
 
-# z.sh
-if [[ -f ~/dotfiles/zsh/plugins/z/z.sh ]]; then
-  . ~/dotfiles/zsh/plugins/z/z.sh
-  function precmd () {
-    z --add "$(pwd -P)"
-  }
-fi
-

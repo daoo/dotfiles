@@ -22,6 +22,3 @@
 [submodule "vim/bundle/vim-surround"]
 	path = vim/bundle/vim-surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule "zsh/plugins/z"]
-	path = zsh/plugins/z
-	url = https://github.com/rupa/z.git
