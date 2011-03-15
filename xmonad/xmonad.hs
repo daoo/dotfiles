@@ -43,21 +43,23 @@ data Config = Config {
 } deriving (Show)
 
 -- Theme
-winBorderFocused = "#303030"
-winBorderNormal  = "#202020"
+winBorderFocused = focusFg
+winBorderNormal  = panelBg
 
 panelFg    = "#b8b8b8"
-panelBg    = "#202020"
-titleFg    = "#fecf35"
-titleBg    = "#202020"
-focusFg    = "#fecf35"
-focusBg    = "#202020"
-urgentFg   = "#ff9800"
-urgentBg   = "#202020"
+panelBg    = "#2e3436"
+titleFg    = "#d3d7cf"
+titleBg    = panelBg
+focusFg    = "#729fcf"
+focusBg    = panelBg
+urgentFg   = "#ef2929"
+urgentBg   = panelBg
+visibleFg  = "#ad7fa8"
+visibleBg  = panelBg
 occupiedFg = "#b8b8b8"
-occupiedBg = "#202020"
+occupiedBg = panelBg
 viewsFg    = "#757575"
-viewsBg    = "#202020"
+viewsBg    = panelBg
 
 panelFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 
@@ -87,7 +89,7 @@ myLayoutHook = onWorkspace "im" imLHook $
                onWorkspace "full" fullscreenLHook $
                defaultLHook
   where
-    imLHook         = noBorders $ avoidStruts $ imLayout
+    imLHook         = lessBorders ambiguity $ avoidStruts $ imLayout
     fullscreenLHook = noBorders $ fullFirstLayout 
     defaultLHook    = lessBorders ambiguity $ avoidStruts defaultLayout
 
@@ -105,7 +107,7 @@ myLogHook :: Handle -> X ()
 myLogHook h           = dynamicLogWithPP $ defaultPP
   { ppUrgent          = color urgentFg urgentBg . dzenStrip
   , ppCurrent         = color focusFg focusBg
-  , ppVisible         = color occupiedFg occupiedBg
+  , ppVisible         = color visibleFg visibleBg
   , ppHidden          = color occupiedFg occupiedBg . noNSP
   , ppHiddenNoWindows = color viewsFg viewsBg . noNSP
   , ppTitle           = color titleFg titleBg
@@ -137,7 +139,7 @@ spConfig = defaultXPConfig
 -- Keys
 keysToAdd :: Config -> KeyMask -> [((KeyMask, KeySym), X ())]
 keysToAdd cfg modMask =
-  [ ((modMask, xK_e), withFocused toggleBorder)
+  [ ((modMask, xK_u), withFocused toggleBorder)
   , ((modMask, xK_s), toggleWS)
   , ((modMask, xK_g), goToSelected defaultGSConfig)
 
