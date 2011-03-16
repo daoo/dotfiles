@@ -28,20 +28,11 @@ setopt nobeep
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 export EDITOR="vim"
 export PAGER="less"
-export LESS="FiXer"
+export LESS="-F -i -X -r"
 
 # Only add ~/bin/ to $PATH if not already there
 echo "$PATH" | grep -q "$HOME/bin"
 if [ $? -ne 0 ]; then
   export PATH="$HOME/bin/:$PATH"
 fi
-
-# man colors 
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;38;5;74m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[38;5;246m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[04;38;5;146m'
 
