@@ -1,3 +1,4 @@
+import Prelude hiding (Left, Right)
 import Control.Concurrent (threadDelay)
 import qualified Data.Map as M
 import Data.Ratio ((%))
@@ -9,6 +10,7 @@ import System.Environment
 import XMonad
 import XMonad.Prompt
 import XMonad.Prompt.Shell (shellPrompt)
+import XMonad.Util.Dzen as D
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad 
 import qualified XMonad.StackSet as W
@@ -120,11 +122,10 @@ myLogHook h           = dynamicLogWithPP $ defaultPP
     noNSP ws  = if (ws == "NSP") then "" else ws
 
 -- Bars
-barDefault, myLeftBar, myRightBar :: String
-barDefault = "-fn '" ++ panelFont ++ "' -bg '" ++ panelBg ++ "' -fg '" ++ panelFg ++ "'"
-
-myLeftBar  = "dzen2 -p -ta l -x 0 -y 0 -w 1200 " ++ barDefault
-myRightBar = "conky -c ~/.xmonad/dzen_conkyrc | dzen2 -p -ta r -x 1200 -y 0 -w 720 " ++ barDefault
+defaultBar = ["-fn", panelFont, "-bg", panelBg, "-fg", panelFg]
+fullBar    = defaultBar ++ ["-x", "0",    "-y", "0", "-w", "1920", "-h", "18", "-ta", "c"]
+leftBar    = defaultBar ++ ["-x", "0",    "-y", "0", "-w", "1200", "-h", "18", "-ta", "l"]
+rightBar   = defaultBar ++ ["-x", "1200", "-y", "0", "-w", "720",  "-h", "18", "-ta", "r"]
 
 spConfig :: XPConfig
 spConfig = defaultXPConfig
@@ -174,8 +175,8 @@ myWorkspaces = [ "im", "web", "code", "code2", "other", "music", "full", "void" 
 main :: IO ()
 main = do
   -- Spawn bars
-  spawn myRightBar
-  d <- spawnPipe myLeftBar
+  spawn $ "conky -c ~/.xmonad/dzen_conkyrc | dzen2 -p" ++ concat rightBar
+  d <- spawnPipe $ "dzen2 -p" ++ concat leftBar
 
   -- Get some info
   h <- getHostName
