@@ -1,0 +1,9 @@
+set mapleader=','
+set guioptions=scn
+
+" -- Commands --
+
+" -- Maps --
+noremap F3 <NOP>
+
+" vim: set ft=vim
