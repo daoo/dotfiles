@@ -5,7 +5,7 @@ export TERMINAL="urxvt"
 export GUI_EDITOR="gvim"
 case "$HOST" in
   "voff"|"kvack")
-    export MEDIAPLAYER="rhythmbox"
+    export MEDIAPLAYER="gogglesmm"
     export BROWSER="firefox-beta-bin"
     export SCREENSAVER="xscreensaver-command --lock"
   ;;
