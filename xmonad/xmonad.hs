@@ -1,10 +1,11 @@
-import Prelude hiding (Left, Right)
 import Control.Concurrent (threadDelay)
-import qualified Data.Map as M
+import Data.List (intersperse)
+import Data.Map (union, fromList)
 import Data.Ratio ((%))
 import Network.BSD
-import System.IO (Handle)
+import Prelude hiding (Left, Right)
 import System.Environment
+import System.IO (Handle)
 
 -- Xmonad
 import XMonad
@@ -122,10 +123,10 @@ myLogHook h           = dynamicLogWithPP $ defaultPP
     noNSP ws  = if (ws == "NSP") then "" else ws
 
 -- Bars
-defaultBar = ["-fn", panelFont, "-bg", panelBg, "-fg", panelFg]
-fullBar    = defaultBar ++ ["-x", "0",    "-y", "0", "-w", "1920", "-h", "18", "-ta", "c"]
-leftBar    = defaultBar ++ ["-x", "0",    "-y", "0", "-w", "1200", "-h", "18", "-ta", "l"]
-rightBar   = defaultBar ++ ["-x", "1200", "-y", "0", "-w", "720",  "-h", "18", "-ta", "r"]
+defaultBar = ["-fn", show panelFont, "-bg", show panelBg, "-fg", show panelFg]
+fullBar    = defaultBar ++ ["-x", "0",    "-y", "0", "-w", "1920", "-h", "13", "-ta", "c"]
+leftBar    = defaultBar ++ ["-x", "0",    "-y", "0", "-w", "1200", "-h", "13", "-ta", "l"]
+rightBar   = defaultBar ++ ["-x", "1200", "-y", "0", "-w", "720",  "-h", "13", "-ta", "r"]
 
 spConfig :: XPConfig
 spConfig = defaultXPConfig
@@ -171,12 +172,11 @@ myWorkspaces :: [WorkspaceId]
 myWorkspaces = [ "im", "web", "code", "code2", "other", "music", "full", "void" ]
 
 -- Main
-
 main :: IO ()
 main = do
   -- Spawn bars
-  spawn $ "conky -c ~/.xmonad/dzen_conkyrc | dzen2 -p" ++ concat rightBar
-  d <- spawnPipe $ "dzen2 -p" ++ concat leftBar
+  spawn $ "conky -c ~/.xmonad/dzen_conkyrc | dzen2 -p " ++ (concat $ intersperse " " rightBar)
+  d <- spawnPipe $ "dzen2 -p " ++ (concat $ intersperse " " leftBar)
 
   -- Get some info
   h <- getHostName
@@ -188,8 +188,8 @@ main = do
   let cfg = Config { host = h, term = t , browser = b , editor = e, lock = l, mediaplayer = m }
 
   -- Setup keys
-  let a x = M.fromList $ keysToAdd cfg (modMask x)
-  let k x = M.union (a x) (keys defaultConfig x)
+  let a x = fromList $ keysToAdd cfg (modMask x)
+  let k x = union (a x) (keys defaultConfig x)
 
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { terminal           = t
