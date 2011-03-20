@@ -92,11 +92,11 @@ myLayoutHook = onWorkspace "im" imLHook $
                onWorkspace "full" fullscreenLHook $
                defaultLHook
   where
-    imLHook         = lessBorders ambiguity $ avoidStruts $ imLayout
+    defaultLHook    = avoidStruts $ lessBorders ambiguity $ defaultLayout
+    imLHook         = avoidStruts $ lessBorders ambiguity $ imLayout
     fullscreenLHook = noBorders $ fullFirstLayout 
-    defaultLHook    = lessBorders ambiguity $ avoidStruts defaultLayout
 
-    ambiguity = (Combine Union Never OtherIndicated)
+    ambiguity = (Combine Difference Screen OnlyFloat)
 
     fullFirstLayout = Full ||| tiled ||| Mirror tiled
     defaultLayout   = tiled ||| Mirror tiled ||| Full
