@@ -3,17 +3,17 @@ set backup
 set backupdir=~/.vim/tmp/
 set directory=~/.vim/tmp/
 
-" Color scheme
+" -- Color scheme --
 colorscheme tango-morning
 sy on
 syntax on
 
-" Disable error bells
+" -- Disable error bells --
 set noerrorbells
 set visualbell
 set t_vb=
 
-" Visual
+" -- Visual --
 set number
 set ruler
 set showcmd
@@ -23,11 +23,11 @@ set scrolloff=5
 set laststatus=2
 set statusline=%F%m%r%h%w%y\ %{fugitive#statusline()}%=\ col:%c%V\ ascii:%b\ pos:%o\ lin:%l\/%L\ %P
 
-" Buffers
+" -- Buffers --
 set autowrite
 set hidden
 
-" Indentation
+" -- Indentation --
 set autoindent
 set smartindent
 
@@ -36,7 +36,7 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 
-" Plugins and extras
+" -- Plugins and extras --
 so ~/.vim/functions
 
 call pathogen#runtime_append_all_bundles()
@@ -54,16 +54,21 @@ let g:clang_snippets=0
 let g:clang_use_library=1
 
 autocmd BufReadPost *.cpp,*.h call FoldCopyright()
-autocmd BufWritePost ~/.vimrc so ~/.vimrc
 
-" Keys
+" -- Keys --
 let mapleader=","
 
-map <Leader>cd :cd %:p:h<CR>
-map <Leader>fa :Tabularize assignment<CR>
-map <Leader>fc :Tabularize /,/r0l1<CR>
+if exists( ":Tabularize" )
+  AddTabularPattern commas /,\zs/
+  map <Leader>fa :Tabularize assignment<CR>
+  map <Leader>fc :Tabularize commas<CR>
+endif
+
 map <Leader>tn :NERDTreeToggle<CR>
+map <Leader>cd :cd %:p:h<CR>
+
 noremap <Leader>o :CommandT<CR>
+
 map <C-i> i<Space><Esc>r
 map <C-Up> ddkP
 map <C-Down> ddp
