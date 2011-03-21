@@ -58,20 +58,16 @@ autocmd BufReadPost *.cpp,*.h call FoldCopyright()
 " -- Keys --
 let mapleader=","
 
-if exists( ":Tabularize" )
-  AddTabularPattern commas /,\zs/
-  map <Leader>fa :Tabularize assignment<CR>
-  map <Leader>fc :Tabularize commas<CR>
-endif
+map <Leader>fa :Tabularize assignment<CR>
+map <Leader>fc :Tabularize /,\zs/<CR>
 
 map <Leader>tn :NERDTreeToggle<CR>
 map <Leader>cd :cd %:p:h<CR>
-
 noremap <Leader>o :CommandT<CR>
 
-map <C-i> i<Space><Esc>r
-map <C-Up> ddkP
+map <C-Up> ddktP
 map <C-Down> ddp
+
 map <C-s> :w<CR>
 imap <C-s> <Esc>:w<CR>a
 
