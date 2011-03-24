@@ -6,7 +6,7 @@ export GUI_EDITOR="gvim"
 case "$HOST" in
   "voff"|"kvack")
     export MEDIAPLAYER="gogglesmm"
-    export BROWSER="firefox-beta-bin"
+    export BROWSER="firefox"
     export SCREENSAVER="xscreensaver-command --lock"
   ;;
 esac
