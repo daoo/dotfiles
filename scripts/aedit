@@ -1,5 +1,9 @@
 #!/bin/bash
 
+rnd() {
+  echo `</dev/urandom tr -dc A-Za-z0-9 | head -c16`
+}
+
 # Check for atool
 ATOOL="$(which atool)"
 if [ $? -ne 0 ]; then
@@ -7,30 +11,35 @@ if [ $? -ne 0 ]; then
   exit
 fi
 
-rnd() {
-  echo `</dev/urandom tr -dc A-Za-z0-9 | head -c16`
-}
+# Check parameters
+FILE="$@"
+REPACK=1
 
-# Some basic information about the archive
-NAME="$(basename "$@")"
-ARCHIVE=$(readlink -f "$@")
-CURRENTDIR="$(dirname "$(readlink -f "$@")")"
+if [ -a "$FILE" ]; then
+  # Some basic information about the archive
+  NAME="$(basename "$FILE")"
+  ARCHIVE=$(readlink -f "$FILE")
+  DIR="$(dirname "$(readlink -f "$FILE")")"
 
-echo "Extracting..."
-# Extract to a tmp dir
-TMPDIR=`mktemp -d "/tmp/aedit-XXXXXXXX"`
-$ATOOL --extract-to=$TMPDIR "$@"
+  echo "Extracting..."
+  # Extract to a tmp dir
+  TMPDIR=`mktemp -d "/tmp/aedit-XXXXXXXX"`
+  $ATOOL --extract-to=$TMPDIR "$@"
 
-echo "Launching shell..."
-# Start a new shell in the tmp directory
-cd "$TMPDIR"
-$SHELL
+  echo "Launching shell..."
+  # Start a new shell in the tmp directory
+  cd "$TMPDIR"
+  $SHELL
 
-echo "Repacking..."
-cp "$ARCHIVE" "/tmp/$NAME.`rnd`"
-$ATOOL -a -f "$ARCHIVE" $(ls $TMPDIR)
+  if [ $REPACK ]; then
+    echo "Repacking..."
+    mv "$ARCHIVE" "/tmp/$NAME.`rnd`" # Backup
+    $ATOOL -a -f "$ARCHIVE" $(ls -b $TMPDIR)
+  fi
 
-echo "Done."
-rm -r "$TMPDIR"
-cd "$CURRENTDIR"
-
+  echo "Done."
+  rm -r "$TMPDIR"
+  cd "$DIR"
+else
+  echo "File '$FILE' does not exist."
+fi
