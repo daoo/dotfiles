@@ -8,3 +8,5 @@ xmonad/icons
 vim/.netrwhist
 xmonad/history
 firefox/pentadactyl/info
+vim/eclim
+vim/plugin/eclim.vim
