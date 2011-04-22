@@ -11,7 +11,7 @@ fi
 case "$TERM" in
   xterm*|*rxvt*)
     # Set the title
-    precmd () {print -Pn "\e]0;%n@%m: %~\a"}
+    precmd () {print -Pn "\e]0;%~ (%n@%m)\a"}
   ;;
 esac
 
