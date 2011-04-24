@@ -23,6 +23,10 @@ set scrolloff=5
 set laststatus=2
 set statusline=%F%m%r%h%w%y\ %{fugitive#statusline()}%=\ col:%c%V\ ascii:%b\ pos:%o\ lin:%l\/%L\ %P
 
+" -- Command Completion --
+set wildmode=longest:full
+set wildmenu
+
 " -- Buffers --
 set autowrite
 set hidden
