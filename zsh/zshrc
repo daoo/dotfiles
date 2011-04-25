@@ -9,3 +9,8 @@
 . ~/dotfiles/zsh/autocompletion
 . ~/dotfiles/zsh/functions
 
+. ~/dotfiles/zsh/plugins/z/z.sh
+function precmd() {
+  z --add "$(pwd -P)"
+}
+
