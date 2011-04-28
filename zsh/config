@@ -36,3 +36,5 @@ if [ $? -ne 0 ]; then
   export PATH="$HOME/bin/:$PATH"
 fi
 
+# Disable ctrl-q and ctrl-s
+stty -ixon

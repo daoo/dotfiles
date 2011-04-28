@@ -10,7 +10,7 @@
 . ~/dotfiles/zsh/functions
 
 . ~/dotfiles/zsh/plugins/z/z.sh
-function precmd() {
+function chpwd() {
   z --add "$(pwd -P)"
 }
 
