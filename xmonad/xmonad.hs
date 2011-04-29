@@ -73,10 +73,10 @@ myManageHook = composeAll . concat $
   , moves "web"   [ "firefox-bin", "Firefox", "Navigator" ]
   , moves "code"  [ "gvim" ]
   , moves "code2" [ "Eclipse" ]
-  , moves "music" [ "tuxguitar", "rhythmbox" ]
-  , moves "void"  [ "explorer.exe", "transmission-gtk" ]
+  , moves "music" [ "tuxguitar", "musicmanager" ]
+  , moves "void"  [ "transmission-gtk" ]
 
-  , floats wmClass [ "MPlayer", "xmessage" ]
+  , floats name [ "MPlayer", "xmessage" ]
   , floats res [ "Dialog" ]
   , [ isFullscreen --> doFullFloat ]
   ]
@@ -84,8 +84,8 @@ myManageHook = composeAll . concat $
     moves w  = map (\a -> wmClass a --> doShift w)
     floats m = map (\a -> m a --> doFloat)
 
-    wmClass a = appName =? a <||> className =? a
-    res a     = resource =? a
+    name a = appName  = ? a <||> className = ? a
+    res a  = resource = ? a
 
 -- Layout Hook
 myLayoutHook = onWorkspace "im" imLHook $
