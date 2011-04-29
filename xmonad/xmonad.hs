@@ -81,11 +81,11 @@ myManageHook = composeAll . concat $
   , [ isFullscreen --> doFullFloat ]
   ]
   where
-    moves w  = map (\a -> wmClass a --> doShift w)
+    moves w  = map (\a -> name a --> doShift w)
     floats m = map (\a -> m a --> doFloat)
 
-    name a = appName  = ? a <||> className = ? a
-    res a  = resource = ? a
+    name a = appName  =? a <||> className =? a
+    res a  = resource =? a
 
 -- Layout Hook
 myLayoutHook = onWorkspace "im" imLHook $
