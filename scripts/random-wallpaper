@@ -1,8 +1,8 @@
 #!/bin/bash
 
-DIR=$1
+DIR="$1"
 if [ -d "$DIR" ]; then
-  echo $(find "$DIR" -not -type d -iname '*.jpg' -or -iname '*.png' -or -iname '*.jpeg' | shuf -n 1)
+  echo $(find "$DIR" -not -type d | shuf -n 1)
 else
   echo "Usage: random-wallpaper /path/to/folder/with/wallpapers/"
 fi
