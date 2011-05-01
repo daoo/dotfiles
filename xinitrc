@@ -27,9 +27,10 @@ case $HOST in
   "kvack") feh --bg-tile "$(random-wallpaper /storage/media/wallpapers/)" ;;
 esac
 
-/usr/bin/xscreensaver -no-splash &
-
+xscreensaver -no-splash &
+xsspid=$!
 parcellite -d -n &
+parcpid=$!
 pidgin &
 dropboxd &
 
@@ -37,5 +38,10 @@ if [ "$(ls -A ~/.config/transmission/torrents/)" ]; then
   transmission-gtk &
 fi
 
+workrave &
+
 xmonad
 
+# Exit
+kill $xsspid
+kill $parcpid
