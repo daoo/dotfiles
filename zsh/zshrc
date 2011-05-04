@@ -14,3 +14,7 @@ function chpwd() {
   z --add "$(pwd -P)"
 }
 
+if [ -f ~/.zlocal ]; then
+  . ~/.zlocal
+fi
+
