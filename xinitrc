@@ -38,8 +38,6 @@ if [ "$(ls -A ~/.config/transmission/torrents/)" ]; then
   transmission-gtk &
 fi
 
-workrave &
-
 xmonad
 
 # Exit
