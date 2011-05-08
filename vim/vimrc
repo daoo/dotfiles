@@ -14,11 +14,11 @@ set visualbell
 set t_vb=
 
 " -- Visual --
-set number
-set ruler
-set showcmd
 set nowrap
+set number
+set relativenumber
 set scrolloff=5
+set showcmd
 
 set laststatus=2
 set statusline=%F%m%r%h%w%y\ %{fugitive#statusline()}%=\ col:%c%V\ ascii:%b\ pos:%o\ lin:%l\/%L\ %P
