@@ -15,12 +15,15 @@ if !Dir.exist?( outdir )
   exit 1
 end
 
+songs = Array.new()
+
 File.open( infile, "r" ) do |file|
   i = 0
   while line = file.gets
     opath = line.chomp
     fname = File.basename( opath )
     npath = File.join( outdir, fname )
+
     if File.exists?( opath )
       if not File.exists?( npath )
         FileUtils.cp( opath, outdir )
@@ -29,10 +32,20 @@ File.open( infile, "r" ) do |file|
       else
         puts "File exists in target #{fname}"
       end
+
+      songs << fname
     else
       puts "File #{opath} not found"
     end
   end
 
   puts "#{i} file(s) copied"
+end
+
+Dir.foreach( outdir ) do |f|
+  if f != "." and f != ".."
+    if not songs.include?( File.basename( f ) )
+      puts "FileUtils.rm( #{f} )"
+    end
+  end
 end
