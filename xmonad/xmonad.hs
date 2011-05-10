@@ -4,13 +4,14 @@ import Data.Map (union, fromList)
 import Data.Ratio ((%))
 import Network.BSD
 import Prelude hiding (Left, Right)
+import System.Directory
 import System.Environment
 import System.IO (Handle)
 
 -- Xmonad
 import XMonad
 import XMonad.Prompt
-import XMonad.Prompt.Shell (shellPrompt)
+import XMonad.Prompt.Shell hiding (shellPrompt, getCommands)
 import XMonad.Util.Dzen as D
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad 
@@ -209,4 +210,20 @@ main = do
 
 getEnvDefault :: String -> String -> IO String
 getEnvDefault env def = getEnv env `catch` (\_ -> return def)
+
+getCommands :: IO [String]
+getCommands = do
+    home <- getEnvDefault "HOME" ""
+    let d = home ++ "/bin"
+
+    exists <- doesDirectoryExist d
+    es <- if exists
+      then getDirectoryContents d
+      else return []
+    return . uniqSort . filter ((/= '.') . head) $ es
+
+shellPrompt :: XPConfig -> X ()
+shellPrompt c = do
+  cmds <- io $ getCommands
+  mkXPrompt Shell c (getShellCompl cmds) (spawn . encodeOutput)
 
