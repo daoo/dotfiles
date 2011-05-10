@@ -214,7 +214,7 @@ getEnvDefault env def = getEnv env `catch` (\_ -> return def)
 getCommands :: IO [String]
 getCommands = do
     home <- getEnvDefault "HOME" ""
-    let d = home ++ "/bin"
+    let d = home ++ "/.xmonad/bin"
 
     exists <- doesDirectoryExist d
     es <- if exists
