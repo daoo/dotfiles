@@ -28,9 +28,7 @@ case $HOST in
 esac
 
 xscreensaver -no-splash &
-xsspid=$!
-parcellite -d -n &
-parcpid=$!
+#parcellite -d -n &
 pidgin &
 dropboxd &
 
@@ -40,6 +38,3 @@ fi
 
 xmonad
 
-# Exit
-kill $xsspid
-kill $parcpid
