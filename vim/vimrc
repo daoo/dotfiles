@@ -65,9 +65,10 @@ let mapleader=","
 map <Leader>fa :Tabularize assignment<CR>
 map <Leader>fc :Tabularize /,\zs/<CR>
 
-map <Leader>tn :NERDTreeToggle<CR>
-map <Leader>cd :cd %:p:h<CR>
-noremap <Leader>o :CommandT<CR>
+nnoremap <F9> :TagbarToggle<CR>
+nnoremap <Leader>tw :ToggleWord<CR>
+nnoremap <Leader>cd :cd %:p:h<CR>
+nnoremap <Leader>o :CommandT<CR>
 
 map <C-Up> ddktP
 map <C-Down> ddp
