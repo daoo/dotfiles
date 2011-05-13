@@ -7,6 +7,7 @@ urxvt*saveLines: 10000
 urxvt*visualBell: false
 urxvt*urgentOnBell: true
 urxvt*buffered: true
+urxvt*internalBorder: 0
 
 scratchpad*background: #242424
 scratchpad*foreground: #f6f3e8
