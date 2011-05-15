@@ -1,11 +1,45 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-MUTEFILE="$HOME/.mute"
+list() {
+  pacmd list-$1 | grep index | awk -F': ' '{print $2}'
+}
 
-if [ "$(cat $MUTEFILE)" = "1" ]; then
-  pactl set-sink-mute 0 0
-  echo "0" > ~/.mute
-else
-  pactl set-sink-mute 0 1
-  echo "1" > ~/.mute
-fi
+muteds() {
+  pacmd list-$1 | grep muted | awk '{print $2}'
+}
+
+mute() {
+	pacmd set-$1-mute $2 1 > /dev/null
+}
+
+unmute() {
+	pacmd set-$1-mute $2 0 > /dev/null
+}
+
+SINKS=(`list sinks`)
+SOURCES=(`list sources`)
+
+# Sinks
+i=0
+for m in `muteds sinks`; do
+  if [ "$m" == "no" ]; then
+    mute sink ${SINKS[$i]}
+  else
+    unmute sink ${SINKS[$i]}
+  fi
+
+  i=`expr $i + 1`
+done
+
+# Sources
+i=0
+for m in `muteds sources`; do
+  if [ "$m" == "no" ]; then
+    mute source ${SOURCES[$i]}
+  else
+    unmute source ${SOURCES[$i]}
+  fi
+
+  i=`expr $i + 1`
+done
+
