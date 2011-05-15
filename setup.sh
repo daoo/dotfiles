@@ -33,13 +33,6 @@ ln -s "$SOURCE/firefox/chrome/userChrome.css" "$PROF/chrome/userChrome.css"
 ln -s "$SOURCE/firefox/searchplugins" "$PROF/searchplugins"
 ln -s "$SOURCE/firefox/user.js/" "$PROF/user.js"
 
-echo "pentadactyl..."
-ln -s "$SOURCE/firefox/pentadactyl" "$DEST/.pentadactyl"
-ln -s "$SOURCE/firefox/pentadactyl/pentadactylrc" "$DEST/.pentadactylrc"
-
-echo "luakit..."
-ln -s "$SOURCE/luakit" "$DEST/.config/luakit"
-
 echo "bin..."
 for file in $(ls $SOURCE/scripts/); do
   ln -s "$SOURCE/scripts/$file" "$BIN/$file"
