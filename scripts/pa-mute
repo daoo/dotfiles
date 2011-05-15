@@ -1,0 +1,11 @@
+#!/bin/sh
+
+MUTEFILE="$HOME/.mute"
+
+if [ "$(cat $MUTEFILE)" = "1" ]; then
+  pactl set-sink-mute 0 0
+  echo "0" > ~/.mute
+else
+  pactl set-sink-mute 0 1
+  echo "1" > ~/.mute
+fi
