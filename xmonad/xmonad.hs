@@ -37,13 +37,13 @@ import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.Reflect
 import XMonad.Layout.Simplest
 
+-- Config
 data Config = Config {
   host :: String,
   browser :: String,
   term :: String,
   editor :: String,
-  lock :: String,
-  mediaplayer :: String
+  lock :: String
 } deriving (Show)
 
 -- Theme
@@ -74,7 +74,7 @@ myManageHook = composeAll . concat $
   , moves "web"   [ "firefox-bin", "Firefox", "Navigator" ]
   , moves "code"  [ "gvim" ]
   , moves "code2" [ "Eclipse" ]
-  , moves "music" [ "tuxguitar", "musicmanager" ]
+  , moves "music" [ "tuxguitar" ]
   , moves "void"  [ "transmission-gtk" ]
 
   , floats name [ "MPlayer", "xmessage" ]
@@ -124,11 +124,18 @@ myLogHook h           = dynamicLogWithPP $ defaultPP
     noNSP ws  = if (ws == "NSP") then "" else ws
 
 -- Bars
-defaultBar = ["-fn", show panelFont, "-bg", show panelBg, "-fg", show panelFg]
-fullBar    = defaultBar ++ ["-x", "0",    "-y", "0", "-w", "1920", "-h", "13", "-ta", "c"]
-leftBar    = defaultBar ++ ["-x", "0",    "-y", "0", "-w", "1200", "-h", "13", "-ta", "l"]
-rightBar   = defaultBar ++ ["-x", "1200", "-y", "0", "-w", "720",  "-h", "13", "-ta", "r"]
+type Bar = [String]
 
+barToString :: Bar -> String
+barToString = concat . intersperse " "
+
+defaultBar, fullBar, leftBar, rightBar :: Bar
+defaultBar  = ["-fn", show panelFont, "-bg", show panelBg, "-fg", show panelFg]
+fullBar     = defaultBar ++ ["-x", "0",    "-y", "0", "-w", "1920", "-h", "13", "-ta", "c"]
+leftBar     = defaultBar ++ ["-x", "0",    "-y", "0", "-w", "1200", "-h", "13", "-ta", "l"]
+rightBar    = defaultBar ++ ["-x", "1200", "-y", "0", "-w", "720",  "-h", "13", "-ta", "r"]
+
+-- Bar look
 spConfig :: XPConfig
 spConfig = defaultXPConfig
   { font              = panelFont
@@ -140,16 +147,16 @@ spConfig = defaultXPConfig
   }
 
 -- Keys
-keysToAdd :: Config -> KeyMask -> [((KeyMask, KeySym), X ())]
-keysToAdd cfg modMask =
+--keysToAdd :: Config -> KeyMask -> [((KeyMask, KeySym), X ())]
+keysToAdd cfg modMask = fromList $
   [ ((modMask, xK_u), withFocused toggleBorder)
   , ((modMask, xK_s), toggleWS)
   , ((modMask, xK_g), goToSelected defaultGSConfig)
 
   -- Dynamic Workspaces
-  , ((modMask, xK_b), removeWorkspace )
-  , ((modMask, xK_n), selectWorkspace spConfig )
-  , ((modMask, xK_m), withWorkspace spConfig (windows . W.shift) )
+  , ((modMask, xK_b), removeWorkspace)
+  , ((modMask, xK_n), selectWorkspace spConfig)
+  , ((modMask, xK_m), withWorkspace spConfig (windows . W.shift))
 
   -- Terminals and stuff
   , ((modMask, xK_p), shellPrompt spConfig)
@@ -160,8 +167,11 @@ keysToAdd cfg modMask =
   , ((modMask, xK_z), spawn $ browser cfg)
   , ((modMask, xK_x), spawn $ editor cfg)
   , ((modMask, xK_c), spawn $ lock cfg)
-  , ((modMask, xK_v), spawn $ mediaplayer cfg)
-  ]
+  
+  , ((0, 0x1008ff30), spawn "mpc prev")         -- XF86Favorites
+  , ((0, 0x1008ff19), spawn "mpc next")         -- XF86Email
+  , ((0, 0x1008ff12), spawn "pa-mute")          -- XF86AudioMute
+  , ((0, 0x1008ff14), spawn "mpd-play-pause") ] -- XF86AudioPlay
   where
     toggleWS = windows $ W.view =<< W.tag . head . filter ((\ x -> x /= "NSP") . W.tag) . W.hidden
 
@@ -170,14 +180,14 @@ myModKey :: KeyMask
 myModKey = mod4Mask
 
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = [ "im", "web", "code", "code2", "other", "music", "full", "void" ]
+myWorkspaces = [ "im", "web", "code", "code2", "other", "other2", "full", "void" ]
 
 -- Main
 main :: IO ()
 main = do
   -- Spawn bars
-  spawn $ "conky -c ~/.xmonad/dzen_conkyrc | dzen2 -p " ++ (concat $ intersperse " " rightBar)
-  d <- spawnPipe $ "dzen2 -p " ++ (concat $ intersperse " " leftBar)
+  spawn $ "conky -c ~/.xmonad/dzen_conkyrc | dzen2 -p " ++ barToString rightBar
+  d <- spawnPipe $ "dzen2 -p " ++ barToString leftBar
 
   -- Get some info
   h <- getHostName
@@ -185,11 +195,10 @@ main = do
   e <- getEnvDefault "GUI_EDITOR" "gvim"
   t <- getEnvDefault "TERMINAL" "urxvt"
   l <- getEnvDefault "SCREENSAVER" ""
-  m <- getEnvDefault "MEDIAPLAYER" ""
-  let cfg = Config { host = h, term = t , browser = b , editor = e, lock = l, mediaplayer = m }
+  let cfg = Config { host = h, term = t , browser = b , editor = e, lock = l }
 
   -- Setup keys
-  let a x = fromList $ keysToAdd cfg (modMask x)
+  let a x = keysToAdd cfg (modMask x)
   let k x = union (a x) (keys defaultConfig x)
 
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
@@ -205,8 +214,7 @@ main = do
     , logHook    = myLogHook d
 
     , focusFollowsMouse = False
-    , keys              = k
-    }
+    , keys              = k }
 
 getEnvDefault :: String -> String -> IO String
 getEnvDefault env def = getEnv env `catch` (\_ -> return def)
