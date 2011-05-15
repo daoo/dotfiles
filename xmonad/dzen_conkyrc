@@ -1,12 +1,15 @@
 background no
 out_to_console yes
 out_to_x no
-#override_utf8_locale yes
 update_interval 4
 short_units yes
-use_spacer none
+use_spacer left
+
+mpd_host localhost
+mpd_port 6600
 
 TEXT
+^i($HOME/.xmonad/icons/note.xbm) ${mpd_smart} \
 ^i($HOME/.xmonad/icons/cpu.xbm) ${cpu}% \
 ^i($HOME/.xmonad/icons/mem.xbm) ${memperc}% \
 ^i($HOME/.xmonad/icons/net_down_03.xbm) ${downspeed eth0} \
