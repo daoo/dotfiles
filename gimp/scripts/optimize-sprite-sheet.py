@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# TODO: Padding
+
 import math
 from gimpfu import *
 
@@ -34,7 +36,7 @@ def python_optimize_sprite_sheet( img, drawable ):
   x = 0
   y = 0
   for layer in img.layers:
-    offset_x = tile_width * x
+    offset_x = tile_width * x #+ ( tile_width - layer.width ) / 2 # TODO: Optional align to center
     offset_y = tile_height * y + ( tile_height - layer.height ) # TODO: Optional align to bottom
     layer.set_offsets( offset_x, offset_y )
     x = x + 1
