@@ -41,23 +41,24 @@ set softtabstop=2
 set expandtab
 
 " -- Plugins and extras --
+filetype off
+
+set rtp+=~/.vim/vundle.git/ 
+call vundle#rc()
+
+" -- Bundles --
+Bundle 'snipMate'
+Bundle 'fugitive.vim'
+Bundle 'Command-T'
+Bundle 'LustyJuggler'
+Bundle 'LustyExplorer'
+Bundle 'Tabular'
+Bundle 'Tagbar'
+Bundle 'toggle_words.vim'
+Bundle 'easytags.vim'
+Bundle 'surround.vim'
+
 so ~/.vim/functions
-
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-
-filetype on
-filetype indent on
-filetype plugin on
-
-let g:clang_complete_auto=0
-let g:clang_complete_copen=0
-let g:clang_conceal_snippets=1
-let g:clang_hl_errors=0
-let g:clang_snippets=0
-let g:clang_use_library=1
-
-autocmd BufReadPost *.cpp,*.h call FoldCopyright()
 
 " -- Keys --
 let mapleader=","
@@ -65,19 +66,16 @@ let mapleader=","
 map <Leader>fa :Tabularize assignment<CR>
 map <Leader>fc :Tabularize /,\zs/<CR>
 
-nnoremap <F9> :TagbarToggle<CR>
-nnoremap <Leader>tw :ToggleWord<CR>
-nnoremap <Leader>cd :cd %:p:h<CR>
-nnoremap <Leader>o :CommandT<CR>
+noremap <F9> :TagbarToggle<CR>
+noremap <Leader>tw :ToggleWord<CR>
+noremap <Leader>cd :cd %:p:h<CR>
+noremap <Leader>o :CommandT<CR>
 
-map <C-Up> ddktP
-map <C-Down> ddp
+nnoremap <C-Up> ddkP
+nnoremap <C-Down> ddp
 
 map <C-s> :w<CR>
 imap <C-s> <Esc>:w<CR>a
-
-vnoremap x "_x
-vnoremap X "_X
 
 inoremap  <Up>     <NOP>
 inoremap  <Down>   <NOP>
