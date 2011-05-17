@@ -46,16 +46,16 @@ filetype off
 set rtp+=~/.vim/vundle.git/ 
 call vundle#rc()
 
-Bundle 'snipMate'
-Bundle 'fugitive.vim'
 Bundle 'Command-T'
-Bundle 'LustyJuggler'
 Bundle 'LustyExplorer'
+Bundle 'LustyJuggler'
 Bundle 'Tabular'
 Bundle 'Tagbar'
-Bundle 'toggle_words.vim'
 Bundle 'easytags.vim'
+Bundle 'fugitive.vim'
+Bundle 'snipMate'
 Bundle 'surround.vim'
+Bundle 'toggle_words.vim'
 
 filetype plugin indent on
 
