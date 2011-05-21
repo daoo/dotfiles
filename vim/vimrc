@@ -8,6 +8,8 @@ colorscheme tango-morning
 sy on
 syntax on
 
+au BufRead,BufNewFile *.go set filetype=go
+
 " -- Disable error bells --
 set noerrorbells
 set visualbell
@@ -53,6 +55,7 @@ Bundle 'Tabular'
 Bundle 'Tagbar'
 Bundle 'easytags.vim'
 Bundle 'fugitive.vim'
+Bundle 'go.vim'
 Bundle 'snipMate'
 Bundle 'surround.vim'
 Bundle 'toggle_words.vim'
