@@ -45,7 +45,12 @@ end
 Dir.foreach( outdir ) do |f|
   if f != "." and f != ".."
     if not songs.include?( File.basename( f ) )
-      puts "FileUtils.rm( #{f} )"
+      print "Remove '#{f}'? "
+      remove = STDIN.gets.chomp.downcase
+      if remove == "yes" or remove == "y"
+        FileUtils.rm( File.join( outdir, f ) )
+        puts "Removed '#{f}'"
+      end
     end
   end
 end
