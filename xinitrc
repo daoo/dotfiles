@@ -5,7 +5,7 @@ export TERMINAL="urxvt"
 export GUI_EDITOR="gvim"
 case "$HOST" in
   "voff"|"kvack")
-    export MEDIAPLAYER="gogglesmm"
+    export MEDIAPLAYER="mpd"
     export BROWSER="firefox"
     export SCREENSAVER="xscreensaver-command --lock"
   ;;
@@ -30,7 +30,7 @@ esac
 xscreensaver -no-splash &
 #parcellite -d -n &
 pidgin &
-dropboxd &
+dropbox-launcher &
 
 if [ "$(ls -A ~/.config/transmission/torrents/)" ]; then
   transmission-gtk &
