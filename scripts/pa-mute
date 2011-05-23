@@ -12,7 +12,7 @@ unmute() {
 	pacmd set-$1-mute $2 0 > /dev/null
 }
 
-STATUSFILE="$HOME/.mute"
+STATUSFILE="/tmp/pa-mute"
 
 if [ "`cat $STATUSFILE`" = "0" ]; then
   action=mute
