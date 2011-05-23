@@ -7,22 +7,32 @@
 import math
 from gimpfu import *
 
+class VAlignment
+  TOP    = 0
+  MIDDLE = 1
+  BOTTOM = 2
+
+class HAlignment
+  LEFT   = 0
+  CENTER = 1
+  RIGHT  = 2
+
 def get_offset_x( tile_width, layer_width, alignH, hOffset ):
-  if alignH == "left":
+  if alignH == HAlignment.LEFT:
     return 0
-  elif alignH == "center":
+  elif alignH == HAlignment.CENTER:
     return tile_width / 2 - layer_width / 2
-  elif alignH == "right":
+  elif alignH == HAlignment.RIGHT:
     return tile_width - layer_width
   else:
     return hOffset
 
 def get_offset_y( tile_height, layer_height, alignV, vOffset ):
-  if alignV == "left":
+  if alignV == VAlignment.TOP:
     return 0
-  elif alignV == "center":
+  elif alignV == VAlignment.MIDDLE:
     return layer_height / 2 - tile_height / 2
-  elif alignV == "right":
+  elif alignV == VAlignment.BOTTOM:
     return tile_height - layer_height
   else:
     return vOffset
@@ -66,6 +76,7 @@ def python_optimize_sprite_sheet( img, drawable, alignH = 0, alignV = 0, hOffset
   elif layout == "vertical":
     img_height = tile_count * tile_height
     img_width  = int( math.ceil( tile_count / tile_count_layout ) ) * tile_width
+
 
   # Resize the image and reposition the content
   img.resize( img_width, img_height, 0, 0 )
