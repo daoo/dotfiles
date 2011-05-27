@@ -7,12 +7,12 @@
 import math
 from gimpfu import *
 
-class VAlignment
+class VAlignment:
   TOP    = 0
   MIDDLE = 1
   BOTTOM = 2
 
-class HAlignment
+class HAlignment:
   LEFT   = 0
   CENTER = 1
   RIGHT  = 2
