@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Envs
-if [[ -f "$HOME/.envsrc" ]]; then
-  source "$HOME/.envsrc"
+if [[ -f "$HOME/.envrc" ]]; then
+  source "$HOME/.envrc"
 fi
 
 # Set a nicer cursor
