@@ -5,36 +5,35 @@ DEST="$HOME"
 BIN="$HOME/bin"
 
 echo "vim..."
-ln -s "$SOURCE/vim/vimrc" "$DEST/.vimrc"
-ln -s "$SOURCE/vim/gvimrc" "$DEST/.gvimrc"
-ln -s "$SOURCE/vim" "$DEST/.vim"
+ln -s "$SOURCE/vim/vimrc" "$DEST/"
+ln -s "$SOURCE/vim/gvimrc" "$DEST/"
+ln -s "$SOURCE/vim" "$DEST/"
 mkdir -p "$SOURCE/vim/tmp"
 
 echo "git..."
-ln -s "$SOURCE/gitconfig" "$DEST/.gitconfig"
-ln -s "$SOURCE/gitignore" "$DEST/.gitignore"
+ln -s "$SOURCE/gitconfig" "$DEST/"
+ln -s "$SOURCE/gitignore" "$DEST/"
 
 echo "zsh..."
-ln -s "$SOURCE/zsh/zshrc" "$DEST/.zshrc"
+ln -s "$SOURCE/zsh/zshrc" "$DEST/"
 
 echo "xmonad..."
-ln -s "$SOURCE/xmonad" "$DEST/.xmonad"
+ln -s "$SOURCE/xmonad" "$DEST/"
 
 echo "Xdefaults..."
-ln -s "$SOURCE/Xdefaults" "$DEST/.Xdefaults"
+ln -s "$SOURCE/Xdefaults" "$DEST/"
 
 echo "xinitrc..."
-ln -s "$SOURCE/xinitrc" "$DEST/.xinitrc"
+ln -s "$SOURCE/xinitrc" "$DEST/"
 
 echo "firefox..."
-PROF=$(find $DEST/.mozilla/firefox -maxdepth 1 -name '*default*')
+PROF="$DEST/.mozilla/firefox/*default"
 mkdir -p "$PROF/chrome/"
-ln -s "$SOURCE/firefox/chrome/userChrome.css" "$PROF/chrome/userChrome.css"
-ln -s "$SOURCE/firefox/searchplugins" "$PROF/searchplugins"
-ln -s "$SOURCE/firefox/user.js/" "$PROF/user.js"
+ln -s "$SOURCE/firefox/searchplugins" "$PROF/"
+ln -s "$SOURCE/firefox/user.js" "$PROF/"
 
 echo "bin..."
-for file in $(ls $SOURCE/scripts/); do
-  ln -s "$SOURCE/scripts/$file" "$BIN/$file"
+for file in "$SOURCE/scripts/*"; do
+  ln -s "$SOURCE/scripts/$file" "$BIN/"
 done
 
