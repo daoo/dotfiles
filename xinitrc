@@ -1,5 +1,12 @@
 #!/bin/sh
 
+HOST="`/bin/hostname`"
+
+# Local configuration
+if [[ -f "$HOME/.xlocal" ]]; then
+  source "$HOME/.xlocal"
+fi
+
 # Envs
 if [[ -f "$HOME/.envrc" ]]; then
   source "$HOME/.envrc"
@@ -15,7 +22,6 @@ fi
 xmodmap -e "remove Lock = Caps_Lock"
 xmodmap -e "keysym Caps_Lock = Return"
 
-HOST="`/bin/hostname`"
 if [[ -d "$WALLPAPER_DIR" ]]; then
   feh --bg-tile "`random-wallpaper $WALLPAPER_DIR`"
 fi
