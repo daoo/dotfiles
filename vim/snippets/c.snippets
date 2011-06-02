@@ -1,8 +1,8 @@
 # Header Include-Guard
 snippet guard
-	#ifndef ${1:`toupper(Filename('$1$2_H', 'UNTITLED_H'))`}
+	#ifndef ${1:`toupper(Filename('$1_H_', 'UNTITLED_H_'))`}
 	#define $1
 
 	${2}
 
-	#endif /* end of include guard: $1 */
+	#endif  // $1
