@@ -22,6 +22,8 @@ set relativenumber
 set scrolloff=5
 set showcmd
 
+" -- Status line --
+
 set laststatus=2
 set statusline=%F%m%r%h%w%y\ %{fugitive#statusline()}%=\ col:%c%V\ ascii:%b\ pos:%o\ lin:%l\/%L\ %P
 
@@ -37,7 +39,7 @@ set hidden
 set autoindent
 set smartindent
 
-set tabstop=2
+set tabstop=8
 set shiftwidth=2
 set softtabstop=2
 set expandtab
@@ -45,20 +47,26 @@ set expandtab
 " -- Plugins and extras --
 filetype off
 
-set rtp+=~/.vim/vundle.git/ 
+set rtp+=~/.vim/bundle/vundle/ 
 call vundle#rc()
 
-Bundle 'Command-T'
-Bundle 'LustyExplorer'
-Bundle 'LustyJuggler'
-Bundle 'Tabular'
+" Let vundle mange it self
+Bundle 'gmarik/vundle'
+
+" Github
+Bundle 'godlygeek/tabular'
+Bundle 'msanders/snipmate.vim'
+Bundle 'tpope/vim-colors-solarized'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-surround'
+Bundle 'wincent/Command-T'
+
+" vim-scripts repos
+Bundle 'L9'
+Bundle 'FuzzyFinder'
 Bundle 'Tagbar'
 Bundle 'a.vim'
-Bundle 'easytags.vim'
-Bundle 'fugitive.vim'
 Bundle 'go.vim'
-Bundle 'snipMate'
-Bundle 'surround.vim'
 Bundle 'toggle_words.vim'
 
 filetype plugin indent on
@@ -75,6 +83,7 @@ noremap <F9> :TagbarToggle<CR>
 noremap <Leader>tw :ToggleWord<CR>
 noremap <Leader>cd :cd %:p:h<CR>
 noremap <Leader>o :CommandT<CR>
+noremap <F2> :A<CR>
 
 nnoremap <C-Up> ddkP
 nnoremap <C-Down> ddp
