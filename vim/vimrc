@@ -56,7 +56,7 @@ Bundle 'gmarik/vundle'
 " Github
 Bundle 'godlygeek/tabular'
 Bundle 'msanders/snipmate.vim'
-Bundle 'tpope/vim-colors-solarized'
+"Bundle 'rip-rip/clang_complete'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 Bundle 'wincent/Command-T'
@@ -73,9 +73,22 @@ filetype plugin indent on
 
 so ~/.vim/functions
 
+" Clang Complete
+let g:clang_auto_select=0
+let g:clang_complete_auto=0
+let g:clang_complete_copen=1
+let g:clang_hl_errors=1
+let g:clang_periodic_quickfix=0
+let g:clang_snippets=0
+let g:clang_conceal_snippets=1
+let g:clang_use_library=1
+
 " -- Keys --
+so ~/.vim/disable-keys
+
 let mapleader=","
 
+" Plugins and tools
 map <Leader>fl :FufLine<CR>
 
 map <Leader>aa :Tabularize assignment<CR>
@@ -87,36 +100,11 @@ noremap <Leader>cd :cd %:p:h<CR>
 noremap <Leader>o :CommandT<CR>
 noremap <F2> :A<CR>
 
+" Moving lines
 nnoremap <C-Up> ddkP
 nnoremap <C-Down> ddp
 
+" Saving
 map <C-s> :w<CR>
 imap <C-s> <Esc>:w<CR>a
-
-inoremap  <Up>     <NOP>
-inoremap  <Down>   <NOP>
-inoremap  <Left>   <NOP>
-inoremap  <Right>  <NOP>
-noremap   <Up>     <NOP>
-noremap   <Down>   <NOP>
-noremap   <Left>   <NOP>
-noremap   <Right>  <NOP>
-
-inoremap <C-Right> <NOP>
-inoremap <C-Left> <NOP>
-inoremap <Home> <NOP>
-inoremap <End> <NOP>
-noremap <C-Right> <NOP>
-noremap <C-Left> <NOP>
-noremap <Home> <NOP>
-noremap <End> <NOP>
-
-inoremap <Insert> <NOP>
-inoremap <Del> <NOP>
-inoremap <PageUp> <NOP>
-inoremap <PageDown> <NOP>
-noremap <Insert> <NOP>
-noremap <Del> <NOP>
-noremap <PageUp> <NOP>
-noremap <PageDown> <NOP>
 
