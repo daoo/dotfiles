@@ -71,7 +71,7 @@ panelFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 myManageHook :: ManageHook
 myManageHook = composeAll . concat $
   [ moves "im"    [ "Pidgin", "Skype" ]
-  , moves "web"   [ "firefox-bin", "Firefox", "Navigator", "chromium" ]
+  , moves "web"   [ "firefox-bin", "Firefox", "Navigator" ]
   , moves "code"  [ "gvim" ]
   , moves "code2" [ "Eclipse" ]
   , moves "music" [ "tuxguitar" ]
