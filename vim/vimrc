@@ -5,7 +5,6 @@ set directory=~/.vim/tmp/
 
 " -- Color scheme --
 colorscheme wombat
-sy on
 syntax on
 
 au BufRead,BufNewFile *.go set filetype=go
@@ -17,7 +16,6 @@ set t_vb=
 
 " -- Visual --
 set nowrap
-set number
 set relativenumber
 set scrolloff=5
 set showcmd
@@ -99,6 +97,8 @@ noremap <Leader>tw :ToggleWord<CR>
 noremap <Leader>cd :cd %:p:h<CR>
 noremap <Leader>o :CommandT<CR>
 noremap <F2> :A<CR>
+
+noremap <Leader>ap :%s/( /(/g<CR>:%s/ )/)/g<CR>
 
 " Moving lines
 nnoremap <C-Up> ddkP
