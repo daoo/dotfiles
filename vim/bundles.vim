@@ -9,18 +9,15 @@ call vundle#rc()
 " Let vundle mange it self
 Bundle 'gmarik/vundle'
 
-" Completion
-"Bundle 'rip-rip/clang_complete'
-
-" Tools
-Bundle 'L9'
-Bundle 'FuzzyFinder'
+" General
 Bundle 'Tagbar'
+Bundle 'mileszs/ack.vim'
+Bundle 'rip-rip/clang_complete'
 Bundle 'tpope/vim-fugitive'
 
-" Files and buffers
-Bundle 'wincent/Command-T'
+" Files, searching and buffers
 Bundle 'a.vim'
+Bundle 'wincent/Command-T'
 
 " Syntax
 Bundle 'daoo/Mustang2'
