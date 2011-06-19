@@ -1,75 +1,8 @@
-set nocompatible
-set backup
-set backupdir=~/.vim/tmp/
-set directory=~/.vim/tmp/
+" -----------------------------------------------------------------------------
+" Plugins and extras
+source ~/.vim/bundles.vim
 
-" -- Color scheme --
-colorscheme wombat
-syntax on
-
-au BufRead,BufNewFile *.go set filetype=go
-
-" -- Disable error bells --
-set noerrorbells
-set visualbell
-set t_vb=
-
-" -- Visual --
-set nowrap
-set relativenumber
-set scrolloff=5
-set showcmd
-
-" -- Status line --
-
-set laststatus=2
-set statusline=%F%m%r%h%w%y\ %{fugitive#statusline()}%=\ col:%c%V\ ascii:%b\ pos:%o\ lin:%l\/%L\ %P
-
-" -- Command Completion --
-set wildmode=longest:full
-set wildmenu
-
-" -- Buffers --
-set autowrite
-set hidden
-
-" -- Indentation --
-set autoindent
-set smartindent
-
-set tabstop=8
-set shiftwidth=2
-set softtabstop=2
-set expandtab
-
-" -- Plugins and extras --
-filetype off
-
-set rtp+=~/.vim/bundle/vundle/ 
-call vundle#rc()
-
-" Let vundle mange it self
-Bundle 'gmarik/vundle'
-
-" Github
-Bundle 'godlygeek/tabular'
-Bundle 'msanders/snipmate.vim'
-"Bundle 'rip-rip/clang_complete'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-surround'
-Bundle 'wincent/Command-T'
-
-" vim-scripts repos
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-Bundle 'Tagbar'
-Bundle 'a.vim'
-Bundle 'go.vim'
-Bundle 'toggle_words.vim'
-
-filetype plugin indent on
-
-so ~/.vim/functions
+source ~/.vim/functions.vim
 
 " Clang Complete
 let g:clang_auto_select=0
@@ -81,8 +14,61 @@ let g:clang_snippets=0
 let g:clang_conceal_snippets=1
 let g:clang_use_library=1
 
-" -- Keys --
-so ~/.vim/disable-keys
+" -----------------------------------------------------------------------------
+" General settings
+set nocompatible
+
+" Visual
+set nowrap
+set relativenumber
+set scrolloff=5
+
+" Status line and command line
+set showcmd
+set laststatus=2
+if exists('*fugitive#statusline')
+  set statusline=%F%m%r%h%w%y\ %{fugitive#statusline()}%=col:%c%V\ ascii:%b\ pos:%o\ lin:%l\/%L\ %P
+else
+  set statusline=%F%m%r%h%w%y%=col:%c%V\ ascii:%b\ pos:%o\ lin:%l\/%L\ %P
+endif
+
+" Disable error bells
+set noerrorbells
+set visualbell
+set t_vb=
+
+" Command Completion
+set wildmode=longest:full
+set wildmenu
+
+" Backup and temporary files
+set backup
+set backupdir=~/.vim/tmp/
+set directory=~/.vim/tmp/
+
+" Color scheme
+colorscheme mustang
+syntax on
+
+" Enable syntax highlighting for .go files
+au BufRead,BufNewFile *.go set filetype=go
+
+" Buffers
+set autowrite
+set hidden
+
+" Indentation
+set autoindent
+set smartindent
+
+set tabstop=8
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+
+" ------------------------------------------------------------------------------
+" Keys
+source ~/.vim/disable-keys.vim
 
 let mapleader=","
 
@@ -107,4 +93,10 @@ nnoremap <C-Down> ddp
 " Saving
 map <C-s> :w<CR>
 imap <C-s> <Esc>:w<CR>a
+
+" Splits
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
