@@ -1,7 +1,6 @@
 " -----------------------------------------------------------------------------
 " Plugins and extras
 source ~/.vim/bundles.vim
-
 source ~/.vim/functions.vim
 
 " Clang Complete
@@ -72,24 +71,25 @@ source ~/.vim/disable-keys.vim
 
 let mapleader=","
 
-" Plugins and tools
-map <Leader>aa :Tabularize assignment<CR>
-map <Leader>ac :Tabularize /,\zs/<CR>
+" Misc
+noremap <F2> :A<CR>
+noremap <F9> :TagbarToggle<CR>
+noremap <F10> :CommandTFlush<CR>
 
 noremap <Leader>o :CommandT<CR>
 noremap <Leader>cd :cd %:p:h<CR>
-
-noremap <Leader>tw :ToggleWord<CR>
-noremap <Leader>ap :%s/( /(/g<CR>:%s/ )/)/g<CR>
-
-noremap <F9> :TagbarToggle<CR>
-noremap <F2> :A<CR>
-
 noremap <C-F> :Ack '<cword>'<CR>
 
-" Moving lines
+" Editing
+nnoremap <Leader>aa :Tabularize assignment<CR>
+
 nnoremap <C-Up> ddkP
 nnoremap <C-Down> ddp
+
+nnoremap <Leader>tw :ToggleWord<CR>
+nnoremap <Leader>ap :%s/( /(/g<CR>:%s/ )/)/g<CR>
+
+nnoremap <Leader>rp :%s/cword/
 
 " Saving
 map <C-s> :w<CR>
