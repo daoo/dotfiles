@@ -26,9 +26,9 @@ set scrolloff=5
 set showcmd
 set laststatus=2
 if exists('*fugitive#statusline')
-  set statusline=%F%m%r%h%w%y\ %{fugitive#statusline()}%=col:%c%V\ ascii:%b\ pos:%o\ lin:%l\/%L\ %P
+  set statusline=%f%m%y%{fugitive#statusline()}%=col:%c%V\ lin:%l\/%L\ %P
 else
-  set statusline=%F%m%r%h%w%y%=col:%c%V\ ascii:%b\ pos:%o\ lin:%l\/%L\ %P
+  set statusline=%f%m%y%=col:%c%V\ lin:%l\/%L\ %P
 endif
 
 " Disable error bells
