@@ -17,6 +17,7 @@ Bundle 'tpope/vim-fugitive'
 
 " Files, searching and buffers
 Bundle 'a.vim'
+Bundle 'scrooloose/nerdtree'
 Bundle 'wincent/Command-T'
 
 " Syntax
@@ -30,6 +31,7 @@ Bundle 'godlygeek/tabular'
 Bundle 'msanders/snipmate.vim'
 Bundle 'toggle_words.vim'
 Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-repeat'
 
 filetype plugin indent on
 

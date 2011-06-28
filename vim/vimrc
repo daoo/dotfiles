@@ -25,7 +25,7 @@ set scrolloff=5
 " Status line and command line
 set showcmd
 set laststatus=2
-if exists('*fugitive#statusline')
+if exists('g:loaded_fugitive')
   set statusline=%f%m%y%{fugitive#statusline()}%=col:%c%V\ lin:%l\/%L\ %P
 else
   set statusline=%f%m%y%=col:%c%V\ lin:%l\/%L\ %P
