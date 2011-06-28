@@ -78,7 +78,7 @@ noremap <F10> :CommandTFlush<CR>
 
 noremap <Leader>o :CommandT<CR>
 noremap <Leader>cd :cd %:p:h<CR>
-noremap <C-F> :Ack '<cword>'<CR>
+noremap <C-f> :Ack '<cword>'<CR>
 
 " Editing
 nnoremap <Leader>aa :Tabularize assignment<CR>
@@ -89,7 +89,7 @@ nnoremap <C-Down> ddp
 nnoremap <Leader>tw :ToggleWord<CR>
 nnoremap <Leader>ap :%s/( /(/g<CR>:%s/ )/)/g<CR>
 
-nnoremap <Leader>rp :%s/cword/
+nnoremap <C-r> :%s/<c-r>=expand("<cword>")<cr>/
 
 " Saving
 map <C-s> :w<CR>
