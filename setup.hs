@@ -1,15 +1,14 @@
+import System
 import System.Directory
 import System.FilePath
 import System.Posix.Files
 
-data Environment = Environment { sourceDir :: FilePath
-                               , targetDir :: FilePath
-                               , firefoxDefaultProfile :: FilePath }
+data Env = Env FilePath FilePath
 
 data Action = Link FilePath FilePath
             | LinkAll FilePath FilePath
             | MakeDir FilePath
-            | Lambda (Environment -> IO ())
+            | Lambda (Env -> IO ())
             | None
 
 type ActionGroup = (String, [Action])
@@ -40,29 +39,39 @@ actions =
       , LinkAll "scripts" "bin" ] )
   ]
   where
-    firefox :: Environment -> IO ()
-    firefox env@(Environment fromDir outDir) = do
-      f <- getFireFoxDefaultProfilePath env
-      case f of
-        Nothing   -> ()
-        Just path -> do
-          let target = f </> "searchplugins"
-          e <- directoryExists target
-          if e
-            then ()
-            else createSymbolicLink (fromDir </> target)
+    firefox :: Env -> IO ()
+    firefox env@(Env sDir tDir) = return ()
 
-execute :: Environment -> Action -> IO ()
-execute (Environment fromDir outDir) (Link targetFile linkName) = createSymbolicLink (fromDir </> targetFile) (outDir </> linkName)
-execute (Environment _ outDir) (MakeDir path)                   = createDirectoryIfMissing True $ outDir </> path
-execute env (Lambda f)                                          = f env
-execute _ _                                                     = ()
+execute :: Env -> Action -> IO ()
+execute (Env sDir tDir) (Link tFile name) = silentLink (sDir </> tFile) (tDir </> name)
+execute (Env sDir tDir) (LinkAll to from) = getDirectoryContents (sDir </> to) >>= mapM_ (\file -> silentLink (sDir </> to </> file) (tDir </> from </> file))
+execute (Env _    tDir) (MakeDir path)    = createDirectoryIfMissing True $ tDir </> path
+execute env             (Lambda f)        = f env
+execute _               _                 = return ()
 
 main :: IO ()
 main = do
-  let env = Environment "TODO" "TODO"
-  mapM (execute env) actions
+  home <- getEnv "HOME"
+  let env = Env (home </> "dotfiles") home
+  mapM_ (\ (s, as) -> putStrLn s >> mapM_ (execute env) as) actions
 
-getFireFoxDefaultProfilePath :: Environment -> IO (Maybe FilePath)
-getFireFoxDefaultProfilePath = Nothing
+getFireFoxDefaultProfilePath :: Env -> IO (Maybe FilePath)
+getFireFoxDefaultProfilePath (Env sourceDir targetDir) = do
+  f <- doesFileExist $ sourceDir </> ".mozilla/firefox"
+  if f
+    then return Nothing
+    else return Nothing
 
+silentLink :: FilePath -> FilePath -> IO ()
+silentLink t n = do
+  td <- doesDirectoryExist t
+  tf <- doesFileExist t
+  nd <- doesDirectoryExist n
+  nt <- doesFileExist n
+
+  if td || tf -- Target exists
+    then do
+      if nd || nt -- Link name exists
+        then return ()
+        else createSymbolicLink t n
+    else return ()
