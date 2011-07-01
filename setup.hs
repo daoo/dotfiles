@@ -51,9 +51,13 @@ execute _               _                 = return ()
 
 main :: IO ()
 main = do
+  let only = ["vim", "zsh"]
+
   home <- getEnv "HOME"
   let env = Env (home </> "dotfiles") home
-  mapM_ (\ (s, as) -> putStrLn s >> mapM_ (execute env) as) actions
+  mapM_ (exeGroup env) $ filter (\ (s, _) -> s `elem` only) actions
+  where
+    exeGroup env (s, as) = putStrLn s >> mapM_ (execute env) as
 
 getFireFoxDefaultProfilePath :: Env -> IO (Maybe FilePath)
 getFireFoxDefaultProfilePath (Env sourceDir targetDir) = do
