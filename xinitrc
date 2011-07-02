@@ -1,16 +1,18 @@
 #!/bin/sh
 
-HOST="`/bin/hostname`"
+safe_source() {
+  if [ -f "$1" ]; then
+    source "$1"
+  fi
+}
+
+if [ "$HOME" = "" ]; then
+  HOST="`/bin/hostname`"
+fi
 
 # Local configuration
-if [[ -f "$HOME/.xlocal" ]]; then
-  source "$HOME/.xlocal"
-fi
-
-# Envs
-if [[ -f "$HOME/.envrc" ]]; then
-  source "$HOME/.envrc"
-fi
+safe_source "$HOME/.xearly"
+safe_source "$HOME/.envrc"
 
 # Set a nicer cursor
 xsetroot -cursor_name left_ptr
@@ -22,19 +24,7 @@ fi
 xmodmap -e "remove Lock = Caps_Lock"
 xmodmap -e "keysym Caps_Lock = Return"
 
-if [[ -d "$WALLPAPER_DIR" ]]; then
-  feh --bg-tile "`random-wallpaper $WALLPAPER_DIR`"
-fi
-
-xscreensaver -no-splash &
-#parcellite -d -n &
-pidgin &
-dropbox-launcher &
-
-# Launch transmission if there's torrents
-if [ "`ls -A ~/.config/transmission/torrents/`" ]; then
-  transmission-gtk &
-fi
+safe_source "$HOME/.xlate"
 
 xmonad
 
