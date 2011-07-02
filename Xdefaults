@@ -1,4 +1,4 @@
-URxvt*font: xft:Monospace:size=8
+URxvt*font: xft:Dina:size=8
 URxvt*scrollBar: false
 URxvt*scrollBar_right: false
 URxvt*saveLines: 10000
