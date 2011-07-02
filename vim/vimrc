@@ -89,7 +89,7 @@ nnoremap <C-Down> ddp
 nnoremap <Leader>tw :ToggleWord<CR>
 nnoremap <Leader>ap :%s/( /(/g<CR>:%s/ )/)/g<CR>
 
-nnoremap <C-r> :%s/<c-r>=expand("<cword>")<cr>/
+nnoremap <Leader>r :%s/<c-r>=expand("<cword>")<cr>/
 
 " Saving
 map <C-s> :w<CR>
