@@ -6,9 +6,9 @@ MPD="/usr/bin/mpd $HOME/.mpd/mpd.conf"
 $MPC status > /dev/null
 if [ $? -eq 0 ]; then
   # MPD running
-  $MPC toggle
+  $MPC toggle > /dev/null
 else
-  $MPD
-  $MPC play
+  $MPD > /dev/null
+  $MPC play > /dev/null
 fi
 
