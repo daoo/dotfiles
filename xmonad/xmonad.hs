@@ -168,10 +168,10 @@ keysToAdd cfg modMask = fromList $
   , ((modMask, xK_x), spawn $ editor cfg)
   , ((modMask, xK_c), spawn $ lock cfg)
   
-  , ((0, 0x1008ff30), spawn "mpc prev")         -- XF86Favorites
-  , ((0, 0x1008ff19), spawn "mpc next")         -- XF86Email
-  , ((0, 0x1008ff12), spawn "pa-mute")          -- XF86AudioMute
-  , ((0, 0x1008ff14), spawn "mpd-play-pause") ] -- XF86AudioPlay
+  , ((0, 0x1008ff30), spawn "mpc prev > /dev/null") -- XF86Favorites
+  , ((0, 0x1008ff19), spawn "mpc next > /dev/null") -- XF86Email
+  , ((0, 0x1008ff12), spawn "pa-mute")              -- XF86AudioMute
+  , ((0, 0x1008ff14), spawn "mpd-play-pause") ]     -- XF86AudioPlay
   where
     toggleWS = windows $ W.view =<< W.tag . head . filter ((\ x -> x /= "NSP") . W.tag) . W.hidden
 
