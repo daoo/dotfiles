@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# Needs mpd, mpc and zenity
+
+MPC="/usr/bin/mpc -q"
+MPC_NOT_QUIET="/usr/bin/mpc"
+MPD="/usr/bin/mpd $HOME/.mpd/mpd.conf"
+M3U="$HOME/.mpd/playlists/list.m3u"
+
+$MPC status
+if [ $? -ne 0 ]; then
+  # MPD not running
+  exit 1
+fi
+
+# Get current song
+SONG=$($MPC current)
+FILE=$($MPC -f '%file%' current)
+
+if [ "$SONG" = "" ]; then
+  # No song playing
+  exit 0
+fi
+
+# Ask for confirmation
+#xmessage -buttons 'Yes:1,No:0' "Really remove '$SONG'?"
+zenity --no-wrap --question --text="Really remove '$SONG'?"
+if [ $? -ne 0 ]; then
+  # Selected No
+  exit 1
+fi
+
+# === Remove From Playlist ===
+# Remove from playlist by turning on consume
+# But preserve consume status
+if [ "$($MPC_NOT_QUIET status | grep consume | awk '{ print $10 }')" = "on" ]; then
+  CONSUME_AFTER=1
+else
+  # This order will make it default to off, in case mpc status does not return (on|off)
+  CONSUME_AFTER=0
+  $MPC --wait consume 1
+fi
+
+# This will remove the song from the playlist
+$MPC --wait next
+
+# Restore consume status
+if [ $CONSUME_AFTER -eq 0 ]; then
+  $MPC consume "$CONSUME_AFTER"
+fi
+
+# === Remove From M3U ===
+# Make a backup of the M3U
+cp "$M3U" "$M3U.bak"
+
+# Remove the song from the default playlist
+grep -v "$FILE" "$M3U" > "$M3U.temp"
+mv "$M3U.temp" "$M3U"
+
+# Greate Success!
+echo "Removed '$SONG'"
+exit 0

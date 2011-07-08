@@ -1,14 +1,14 @@
 #!/bin/sh
 
-MPC="/usr/bin/mpc"
+MPC="/usr/bin/mpc -q"
 MPD="/usr/bin/mpd $HOME/.mpd/mpd.conf"
 
-$MPC status > /dev/null
+$MPC status
 if [ $? -eq 0 ]; then
   # MPD running
-  $MPC toggle > /dev/null
+  $MPC toggle
 else
-  $MPD > /dev/null
-  $MPC play > /dev/null
+  $MPD
+  $MPC
 fi
 
