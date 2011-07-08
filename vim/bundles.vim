@@ -16,7 +16,7 @@ Bundle 'rip-rip/clang_complete'
 Bundle 'tpope/vim-fugitive'
 
 " Files, searching and buffers
-Bundle 'a.vim'
+Bundle 'daoo/a.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'wincent/Command-T'
 
@@ -34,4 +34,17 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-repeat'
 
 filetype plugin indent on
+
+" -----------------------------------------------------------------------------
+" Plugin Settings
+ 
+" Clang Complete
+let g:clang_auto_select=0
+let g:clang_complete_auto=0
+let g:clang_complete_copen=1
+let g:clang_hl_errors=1
+let g:clang_periodic_quickfix=0
+let g:clang_snippets=0
+let g:clang_conceal_snippets=1
+let g:clang_use_library=1
 
