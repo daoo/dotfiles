@@ -1,5 +1,5 @@
 set guifont=Monospace\ 8
-
 set guioptions=""
+set mouse=""
 set t_vb=
 
