@@ -1,16 +1,97 @@
-" -----------------------------------------------------------------------------
-" Plugins and extras
-source ~/.vim/bundles.vim
-source ~/.vim/functions.vim
+" daoo's .vimrc
 
-" -----------------------------------------------------------------------------
-" General settings
+" {{{ Startup
 set nocompatible
 
-" Visual
+" use '.vim' directory instead of 'vimfiles' under windows
+if has("win32")
+  set runtimepath=~/.vim,$VIMRUNTIME
+endif
+
+filetype off
+
+set runtimepath+=~/.vim/bundle/vundle/ 
+call vundle#rc()
+" }}}
+" {{{ Vundle
+" Let vundle mange it self
+Bundle 'gmarik/vundle'
+
+" General
+Bundle 'Tagbar'
+Bundle 'mileszs/ack.vim'
+Bundle 'rip-rip/clang_complete'
+Bundle 'tpope/vim-fugitive'
+
+" Files, searching and buffers
+Bundle 'daoo/a.vim'
+Bundle 'scrooloose/nerdtree'
+Bundle 'wincent/Command-T'
+
+" Syntax
+Bundle 'daoo/Mustang2'
+Bundle 'Wombat'
+Bundle 'go.vim'
+Bundle 'tango-morning.vim'
+
+" Editing
+Bundle 'godlygeek/tabular'
+Bundle 'msanders/snipmate.vim'
+Bundle 'toggle_words.vim'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-repeat'
+
+filetype plugin indent on
+
+" }}}
+" {{{ General settings
+" Backup and temporary files
+set backup
+set backupdir=~/.vim/tmp/
+set directory=~/.vim/tmp/
+
+" Buffers
+set autowrite
+set hidden
+
+" Folding settings
+set foldmethod=indent
+set foldnestmax=10
+set nofoldenable
+set foldlevel=0
+
+" Completion
+set wildmenu
+set wildmode=list:longest,full
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.o
+
+" History
+set history=500
+set undolevels=500
+
+" Make backspace work like 'normal' text editors
+set backspace=start,indent,eol
+
+" Searching
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+
+" Indentation
+set cindent
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+set tabstop=8
+" }}}
+" {{{ Visual Settings
+set lazyredraw
 set nowrap
 set relativenumber
 set scrolloff=5
+set cursorline
+set cursorcolumn
 
 " Status line and command line
 set showcmd
@@ -26,64 +107,92 @@ set noerrorbells
 set visualbell
 set t_vb=
 
-" Command Completion
-set wildmode=longest:full
-set wildmenu
-
-" Backup and temporary files
-set backup
-set backupdir=~/.vim/tmp/
-set directory=~/.vim/tmp/
-
 " Color scheme
 colorscheme mustang
 syntax on
+" }}}
+" {{{ Plugin Settings
 
-" Buffers
-set autowrite
-set hidden
+" Clang Complete
+let g:clang_auto_select=0
+let g:clang_complete_auto=0
+let g:clang_complete_copen=1
+let g:clang_hl_errors=1
+let g:clang_periodic_quickfix=0
+let g:clang_snippets=0
+let g:clang_conceal_snippets=1
+let g:clang_use_library=1
+" }}}
+" {{{ Disabled Keys
+" Arrow keys
+inoremap  <Down>   <NOP>
+inoremap  <Left>   <NOP>
+inoremap  <Right>  <NOP>
+inoremap  <Up>     <NOP>
+noremap   <Down>   <NOP>
+noremap   <Left>   <NOP>
+noremap   <Right>  <NOP>
+noremap   <Up>     <NOP>
 
-" Indentation
-set autoindent
-set smartindent
+inoremap <C-Left> <NOP>
+inoremap <C-Right> <NOP>
+noremap <C-Left> <NOP>
+noremap <C-Right> <NOP>
 
-set tabstop=8
-set shiftwidth=2
-set softtabstop=2
-set expandtab
-
-" ------------------------------------------------------------------------------
-" Keys
-source ~/.vim/disable-keys.vim
-
+" Above arrow keys
+inoremap <Del> <NOP>
+inoremap <End> <NOP>
+inoremap <Home> <NOP>
+inoremap <PageDown> <NOP>
+inoremap <PageUp> <NOP>
+noremap <Del> <NOP>
+noremap <End> <NOP>
+noremap <Home> <NOP>
+noremap <PageDown> <NOP>
+noremap <PageUp> <NOP>
+" }}}
+" {{{ Key Bindings
 let mapleader=","
 
+" F-keys
+nnoremap <F2> :NERDTreeToggle<CR>
+nnoremap <F9> :TagbarToggle<CR>
+nnoremap <F10> :CommandTFlush<CR>
+
+" a.vim
+nnoremap <Leader>sa :A<CR>
+nnoremap <Leader>sv :AV<CR>
+nnoremap <Leader>ss :AS<CR>
+
 " Misc
-noremap <F2> :A<CR>
-noremap <F9> :TagbarToggle<CR>
-noremap <F10> :CommandTFlush<CR>
+nnoremap <Leader>ap :%s/( /(/g<CR>:%s/ )/)/g<CR>
+nnoremap <Leader>cd :cd %:p:h<CR>
+nnoremap <Leader>f :Ack '<cword>'<CR>
+nnoremap <Leader>r :%s/<c-r>=expand("<cword>")<cr>/
+nnoremap <Leader>tw :ToggleWord<CR>
 
-noremap <Leader>cd :cd %:p:h<CR>
-noremap <C-f> :Ack '<cword>'<CR>
+nnoremap <Space> :set hlsearch! hlsearch?<CR>
 
-" Editing
+" Tabular
 nnoremap <Leader>aa :Tabularize assignment<CR>
 
+" Move lines up and down
 nnoremap <C-Up> ddkP
 nnoremap <C-Down> ddp
 
-nnoremap <Leader>tw :ToggleWord<CR>
-nnoremap <Leader>ap :%s/( /(/g<CR>:%s/ )/)/g<CR>
-
-nnoremap <Leader>r :%s/<c-r>=expand("<cword>")<cr>/
+" Redraw window so search terms are centered
+nnoremap n nzz
+nnoremap N Nzz
 
 " Saving
 map <C-s> :w<CR>
 imap <C-s> <Esc>:w<CR>a
 
-" Splits
+" Easier SplitNavigation
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+" }}}
 
+" vim: fdm=marker :
