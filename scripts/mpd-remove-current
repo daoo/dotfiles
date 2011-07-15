@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# Needs mpd, mpc and zenity
+# Script for removing the currently playing song from your mpd queue and a selected m3u file.
+# Needs mpd and mpc
+
+
 
 MPC="/usr/bin/mpc -q"
 MPC_NOT_QUIET="/usr/bin/mpc"
@@ -9,8 +12,7 @@ M3U="$HOME/.mpd/playlists/list.m3u"
 
 $MPC status
 if [ $? -ne 0 ]; then
-  # MPD not running
-  exit 1
+  exit 1 # MPD not running
 fi
 
 # Get current song
@@ -18,16 +20,18 @@ SONG=$($MPC current)
 FILE=$($MPC -f '%file%' current)
 
 if [ "$SONG" = "" ]; then
-  # No song playing
-  exit 0
+  exit 2 # No song playing
 fi
 
 # Ask for confirmation
+# xmessage or zenity could be used if you don't want to run this in a terminal:
 #xmessage -buttons 'Yes:1,No:0' "Really remove '$SONG'?"
-zenity --no-wrap --question --text="Really remove '$SONG'?"
-if [ $? -ne 0 ]; then
-  # Selected No
-  exit 1
+#zenity --no-wrap --question --text="Really remove '$SONG'?"
+
+echo -n "Really remove '$SONG' [y/N]? "
+read RESULT
+if [ "$RESULT" != "y" -a "$RESULT" != "Y" ]; then
+  exit 3 # Failed confirmation
 fi
 
 # === Remove From Playlist ===
