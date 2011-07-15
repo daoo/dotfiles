@@ -10,4 +10,4 @@ if [[ ! -d "$TRASH_DIR" ]]; then
   mkdir "$TRASH_DIR"
 fi
 
-mv $@ "$TRASH_DIR"
+mv "$1" "$TRASH_DIR"
