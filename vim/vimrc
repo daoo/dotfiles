@@ -173,7 +173,7 @@ nnoremap <Leader>ap :%s/( /(/g<CR>:%s/ )/)/g<CR>
 nnoremap <Leader>cd :cd %:p:h<CR>
 nnoremap <Leader>f :Ack '<cword>'<CR>
 nnoremap <Leader>r :%s/<c-r>=expand("<cword>")<cr>/
-nnoremap <Leader>tw :ToggleWord<CR>
+nnoremap <Leader>mw :ToggleWord<CR>
 
 nnoremap <Space> :set hlsearch! hlsearch?<CR>
 
