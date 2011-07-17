@@ -10,23 +10,23 @@ end
 infile = ARGV[0].chomp
 outdir = ARGV[1].chomp
 
-if !Dir.exist?( outdir )
+if !Dir.exist?(outdir)
   puts "Directory #{outdir} does not exist"
   exit 1
 end
 
 songs = Array.new()
 
-File.open( infile, "r" ) do |file|
+File.open(infile, "r") do |file|
   i = 0
   while line = file.gets
     opath = line.chomp
-    fname = File.basename( opath )
-    npath = File.join( outdir, fname )
+    fname = File.basename(opath)
+    npath = File.join(outdir, fname)
 
-    if File.exists?( opath )
-      if not File.exists?( npath )
-        FileUtils.cp( opath, outdir )
+    if File.exists?(opath)
+      if not File.exists?(npath)
+        FileUtils.cp(opath, outdir)
         puts "Copied #{fname}"
         i += 1
       else
@@ -42,13 +42,13 @@ File.open( infile, "r" ) do |file|
   puts "#{i} file(s) copied"
 end
 
-Dir.foreach( outdir ) do |f|
+Dir.foreach(outdir) do |f|
   if f != "." and f != ".."
-    if not songs.include?( File.basename( f ) )
-      print "Remove '#{f}'? "
+    if not songs.include?(File.basename(f))
+      print "Remove '#{f}' [y/N]? "
       remove = STDIN.gets.chomp.downcase
-      if remove == "yes" or remove == "y"
-        FileUtils.rm( File.join( outdir, f ) )
+      if remove == "y"
+        FileUtils.rm(File.join(outdir, f))
         puts "Removed '#{f}'"
       end
     end
