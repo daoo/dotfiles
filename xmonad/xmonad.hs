@@ -15,7 +15,7 @@ import XMonad.Prompt.Shell hiding (shellPrompt, getCommands)
 import XMonad.Util.Dzen as D
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad 
-import qualified XMonad.StackSet as W
+import qualified XMonad.StackSet as S
 
 -- Actions
 import XMonad.Actions.DynamicWorkspaces
@@ -150,30 +150,37 @@ spConfig = defaultXPConfig
 --keysToAdd :: Config -> KeyMask -> [((KeyMask, KeySym), X ())]
 keysToAdd cfg modMask = fromList $
   [ ((modMask, xK_u), withFocused toggleBorder)
-  , ((modMask, xK_s), toggleWS)
-  , ((modMask, xK_g), goToSelected defaultGSConfig)
+  , ((modMask, xK_o), toggleWS)
+  , ((modMask, xK_d), goToSelected defaultGSConfig)
 
   -- Dynamic Workspaces
-  , ((modMask, xK_b), removeWorkspace)
-  , ((modMask, xK_n), selectWorkspace spConfig)
-  , ((modMask, xK_m), withWorkspace spConfig (windows . W.shift))
+  , ((modMask, xK_y), removeWorkspace)
+  , ((modMask, xK_f), selectWorkspace spConfig)
+  , ((modMask, xK_g), withWorkspace spConfig (windows . S.shift))
 
   -- Terminals and stuff
   , ((modMask, xK_p), shellPrompt spConfig)
+  , ((modMask, xK_dollar), scratchpadSpawnActionTerminal $ term cfg)
+  , ((modMask, xK_asciitilde), scratchpadSpawnActionTerminal $ term cfg)
   , ((modMask, xK_grave), scratchpadSpawnActionTerminal $ term cfg)
   , ((modMask, xK_Return), spawn $ term cfg)
 
   -- Software
-  , ((modMask, xK_z), spawn $ browser cfg)
-  , ((modMask, xK_x), spawn $ editor cfg)
-  , ((modMask, xK_c), spawn $ lock cfg)
+  , ((modMask, xK_x), spawn $ browser cfg)
+  , ((modMask, xK_b), spawn $ editor cfg)
+  , ((modMask, xK_m), spawn $ lock cfg)
   
+  -- Multimedia keys
   , ((0, 0x1008ff30), spawn "mpc prev > /dev/null") -- XF86Favorites
   , ((0, 0x1008ff19), spawn "mpc next > /dev/null") -- XF86Email
   , ((0, 0x1008ff12), spawn "pa-mute")              -- XF86AudioMute
   , ((0, 0x1008ff14), spawn "mpd-play-pause") ]     -- XF86AudioPlay
+  ++ mapWS modMask (windows . S.greedyView)
+  ++ mapWS (modMask .|. shiftMask) (\ i -> (windows $ S.shift i) >> (windows $ S.greedyView i))
   where
-    toggleWS = windows $ W.view =<< W.tag . head . filter ((\ x -> x /= "NSP") . W.tag) . W.hidden
+    ws        = zip myWorkspaces workspaceKeys
+    mapWS m a = map (\ (i, k) -> ((m, k), a i)) ws
+    toggleWS  = windows $ S.view =<< S.tag . head . filter ((\ x -> x /= "NSP") . S.tag) . S.hidden
 
 -- Misc
 myModKey :: KeyMask
@@ -181,6 +188,10 @@ myModKey = mod4Mask
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = [ "im", "web", "code", "code2", "other", "other2", "full", "void" ]
+workspaceKeys :: [KeySym]
+workspaceKeys = [ xK_ampersand, xK_bracketleft, xK_braceleft, xK_braceright
+                , xK_parenleft, xK_equal, xK_asterisk, xK_parenright, xK_plus
+                , xK_bracketright, xK_exclam ]
 
 -- Main
 main :: IO ()
