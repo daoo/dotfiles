@@ -9,6 +9,6 @@ if [ $? -eq 0 ]; then
   $MPC toggle
 else
   $MPD
-  $MPC
+  $MPC play
 fi
 
