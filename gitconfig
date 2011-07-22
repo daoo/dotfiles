@@ -1,7 +1,7 @@
 [core]
-  editor   = vim
-  autocrlf = input
-	excludesfile = ~/.gitignore
+  editor       = vim
+  autocrlf     = input
+  excludesfile = ~/.gitignore
 [color]
   branch      = auto
   diff        = auto
@@ -15,5 +15,5 @@
   w  = whatchanged
   lg = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 [user]
-	name  = daoo
-	email = daoo314@gmail.com
+  name  = daoo
+  email = daoo314@gmail.com
