@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "scale=4; $@" | bc
+
