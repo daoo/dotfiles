@@ -17,7 +17,7 @@ class HAlignment:
   CENTER = 1
   RIGHT  = 2
 
-def get_offset_x( tile_width, layer_width, alignH, hOffset ):
+def get_offset_x(tile_width, layer_width, alignH, hOffset):
   if alignH == HAlignment.LEFT:
     return 0
   elif alignH == HAlignment.CENTER:
@@ -27,7 +27,7 @@ def get_offset_x( tile_width, layer_width, alignH, hOffset ):
   else:
     return hOffset
 
-def get_offset_y( tile_height, layer_height, alignV, vOffset ):
+def get_offset_y(tile_height, layer_height, alignV, vOffset):
   if alignV == VAlignment.TOP:
     return 0
   elif alignV == VAlignment.MIDDLE:
@@ -37,31 +37,43 @@ def get_offset_y( tile_height, layer_height, alignV, vOffset ):
   else:
     return vOffset
 
-def python_optimize_sprite_sheet( img, drawable, alignH = 0, alignV = 0, hOffset = 0, vOffset = 0, layout = "horizontal", even = 0, hTileCount = 0, vTileCount = 0, maxWidth = 0, maxHeight = 0 ):
+def find_largest(layers):
+  w = 0
+  h = 0
+  for layer in layers:
+    if layer.width > w:
+      w = layer.width
+    if layer.height > h:
+      h = layer.height
+
+  return w, h
+
+
+def python_optimize_sprite_sheet(img, drawable, alignH = 0, alignV = 0, hOffset = 0, vOffset = 0, layout = "horizontal", even = 0, hTileCount = 0, vTileCount = 0, maxWidth = 0, maxHeight = 0):
   img.undo_group_start()
 
   # Autocrop and rename all layers
   i = 1
   for layer in img.layers:
-    layer.name = "Sprite " + str( i )
+    layer.name = "Sprite " + str(i)
+    
+    # For some reason, autocrop works on the currently selected layer
     img.active_layer = layer
-    pdb.plug_in_autocrop_layer( img, layer )
+    pdb.plug_in_autocrop_layer(img, layer)
 
     i = i + 1
 
   # Find largest layer and use it as tile size
-  tile_width  = 0
-  tile_height = 0
-  for layer in img.layers:
-    if layer.width > tile_width:
-      tile_width = layer.width
-    if layer.height > tile_height:
-      tile_height = layer.height
+  tile_width, tile_height = find_largest(img.layers)
+  print("Tile size: " + str(tile_width) + "x" + str(tile_height))
+
+  # Setup the grid
+  pdb.gimp_image_grid_set_spacing(img, tile_width, tile_height)
 
   # Calculate new image size
-  tile_count = len( img.layers )
+  tile_count = len(img.layers)
   if even == 1:
-    tile_count_layout = math.floor( sqrt( tile_count ) )
+    tile_count_layout = math.floor(sqrt(tile_count))
   else:
     if hTileCount == 0 and vTileCount == 0:
       tile_count_layout = tile_count
@@ -72,25 +84,24 @@ def python_optimize_sprite_sheet( img, drawable, alignH = 0, alignV = 0, hOffset
 
   if layout == "horizontal":
     img_width  = tile_count_layout * tile_width
-    img_height = int( math.ceil( tile_count / tile_count_layout ) ) * tile_height
+    img_height = int(math.ceil(tile_count / float(tile_count_layout))) * tile_height
   elif layout == "vertical":
     img_height = tile_count * tile_height
-    img_width  = int( math.ceil( tile_count / tile_count_layout ) ) * tile_width
-
+    img_width  = int(math.ceil(tile_count / float(tile_count_layout))) * tile_width
 
   # Resize the image and reposition the content
-  img.resize( img_width, img_height, 0, 0 )
+  img.resize(img_width, img_height, 0, 0)
   if layout == "horizontal":
     x = 0
     y = 0
 
     for layer in img.layers:
-      offset_x = tile_width * x + get_offset_x( tile_width, layer.width, alignH, hOffset )
-      offset_y = tile_height * y + get_offset_y( tile_height, layer.height, alignV, vOffset )
-      layer.set_offsets( offset_x, offset_y )
+      offset_x = tile_width * x + get_offset_x(tile_width, layer.width, alignH, hOffset)
+      offset_y = tile_height * y + get_offset_y(tile_height, layer.height, alignV, vOffset)
+      layer.set_offsets(offset_x, offset_y)
 
       x += 1
-      if x > tile_count_layout:
+      if x >= tile_count_layout:
         x = 0
         y += 1
 
@@ -99,20 +110,19 @@ def python_optimize_sprite_sheet( img, drawable, alignH = 0, alignV = 0, hOffset
     y = 0
 
     for layer in img.layers:
-      offset_x = tile_width * x + pX + get_offset_x( tile_width, layer.width, alignH, hOffset )
-      offset_y = tile_height * y + pY + get_offset_y( tile_height, layer.height, alignV, vOffset )
-      layer.set_offsets( offset_x, offset_y )
+      offset_x = tile_width * x + get_offset_x(tile_width, layer.width, alignH, hOffset)
+      offset_y = tile_height * y + get_offset_y(tile_height, layer.height, alignV, vOffset)
+      layer.set_offsets(offset_x, offset_y)
 
       y += 1
-      if y > tile_count_layout:
+      if y >= tile_count_layout:
         y = 0
         x += 1
 
-  #img.flatten()
   img.undo_group_end()
   gimp.displays_flush()
 
-register( "python_fu_optimize_sprite_sheet"
+register("python_fu_optimize_sprite_sheet"
         , "Optimize the size and arrangement of tiles in a sprite sheet."
         , "Optimize the size and arrangement of tiles in a sprite sheet."
         , "Daniel Oom"
