@@ -132,8 +132,8 @@ barToString = concat . intersperse " "
 defaultBar, fullBar, leftBar, rightBar :: Bar
 defaultBar  = ["-fn", show panelFont, "-bg", show panelBg, "-fg", show panelFg]
 fullBar     = defaultBar ++ ["-x", "0",    "-y", "0", "-w", "1920", "-h", "13", "-ta", "c"]
-leftBar     = defaultBar ++ ["-x", "0",    "-y", "0", "-w", "1200", "-h", "13", "-ta", "l"]
-rightBar    = defaultBar ++ ["-x", "1200", "-y", "0", "-w", "720",  "-h", "13", "-ta", "r"]
+leftBar     = defaultBar ++ ["-x", "0",    "-y", "0", "-w", "1000", "-h", "13", "-ta", "l"]
+rightBar    = defaultBar ++ ["-x", "1000", "-y", "0", "-w", "920",  "-h", "13", "-ta", "r"]
 
 -- Bar look
 spConfig :: XPConfig

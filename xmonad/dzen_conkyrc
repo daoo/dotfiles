@@ -12,7 +12,7 @@ TEXT
 ${if_running mpd}\
 ${if_match "$mpd_status"=="Playing"}^i($HOME/.xmonad/icons/play.xbm)${endif}\
 ${if_match "$mpd_status"=="Paused"}^i($HOME/.xmonad/icons/pause.xbm)${endif}\
- ${mpd_smart} \
+ ${mpd_smart 85} \
 ${endif}\
 ^i($HOME/.xmonad/icons/cpu.xbm) ${cpu}% \
 ^i($HOME/.xmonad/icons/mem.xbm) ${memperc}% \
