@@ -1,4 +1,5 @@
 *.swp
+*.pyc
 firefox/pentadactyl/info
 vim/.netrwhist
 vim/bundle
