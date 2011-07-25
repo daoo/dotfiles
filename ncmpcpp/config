@@ -1,0 +1,29 @@
+mpd_host = "localhost"
+mpd_port = "6600"
+mpd_music_dir = "/storage/music/"
+
+playlist_separate_albums = "yes"
+playlist_display_mode = "columns"
+browser_display_mode = "columns"
+search_engine_display_mode = "columns"
+user_interface = "alternative"
+
+default_space_mode = "select"
+
+header_visibility = "yes"
+statusbar_visibility = "yes"
+titles_visibility = "yes"
+header_text_scrolling = "yes"
+store_lyrics_in_song_dir = "no"
+
+ncmpc_like_songs_adding = "yes" (enabled - add/remove, disabled - always add)
+display_screens_numbers_on_start = "yes"
+
+jump_to_now_playing_song_at_start = "yes"
+ask_before_clearing_main_playlist = "yes"
+display_volume_level = "yes"
+display_bitrate = "yes"
+
+mouse_support = "no"
+search_engine_default_search_mode = "2"
+
