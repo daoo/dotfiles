@@ -1,6 +1,7 @@
-*.swp
 *.pyc
+*.swp
 firefox/pentadactyl/info
+ncmpcpp/error.log
 vim/.netrwhist
 vim/bundle
 vim/eclim
