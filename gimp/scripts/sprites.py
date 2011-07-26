@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from gimpfu import *
+#from gimpfu import *
 
 class Layout:
   VERTICAL   = 0
@@ -8,34 +8,32 @@ class Layout:
 
   direction = VERTICAL
   limit     = 0
-  layout    = []
+
+  __current = 0, 0
 
   def __init__(self, direction, limit):
     self.direction = direction
     self.limit     = limit
+  
+  def pop(self):
+    old  = self.__current
+    x, y = self.__current
 
-    self.layout = [(0, 0)] # Always start at (0, 0)
+    if self.direction == Layout.HORIZONTAL:
+      q, r = divmod(x + 1, self.limit)
 
-    if direction == Layout.HORIZONTAL:
-      x = 1
-      y = 0
-      for i in range(1, tile_count):
-        layout.append((x, y))
+      x  = r
+      y += q
 
-        x += 1
-        if x > limit:
-          x  = 0
-          y += 1
-    elif direction == Layout.VERTICAL:
-      x = 0
-      y = 1
-      for i in range(1, tile_count):
-        layout.append((x, y))
+    elif self.direction == Layout.VERTICAL:
+      q, r = divmod(y + 1, self.limit)
 
-        y += 1
-        if x > limit:
-          x += 1
-          y  = 0
+      x += q
+      y  = r
+
+    self.__current = x, y
+
+    return old
 
 class Alignment:
   FIRST  = 0 # Top or left
@@ -50,21 +48,21 @@ class Alignment:
     self.v_align = v_align
     self.h_align = h_align
 
-  def __get_offset(self, align, tile_size, layer_size, current):
+  def __get_offset(align, tile_size, layer_size, current):
     if align == FIRST:
       return 0
     elif align == SECOND:
       return tile_size / 2 - layer_size / 2
     elif align == THIRD:
       return tile_size - layer_size
-    elif align == KEEP:
-      return current % tile_size
+    else:
+      return current
 
-  def get_x_offset(self, tile_size, layer_size, current):
-    return __get_offset(self, h_align, layer_size, current)
+  def get_offsets(self, tile_size, layer):
+    x = __get_offset(v_align, tile_size.width, layer.width, tile_size.width % layer.offsets[0])
+    y = __get_offset(h_align, tile_size.height, layer.height, tile_size.height % layer.offsets[1])
 
-  def get_y_offset(self, tile_size, layer_size, current):
-    return __get_offset(self, v_align, layer_size, current)
+    return x, y
 
 def find_bounding(layers):
   w = 0
@@ -107,11 +105,21 @@ class SpriteSheet:
     if align.v_align == Alignment.KEEP:
       new_height = 0
       for layer in self.image.layers:
-        tx         = layer.offsets[0] % tile_height
-        new_height = max(new_height, tx + layer.height)
+        ty         = layer.offsets[0] % tile_height
+        new_height = max(new_height, ty + layer.height)
  
       tile_height = new_height
 
-    for (x, y) in layout.layout:
-      print("ASD")
-    
+    for layer in self.image.layers:
+      tx, ty = layout.pop()
+      ox, oy = align.get_offsets(tile_size, layer)
+
+      layer.set_offsets(tx * tile_width + ox, ty * tile_height + oy)
+
+class TileSize:
+  width = 0
+  height = 0
+
+  def __init__(self, width, height):
+    self.width  = width
+    self.height = height
