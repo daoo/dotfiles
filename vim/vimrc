@@ -171,8 +171,9 @@ nnoremap <Leader>ss :AS<CR>
 " Misc
 nnoremap <Leader>ap :%s/( /(/g<CR>:%s/ )/)/g<CR>
 nnoremap <Leader>cd :cd %:p:h<CR>
-nnoremap <Leader>fl /<c-r>=expand("<cword>")<cr><CR>
+nnoremap <Leader>fc :set hlsearch!<CR>
 nnoremap <Leader>fg :Ack '<cword>'<CR>
+nnoremap <Leader>fl /<c-r>=expand("<cword>")<cr><CR>
 nnoremap <Leader>fr :%s/<c-r>=expand("<cword>")<cr>/
 nnoremap <Leader>mw :ToggleWord<CR>
 
