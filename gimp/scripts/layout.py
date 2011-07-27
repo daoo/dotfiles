@@ -25,9 +25,9 @@ class Layout:
     self.reset()
 
   def get_size(self, layer_count):
-    tmp = int(ceil(float(layer_count) / float(self.limit)))
-
     if self.limit > 0 and layer_count > self.limit:
+      tmp = int(ceil(float(layer_count) / float(self.limit)))
+
       if self.direction == Layout.HORIZONTAL:
         return self.limit, tmp
       elif self.direction == Layout.VERTICAL:
