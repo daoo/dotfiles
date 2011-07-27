@@ -33,9 +33,9 @@ register("python_fu_layout_tiles"
         , "<Image>/Filters/Sprite Sheet/Layout Tiles..."
         , "*"
         , [ (PF_OPTION, "alignH", "Horzontal alignment", 0, ["Left", "Center", "Right"])
-          , (PF_OPTION, "alignV", "Vertical alignment" , 0, ["Top", "Middle", "Bottom"])
-          , (PF_RADIO , "layout", "Tile layout", "horizontal", (("Horizontal", "horizontal"), ("Vertical", "vertical")))
-          , (PF_INT   , "limit", "Limit", 0) ]
+          , (PF_OPTION, "alignV", "Vertical alignment", 0, ["Top", "Middle", "Bottom"])
+          , (PF_RADIO, "layout", "Tile layout", "horizontal", (("Horizontal", "horizontal"), ("Vertical", "vertical")))
+          , (PF_INT, "limit", "Limit", 0) ]
         , []
         , python_layout_tiles)
 
