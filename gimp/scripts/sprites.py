@@ -2,28 +2,12 @@ from layout import Layout
 from alignment import Alignment
 from gimpfu import *
 
-def calculate_tile_size(img, keep_x = False, keep_y = False):
+def calculate_tile_size(img):
   w = 0
   h = 0
   for layer in img.layers:
     w = max(w, layer.width)
     h = max(h, layer.height)
-
-  if keep_x:
-    nw = 0
-    for layer in img.layers:
-      tx = layer.offsets[0] % w
-      nw = max(nw, tx + layer.width)
-
-    w = nw
-
-  if keep_y:
-    nh = 0
-    for layer in img.layers:
-      ty = layer.offsets[0] % h
-      nh = max(nh, ty + layer.height)
-
-    h = nh
 
   return w, h
 
@@ -40,10 +24,7 @@ def clean_up(img):
     i += 1
 
 def align_and_layout(img, align, layout):
-  tw, th = calculate_tile_size(
-      img,
-      align.h_align == Alignment.KEEP,
-      align.v_align == Alignment.KEEP)
+  tw, th = calculate_tile_size(img)
 
   layout.reset()
   for layer in img.layers:
