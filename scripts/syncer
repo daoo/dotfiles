@@ -1,5 +1,13 @@
 #!/usr/bin/env ruby
 
+def for_paths(dir)
+  Dir.foreach(dir) do |f|
+    if f != "." and f != ".."
+      yield(File.join(dir, f))
+    end
+  end
+end
+
 require 'fileutils'
 
 if ARGV.length != 2
@@ -17,20 +25,33 @@ end
 
 songs = Array.new()
 
+puts "Copying..."
 File.open(infile, "r") do |file|
   i = 0
   while line = file.gets
     opath = line.chomp
     fname = File.basename(opath)
-    npath = File.join(outdir, fname)
+
+    tmp    = File.dirname(opath).split("/")
+    album  = tmp[-1]
+    artist = tmp[-2]
+
+    tmp  = fname.split(".").first()
+    song = tmp[3, tmp.length]
+
+    id = "#{artist} - #{album} - #{song}"
+
+    ndir  = File.join(outdir, artist, album)
+    npath = File.join(ndir, fname)
 
     if File.exists?(opath)
       if not File.exists?(npath)
-        FileUtils.cp(opath, outdir)
-        puts "Copied #{fname}"
+        FileUtils.mkdir_p(ndir)
+        FileUtils.cp(opath, ndir)
+        puts id
         i += 1
       else
-        puts "File exists in target #{fname}"
+        puts "File exists in target #{id}"
       end
 
       songs << fname
@@ -42,14 +63,18 @@ File.open(infile, "r") do |file|
   puts "#{i} file(s) copied"
 end
 
-Dir.foreach(outdir) do |f|
-  if f != "." and f != ".."
-    if not songs.include?(File.basename(f))
-      print "Remove '#{f}' [y/N]? "
-      remove = STDIN.gets.chomp.downcase
-      if remove == "y"
-        FileUtils.rm(File.join(outdir, f))
-        puts "Removed '#{f}'"
+puts
+puts "Remove files not in the infile..."
+for_paths(outdir) do |artist|
+  for_paths(artist) do |album|
+    for_paths(album) do |f|
+      if not songs.include?(File.basename(f))
+        print "Remove '#{f}' [y/N]? "
+        remove = STDIN.gets.chomp.downcase
+        if remove == "y"
+          FileUtils.rm(File.join(outdir, f))
+          puts "Removed '#{f}'"
+        end
       end
     end
   end
