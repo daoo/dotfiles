@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+# TODO: Job manager
+# TODO: Separate Progress Bar into it's own module
+
 require 'fileutils'
 
 #{{{ Progress Bar
@@ -381,7 +384,7 @@ def main(argv)
         # make the system more responsive during the 
         # sync.
         while File.size(opath) != File.size(npath)
-         #sleep 0.1
+         sleep 0.5
         end
       end
 
