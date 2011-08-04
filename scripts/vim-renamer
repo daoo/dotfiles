@@ -29,7 +29,11 @@ Tempfile.open('random') do |tf|
 
       # Don't rename if we don't have to
       if old != new
-        FileUtils.mv(old, new)
+        if not File.exists?(new)
+          FileUtils.mv(old, new)
+        else
+          puts "File #{new} already exists, not renaming."
+        end
       end
     end
   end
