@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+require 'tempfile'
+
+# Works with PWD
+old_names = Dir.glob("*").sort
+
+Tempfile.open('random') do |tf|
+  tf.puts("# Lines starting wiht # will be ignored")
+  tf.puts("# Do not change the order of the file names")
+  old_names.each do |name|
+    tf.puts(name)
+  end
+  tf.flush()
+
+  system("vim #{tf.path()}")
+
+  tf.rewind
+  new_names = tf.readlines.map { |line| line.chomp }.select { |name| not name.start_with?("#") }
+
+  if new_names.length != old_names.length
+    puts "Number of lines have changed! Exiting."
+    exit 1
+  else
+    while not new_names.empty? and not old_names.empty?
+      old = old_names.pop()
+      new = new_names.pop()
+
+      # Don't rename if we don't have to
+      if old != new
+        FileUtils.mv(old, new)
+      end
+    end
+  end
+end
