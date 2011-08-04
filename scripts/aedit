@@ -8,7 +8,7 @@ rnd() {
 ATOOL="$(which atool)"
 if [ $? -ne 0 ]; then
   echo "atool not found"
-  exit
+  exit 1
 fi
 
 # Check parameters
