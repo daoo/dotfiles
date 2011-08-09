@@ -171,7 +171,7 @@ nnoremap <Leader>ss :AS<CR>
 " Misc
 nnoremap <Leader>cd :cd %:p:h<CR>
 
-nnoremap <Leader>fc :set hlsearch!<CR>
+nnoremap <Leader>fc :nohlsearch<CR>
 nnoremap <Leader>fg :Ack '<cword>'<CR>
 nnoremap <Leader>fl /<c-r>=expand("<cword>")<cr><CR>
 nnoremap <Leader>fr :%s/<c-r>=expand("<cword>")<cr>/
