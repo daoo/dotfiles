@@ -3,18 +3,123 @@
 # Skip all this for non-interactive shells
 [[ -z "$PS1" ]] && return
 
-. ~/dotfiles/zsh/config
-. ~/dotfiles/zsh/aliases
-. ~/dotfiles/zsh/binds
-. ~/dotfiles/zsh/autocompletion
-. ~/dotfiles/zsh/functions
+# {{{ Config
+# PS1 and Title
+if [ "$SSH_CLIENT" != "" ]; then
+  # Connected through ssh
+  PS1='%n@%m:%~$ '
+else
+  PS1='%n:%~$ '
+fi
 
+case "$TERM" in
+  xterm*|*rxvt*)
+    # Set the title
+    precmd () {print -Pn "\e]0;%~ (%n@%m)\a"}
+  ;;
+esac
+
+# History
+HISTFILE=~/.zhistory
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+setopt histignoredups
+setopt incappendhistory
+
+# Stuff
+setopt nobeep
+export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+export EDITOR="vim"
+export PAGER="less"
+export LESS="-F -i -X -r"
+
+# Only add ~/bin/ to $PATH if not already there
+echo "$PATH" | grep -q "$HOME/bin"
+if [ $? -ne 0 ]; then
+  export PATH="$HOME/bin:$PATH"
+fi
+
+# Disable ctrl-q and ctrl-s
+stty -ixon
+# }}}
+# {{{ Aliases
+# Give some commands fancy colors
+alias grep='grep --color=auto'
+alias ls='ls -h -F --color=auto'
+alias tree='tree -C'
+alias pacman='pacman-color'
+
+# Some for ls
+alias l='ls'
+alias ll='ls -lh'
+alias la='ls -a'
+alias lla='ls -lha'
+
+# Up up and away
+alias '..'='cd ..'
+alias '...'='cd ../..'
+alias '....'='cd ../../..'
+alias '.....'='cd ../../../..'
+
+# Bazinga
+alias :q="echo 'you are not in vim anymore' ; echo ''"
+alias :w="echo 'you are not in vim anymore' ; echo ''"
+
+# Other
+alias bell="echo -e '\a'"
+alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
+alias calc="noglob calc"
+# }}}
+# {{{ Binds
+bindkey '' history-search-backward
+bindkey '' history-search-forward
+bindkey '' history-incremental-search-backward
+bindkey '' push-line
+
+bindkey '[7~' beginning-of-line
+bindkey '[8~' end-of-line
+bindkey 'Od'  backward-word
+bindkey 'Oc'  forward-word
+
+bindkey '^[[3~' delete-char
+bindkey '[3^' delete-word
+bindkey ''    backward-kill-word
+bindkey ''    backward-delete-char
+# }}}
+# {{{ Autocompletion
+# Completion
+autoload -U compinit
+compinit
+zstyle ':completion:*' special-dirs true
+
+if [[ -f "/etc/zsh_command_not_found" ]]; then
+  . /etc/zsh_command_not_found
+fi
+# }}}
+# {{{ Functions
+chalmers() {
+  TERM=linux ssh lalti@remote$(($RANDOM % 4 + 1)).student.chalmers.se $*
+}
+
+f() {
+  find . -iname "*$@*"
+}
+
+ff() {
+  find . -iname "*$@*" -not -type d
+}
+# }}}
+# {{{ Plugins
 . ~/dotfiles/zsh/plugins/z/z.sh
 function chpwd() {
   z --add "$(pwd -P)"
 }
-
+# }}}
+# {{{ Local settings
 if [ -f ~/.zlocal ]; then
   . ~/.zlocal
 fi
+# }}}
 
+# vim: fdm=marker :
