@@ -1,325 +1,11 @@
 #!/usr/bin/env ruby
 
-# TODO: Job manager
-# TODO: Separate Progress Bar into it's own module
+require 'tempfile'
 
-require 'fileutils'
-
-#{{{ Progress Bar
-class ProgressBar
-  #{{{ State
-  class State
-    attr_accessor :left, :right, :max
-
-    def initialize(max)
-      @max   = max
-      @left  = 0
-      @right = max
-    end
-
-    def step(val)
-      @left  += val
-      @right  = @max - @left
-    end
-
-    def get_progress()
-      return @left.to_f / @max.to_f
-    end
-  end
-  #}}}
-  #{{{ Look
-  class Element
-    def initialize()
-      @tot_length = 0
-    end
-
-    def length()
-      return @tot_length
-    end
-  end
-
-  class EPrecentage < Element
-    def initialize()
-      @tot_length = 4
-    end
-
-    def get_str(state)
-      str = String.new()
-
-      # Rounding hack
-      p = (state.get_progress() * 100.0 + 0.5).to_i
-
-      str << p.to_s.rjust(3, " ")
-      str << "%"
-
-      return str
-    end
-  end
-
-  class ECount < Element
-    def initialize(max)
-      @max_str    = max.to_s
-      @num_length = @max_str.length
-      @tot_length = @num_length * 2 + 3
-    end
-
-    def get_str(state)
-      str = String.new()
-
-      str << state.left.to_s.rjust(@num_length, " ")
-      str << " / "
-      str << @max_str
-
-      return str
-    end
-  end
-
-  class EBar < Element
-    CHAR_LEFT  = "#"
-    CHAR_RIGHT = "-"
-
-    CHAR_BEGIN = "["
-    CHAR_END   = "]"
-
-    DECORATIVE_CHARS = 2
-
-    def initialize(max, length)
-      @tot_length = length
-      @p_length   = length - DECORATIVE_CHARS
-    end
-
-    def get_str(state)
-      str = String.new()
-
-      str << CHAR_BEGIN
-
-      lefts  = ((state.left.to_f / state.max.to_f) * @p_length).to_i
-      rights = @p_length - lefts
-
-      str << CHAR_LEFT * lefts
-      str << CHAR_RIGHT * rights
-
-      str << CHAR_END
-
-      return str
-    end
-  end
-
-  class ESpacer < Element
-    def initialize(length = 1, char = " ")
-      @tot_length = length
-      @str        = char * length
-    end
-
-    def get_str(data)
-      return @str
-    end
-  end
-
-  class Look
-    def initialize(array)
-      @array = array
-
-      @length = @array.map { |a| a.length() }.inject { |sum, x| sum + x }
-    end
-
-    def length()
-      return @length
-    end
-
-    def get_str(state)
-      str = String.new()
-      
-      @array.each do |a|
-        str << a.get_str(state)
-      end
-
-      return str
-    end
-  end
-
-  #}}}
-  #{{{ Methods
-  def initialize(step, max, length)
-    @finished        = false
-    @have_been_drawn = false
-
-    @state = State.new(max)
-    @step  = 1
-
-    a   = [ECount.new(max), ESpacer.new(), ESpacer.new(), EPrecentage.new()]
-    tmp = Look.new(a)
-    a.insert(2, EBar.new(max, length - tmp.length()))
-    @look = Look.new(a)
-
-    @tot_length = @look.length()
-  end
-
-  def length()
-    return @tot_length
-  end
-
-  def step(step = nil)
-    if step == nil
-      @state.step(@step)
-    else
-      @state.step(step)
-    end
-  end
-
-  def draw()
-    if @have_been_drawn
-      print "\b" * @tot_length
-    end
-
-    print @look.get_str(@state)
-
-    @have_been_drawn = true
-  end
-
-  def finish()
-    puts
-  end
-
-  def get_str()
-    return @look.get_str(@state)
-  end
-  #}}}
-end
-#}}}
-#{{{ Misc
-def for_paths(dir)
-  Dir.foreach(dir) do |f|
-    if f != "." and f != ".."
-      yield(File.join(dir, f))
-    end
-  end
-end
-
-class String
-  def shift()
-    return self.slice!(0)
-  end
-end
-
-def get_lines(file)
-  result = ""
-
-  File.open(file, 'r') do |f|
-    result = f.readlines
-  end
-
-  return result
-end
-#}}}
-#{{{ SongData
-class SongData 
-  attr_accessor :song, :num, :album, :artist, :file, :file_name, :file_ext, :ext
-
-  def initialize(file)
-    @file      = file
-    @file_name = File.basename(file)
-    @file_ext  = File.extname(@file_name)
-    @ext       = @file_ext[1,@file_ext.length] # No dot
-
-    tmp     = file.split('/')
-    @album  = tmp[-2]
-    @artist = tmp[-3]
-
-    tmp = File.basename(@file_name, @file_ext)
-    tmp = tmp.split(" ")
-    @num = tmp.shift()
-    @song = tmp.join(" ")
-  end
-
-  def to_s()
-    return "#{@artist} - #{@album} - #{@num} #{@song}"
-  end
-end
-#}}}
-#{{{ Format
-class Format
-  FOLDER = 0
-  ARTIST = 1
-  ALBUM  = 2
-  SONG   = 3
-  NUM    = 4
-  EXT    = 5
-
-  def initialize()
-    @data = Array.new()
-  end
-
-  def <<(format)
-    @data << format
-  end
-
-  def format(input)
-    res = String.new()
-    @data.each do |f|
-      case f
-        when Format::FOLDER
-          res << File::SEPARATOR
-        when Format::ARTIST
-          res << input.artist
-        when Format::ALBUM
-          res << input.album
-        when Format::SONG
-          res << input.song
-        when Format::NUM
-          res << input.num
-        when Format::EXT
-          res << input.ext
-        else
-          res << f
-      end
-    end
-
-    return res
-  end
-
-  def self.from_string(str)
-    fmt = Format.new()
-
-    while not str.empty?
-      chr = str.shift()
-      case chr
-        when "/"
-          fmt << Format::FOLDER
-        when "%"
-          chr2 = str.shift()
-          case chr2
-            when "a"
-              fmt << Format::ARTIST
-            when "l"
-              fmt << Format::ALBUM
-            when "s"
-              fmt << Format::SONG
-            when "n"
-              fmt << Format::NUM
-            when "e"
-              fmt << Format::EXT
-          end
-        else
-          fmt << chr
-      end
-    end
-
-    return fmt
-  end
-end
-#}}}
-#{{{ Main
 def main(argv)
   if argv.length < 2
     puts "Usage: syncer [OPTIONS] INFILE OUTDIR"
     puts "Options:"
-    puts "  -f format"
-    puts "    TODO: Explain format"
-    puts "  -v"
-    puts "    Verbose logging"
-    puts "  -d"
-    puts "    Dry run, don't copy anything"
     exit 0
   end
 
@@ -337,70 +23,29 @@ def main(argv)
     exit 1
   end
 
-  # Parse options
-  fmt_str = "/%a/%l/%n %s.%e"
-  verbose = false
-  dry_run = false
-
-  while not argv.empty?
-    tmp = argv.shift
-    if tmp == "-f"
-      fmt_str = argv.shift.chomp
-    elsif tmp == "-d"
-      dry_run = true
-    elsif tmp == "-v"
-      verbose = true
-    end
+  lines = []
+  File.open(infile) do |f|
+    lines = f.readlines()
   end
 
-  songs = Array.new()
-  fmt = Format.from_string(fmt_str)
-
-  puts "Reading infile..."
-  lines = get_lines(infile)
-
-  pbar = ProgressBar.new(1, lines.length(), 50)
-  print "Copying #{lines.length} file(s)... ".ljust(`tput cols`.chop.to_i - pbar.length(), " ")
-
-  print pbar.get_str()
+  lines.collect! { |l| l.split(File::SEPARATOR) }
+  common = lines.first
   lines.each do |line|
-    opath = line.chomp
-    if File.exists?(opath)
-      data = SongData.new(opath)
-      id   = data.to_s()
-
-      if verbose
-        puts fmt.format(data)
-      end
-
-      npath = File.join(outdir, fmt.format(data))
-      ndir = File.dirname(npath)
-      if not dry_run and not File.exists?(npath)
-        FileUtils.mkdir_p(ndir)
-        FileUtils.cp(opath, ndir)
-
-        # Wait until entire file have been copied.
-        # This is to prevent flooding buffers. Will
-        # make the system more responsive during the 
-        # sync.
-        while File.size(opath) != File.size(npath)
-         sleep 0.5
-        end
-      end
-
-      songs << data
-    end
-
-    pbar.step()
-    print "\b" * pbar.length()
-    print pbar.get_str()
+    common = common & line
   end
 
-  pbar.finish()
+  source_dir = common.join(File::SEPARATOR)
 
-  puts "Remove files not in the infile..."
+  Tempfile.open('random') do |tf|
+    lines.each do |line|
+      file = (line - common).join(File::SEPARATOR)
+      tf.puts file
+    end
+
+    system("rsync --progress --stats --delete --files-from='#{tf.path}' '#{source_dir}' '#{outdir}'")
+  end
 end
-#}}}
 
 main(ARGV)
 
+# vim: set fdm=marker :
