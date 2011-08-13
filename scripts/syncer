@@ -3,9 +3,7 @@
 # TODO: Job manager
 # TODO: Separate Progress Bar into it's own module
 
-require 'find'
 require 'fileutils'
-require 'taglib'
 
 #{{{ Progress Bar
 class ProgressBar
@@ -190,10 +188,10 @@ class ProgressBar
 end
 #}}}
 #{{{ Misc
-def recursive_list_files(dir)
-  Find.find(dir) do |entry|
-    if File.file?(entry)
-      yield entry
+def for_paths(dir)
+  Dir.foreach(dir) do |f|
+    if f != "." and f != ".."
+      yield(File.join(dir, f))
     end
   end
 end
@@ -215,24 +213,27 @@ def get_lines(file)
 end
 #}}}
 #{{{ SongData
-class SongData < TagLib::File
-  def initialize(path)
-    super(path)
+class SongData 
+  attr_accessor :song, :num, :album, :artist, :file, :file_name, :file_ext, :ext
 
-    file_ext = File.extname(path)
-    @ext     = file_ext[1,file_ext.length] # No dot
-  end
+  def initialize(file)
+    @file      = file
+    @file_name = File.basename(file)
+    @file_ext  = File.extname(@file_name)
+    @ext       = @file_ext[1,@file_ext.length] # No dot
 
-  def ext
-    return @ext
-  end
+    tmp     = file.split('/')
+    @album  = tmp[-2]
+    @artist = tmp[-3]
 
-  def ==(other)
-    return ((title == other.title) and (artist == other.artist) and (album == other.album))
+    tmp = File.basename(@file_name, @file_ext)
+    tmp = tmp.split(" ")
+    @num = tmp.shift()
+    @song = tmp.join(" ")
   end
 
   def to_s()
-    return "#{artist} - #{album} - #{title}"
+    return "#{@artist} - #{@album} - #{@num} #{@song}"
   end
 end
 #}}}
@@ -254,7 +255,7 @@ class Format
   end
 
   def format(input)
-    res = ""
+    res = String.new()
     @data.each do |f|
       case f
         when Format::FOLDER
@@ -264,10 +265,9 @@ class Format
         when Format::ALBUM
           res << input.album
         when Format::SONG
-          res << input.title
+          res << input.song
         when Format::NUM
-          # TODO: Hide this when track is 0x00
-          res << input.track.to_s.rjust(2, "0")
+          res << input.num
         when Format::EXT
           res << input.ext
         else
@@ -367,15 +367,17 @@ def main(argv)
     opath = line.chomp
     if File.exists?(opath)
       data = SongData.new(opath)
+      id   = data.to_s()
 
       if verbose
-        puts data.to_s
+        puts fmt.format(data)
       end
 
       npath = File.join(outdir, fmt.format(data))
+      ndir = File.dirname(npath)
       if not dry_run and not File.exists?(npath)
-        FileUtils.mkdir_p(File.dirname(npath))
-        FileUtils.cp(opath, npath)
+        FileUtils.mkdir_p(ndir)
+        FileUtils.cp(opath, ndir)
 
         # Wait until entire file have been copied.
         # This is to prevent flooding buffers. Will
@@ -396,26 +398,9 @@ def main(argv)
 
   pbar.finish()
 
-  puts
-  puts "Remove files not in infile..."
-
-  recursive_list_files(outdir) do |file|
-    song = SongData.new(file)
-
-    if songs.select { |s| song == s }.empty?
-      print "Remove #{song.to_s} [y/N]? "
-
-      ans = gets.chomp.downcase
-      if ans == "y"
-        if not dry_run
-          FileUtils.rm(file)
-        end
-      end
-    end
-  end
+  puts "Remove files not in the infile..."
 end
 #}}}
 
 main(ARGV)
 
-# vim: set fdm=marker :
