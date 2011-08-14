@@ -20,7 +20,6 @@ Bundle 'gmarik/vundle'
 " General
 Bundle 'Tagbar'
 Bundle 'mileszs/ack.vim'
-Bundle 'clang-complete'
 Bundle 'tpope/vim-fugitive'
 
 " Files, searching and buffers
