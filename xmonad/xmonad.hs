@@ -1,3 +1,5 @@
+module Main where
+
 import Config
 import Keys
 import Theme
@@ -48,8 +50,8 @@ main = do
                         "chewbacca" -> chewbaccaBar
                         _           -> undefined -- TODO
     
-  spawn $ "conky -c ~/.xmonad/conky/" ++ h ++ " | dzen2 -p " ++ barToString left
-  d <- spawnPipe $ "dzen2 -p " ++ barToString right
+  spawn $ "conky -c ~/.xmonad/conky/" ++ h ++ " | dzen2 -p " ++ barToString right
+  d <- spawnPipe $ "dzen2 -p " ++ barToString left
 
   -- Setup keys
   let a x = keysToAdd s (modMask x)

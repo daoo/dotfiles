@@ -13,7 +13,7 @@ data Software = Software {
   term :: String,
   editor :: String,
   lock :: String
-}
+} deriving (Show)
 
 softwareDefault :: IO Software
 softwareDefault = do
@@ -37,14 +37,14 @@ data Bar = Bar {
   barAlign :: BarAlign,
   barFont :: String,
   barFg :: String, barBg :: String
-}
+} deriving (Show)
 
 barToString :: Bar -> String
 barToString bar = concat $ intersperse " " bar'
   where
     bar' = [ "-fn", show $ barFont bar
            , "-fg", show $ barFg bar
-           , "-fg", show $ barBg bar
+           , "-bg", show $ barBg bar
            , "-x", show $ barX bar
            , "-y", show $ barY bar
            , "-w", show $ barWidth bar
