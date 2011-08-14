@@ -1,0 +1,32 @@
+background no
+out_to_console yes
+out_to_x no
+update_interval 4
+update_interval_on_battery 5
+short_units yes
+use_spacer left
+
+hddtemp_host localhost
+hddtemp_port 7634
+
+mpd_host localhost
+mpd_port 6600
+
+TEXT
+^i($HOME/.xmonad/icons/bat_full.xbm) ${battery_percent}% \
+${if_empty battery_time}\
+${else}${battery_time} \
+${endif}\
+^i($HOME/.xmonad/icons/cpu.xbm) ${cpu}% \
+^i($HOME/.xmonad/icons/mem.xbm) ${memperc}% \
+^i($HOME/.xmonad/icons/hdd.xbm) ${hddtemp /dev/sda}C ${fs_used_perc /}% ${fs_used_perc /home}% \
+${if_up eth0}\
+^i($HOME/.xmonad/icons/net_down.xbm) ${downspeed eth0} \
+^i($HOME/.xmonad/icons/net_up.xbm) ${upspeed eth0} \
+${endif}\
+${if_up wlan0}\
+^i($HOME/.xmonad/icons/wifi.xbm) ${wireless_link_qual_perc wlan0}% \
+^i($HOME/.xmonad/icons/net_down.xbm) ${downspeed wlan0} \
+^i($HOME/.xmonad/icons/net_up.xbm) ${upspeed wlan0} \
+${endif}\
+^i($HOME/.xmonad/icons/clock.xbm) ${time %a %b %d %H:%M}
