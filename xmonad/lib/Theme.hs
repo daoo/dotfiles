@@ -28,5 +28,5 @@ myXPConfig = defaultXPConfig
   , bgColor           = panelBg
   , fgColor           = panelFg
   , bgHLight          = focusFg
-  , position          = Top
+  , position          = Bottom
   , promptBorderWidth = 0 }
