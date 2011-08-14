@@ -12,6 +12,6 @@ xmonad/history
 xmonad/xmonad
 xmonad/xmonad-i386-linux
 xmonad/xmonad-x86_64-linux
-xmonad/xmonad.errors
-xmonad/xmonad.hi
-xmonad/xmonad.o
+*.errors
+*.hi
+*.o
