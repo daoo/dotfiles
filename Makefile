@@ -4,31 +4,32 @@ HOSTNAME := $(shell hostname)
 all: git scripts vim xdefaults xinitrc xmonad zsh
 
 git:
-	ln -fs $(CFGROOT)/git/gitconfig ${HOME}/.gitconfig
+	ln -fsn $(CFGROOT)/git/gitconfig ${HOME}/.gitconfig
 
 rtorrent:
-	ln -fs $(CFGROOT)/rtorrent.rc ${HOME}/.rtorrent.rc
+	ln -fsn $(CFGROOT)/rtorrent.rc ${HOME}/.rtorrent.rc
 
 scripts:
-	ln -fs $(CFGROOT)/scripts ${HOME}/bin/
+	ln -fsn $(CFGROOT)/scripts ${HOME}/bin/
 
 vim:
-	ln -fs $(CFGROOT)/vim ${HOME}/.vim
-	ln -fs $(CFGROOT)/vim/vimrc ${HOME}/.vimrc
-	ln -fs $(CFGROOT)/vim/gvimrc ${HOME}/.gvimrc
+	ln -fsn $(CFGROOT)/vim ${HOME}/.vim
+	ln -fsn $(CFGROOT)/vim/vimrc ${HOME}/.vimrc
+	ln -fsn $(CFGROOT)/vim/gvimrc ${HOME}/.gvimrc
+	mkdir -p ${HOME}/.vim/tmp
 
 xdefaults:
-	ln -fs $(CFGROOT)/Xdefaults ${HOME}/.Xdefaults
+	ln -fsn $(CFGROOT)/Xdefaults ${HOME}/.Xdefaults
 
 xinitrc:
-	ln -fs $(CFGROOT)/xinitrc ${HOME}/.xinitrc
+	ln -fsn $(CFGROOT)/xinitrc ${HOME}/.xinitrc
 
 xmonad:
-	ln -fs $(CFGROOT)/xmonad ${HOME}/.xmonad
+	ln -fsn $(CFGROOT)/xmonad ${HOME}/.xmonad
 
 zsh:
-	ln -fs $(CFGROOT)/zsh ${HOME}/.zsh
-	ln -fs $(CFGROOT)/zsh/zshrc ${HOME}/.zshrc
+	ln -fsn $(CFGROOT)/zsh ${HOME}/.zsh
+	ln -fsn $(CFGROOT)/zsh/zshrc ${HOME}/.zshrc
 
 uninstall:
 	rm -f ${HOME}/.Xdefaults
