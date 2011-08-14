@@ -28,7 +28,7 @@ xmonad:
 
 zsh:
 	ln -fs $(CFGROOT)/zsh ${HOME}/.zsh
-	ln -fs $(CFGROOT)/zsh/cfg ${HOME}/.zshrc
+	ln -fs $(CFGROOT)/zsh/zshrc ${HOME}/.zshrc
 
 uninstall:
 	rm -f ${HOME}/.Xdefaults
