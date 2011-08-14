@@ -1,5 +1,8 @@
 module Theme where
 
+import Data.Map as M
+
+import XMonad
 import XMonad.Prompt
 
 winBorderFocused = focusFg
@@ -29,4 +32,7 @@ myXPConfig = defaultXPConfig
   , fgColor           = panelFg
   , bgHLight          = focusFg
   , position          = Bottom
-  , promptBorderWidth = 0 }
+  , promptBorderWidth = 0
+
+  -- Make Ctrl-C in prompt stop input
+  , promptKeymap = M.fromList [((controlMask,xK_c), quit)] `M.union` promptKeymap defaultXPConfig }
