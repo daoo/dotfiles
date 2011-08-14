@@ -2,35 +2,17 @@ module Common where
 
 import Theme
 
-import Control.Concurrent (threadDelay)
-import Data.List (intersperse, find)
-import Data.Map (union, fromList)
 import Data.Ratio ((%))
-import Network.BSD
-import Prelude hiding (Left, Right)
-import System.Directory
-import System.Environment
 import System.IO (Handle)
 
 -- Xmonad
 import XMonad
-import XMonad.Prompt
-import XMonad.Prompt.Shell hiding (shellPrompt, getCommands)
-import XMonad.Util.Dzen as D
 import XMonad.Util.Run
-import XMonad.Util.Scratchpad 
-import qualified XMonad.StackSet as S
-
--- Actions
-import XMonad.Actions.DynamicWorkspaces
-import XMonad.Actions.NoBorders
-import XMonad.Actions.GridSelect
 
 -- Hooks
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.UrgencyHook hiding (Never)
 
 -- Layouts
 import XMonad.Layout.Grid
@@ -39,7 +21,6 @@ import XMonad.Layout.Named (named)
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.Reflect
-import XMonad.Layout.Simplest
 
 -- Manage Hook
 myManageHook :: ManageHook

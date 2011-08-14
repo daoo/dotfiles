@@ -2,11 +2,9 @@ import Config
 import Keys
 import Theme
 import Common
-import Prompt
 
 import Data.Map (union)
 import Network.BSD
-import System.IO
 
 -- Xmonad
 import XMonad
@@ -17,6 +15,7 @@ import XMonad.Util.Scratchpad
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 
+zalbaarBar :: (Bar, Bar)
 zalbaarBar = 
   ( defaultBar
     { barWidth = 1000
@@ -27,6 +26,7 @@ zalbaarBar =
     , barX     = 1000
     , barAlign = AlignRight } )
 
+chewbaccaBar :: (Bar, Bar)
 chewbaccaBar =
   ( defaultBar
     { barWidth = 683
@@ -46,9 +46,10 @@ main = do
   let (left, right) = case h of
                         "zaalbar"   -> zalbaarBar
                         "chewbacca" -> chewbaccaBar
+                        _           -> undefined -- TODO
     
   spawn $ "conky -c ~/.xmonad/conky/" ++ h ++ " | dzen2 -p " ++ barToString left
-  d <- spawnPipe $ "dzen2 -p " ++ barToString left
+  d <- spawnPipe $ "dzen2 -p " ++ barToString right
 
   -- Setup keys
   let a x = keysToAdd s (modMask x)

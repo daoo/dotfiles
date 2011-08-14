@@ -4,20 +4,17 @@ import Config
 import Theme
 import Prompt
 
-import Data.Map (fromList)
+import Data.Map hiding (filter, map)
 
 import qualified XMonad.StackSet as S
 
 import XMonad
-import XMonad.Prompt
-import XMonad.Prompt.Shell hiding (shellPrompt, getCommands)
 
 -- Actions
 import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.GridSelect
 import XMonad.Actions.NoBorders
 
-import XMonad.Util.Run
 import XMonad.Util.Scratchpad 
 
 workspaceKeys :: [KeySym]
@@ -25,7 +22,7 @@ workspaceKeys = [ xK_ampersand, xK_bracketleft, xK_braceleft, xK_braceright
                 , xK_parenleft, xK_equal, xK_asterisk, xK_parenright, xK_plus
                 , xK_bracketright, xK_exclam ]
 
---keysToAdd :: Config -> KeyMask -> [((KeyMask, KeySym), X ())]
+keysToAdd :: Software -> KeyMask -> Map (KeyMask, KeySym) (X ())
 keysToAdd cfg modMask = fromList $
   [ ((modMask, xK_u), withFocused toggleBorder)
   , ((modMask, xK_o), toggleWS)
@@ -61,4 +58,4 @@ keysToAdd cfg modMask = fromList $
     ws        = zip myWorkspaces workspaceKeys
     toggleWS  = windows $ S.view =<< S.tag . head . filter ((\ x -> x /= "NSP") . S.tag) . S.hidden
 
-mapWS m a = map (\ (i, k) -> ((m, k), a i))
+mapWS m a ws = map (\ (i, k) -> ((m, k), a i)) ws
