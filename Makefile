@@ -1,7 +1,7 @@
 CFGROOT := $(shell pwd)
 HOSTNAME := $(shell hostname)
 
-all: git scripts vim xdefaults xinitrc xmonad zsh
+all: git scripts vim rtorrent xdefaults xinitrc xmonad zsh
 
 git:
 	ln -fsn $(CFGROOT)/git/gitconfig ${HOME}/.gitconfig
