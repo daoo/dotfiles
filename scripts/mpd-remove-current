@@ -3,7 +3,7 @@
 # Script for removing the currently playing song from your mpd queue and a selected m3u file.
 # Needs mpd and mpc
 
-MPC_NO_ARGS="$(which mpd)"
+MPC_NO_ARGS="$(which mpc)"
 MPC="$MPC_NO_ARGS -q"
 
 MPD_DIR="$HOME/.mpd/"
@@ -12,7 +12,7 @@ MPD="$(which mpd) $MPD_DIR/mpd.conf"
 M3U="$MPD_DIR/playlists/list.m3u"
 
 $MPC status
-if [ -a "$MPD_DIR/pid" ]; then
+if [ ! -f "$MPD_DIR/pid" ]; then
   exit 1 # MPD not running
 fi
 

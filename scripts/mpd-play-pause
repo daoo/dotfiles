@@ -4,7 +4,7 @@ MPD_DIR="$HOME/.mpd/"
 MPC="$(which mpc) -q"
 MPD="$(which mpd) $MPD_DIR/mpd.conf"
 
-if [ -a "$MPD_DIR/pid" ]; then
+if [ -f "$MPD_DIR/pid" ]; then
   # MPD running
   $MPC toggle
 else
