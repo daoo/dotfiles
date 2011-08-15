@@ -1,14 +1,15 @@
-#!/bin/sh
+#!/bin/bash
 
-MPC="/usr/bin/mpc -q"
-MPD="/usr/bin/mpd $HOME/.mpd/mpd.conf"
+MPD_DIR="$HOME/.mpd/"
+MPC="$(which mpc) -q"
+MPD="$(which mpd) $MPD_DIR/mpd.conf"
 
-$MPC status
-if [ $? -eq 0 ]; then
+if [ -a "$MPD_DIR/pid" ]; then
   # MPD running
   $MPC toggle
 else
   $MPD
+  sleep 1 # Sleep a second to let MPD start
   $MPC play
 fi
 

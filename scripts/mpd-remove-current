@@ -3,15 +3,16 @@
 # Script for removing the currently playing song from your mpd queue and a selected m3u file.
 # Needs mpd and mpc
 
+MPC_NO_ARGS="$(which mpd)"
+MPC="$MPC_NO_ARGS -q"
 
+MPD_DIR="$HOME/.mpd/"
+MPD="$(which mpd) $MPD_DIR/mpd.conf"
 
-MPC="/usr/bin/mpc -q"
-MPC_NOT_QUIET="/usr/bin/mpc"
-MPD="/usr/bin/mpd $HOME/.mpd/mpd.conf"
-M3U="$HOME/.mpd/playlists/list.m3u"
+M3U="$MPD_DIR/playlists/list.m3u"
 
 $MPC status
-if [ $? -ne 0 ]; then
+if [ -a "$MPD_DIR/pid" ]; then
   exit 1 # MPD not running
 fi
 
@@ -34,10 +35,9 @@ if [ "$RESULT" != "y" -a "$RESULT" != "Y" ]; then
   exit 3 # Failed confirmation
 fi
 
-# === Remove From Playlist ===
 # Remove from playlist by turning on consume
 # But preserve consume status
-if [ "$($MPC_NOT_QUIET status | grep consume | awk '{ print $10 }')" = "on" ]; then
+if [ "$($MPC_NO_ARGS status | grep consume | awk '{ print $10 }')" = "on" ]; then
   CONSUME_AFTER=1
 else
   # This order will make it default to off, in case mpc status does not return (on|off)
@@ -53,7 +53,7 @@ if [ $CONSUME_AFTER -eq 0 ]; then
   $MPC consume "$CONSUME_AFTER"
 fi
 
-# === Remove From M3U ===
+# Remove From M3U
 # Make a backup of the M3U
 cp "$M3U" "$M3U.bak"
 
