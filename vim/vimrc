@@ -18,16 +18,25 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " General
-Bundle 'Tagbar'
-Bundle 'mileszs/ack.vim'
-Bundle 'tpope/vim-fugitive'
+if executable('ctags')
+  Bundle 'Tagbar'
+endif
+
+if executable('ack')
+  Bundle 'mileszs/ack.vim'
+endif
+
+if executable('git')
+  Bundle 'tpope/vim-fugitive'
+endif
 
 " Files, searching and buffers
-Bundle 'EasyMotion'
 Bundle 'Mark'
 Bundle 'daoo/a.vim'
 Bundle 'scrooloose/nerdtree'
-Bundle 'wincent/Command-T'
+if has('ruby')
+  Bundle 'wincent/Command-T'
+endif
 
 " Syntax
 Bundle 'Wombat'
