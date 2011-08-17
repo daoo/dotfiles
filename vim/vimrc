@@ -14,10 +14,11 @@ set runtimepath+=~/.vim/bundle/vundle/
 call vundle#rc()
 " }}}
 " {{{ Vundle
-" Let vundle mange it self
-Bundle 'gmarik/vundle'
 
 " General
+Bundle 'tpope/vim-repeat'
+Bundle 'gmarik/vundle'
+
 if executable('ctags')
   Bundle 'Tagbar'
 endif
@@ -33,9 +34,11 @@ endif
 " Files, searching and buffers
 Bundle 'Mark'
 Bundle 'daoo/a.vim'
-Bundle 'scrooloose/nerdtree'
 if has('ruby')
   Bundle 'wincent/Command-T'
+else
+  " If I can't have command-t, at least give me nerdtree
+  Bundle 'scrooloose/nerdtree'
 endif
 
 " Syntax
@@ -43,12 +46,17 @@ Bundle 'Wombat'
 Bundle 'daoo/Mustang2'
 Bundle 'go.vim'
 Bundle 'tango-morning.vim'
+Bundle 'nathanaelkane/vim-indent-guides'
 
 " Editing
+Bundle 'scrooloose/nerdcommenter'
 Bundle 'godlygeek/tabular'
-Bundle 'msanders/snipmate.vim'
 Bundle 'toggle_words.vim'
-Bundle 'tpope/vim-repeat'
+
+" Automated insertion
+Bundle 'Raidmondi/delimitMate'
+Bundle 'ervandew/supertab'
+Bundle 'msanders/snipmate.vim'
 Bundle 'tpope/vim-surround'
 
 filetype plugin indent on
