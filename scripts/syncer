@@ -42,7 +42,7 @@ def main(argv)
       tf.puts file
     end
 
-    system("rsync --progress --stats --delete --files-from='#{tf.path}' '#{source_dir}' '#{outdir}'")
+    system("rsync --progress --stats --delete --ignore-existing --files-from='#{tf.path}' '#{source_dir}' '#{outdir}'")
   end
 end
 
