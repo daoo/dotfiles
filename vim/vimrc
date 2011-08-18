@@ -81,7 +81,7 @@ set foldlevel=0
 " Completion
 set wildmenu
 set wildmode=list:longest,full
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.o
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.hi
 
 " History
 set history=500
