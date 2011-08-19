@@ -51,6 +51,7 @@ main = do
 
   let (left, right) = case h of
                         "zaalbar"   -> zalbaarBar
+                        "freyyr"    -> zalbaarBar
                         "chewbacca" -> chewbaccaBar
                         _           -> undefined -- TODO
     
