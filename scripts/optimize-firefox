@@ -1,0 +1,13 @@
+#!/bin/bash
+
+for dir in ~/.mozilla/firefox/*.*/; do
+  echo
+  echo "$dir"
+  cd "$dir"
+  for i in *.sqlite; do
+    echo "$i"
+    sqlite3 "$i" vacuum
+    sqlite3 "$i" reindex
+  done
+done
+
