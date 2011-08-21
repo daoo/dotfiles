@@ -34,11 +34,14 @@ export EDITOR="vim"
 export PAGER="less"
 export LESS="-F -i -X -r"
 
-# Only add ~/bin/ to $PATH if not already there
-echo "$PATH" | grep -q "$HOME/bin"
-if [ $? -ne 0 ]; then
-  export PATH="$HOME/bin:$PATH"
-fi
+# Only add to $PATH if not already there
+function add_to_path() {
+  if ! echo "$PATH" | grep -q "$1"; then
+    export PATH="$1:$PATH"
+  fi
+}
+add_to_path "$HOME/bin"
+add_to_path "$HOME/bin/scripts"
 
 # Disable ctrl-q and ctrl-s
 stty -ixon
