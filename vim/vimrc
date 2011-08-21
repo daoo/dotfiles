@@ -55,7 +55,6 @@ Bundle 'toggle_words.vim'
 
 " Automated insertion
 Bundle 'Raimondi/delimitMate'
-Bundle 'ervandew/supertab'
 Bundle 'msanders/snipmate.vim'
 Bundle 'tpope/vim-surround'
 
@@ -81,7 +80,7 @@ set foldlevel=0
 " Completion
 set wildmenu
 set wildmode=list:longest,full
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.hi
+set wildignore=*.png,*.jpg,*.swp,*.bak,*.pyc,*.class,*.o,*.hi
 
 " History
 set history=500
@@ -193,6 +192,15 @@ nnoremap <Leader>fl /<c-r>=expand("<cword>")<cr><CR>
 nnoremap <Leader>fr :%s/<c-r>=expand("<cword>")<cr>/
 
 nnoremap <Leader>jw :ToggleWord<CR>
+
+" Completion
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-Space> pumvisible() \|\| &omnifunc == '' ?
+\ "\<lt>C-n>" :
+\ "\<lt>C-x>\<lt>C-o><c-r>=pumvisible() ?" .
+\ "\"\\<lt>c-n>\\<lt>c-p>\\<lt>c-n>\" :" .
+\ "\" \\<lt>bs>\\<lt>C-n>\"\<CR>"
+imap <C-@> <C-Space>
 
 " Tabular
 nnoremap <Leader>ap :%s/( /(/g<CR>:%s/ )/)/g<CR>
