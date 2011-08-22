@@ -212,8 +212,8 @@ nnoremap <Leader>ap :%s/( /(/g<CR>:%s/ )/)/g<CR>
 nnoremap <Leader>aa :Tabularize assignment<CR>
 
 " Move lines up and down
-nnoremap <C-Up> ddkP
-nnoremap <C-Down> ddp
+nnoremap <C-Up> :move -2<CR>
+nnoremap <C-Down> :move +<CR>
 
 " Redraw window so search terms are centered
 nnoremap n nzz
