@@ -41,11 +41,16 @@ else
   Bundle 'scrooloose/nerdtree'
 endif
 
-" Syntax
+" Color Schemes
+Bundle 'Solarized'
 Bundle 'Wombat'
 Bundle 'daoo/Mustang2'
-Bundle 'go.vim'
 Bundle 'tango-morning.vim'
+
+" Syntax
+Bundle 'alex.vim'
+Bundle 'go.vim'
+Bundle 'happy.vim'
 Bundle 'nathanaelkane/vim-indent-guides'
 
 " Editing
