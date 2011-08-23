@@ -14,6 +14,9 @@ ${if_match "$mpd_status"=="Playing"}^i($HOME/.xmonad/icons/play.xbm)${endif}\
 ${if_match "$mpd_status"=="Paused"}^i($HOME/.xmonad/icons/pause.xbm)${endif}\
  ${mpd_smart 85} \
 ${endif}\
+${if_existing /tmp/gmail-unread-count}\
+^fg(\#ef2929)^i($HOME/.xmonad/icons/mail.xbm) ${head /tmp/gmail-unread-count 1} ^fg()\
+${endif}\
 ^i($HOME/.xmonad/icons/cpu.xbm) ${cpu}% \
 ^i($HOME/.xmonad/icons/mem.xbm) ${memperc}% \
 ^i($HOME/.xmonad/icons/hdd.xbm) ${fs_used_perc /}% ${fs_used_perc /home}% ${fs_used_perc /media/storage}% \
