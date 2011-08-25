@@ -1,0 +1,59 @@
+#!/usr/bin/env ruby
+
+languages =
+  { :java =>
+    { :header => [ "/*",
+                   " * Copyright (c) $year $name, see license.txt for more info.",
+                   " */",
+                   "" ],
+      :ext => ".java",
+      :before => "package" },
+    :haskell =>
+    { :header => [ "--",
+                   "-- Copyright (c) $year $name, see license.txt for more info.",
+                   "--",
+                   "" ],
+      :ext => ".hs",
+      :before => "module" }
+  }
+
+def ensure_headers(files, lang, year, name)
+  files.each do |file|
+    lines = []
+    File.open(file) do |f|
+      lines = f.readlines
+    end
+
+    header    = lang[:header].collect { |s| s.sub("$year", year).sub("$name", name) }
+    no_header = lines.drop_while { |l| !l.start_with?(lang[:before]) }
+    output    = header + no_header
+
+    File.open(file, 'w') do |f|
+      f.puts output
+    end
+  end
+end
+
+if ARGV.length != 3
+  puts "Usage:"
+  puts "#{__FILE__} LANGUAGE YEAR NAME"
+  exit 1
+else
+  lang_str = ARGV[0]
+  year     = ARGV[1]
+  name     = ARGV[2]
+
+  case lang_str
+  when "java"
+    lang = languages[:java]
+  when "haskell"
+    lang = languages[:haskell]
+  else
+    puts "Language not valid"
+  end
+
+  # TODO: Use ruby methods instead
+  files = `find . -iname '*#{lang[:ext]}'`.split("\n")
+
+  ensure_headers(files, lang, year, name)
+end
