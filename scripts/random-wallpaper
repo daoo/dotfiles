@@ -1,9 +1,21 @@
 #!/bin/bash
+#
+# A script that selects a new random wallpaper for SLIM
+# by daoo <daoo314@gmail.com>
+#
 
-DIR="$1"
-if [ -d "$DIR" ]; then
-  echo $(find "$DIR" -not -type d | shuf -n 1)
-else
-  echo "Usage: random-wallpaper /path/to/folder/with/wallpapers/"
+if ! shuf=$(which shuf); then
+  echo "Shuf needed."
+  exit 1
 fi
+
+# Note that this script can be run ANYTIME, hence we know nothing about
+# the environment we are running in.
+wallpaper_dir="/home/daniel/media/wallpapers/"
+wallpaper_link="/home/daniel/.wallpaper"
+
+# We assume that all files in the wallpaper dir are images
+wallpaper=$(find "$wallpaper_dir" -type f | $shuf -n 1)
+
+ln -sf "$wallpaper" "$wallpaper_link"
 
