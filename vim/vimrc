@@ -210,7 +210,8 @@ imap <C-@> <C-Space>
 " Tabular
 nnoremap <Leader>ap :%s/( /(/g<CR>:%s/ )/)/g<CR>
 nnoremap <Leader>aa :Tabularize assignment<CR>
-nnoremap <Leader>ab :Tabularize /[{}]<CR>
+nnoremap <Leader>ab :Tabularize braces<CR>
+nnoremap <Leader>ac :Tabularize commas<CR>
 
 " Move lines up and down
 nnoremap <C-Up> :move -2<CR>
