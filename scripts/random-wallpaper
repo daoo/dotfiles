@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# A script that selects a new random wallpaper for SLIM
-# by daoo <daoo314@gmail.com>
+# A script that selects a new random wallpaper and creates a link for it.
+# By daoo <daoo314@gmail.com>
 #
 
 if ! shuf=$(which shuf); then
@@ -9,10 +9,13 @@ if ! shuf=$(which shuf); then
   exit 1
 fi
 
-# Note that this script can be run ANYTIME, hence we know nothing about
-# the environment we are running in.
-wallpaper_dir="/home/daniel/media/wallpapers/"
-wallpaper_link="/home/daniel/.wallpaper"
+if [ ! -d "$1" ]; then
+  echo "$1 not a directory."
+  exit 1
+fi
+
+wallpaper_dir="$1"
+wallpaper_link="$2"
 
 # We assume that all files in the wallpaper dir are images
 wallpaper=$(find "$wallpaper_dir" -type f | $shuf -n 1)
