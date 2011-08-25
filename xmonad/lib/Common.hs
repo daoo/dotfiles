@@ -37,7 +37,7 @@ myManageHook = composeAll . concat $
   , [ isFullscreen --> doFullFloat ] ]
   where
     moves w  = map (\a -> name a --> doShift w)
-    floats m = map (\a -> m a --> doFloat)
+    floats m = map (\a -> m a --> doCenterFloat)
 
     name a = appName  =? a <||> className =? a
     res a  = resource =? a
