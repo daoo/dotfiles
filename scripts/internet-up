@@ -1,17 +1,17 @@
 #!/bin/bash
 
-COMMAND="ping 192.168.0.1 -c 2"
+command="ping 192.168.0.1 -c 2"
 
-I=0
+i=0
 while [ $I -lt 5 ]; do
-  $COMMAND > /dev/null
+  $command > /dev/null
   if [ $? -eq 0 ]; then
     $@
     exit 0
   fi
 
   sleep 15
-  I=$(expr $I + 1)
+  i=$(expr $i + 1)
 done
 
 exit 1
