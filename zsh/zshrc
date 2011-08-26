@@ -96,11 +96,6 @@ if [ -f "/etc/zsh_command_not_found" ]; then
   . /etc/zsh_command_not_found
 fi
 # }}}
-# {{{ Functions
-chalmers() {
-  TERM=linux ssh lalti@remote$(($RANDOM % 4 + 1)).student.chalmers.se $*
-}
-# }}}
 # {{{ Plugins
 . ~/dotfiles/zsh/plugins/z/z.sh
 function chpwd() {
