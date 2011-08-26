@@ -9,6 +9,7 @@
   status      = auto
 [alias]
   df = diff
+  dc = diff --cached
   st = status
   ci = commit
   co = checkout
