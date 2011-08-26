@@ -10,6 +10,8 @@ if [ "$HOME" = "" ]; then
   HOST="`/bin/hostname`"
 fi
 
+safe_source "$HOME/.path"
+
 # Local configuration
 safe_source "$HOME/.xearly"
 safe_source "$HOME/.envrc"

@@ -34,6 +34,11 @@ export EDITOR="vim"
 export PAGER="less"
 export LESS="-F -i -X -r"
 
+# Path
+if [ -f "~/.path" ]; then
+  source "~/.path"
+fi
+
 # Disable ctrl-q and ctrl-s
 stty -ixon
 # }}}
