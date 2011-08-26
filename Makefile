@@ -1,7 +1,7 @@
 CFGROOT := $(shell pwd)
 HOSTNAME := $(shell hostname)
 
-all: git scripts vim rtorrent xdefaults xinitrc xmonad zsh
+all: git path rtorrent scripts vim xdefaults xinitrc xmonad zsh
 
 git:
 	ln -fsn $(CFGROOT)/git/gitconfig ${HOME}/.gitconfig
@@ -24,6 +24,9 @@ xdefaults:
 xinitrc:
 	ln -fsn $(CFGROOT)/xinitrc ${HOME}/.xinitrc
 
+path:
+	ln -fsn $(CFGROOT)/path ${HOME}/.path
+
 xmonad:
 	ln -fsn $(CFGROOT)/xmonad ${HOME}/.xmonad
 
@@ -35,6 +38,7 @@ uninstall:
 	rm -f ${HOME}/.Xdefaults
 	rm -f ${HOME}/.gitconfig
 	rm -f ${HOME}/.gvimrc
+	rm -f ${HOME}/.path
 	rm -f ${HOME}/.rtorrent.rc
 	rm -f ${HOME}/.vim
 	rm -f ${HOME}/.vimrc
@@ -43,4 +47,4 @@ uninstall:
 	rm -f ${HOME}/.zsh
 	rm -f ${HOME}/.zshrc
 
-.PHONY: uninstall git rtorrent scripts vim xdefaults xinitrc xmonad zsh
+.PHONY: uninstall git rtorrent scripts vim xdefaults xinitrc xmonad zsh path
