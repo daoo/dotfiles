@@ -3,7 +3,7 @@
 command="ping 192.168.0.1 -c 2"
 
 i=0
-while [ $I -lt 5 ]; do
+while [ $i -lt 5 ]; do
   $command > /dev/null
   if [ $? -eq 0 ]; then
     $@
