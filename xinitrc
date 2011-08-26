@@ -6,7 +6,7 @@ safe_source() {
   fi
 }
 
-if [ "$HOME" = "" ]; then
+if [ -z "$HOME" ]; then
   HOST="`/bin/hostname`"
 fi
 

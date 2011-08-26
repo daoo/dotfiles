@@ -1,15 +1,15 @@
 #!/bin/zsh
 
 # Skip all this for non-interactive shells
-[[ -z "$PS1" ]] && return
+[ -z "$PS1" ] && return
 
 # {{{ Config
 # PS1 and Title
-if [ "$SSH_CLIENT" != "" ]; then
-  # Connected through ssh
-  PS1='%n@%m:%~$ '
-else
+if [ -z "$SSH_CLIENT" ]; then
+  # Not connected through ssh
   PS1='%n:%~$ '
+else
+  PS1='%n@%m:%~$ '
 fi
 
 case "$TERM" in
