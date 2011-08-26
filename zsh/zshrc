@@ -92,7 +92,7 @@ autoload -U compinit
 compinit
 zstyle ':completion:*' special-dirs true
 
-if [[ -f "/etc/zsh_command_not_found" ]]; then
+if [ -f "/etc/zsh_command_not_found" ]; then
   . /etc/zsh_command_not_found
 fi
 # }}}
