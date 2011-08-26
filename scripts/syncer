@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'find'
 require 'tempfile'
 
 def main(argv)
@@ -23,26 +24,45 @@ def main(argv)
     exit 1
   end
 
-  lines = []
+  m3u = []
   File.open(infile) do |f|
-    lines = f.readlines()
+    m3u = f.readlines()
   end
+  m3u = m3u.collect { |l| l.chomp }
 
-  lines.collect! { |l| l.split(File::SEPARATOR) }
-  common = lines.first
-  lines.each do |line|
+  # Find and remove sourcedir, needed for rsync
+  m3u_split = m3u.collect { |l| l.split(File::SEPARATOR) }
+  common = m3u_split.first
+  m3u_split.each do |line|
     common = common & line
   end
-
-  source_dir = common.join(File::SEPARATOR)
+  sourcedir = common.join(File::SEPARATOR)
 
   Tempfile.open('random') do |tf|
-    lines.each do |line|
-      file = (line - common).join(File::SEPARATOR)
+    m3u_split.each do |full_path|
+      file = (full_path - common).join(File::SEPARATOR)
       tf.puts file
     end
+    # Need to flush for all m3u_split to be written
+    tf.flush
 
-    system("rsync --progress --stats --delete --ignore-existing --files-from='#{tf.path}' '#{source_dir}' '#{outdir}'")
+    system("rsync --progress --delete --size-only --files-from='#{tf.path}' '#{sourcedir}' '#{outdir}'")
+
+    # Remove files in outdir that are not in infile
+    m3u_file_names = m3u.collect { |path| File.basename(path) }
+    Find.find(outdir) do |path|
+      if !File.directory?(path)
+        checkname = File.basename(path)
+        # NOTE: Only compares file names, might clash if there are several albums with same song names (unlikely)...
+        if !m3u_file_names.any? { |name| name == checkname }
+          print "Remove #{checkname} [y/N]? "
+          ans = gets.chomp.downcase
+          if ans == "y"
+            FileUtils.rm(path)
+          end
+        end
+      end
+    end
   end
 end
 
