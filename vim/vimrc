@@ -42,7 +42,6 @@ else
 endif
 
 " Color Schemes
-Bundle 'Solarized'
 Bundle 'Wombat'
 Bundle 'daoo/Mustang2'
 Bundle 'tango-morning.vim'
