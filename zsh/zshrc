@@ -100,14 +100,6 @@ fi
 chalmers() {
   TERM=linux ssh lalti@remote$(($RANDOM % 4 + 1)).student.chalmers.se $*
 }
-
-f() {
-  find . -iname "*$@*"
-}
-
-ff() {
-  find . -iname "*$@*" -not -type d
-}
 # }}}
 # {{{ Plugins
 . ~/dotfiles/zsh/plugins/z/z.sh
