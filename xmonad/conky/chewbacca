@@ -19,7 +19,6 @@ ${else}${battery_time} \
 ${endif}\
 ^i($HOME/.xmonad/icons/cpu.xbm) ${cpu}% \
 ^i($HOME/.xmonad/icons/mem.xbm) ${memperc}% \
-^i($HOME/.xmonad/icons/hdd.xbm) ${hddtemp /dev/sda}C ${fs_used_perc /}% ${fs_used_perc /home}% \
 ${if_up eth0}\
 ^i($HOME/.xmonad/icons/net_down.xbm) ${downspeed eth0} \
 ^i($HOME/.xmonad/icons/net_up.xbm) ${upspeed eth0} \
