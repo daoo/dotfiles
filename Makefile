@@ -1,10 +1,13 @@
 CFGROOT := $(shell pwd)
 HOSTNAME := $(shell hostname)
 
-all: git path rtorrent scripts vim xdefaults xinitrc xmonad zsh
+all: git gtk path rtorrent scripts vim xdefaults xinitrc xmonad zsh
 
 git:
 	ln -fsn $(CFGROOT)/git/gitconfig ${HOME}/.gitconfig
+
+gtk:
+	ln -fsn $(CFGROOT)/gtkrc-2.0.mine ${HOME}/.gtkrc-2.0.mine
 
 rtorrent:
 	ln -fsn $(CFGROOT)/rtorrent.rc ${HOME}/.rtorrent.rc

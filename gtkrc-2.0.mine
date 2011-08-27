@@ -1,0 +1,6 @@
+style "vimfix" {
+  bg[NORMAL] = "#202020"
+}
+
+widget "vim-main-window.*GtkForm" style "vimfix"
+
