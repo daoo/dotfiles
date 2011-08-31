@@ -8,14 +8,11 @@ import Common
 import Data.Map (union)
 import Network.BSD
 
--- Xmonad
 import XMonad
-import XMonad.Util.Run
-import XMonad.Util.Scratchpad 
-
--- Hooks
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
+import XMonad.Util.Run
+import XMonad.Util.Scratchpad
 
 zalbaarBar :: (Bar, Bar)
 zalbaarBar = 
@@ -76,3 +73,4 @@ main = do
     , terminal = term s
     , keys     = k
     , logHook  = myLogHook d }
+
