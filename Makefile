@@ -1,7 +1,7 @@
 CFGROOT := $(shell pwd)
 HOSTNAME := $(shell hostname)
 
-all: git gtk path rtorrent scripts vim xdefaults xinitrc xmonad zsh
+all: git gtk path rtorrent scripts tmux vim xdefaults xinitrc xmonad zsh
 
 git:
 	ln -fsn $(CFGROOT)/git/gitconfig ${HOME}/.gitconfig
@@ -14,6 +14,9 @@ rtorrent:
 
 scripts:
 	ln -fsn $(CFGROOT)/scripts ${HOME}/bin/
+
+tmux:
+	ln -fsn $(CFGROOT)/tmux.conf ${HOME}/.tmux.conf
 
 vim:
 	ln -fsn $(CFGROOT)/vim ${HOME}/.vim
@@ -43,6 +46,7 @@ uninstall:
 	rm -f ${HOME}/.gvimrc
 	rm -f ${HOME}/.path
 	rm -f ${HOME}/.rtorrent.rc
+	rm -f ${HOME}/.tmux.conf
 	rm -f ${HOME}/.vim
 	rm -f ${HOME}/.vimrc
 	rm -f ${HOME}/.xinitrc

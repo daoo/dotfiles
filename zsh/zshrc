@@ -42,6 +42,9 @@ fi
 
 # Disable ctrl-q and ctrl-s
 stty -ixon
+
+# tmux
+[ -n "$TMUX" ] && export TERM=screen-256color
 # }}}
 # {{{ Aliases
 # Give some commands fancy colors
