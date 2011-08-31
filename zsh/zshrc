@@ -4,7 +4,7 @@
 [ -z "$PS1" ] && return
 
 # {{{ Config
-# PS1 and Title
+# PS1
 if [ -z "$SSH_CLIENT" ]; then
   # Not connected through ssh
   PS1='%n:%~$ '
@@ -12,6 +12,7 @@ else
   PS1='%n@%m:%~$ '
 fi
 
+# Title
 case "$TERM" in
   xterm*|*rxvt*)
     # Set the title
