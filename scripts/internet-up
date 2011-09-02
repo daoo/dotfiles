@@ -7,7 +7,7 @@ while [ $i -lt 5 ]; do
   $command > /dev/null
   if $command > /dev/null; then
     for e in $*; do
-      eval $e
+      eval $e &
     done
 
     exit 0
