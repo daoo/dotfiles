@@ -6,8 +6,9 @@ i=0
 while [ $i -lt 5 ]; do
   $command > /dev/null
   if $command > /dev/null; then
-    for e in $*; do
-      eval $e &
+    while [ $# -ne 0 ]; do
+      exec $1 &
+      shift
     done
 
     exit 0
