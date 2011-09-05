@@ -58,7 +58,6 @@ Bundle 'godlygeek/tabular'
 Bundle 'toggle_words.vim'
 
 " Automated insertion
-Bundle 'Raimondi/delimitMate'
 Bundle 'msanders/snipmate.vim'
 Bundle 'tpope/vim-surround'
 
