@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+# Episodes
+# By Daniel Oom
+
+# TODO: custom command
+command="mplayer"
+state_file="./.episodes-state"
+
+# Check arguments
+while [ $# -ne 0 ]; do
+  case "$1" in
+    "-i")
+      interactive=1
+    "--init")
+      init=1
+    ;;
+    "--undo")
+      undo=1
+    ;;
+  esac
+
+  shift
+done
+
+if [ -n "$init" ]; then
+  if [ -f "$state_file" ]; then
+    echo "Already initialized."
+    exit 1
+  else
+    echo "Initializing..."
+    ls > $state_file
+
+    echo "Found $(cat $state_file | wc -l) file(s)"
+
+    echo "Done"
+  fi
+elif [ -f "$state_file" ]; then
+  file=$(head -n1 $state_file)
+  echo "You want episode? I give you $file!"
+  if $command $file &> /dev/null; then
+    if [ -z "$dry_run" ]; then
+      cp $state_file $state_file.bak
+      sed -i 1d $state_file
+    fi
+  fi
+else
+  echo "Directory need to be initialized."
+  echo "Run episodes --init"
+fi
