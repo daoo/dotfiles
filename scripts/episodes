@@ -7,23 +7,7 @@
 command="mplayer"
 state_file="./.episodes-state"
 
-# Check arguments
-while [ $# -ne 0 ]; do
-  case "$1" in
-    "-i")
-      interactive=1
-    "--init")
-      init=1
-    ;;
-    "--undo")
-      undo=1
-    ;;
-  esac
-
-  shift
-done
-
-if [ -n "$init" ]; then
+function init() {
   if [ -f "$state_file" ]; then
     echo "Already initialized."
     exit 1
@@ -34,16 +18,49 @@ if [ -n "$init" ]; then
     echo "Found $(cat $state_file | wc -l) file(s)"
 
     echo "Done"
+    exit 0
   fi
-elif [ -f "$state_file" ]; then
-  file=$(head -n1 $state_file)
-  echo "You want episode? I give you $file!"
-  if $command $file &> /dev/null; then
-    if [ -z "$dry_run" ]; then
-      cp $state_file $state_file.bak
-      sed -i 1d $state_file
+}
+
+function remove() {
+  if [ -f "$state_file" ]; then
+    echo "Okay."
+    rm $state_file
+    exit 0
+  else
+    echo "Not initialized"
+    exit 0
+  fi
+}
+
+case "$1" in
+  --init)   init ;;
+  --remove) remove ;;
+esac
+
+if [ -f "$state_file" ]; then
+  # Backup and get state
+  cp $state_file $state_file.bak
+  internal_state=$(cat $state_file)
+
+  quit=0
+  while [ $quit -ne 1 ]; do
+    file=$(echo $internal_state | head -n1)
+    internal_state=$(echo $internal_state | sed 1d)
+
+    echo "$file"
+    if $command $file &> /dev/null; then
+      echo -n "Remove file from state [y,n,q]? "
+
+      inp=""
+      read inp
+
+      case "$inp" in
+        'y'|'Y') sed -i 1d $state_file ;;
+        'q'|'Q') quit=1 ;;
+      esac
     fi
-  fi
+  done
 else
   echo "Directory need to be initialized."
   echo "Run episodes --init"
