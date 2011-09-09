@@ -2,8 +2,10 @@
 
 command="ping 192.168.0.1 -c 2"
 
+sleep_time=5
+sleep_delta=5
 i=0
-while [ $i -lt 5 ]; do
+while [ $i -lt 6 ]; do
   $command > /dev/null
   if $command > /dev/null; then
     while [ $# -ne 0 ]; do
@@ -14,7 +16,8 @@ while [ $i -lt 5 ]; do
     exit 0
   fi
 
-  sleep 15
+  sleep $sleep_time
+  $sleep_time=$(expr $sleep_time + $sleep_delta)
   i=$(expr $i + 1)
 done
 
