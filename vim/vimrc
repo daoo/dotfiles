@@ -145,7 +145,7 @@ let g:clang_snippets=0
 let g:clang_conceal_snippets=1
 let g:clang_use_library=1
 " }}}
-" {{{ Disabled Keys
+" {{{ Disabled Stupid Keys
 " Arrow keys
 inoremap  <Down>   <NOP>
 inoremap  <Left>   <NOP>
@@ -176,11 +176,17 @@ noremap <PageUp> <NOP>
 " {{{ Key Bindings
 let mapleader=","
 
+" Disable Ex mode
+noremap Q <NOP>
+
 " F-keys
-nnoremap <F2> :NERDTreeToggle<CR>
+if exists("loaded_nerd_tree")
+  nnoremap <F2> :NERDTreeToggle<CR>
+endif
+
+nnoremap <F3> :TagbarToggle<CR>
 nnoremap <F5> :make run<CR>
 nnoremap <F8> :make<CR>
-nnoremap <F9> :TagbarToggle<CR>
 nnoremap <F10> :CommandTFlush<CR>
 
 " a.vim
