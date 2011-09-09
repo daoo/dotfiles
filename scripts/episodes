@@ -6,7 +6,6 @@
 # TODO: custom command
 command="mplayer"
 state_file="./.episodes-state"
-active_state="./.episodes-active"
 
 function init() {
   if [ -f "$state_file" ]; then
@@ -42,27 +41,24 @@ esac
 if [ -f "$state_file" ]; then
   # Backup and get state
   cp $state_file $state_file.bak
-  cp $state_file $active_state
 
   quit=0
-  while [ $quit -ne 1 -a "$(cat $active_state)" != "" ]; do
-    file=$(head -n1 $active_state)
+  while [ $quit -ne 1 -a -s $state_file ]; do
+    file=$(head -n1 $state_file)
 
     echo "$file"
     if $command $file &> /dev/null; then
-      echo -n "Remove file from state [y,n,q]? "
+      echo -n "Remove file from state [y,q]? "
 
       inp=""
       read inp
 
       case "$inp" in
-        'y'|'Y') sed -i 1d $active_state ;;
+        'y'|'Y') sed -i 1d $state_file ;;
         'q'|'Q') quit=1 ;;
       esac
     fi
   done
-
-  mv $active_state $state_file
 else
   echo "Directory need to be initialized."
   echo "Run episodes --init"
