@@ -7,6 +7,12 @@
 command="mplayer"
 state_file="./.episodes-state"
 
+function print_help() {
+  echo "n - next file"
+  echo "q - remove and quit"
+  echo "u - keep and quit"
+}
+
 function init() {
   if [ -f "$state_file" ]; then
     echo "Already initialized."
@@ -22,7 +28,7 @@ function init() {
   fi
 }
 
-function remove() {
+function uninit() {
   if [ -f "$state_file" ]; then
     echo "Okay."
     rm $state_file
@@ -33,9 +39,13 @@ function remove() {
   fi
 }
 
+function remove() {
+  sed -i 1d $state_file
+}
+
 case "$1" in
   --init)   init ;;
-  --remove) remove ;;
+  --uninit) uninit ;;
 esac
 
 if [ -f "$state_file" ]; then
@@ -48,14 +58,16 @@ if [ -f "$state_file" ]; then
 
     echo "$file"
     if $command $file &> /dev/null; then
-      echo -n "Remove file from state [y,q]? "
+      echo -n "Remove file from state [n,q,u,?]? "
 
       inp=""
       read inp
 
       case "$inp" in
-        'y'|'Y') sed -i 1d $state_file ;;
-        'q'|'Q') quit=1 ;;
+        'n') remove ;;
+        'u') quit=1 ;;
+        'q') remove; quit=1 ;;
+        '?') print_help ;;
       esac
     fi
   done
