@@ -57,7 +57,7 @@ if [ -f "$state_file" ]; then
     file=$(head -n1 $state_file)
 
     echo "$file"
-    if $command $file &> /dev/null; then
+    if $command "$file" &> /dev/null; then
       echo -n "Remove file from state [n,q,u,?]? "
 
       inp=""
