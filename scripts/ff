@@ -1,4 +1,4 @@
 #!/bin/sh
 
-find . -iname "*$@*"
+find . -iname "*$@*" -and -not -type d
 
