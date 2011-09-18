@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # A script that selects a new random wallpaper and creates a link for it.
-# By daoo <daoo314@gmail.com>
+# By daoo
 #
 
 if ! shuf=$(which shuf); then
