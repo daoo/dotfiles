@@ -1,15 +1,15 @@
 #!/bin/bash
 
-MPD_DIR="$HOME/.mpd/"
-MPC="$(which mpc) -q"
-MPD="$(which mpd) $MPD_DIR/mpd.conf"
+mpd_dir="$HOME/.mpd"
+mpc="mpc -q"
+mpd="mpd $mpd_dir/mpd.conf"
 
-if [ -f "$MPD_DIR/pid" ]; then
-  # MPD running
-  $MPC toggle
+if [ -f "$mpd_dir/pid" ]; then
+  # mpd running
+  $mpc toggle
 else
-  $MPD
-  sleep 1 # Sleep a second to let MPD start
-  $MPC play
+  $mpd
+  sleep 1 # Sleep a second to let mpd start
+  $mpc play
 fi
 
