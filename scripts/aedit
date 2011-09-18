@@ -5,41 +5,40 @@ rnd() {
 }
 
 # Check for atool
-ATOOL="$(which atool)"
-if [ $? -ne 0 ]; then
+if ! atool=$(which atool); then
   echo "atool not found"
   exit 1
 fi
 
 # Check parameters
-FILE="$@"
-REPACK=1
+file="$@"
+repack=1
 
-if [ -a "$FILE" ]; then
+if [ -a "$file" ]; then
   # Some basic information about the archive
-  NAME="$(basename "$FILE")"
-  ARCHIVE=$(readlink -f "$FILE")
-  DIR="$(dirname "$(readlink -f "$FILE")")"
+  name="$(basename "$file")"
+  archive=$(readlink -f "$file")
+  dir="$(dirname "$(readlink -f "$file")")"
 
   echo "Extracting..."
   # Extract to a tmp dir
-  TMPDIR=`mktemp -d "/tmp/aedit-XXXXXXXX"`
-  $ATOOL --extract-to=$TMPDIR "$@"
+  tmpdir=`mktemp -d "/tmp/aedit-XXXXXXXX"`
+  $atool --extract-to=$tmpdir "$@"
 
   echo "Launching shell..."
   # Start a new shell in the tmp directory
-  cd "$TMPDIR"
+  cd "$tmpdir"
   $SHELL
 
-  if [ $REPACK ]; then
+  if [ $repack ]; then
     echo "Repacking..."
-    mv "$ARCHIVE" "/tmp/$NAME.`rnd`" # Backup
-    $ATOOL -a -f "$ARCHIVE" $(ls -b $TMPDIR)
+    mv "$archive" "/tmp/$name.`rnd`" # Backup
+    $atool -a -f "$archive" $(ls -b $tmpdir)
   fi
 
   echo "Done."
-  rm -r "$TMPDIR"
-  cd "$DIR"
+  rm -r "$tmpdir"
+  cd "$dir"
 else
-  echo "File '$FILE' does not exist."
+  echo "File '$file' does not exist."
 fi

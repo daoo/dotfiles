@@ -12,14 +12,14 @@ unmute() {
 	pacmd set-$1-mute $2 0 > /dev/null
 }
 
-STATUSFILE="/tmp/pa-mute"
+statusfile="/tmp/pa-mute"
 
-if [ "`cat $STATUSFILE`" = "0" ]; then
+if [ "`cat $statusfile`" = "0" ]; then
   action=mute
-  echo "1" > $STATUSFILE
+  echo "1" > $statusfile
 else
   action=unmute
-  echo "0" > $STATUSFILE
+  echo "0" > $statusfile
 fi
 
 # Sinks

@@ -1,13 +1,13 @@
 #!/bin/bash
 
 if [ $EUID -eq 0 ]; then
-  TRASH_DIR="/tmp/trash/"
+  trash_dir="/tmp/trash/"
 else
-  TRASH_DIR="$HOME/.trash/"
+  trash_dir="$HOME/.trash/"
 fi
 
-if [ ! -d "$TRASH_DIR" ]; then
-  mkdir "$TRASH_DIR"
+if [ ! -d "$trash_dir" ]; then
+  mkdir "$trash_dir"
 fi
 
-mv "$1" "$TRASH_DIR"
+mv "$1" "$trash_dir"
