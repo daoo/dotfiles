@@ -3,64 +3,66 @@
 # Script for removing the currently playing song from your mpd queue and a selected m3u file.
 # Needs mpd and mpc
 
-MPC_NO_ARGS="$(which mpc)"
-MPC="$MPC_NO_ARGS -q"
+mpc_no_args="$(which mpc)"
+mpc="$mpc_no_args -q"
 
-MPD_DIR="$HOME/.mpd/"
-MPD="$(which mpd) $MPD_DIR/mpd.conf"
+mpd_dir="$HOME/.mpd"
+playlist_dir="$mpd_dir/playlists"
 
-M3U="$MPD_DIR/playlists/list.m3u"
+mpd="$(which mpd) $mpd_dir/mpd.conf"
 
-$MPC status
-if [ ! -f "$MPD_DIR/pid" ]; then
-  exit 1 # MPD not running
+$mpc status
+if [ ! -f "$mpd_dir/pid" ]; then
+  exit 1 # mpd not running
 fi
 
 # Get current song
-SONG=$($MPC current)
-FILE=$($MPC -f '%file%' current)
+song=$($mpc current)
+file=$($mpc -f '%file%' current)
 
-if [ "$SONG" = "" ]; then
+if [ "$song" = "" ]; then
   exit 2 # No song playing
 fi
 
 # Ask for confirmation
 # xmessage or zenity could be used if you don't want to run this in a terminal:
-#xmessage -buttons 'Yes:1,No:0' "Really remove '$SONG'?"
-#zenity --no-wrap --question --text="Really remove '$SONG'?"
+#xmessage -buttons 'Yes:1,No:0' "Really remove '$song'?"
+#zenity --no-wrap --question --text="Really remove '$song'?"
 
-echo -n "Really remove '$SONG' [y/N]? "
-read RESULT
-if [ "$RESULT" != "y" -a "$RESULT" != "Y" ]; then
+echo -n "Really remove '$song' [y/N]? "
+read result
+if [ "$result" != "y" -a "$result" != "Y" ]; then
   exit 3 # Failed confirmation
 fi
 
 # Remove from playlist by turning on consume
 # But preserve consume status
-if [ "$($MPC_NO_ARGS status | grep consume | awk '{ print $10 }')" = "on" ]; then
-  CONSUME_AFTER=1
+if [ "$($mpc_no_args status | grep consume | awk '{ print $10 }')" = "on" ]; then
+  consume_after=1
 else
   # This order will make it default to off, in case mpc status does not return (on|off)
-  CONSUME_AFTER=0
-  $MPC --wait consume 1
+  consume_after=0
+  $mpc --wait consume 1
 fi
 
 # This will remove the song from the playlist
-$MPC --wait next
+$mpc --wait next
 
 # Restore consume status
-if [ $CONSUME_AFTER -eq 0 ]; then
-  $MPC consume "$CONSUME_AFTER"
+if [ $consume_after -eq 0 ]; then
+  $mpc consume "$consume_after"
 fi
 
-# Remove From M3U
-# Make a backup of the M3U
-cp "$M3U" "$M3U.bak"
+# Remove from playlists in playlist dir
+for m3u in $playlist_dir/*.m3u; do
+  # Make a backup of the M3U
+  cp "$m3u" "$m3u.bak"
 
-# Remove the song from the default playlist
-grep -v "$FILE" "$M3U" > "$M3U.temp"
-mv "$M3U.temp" "$M3U"
+  # Remove the song from the default playlist
+  grep -v "$file" "$m3u" > "$m3u.temp"
+  mv "$m3u.temp" "$m3u"
+done
 
 # Greate Success!
-echo "Removed '$SONG'"
+echo "Removed '$song'"
 exit 0
