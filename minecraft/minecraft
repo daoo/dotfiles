@@ -1,0 +1,16 @@
+#!/bin/bash
+
+minecraft_dir=$HOME/games/minecraft/client
+minecraft_jar=$minecraft_dir/minecraft.jar
+
+java=$(which java)
+memopts="-Xmx1024M -Xms512M"
+
+if wmname=$(which wmname); then
+  # Stupid hack to make minecraft work with xmonad
+  wmname "LG3D"
+fi
+
+cd "$minecraft_dir"
+$java $memopts -cp $minecraft_jar net.minecraft.LauncherFrame
+

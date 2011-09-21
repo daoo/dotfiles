@@ -1,0 +1,48 @@
+#!/bin/bash
+
+java="$(which java)"
+memopts="-Xmx1024M -Xms512M"
+
+minecraft_dir=$HOME/games/minecraft/server
+server_jar=$minecraft_dir/minecraft_server.jar
+
+server=$1
+world=$2
+
+server_dir="$minecraft_dir/$server"
+
+if [ ! -d "$server_dir" ]; then
+  echo -n "Server '$server' does not exist, create new [Y/n]? "
+
+  inp=""
+  read ans
+  if [ "$ans" != "n" ]; then
+    echo "Creating server..."
+    mkdir "$server_dir"
+  else
+    exit 1
+  fi
+fi
+
+if [ ! -d "$server_dir/$world" ]; then
+  echo -n "World '$world' does not exist, create new [Y/n]? "
+
+  inp=""
+  read ans
+  if [ "$ans" = "n" ]; then
+    exit 1
+  fi
+
+  echo "Creating world..."
+fi
+
+cd "$server_dir"
+
+# Set world
+if [ -f "$server_dir/server.properties" ]; then
+  # TODO: when creating a new server we can't set the world because the properties file does not exist
+  sed -i "s/level-name=.*/level-name=$world/" "$server_dir/server.properties"
+fi
+
+$java $memopts -jar "$server_jar" nogui
+

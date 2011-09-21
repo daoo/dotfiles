@@ -1,0 +1,41 @@
+#!/bin/bash
+
+curl="$(which curl)"
+cmp="$(which cmp)"
+
+minecraft_dir="$HOME/games/minecraft"
+
+client_url="https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft.jar"
+client_dir="$minecraft_dir/client"
+client_file="$client_dir/minecraft.jar"
+
+server_url="https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar"
+server_dir="$minecraft_dir/server"
+server_file="$server_dir/minecraft_server.jar"
+
+function update() {
+  local url=$1
+  local file=$2
+  local tmp="$(mktemp)"
+
+  echo "Downloading..."
+  $curl -s "$url" > "$tmp"
+
+  if [ $(stat -c%s "$tmp") -eq 0 ]; then
+    echo "Error downloading file."
+    exit 1
+  fi
+
+  if $cmp -s $tmp $file; then
+    echo "Already up-to-date."
+  else
+    mv $tmp $file
+    echo "Update successful."
+  fi
+}
+
+case "$1" in
+  "server") update $server_url $server_file ;;
+  "client") update $client_url $client_file ;;
+esac
+
