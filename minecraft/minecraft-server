@@ -1,7 +1,6 @@
 #!/bin/bash
 
-java="$(which java)"
-memopts="-Xmx1024M -Xms512M"
+javaopts="-server -Xmx1024M -Xms512M"
 
 minecraft_dir=$HOME/games/minecraft/server
 server_jar=$minecraft_dir/minecraft_server.jar
@@ -44,5 +43,5 @@ if [ -f "$server_dir/server.properties" ]; then
   sed -i "s/level-name=.*/level-name=$world/" "$server_dir/server.properties"
 fi
 
-$java $memopts -jar "$server_jar" nogui
+java $javaopts -jar "$server_jar" nogui
 
