@@ -1,5 +1,24 @@
 #!/bin/bash
 
+function list_dirs() {
+  for f in $1/*; do
+    if [ -d "$f" ]; then
+      echo $(basename $f)
+    fi
+  done
+}
+
+function ask() {
+  echo -n "$1"
+
+  inp=""
+  read ans
+  case "$ans" in
+    "y"|"Y") return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
 javaopts="-server -Xmx1024M -Xms512M"
 
 minecraft_dir=$HOME/games/minecraft/server
@@ -8,14 +27,16 @@ server_jar=$minecraft_dir/minecraft_server.jar
 server=$1
 world=$2
 
+if [ -z "$server" ]; then
+  echo "Availible servers:"
+  list_dirs "$minecraft_dir"
+  exit 1
+fi
+
 server_dir="$minecraft_dir/$server"
 
 if [ ! -d "$server_dir" ]; then
-  echo -n "Server '$server' does not exist, create new [Y/n]? "
-
-  inp=""
-  read ans
-  if [ "$ans" != "n" ]; then
+  if ask "Server '$server' does not exist, create new [y/N]? "; then
     echo "Creating server..."
     mkdir "$server_dir"
   else
@@ -23,25 +44,26 @@ if [ ! -d "$server_dir" ]; then
   fi
 fi
 
-if [ ! -d "$server_dir/$world" ]; then
-  echo -n "World '$world' does not exist, create new [Y/n]? "
+if [ -z "$world" ]; then
+  echo "Availible maps:"
+  list_dirs "$server_dir"
+  exit 1
+fi
 
-  inp=""
-  read ans
-  if [ "$ans" = "n" ]; then
+if [ ! -d "$server_dir/$world" ]; then
+  if ask "World '$world' does not exist, create new [y/N]? "; then
+    echo "Creating world..."
+  else
     exit 1
   fi
-
-  echo "Creating world..."
 fi
 
 cd "$server_dir"
 
 # Set world
-if [ -f "$server_dir/server.properties" ]; then
+if [ -f "server.properties" ]; then
   # TODO: when creating a new server we can't set the world because the properties file does not exist
   sed -i "s/level-name=.*/level-name=$world/" "$server_dir/server.properties"
 fi
 
 java $javaopts -jar "$server_jar" nogui
-
