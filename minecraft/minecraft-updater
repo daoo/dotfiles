@@ -1,32 +1,38 @@
 #!/bin/bash
 
-curl="$(which curl)"
-cmp="$(which cmp)"
-
 minecraft_dir="$HOME/games/minecraft"
+home_dir="$HOME/.minecraft"
 
 client_url="https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft.jar"
-client_dir="$minecraft_dir/client"
-client_file="$client_dir/minecraft.jar"
-
 server_url="https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar"
-server_dir="$minecraft_dir/server"
-server_file="$server_dir/minecraft_server.jar"
+client_file="$minecraft_dir/client/minecraft.jar"
+server_file="$minecraft_dir/server/minecraft_server.jar"
 
-function update() {
+function update_lwjgl() {
+  local source_dir=$1
+  local output_dir=$2
+
+  for jar in jinput.jar lwjgl.jar lwjgl_util.jar; do
+    cp "$source_dir/jar/$jar" "$output_dir/"
+  done
+
+  cp $source_dir/native/linux/*.so "$output_dir/natives/"
+}
+
+function update_file() {
   local url=$1
   local file=$2
-  local tmp="$(mktemp)"
+  local tmp=$(mktemp)
 
   echo "Downloading..."
-  $curl -s "$url" > "$tmp"
+  curl -s "$url" > "$tmp"
 
   if [ $(stat -c%s "$tmp") -eq 0 ]; then
     echo "Error downloading file."
     exit 1
   fi
 
-  if $cmp -s $tmp $file; then
+  if cmp -s $tmp $file; then
     echo "Already up-to-date."
   else
     mv $tmp $file
@@ -35,7 +41,8 @@ function update() {
 }
 
 case "$1" in
-  "server") update $server_url $server_file ;;
-  "client") update $client_url $client_file ;;
+  "server") echo "Updating server..."; update_file $server_url $server_file ;;
+  "client") echo "Updating client..."; update_file $client_url $client_file ;;
+  "lwjgl") echo "Updating lwjgl..."; update_lwjgl "$2" "$home_dir/bin" ;;
 esac
 
