@@ -66,14 +66,15 @@ alias '....'='cd ../../..'
 alias '.....'='cd ../../../..'
 
 # Bazinga
-alias :q="echo 'you are not in vim anymore' ; echo ''"
-alias :w="echo 'you are not in vim anymore' ; echo ''"
+alias :q='echo you are not in vim anymore'
+alias :w='echo you are not in vim anymore'
 
 # Other
 alias bell="echo -e '\a'"
 alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
-alias calc="noglob calc"
-alias g="git"
+alias calc='noglob calc'
+alias g='git'
+alias y='yaourt'
 # }}}
 # {{{ Binds
 bindkey '' history-search-backward
