@@ -50,7 +50,6 @@ Bundle 'tango-morning.vim'
 Bundle 'alex.vim'
 Bundle 'go.vim'
 Bundle 'happy.vim'
-Bundle 'nathanaelkane/vim-indent-guides'
 
 " Editing
 Bundle 'scrooloose/nerdcommenter'
