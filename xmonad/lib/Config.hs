@@ -1,7 +1,5 @@
 module Config where
 
-import System.Environment
-
 import XMonad
 
 import Environment
@@ -14,9 +12,6 @@ data Software = Software {
   editor :: String,
   lock :: String
 } deriving (Show)
-
-getEnvDefault :: String -> String -> IO String
-getEnvDefault env def = getEnv env `catch` (\_ -> return def)
 
 softwareDefault :: IO Software
 softwareDefault = do
