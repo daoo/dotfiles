@@ -28,9 +28,12 @@ myModKey :: KeyMask
 myModKey = mod4Mask
 
 -- Colors
+winBorderFocused, winBorderNormal :: String
 winBorderFocused = focusFg
 winBorderNormal  = panelBg
 
+panelFg, panelBg, titleFg, titleBg, focusFg, focusBg, urgentFg, urgentBg, visibleFg,
+  visibleBg, occupiedFg, occupiedBg, viewsFg, viewsBg :: String
 panelFg    = "#b8b8b8"
 panelBg    = "#2e3436"
 titleFg    = "#d3d7cf"
@@ -47,6 +50,7 @@ viewsFg    = "#757575"
 viewsBg    = panelBg
 
 -- Fonts
+panelFont :: String
 panelFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 
 -- XPConfig

@@ -18,7 +18,7 @@ main :: IO ()
 main = do
   s <- softwareDefault
 
-  (left, right) = (defaultBar, defaultBar)
+  let (left, right) = (defaultBar, defaultBar)
 
   spawn $ "conky -c ~/.xmonad/conkyrc | dzen2 -p " ++ barToString right
   d <- spawnPipe $ "dzen2 -p " ++ barToString left
