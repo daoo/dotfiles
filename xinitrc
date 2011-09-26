@@ -1,19 +1,5 @@
 #!/bin/sh
 
-safe_source() {
-  if [ -f "$1" ]; then
-    source "$1"
-  fi
-}
-
-if [ -z "$HOME" ]; then
-  HOST="`/bin/hostname`"
-fi
-
-# Local configuration
-safe_source "$HOME/.xearly"
-safe_source "$HOME/.envrc"
-
 # Set a nicer cursor
 xsetroot -cursor_name left_ptr
 
@@ -23,8 +9,6 @@ if [ -f "/usr/share/X11/xkb/symbols/usaswe" ]; then
 fi
 xmodmap -e "remove Lock = Caps_Lock"
 xmodmap -e "keysym Caps_Lock = Return"
-
-safe_source "$HOME/.xlate"
 
 xmonad
 
