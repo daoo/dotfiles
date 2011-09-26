@@ -29,8 +29,6 @@ myManageHook = composeAll . concat $
   , moves "web"   [ "firefox-bin", "Firefox", "Navigator" ]
   , moves "code"  [ "gvim" ]
   , moves "code2" [ "Eclipse" ]
-  , moves "music" [ "tuxguitar" ]
-  , moves "void"  [ "transmission-gtk" ]
 
   , floats name [ "MPlayer", "xmessage" ]
   , floats res [ "Dialog" ]
