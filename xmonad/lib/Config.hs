@@ -21,7 +21,7 @@ softwareDefault = do
 
 -- Workspaces
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = [ "im", "web", "code", "code2", "other", "other2", "full", "void" ]
+myWorkspaces = ["im", "web", "code", "code2", "other", "other2", "full", "void"]
 
 -- Modkey
 myModKey :: KeyMask

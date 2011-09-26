@@ -7,7 +7,6 @@ import Keys
 import Software
 
 import Data.Map (union)
-import Network.BSD
 
 import XMonad
 import XMonad.Hooks.ManageDocks
@@ -15,44 +14,13 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad
 
-zalbaarBar :: (Bar, Bar)
-zalbaarBar = 
-  ( defaultBar
-    { barWidth = 1000
-    , barX     = 0
-    , barY     = 1080 - 13
-    , barAlign = AlignLeft }
-  , defaultBar
-    { barWidth = 920
-    , barX     = 1000
-    , barY     = 1080 - 13
-    , barAlign = AlignRight } )
-
-chewbaccaBar :: (Bar, Bar)
-chewbaccaBar =
-  ( defaultBar
-    { barWidth  = 683
-    , barX      = 0
-    , barY      = 768 - 13
-    , barAlign  = AlignLeft }
-  , defaultBar
-    { barWidth = 683
-    , barX     = 683
-    , barY     = 768 - 13
-    , barAlign = AlignRight } )
-
 main :: IO ()
 main = do
-  h <- getHostName
   s <- softwareDefault
 
-  let (left, right) = case h of
-                        "zaalbar"   -> zalbaarBar
-                        "freyyr"    -> zalbaarBar
-                        "chewbacca" -> chewbaccaBar
-                        _           -> undefined -- TODO
-    
-  spawn $ "conky -c ~/.xmonad/conky/" ++ h ++ " | dzen2 -p " ++ barToString right
+  (left, right) = (defaultBar, defaultBar)
+
+  spawn $ "conky -c ~/.xmonad/conky/conkyrc | dzen2 -p " ++ barToString right
   d <- spawnPipe $ "dzen2 -p " ++ barToString left
 
   -- Setup keys
