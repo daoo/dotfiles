@@ -1,8 +1,8 @@
 module Keys (keysToAdd) where
 
 import Config
-import Theme
 import Prompt
+import Software
 
 import Data.Map hiding (filter, map)
 

@@ -1,6 +1,6 @@
 module Common where
 
-import Theme
+import Config
 
 import Data.Ratio ((%))
 import System.IO (Handle)

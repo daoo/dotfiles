@@ -1,10 +1,10 @@
 module Main where
 
 import Bar
+import Common
 import Config
 import Keys
-import Theme
-import Common
+import Software
 
 import Data.Map (union)
 import Network.BSD
