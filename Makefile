@@ -1,5 +1,4 @@
 CFGROOT := $(shell pwd)
-HOSTNAME := $(shell hostname)
 
 all: git gtk rtorrent scripts tmux vim xdefaults xinitrc xmonad zsh
 
