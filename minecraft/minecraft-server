@@ -19,51 +19,65 @@ function ask() {
   esac
 }
 
-javaopts="-server -Xmx1024M -Xms512M"
+function launch() {
+  # Assume these exists
+  local server=$1
+  local world=$2
+
+  local server_dir="$minecraft_dir/servers/$server"
+
+  # Create link
+  ln -fsn "$minecraft_dir/worlds/$world" "$server_dir/$world"
+
+  # Set world name
+  sed -i "s/level-name=.*/level-name=$world/" "$server_dir/server.properties"
+  
+  cd "$server_dir"
+  $command
+}
 
 minecraft_dir=$HOME/games/minecraft/server
 server_jar=$minecraft_dir/minecraft_server.jar
 
+javaopts="-server -Xmx1024M -Xms512M"
+command="java $javaopts -jar $server_jar nogui"
+
 server=$1
 world=$2
 
+# Check for empty input
 if [ -z "$server" ]; then
   echo "Availible servers:"
-  list_dirs "$minecraft_dir"
+  list_dirs "$minecraft_dir/servers"
   exit 1
-fi
-
-server_dir="$minecraft_dir/$server"
-
-if [ ! -d "$server_dir" ]; then
-  if ask "Server '$server' does not exist, create new [y/N]? "; then
-    echo "Creating server..."
-    mkdir "$server_dir"
-  else
-    exit 1
-  fi
 fi
 
 if [ -z "$world" ]; then
   echo "Availible maps:"
-  list_dirs "$server_dir"
+  list_dirs "$minecraft_dir/worlds"
   exit 1
 fi
 
-if [ ! -d "$server_dir/$world" ]; then
-  if ask "World '$world' does not exist, create new [y/N]? "; then
-    echo "Creating world..."
+# Check for non existing dirs
+if [ ! -d "$minecraft_dir/servers/$server" ]; then
+  if ask "Server '$server' does not exist, create new [y/N]? "; then
+    echo "Creating server..."
+    mkdir "$minecraft_dir/servers/$server"
+
+    # Launch minecraft-server once and stop it immediately
+    echo "stop" | $command
   else
     exit 1
   fi
 fi
 
-cd "$server_dir"
-
-# Set world
-if [ -f "server.properties" ]; then
-  # TODO: when creating a new server we can't set the world because the properties file does not exist
-  sed -i "s/level-name=.*/level-name=$world/" "$server_dir/server.properties"
+if [ ! -d "$minecraft_dir/worlds/$world" ]; then
+  if ask "World '$world' does not exist, create new [y/N]? "; then
+    echo "Creating world..."
+    mkdir "$minecraft_dir/worlds/$world"
+  else
+    exit 1
+  fi
 fi
 
-java $javaopts -jar "$server_jar" nogui
+launch $server $world
