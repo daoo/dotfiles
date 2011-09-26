@@ -1,5 +1,6 @@
 module Main where
 
+import Bar
 import Config
 import Keys
 import Theme
@@ -39,7 +40,6 @@ chewbaccaBar =
     , barX     = 683
     , barY     = 768 - 13
     , barAlign = AlignRight } )
-
 
 main :: IO ()
 main = do

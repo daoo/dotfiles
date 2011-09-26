@@ -60,16 +60,5 @@ myLayoutHook = onWorkspace "im" imLHook $
 
 -- Log Hook
 myLogHook :: Handle -> X ()
-myLogHook h = dynamicLogWithPP $ defaultPP
-  { ppUrgent          = color urgentFg urgentBg . dzenStrip
-  , ppCurrent         = color focusFg focusBg
-  , ppVisible         = color visibleFg visibleBg
-  , ppHidden          = color occupiedFg occupiedBg . noNSP
-  , ppHiddenNoWindows = color viewsFg viewsBg . noNSP
-  , ppTitle           = color titleFg titleBg
-  , ppWsSep           = " "
-  , ppSep             = " | "
-  , ppOutput          = hPutStrLn h }
-  where
-    color     = dzenColor
-    noNSP ws  = if (ws == "NSP") then "" else ws
+myLogHook h = dynamicLogWithPP $ myPP { ppOutput = hPutStrLn h }
+

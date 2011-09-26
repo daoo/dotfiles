@@ -1,8 +1,11 @@
 module Theme where
 
+import Bar
+
 import Data.Map as M
 
 import XMonad
+import XMonad.Hooks.DynamicLog
 import XMonad.Prompt
 
 winBorderFocused = focusFg
@@ -36,3 +39,28 @@ myXPConfig = defaultXPConfig
 
   -- Make Ctrl-C in prompt stop input
   , promptKeymap = M.fromList [((controlMask,xK_c), quit)] `M.union` promptKeymap defaultXPConfig }
+
+myPP :: PP
+myPP = defaultPP
+  { ppUrgent          = color urgentFg urgentBg . dzenStrip
+  , ppCurrent         = color focusFg focusBg
+  , ppVisible         = color visibleFg visibleBg
+  , ppHidden          = color occupiedFg occupiedBg . noNSP
+  , ppHiddenNoWindows = color viewsFg viewsBg . noNSP
+  , ppTitle           = color titleFg titleBg
+  , ppWsSep           = " "
+  , ppSep             = " | " }
+  where
+    color     = dzenColor
+    noNSP ws  = if (ws == "NSP") then "" else ws
+
+defaultBar :: Bar
+defaultBar = Bar
+  { barFont   = panelFont
+  , barFg     = panelFg
+  , barBg     = panelBg
+  , barWidth  = 0
+  , barHeight = 13
+  , barX      = 0
+  , barY      = 0
+  , barAlign  = AlignCenter }
