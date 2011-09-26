@@ -1,7 +1,7 @@
 CFGROOT := $(shell pwd)
 HOSTNAME := $(shell hostname)
 
-all: git gtk path rtorrent scripts tmux vim xdefaults xinitrc xmonad zsh
+all: git gtk rtorrent scripts tmux vim xdefaults xinitrc xmonad zsh
 
 git:
 	ln -fsn $(CFGROOT)/git/gitconfig ${HOME}/.gitconfig
@@ -30,28 +30,26 @@ xdefaults:
 xinitrc:
 	ln -fsn $(CFGROOT)/xinitrc ${HOME}/.xinitrc
 
-path:
-	ln -fsn $(CFGROOT)/path ${HOME}/.path
-
 xmonad:
 	ln -fsn $(CFGROOT)/xmonad ${HOME}/.xmonad
 
 zsh:
 	ln -fsn $(CFGROOT)/zsh ${HOME}/.zsh
 	ln -fsn $(CFGROOT)/zsh/zshrc ${HOME}/.zshrc
+	ln -fsn $(CFGROOT)/zsh/zprofile ${HOME}/.zprofile
 
 uninstall:
 	rm -f ${HOME}/.Xdefaults
 	rm -f ${HOME}/.gitconfig
 	rm -f ${HOME}/.gvimrc
-	rm -f ${HOME}/.path
 	rm -f ${HOME}/.rtorrent.rc
 	rm -f ${HOME}/.tmux.conf
 	rm -f ${HOME}/.vim
 	rm -f ${HOME}/.vimrc
 	rm -f ${HOME}/.xinitrc
 	rm -f ${HOME}/.xmonad
+	rm -f ${HOME}/.zprofile
 	rm -f ${HOME}/.zsh
 	rm -f ${HOME}/.zshrc
 
-.PHONY: uninstall git rtorrent scripts vim xdefaults xinitrc xmonad zsh path
+.PHONY: uninstall git rtorrent scripts vim xdefaults xinitrc xmonad zsh
