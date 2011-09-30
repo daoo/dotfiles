@@ -4,21 +4,15 @@
 # By daoo
 #
 
-if ! shuf=$(which shuf); then
-  echo "Shuf needed."
-  exit 1
-fi
-
 if [ ! -d "$1" ]; then
   echo "$1 not a directory."
   exit 1
 fi
 
 wallpaper_dir="$1"
-wallpaper_link="$2"
 
 # We assume that all files in the wallpaper dir are images
-wallpaper=$(find "$wallpaper_dir" -type f | $shuf -n 1)
+file=$(find "$wallpaper_dir" -type f | shuf -n 1)
 
-ln -sf "$wallpaper" "$wallpaper_link"
+feh --bg-tile $file
 
