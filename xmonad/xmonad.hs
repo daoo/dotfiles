@@ -20,7 +20,7 @@ main = do
 
   let (left, right) = (defaultBar, defaultBar)
 
-  spawn $ "conky -c ~/.xmonad/conkyrc | dzen2 -p " ++ barToString right
+  spawn $ "conky -c ~/.xmonad/conkyrc 2> /dev/null | dzen2 -p " ++ barToString right
   d <- spawnPipe $ "dzen2 -p " ++ barToString left
 
   -- Setup keys
