@@ -4,7 +4,7 @@
 # By daoo
 #
 
-if [ ! -d "$1" ]; then
+if [[ ! -d $1 ]]; then
   echo "$1 not a directory."
   exit 1
 fi

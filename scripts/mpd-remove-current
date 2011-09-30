@@ -3,24 +3,18 @@
 # Script for removing the currently playing song from your mpd queue and a selected m3u file.
 # Needs mpd and mpc
 
-mpc_no_args="$(which mpc)"
-mpc="$mpc_no_args -q"
-
 mpd_dir="$HOME/.mpd"
 playlist_dir="$mpd_dir/playlists"
 
-mpd="$(which mpd) $mpd_dir/mpd.conf"
-
-$mpc status
-if [ ! -f "$mpd_dir/pid" ]; then
+if [[ ! -f "$mpd_dir/pid" ]]; then
   exit 1 # mpd not running
 fi
 
 # Get current song
-song=$($mpc current)
-file=$($mpc -f '%file%' current)
+song=$(mpc -q current)
+file=$(mpc -q -f '%file%' current)
 
-if [ "$song" = "" ]; then
+if [[ -z $song ]]; then
   exit 2 # No song playing
 fi
 
@@ -31,26 +25,26 @@ fi
 
 echo -n "Really remove '$song' [y/N]? "
 read result
-if [ "$result" != "y" -a "$result" != "Y" ]; then
+if [[ ($result != "y") && ($result != "Y") ]]; then
   exit 3 # Failed confirmation
 fi
 
 # Remove from playlist by turning on consume
 # But preserve consume status
-if [ "$($mpc_no_args status | grep consume | awk '{ print $10 }')" = "on" ]; then
+if [[ $(mpc status | grep consume | awk '{ print $10 }') = "on" ]]; then
   consume_after=1
 else
   # This order will make it default to off, in case mpc status does not return (on|off)
   consume_after=0
-  $mpc --wait consume 1
+  mpc -q --wait consume 1
 fi
 
 # This will remove the song from the playlist
-$mpc --wait next
+mpc -q --wait next
 
 # Restore consume status
-if [ $consume_after -eq 0 ]; then
-  $mpc consume "$consume_after"
+if [[ $consume_after -eq 0 ]]; then
+  mpc -q consume "$consume_after"
 fi
 
 # Remove from playlists in playlist dir
@@ -59,6 +53,7 @@ for m3u in $playlist_dir/*.m3u; do
   cp "$m3u" "$m3u.bak"
 
   # Remove the song from the default playlist
+  # TODO: use sed instead
   grep -v "$file" "$m3u" > "$m3u.temp"
   mv "$m3u.temp" "$m3u"
 done

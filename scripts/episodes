@@ -14,7 +14,7 @@ function print_help() {
 }
 
 function init() {
-  if [ -f "$state_file" ]; then
+  if [[ -f "$state_file" ]]; then
     echo "Already initialized."
     exit 1
   else
@@ -29,7 +29,7 @@ function init() {
 }
 
 function uninit() {
-  if [ -f "$state_file" ]; then
+  if [[ -f "$state_file" ]]; then
     echo "Okay."
     rm $state_file
     exit 0
@@ -48,12 +48,12 @@ case "$1" in
   --uninit) uninit ;;
 esac
 
-if [ -f "$state_file" ]; then
+if [[ -f "$state_file" ]]; then
   # Backup and get state
   cp $state_file $state_file.bak
 
   quit=0
-  while [ $quit -ne 1 -a -s $state_file ]; do
+  while [[ ($quit -ne 1) && (-s $state_file) ]]; do
     file=$(head -n1 $state_file)
 
     echo "$file"

@@ -5,8 +5,8 @@ rnd() {
 }
 
 # Check for atool
-if ! atool=$(which atool); then
-  echo "atool not found"
+if ! atool=$(which atool) 2> /dev/null; then
+  echo "atool not found" >&2
   exit 1
 fi
 
@@ -14,7 +14,7 @@ fi
 file="$@"
 repack=1
 
-if [ -a "$file" ]; then
+if [[ -a $file ]]; then
   # Some basic information about the archive
   name="$(basename "$file")"
   archive=$(readlink -f "$file")
@@ -30,7 +30,7 @@ if [ -a "$file" ]; then
   cd "$tmpdir"
   $SHELL
 
-  if [ $repack ]; then
+  if [[ $repack ]]; then
     echo "Repacking..."
     mv "$archive" "/tmp/$name.`rnd`" # Backup
     $atool -a -f "$archive" $(ls -b $tmpdir)
@@ -40,5 +40,5 @@ if [ -a "$file" ]; then
   rm -r "$tmpdir"
   cd "$dir"
 else
-  echo "File '$file' does not exist."
+  echo "File '$file' does not exist." >&2
 fi

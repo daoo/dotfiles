@@ -14,7 +14,7 @@ unmute() {
 
 statusfile="/tmp/pa-mute"
 
-if [ "`cat $statusfile`" = "0" ]; then
+if [[ $(cat $statusfile) = "0" ]]; then
   action=mute
   echo "1" > $statusfile
 else
