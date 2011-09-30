@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # A script that selects a new random wallpaper and creates a link for it.
 # By daoo

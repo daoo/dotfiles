@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Script for removing the currently playing song from your mpd queue and a selected m3u file.
 # Needs mpd and mpc

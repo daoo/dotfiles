@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 mount -o rw,noauto,async,user,umask=1000 "$1" "$2"
 

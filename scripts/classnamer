@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 curl "http://www.classnamer.com/" -s | awk -F'<|>' '/id="classname"/{print $3}'
 

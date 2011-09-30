@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 mpc -q clear
 cat $1 | mpc -q add

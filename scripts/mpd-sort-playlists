@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 mpd_dir="$HOME/.mpd"
 playlist_dir="$mpd_dir/playlists"
