@@ -33,7 +33,7 @@ setopt nobeep
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 export EDITOR="vim"
 export PAGER="less"
-export LESS="-F -i -X -r"
+export LESS="-FiXr"
 
 # Disable ctrl-q and ctrl-s
 stty -ixon
