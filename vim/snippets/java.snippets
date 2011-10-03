@@ -1,8 +1,25 @@
-snippet cons
-	public ${1:`Filename("", "untitled")`}()
-	{
-		${2}
+snippet mai
+	public static void main(final String[] args) {
+		${1:/* code */}
 	}
+
+snippet cons
+	public ${1:`Filename("", "untitled")`}(${2}) {
+		${3}
+	}
+
+snippet get
+	public ${1:int} get${2:Something}() {
+		return ${3:something};
+	}${4}
+
+snippet set
+	public void set${1:Something}(final ${2:int} ${3:something}) {
+		this.$3 = $3;
+	}${4}
 
 snippet println
 	System.out.println("${1}");
+
+snippet priv
+	private final ${1:int} ${2:var};
