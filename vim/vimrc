@@ -2,66 +2,44 @@
 
 " {{{ Startup
 set nocompatible
-
-" use '.vim' directory instead of 'vimfiles' under windows
-if has("win32")
-  set runtimepath=~/.vim,$VIMRUNTIME
-endif
-
-filetype off
-
-set runtimepath+=~/.vim/bundle/vundle/ 
-call vundle#rc()
 " }}}
-" {{{ Vundle
+" {{{ VAM
+set runtimepath+=~/.vim/vim-addons/vim-addon-manager
 
-" General
-Bundle 'tpope/vim-repeat'
-Bundle 'gmarik/vundle'
+fun! SetupVAM()
+  let plugins = [
+    \ 'Mark2666',
+    \ 'The_NERD_Commenter',
+    \ 'The_NERD_tree',
+    \ 'Wombat',
+    \ 'ack',
+    \ 'alex',
+    \ 'fugitive',
+    \ 'github:daoo/Mustang2',
+    \ 'github:daoo/a.vim',
+    \ 'happy',
+    \ 'repeat',
+    \ 'snipmate',
+    \ 'snipmate-snippets',
+    \ 'surround',
+    \ 'tabular',
+    \ 'tango-morning',
+    \ 'toggle_words',
+    \ ]
 
-if executable('ctags')
-  Bundle 'Tagbar'
-endif
+  " Only add certain plugins if they meet a criteria
+  if has('ruby')
+    call add(plugins, 'Command-T')
+  endif
 
-if executable('ack')
-  Bundle 'mileszs/ack.vim'
-endif
+  if executable('ctags')
+    call add(plugins, 'Tagbar')
+  endif
 
-if executable('git')
-  Bundle 'tpope/vim-fugitive'
-endif
+  call vam#ActivateAddons(plugins, {'auto_install' : 0})
+endf
 
-" Files, searching and buffers
-Bundle 'Mark'
-Bundle 'daoo/a.vim'
-if has('ruby')
-  Bundle 'wincent/Command-T'
-else
-  " If I can't have command-t, at least give me nerdtree
-  Bundle 'scrooloose/nerdtree'
-endif
-
-" Color Schemes
-Bundle 'Wombat'
-Bundle 'daoo/Mustang2'
-Bundle 'tango-morning.vim'
-
-" Syntax
-Bundle 'alex.vim'
-Bundle 'go.vim'
-Bundle 'happy.vim'
-
-" Editing
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'godlygeek/tabular'
-Bundle 'toggle_words.vim'
-
-" Automated insertion
-Bundle 'msanders/snipmate.vim'
-Bundle 'tpope/vim-surround'
-
-filetype plugin indent on
-
+call SetupVAM()
 " }}}
 " {{{ General settings
 " Backup and temporary files
@@ -129,6 +107,10 @@ set t_vb=
 " Color scheme
 colorscheme mustang
 syntax on
+" }}}
+" {{{ Filetypes Settings
+autocmd Filetype snippet setlocal ts=8 sts=0 sw=8
+autocmd Filetype make setlocal ts=8 sts=0 sw=8
 " }}}
 " {{{ Plugin Settings
 " EasyMotion

@@ -3,10 +3,9 @@
 firefox/pentadactyl/info
 ncmpcpp/error.log
 vim/.netrwhist
-vim/bundle
-vim/eclim
-vim/plugin/eclim.vim
-vim/spell
+vim/spell/
+vim/tmp/
+vim/vim-addons/
 xmonad/bin
 xmonad/history
 xmonad/xmonad
