@@ -15,7 +15,6 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.ManageDocks
 
 -- Layouts
-import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import XMonad.Layout.Named (named)
 import XMonad.Layout.NoBorders
@@ -41,12 +40,10 @@ myManageHook = composeAll . concat $
     res a  = resource =? a
 
 -- Layout Hook
-myLayoutHook = onWorkspace "im" imLHook $
-               onWorkspace "full" fullscreenLHook $
+myLayoutHook = onWorkspace "full" fullscreenLHook $
                defaultLHook
   where
     defaultLHook    = avoidStruts $ lessBorders ambiguity $ defaultLayout
-    imLHook         = avoidStruts $ lessBorders ambiguity $ imLayout
     fullscreenLHook = noBorders $ fullFirstLayout 
 
     ambiguity = (Combine Difference Screen OnlyFloat)
@@ -54,9 +51,6 @@ myLayoutHook = onWorkspace "im" imLHook $
     fullFirstLayout = Full ||| tiled ||| Mirror tiled
     defaultLayout   = tiled ||| Mirror tiled ||| Full
     tiled           = Tall 1 (3.0/100.0) (1.0/2.0)
-
-    imLayout = named "IM Grid" $ reflectHoriz $ withIM (1%7) rosters Grid
-    rosters  = (ClassName "Pidgin") `And` (Role "buddy_list")
 
 -- Log Hook
 myLogHook :: Handle -> X ()
