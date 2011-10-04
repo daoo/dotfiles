@@ -80,7 +80,6 @@ set cindent
 set expandtab
 set shiftwidth=2
 set softtabstop=2
-set tabstop=8
 " }}}
 " {{{ Visual Settings
 set lazyredraw
@@ -109,8 +108,8 @@ colorscheme mustang
 syntax on
 " }}}
 " {{{ Filetypes Settings
-autocmd Filetype snippet setlocal ts=8 sts=0 sw=8
-autocmd Filetype make setlocal ts=8 sts=0 sw=8
+autocmd Filetype snippet setlocal sts=0 sw=8 noet
+autocmd Filetype make setlocal sts=0 sw=8 noet
 " }}}
 " {{{ Plugin Settings
 " EasyMotion
