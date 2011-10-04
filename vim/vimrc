@@ -111,20 +111,6 @@ syntax on
 autocmd Filetype snippet setlocal sts=0 sw=8 noet
 autocmd Filetype make setlocal sts=0 sw=8 noet
 " }}}
-" {{{ Plugin Settings
-" EasyMotion
-let g:EasyMotion_leader_key='<Leader>e'
-
-" Clang Complete
-let g:clang_auto_select=0
-let g:clang_complete_auto=0
-let g:clang_complete_copen=1
-let g:clang_hl_errors=1
-let g:clang_periodic_quickfix=0
-let g:clang_snippets=0
-let g:clang_conceal_snippets=1
-let g:clang_use_library=1
-" }}}
 " {{{ Disabled Stupid Keys
 " Arrow keys
 inoremap <Down>  <NOP>
