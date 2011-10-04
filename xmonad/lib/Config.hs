@@ -1,6 +1,6 @@
 module Config where
 
-import Data.Map as M
+import Data.Map (fromList, union)
 
 import Bar
 import Environment
@@ -64,7 +64,7 @@ myXPConfig = defaultXPConfig
   , promptBorderWidth = 0
 
   -- Make Ctrl-C in prompt stop input
-  , promptKeymap = M.fromList [((controlMask,xK_c), quit)] `M.union` promptKeymap defaultXPConfig }
+  , promptKeymap = fromList [((controlMask,xK_c), quit)] `union` promptKeymap defaultXPConfig }
 
 -- Log Hook
 myPP :: PP

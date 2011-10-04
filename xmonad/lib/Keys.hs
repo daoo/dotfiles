@@ -6,15 +6,11 @@ import Software
 
 import Data.Map hiding (filter, map)
 
-import qualified XMonad.StackSet as S
-
 import XMonad
-
--- Actions
 import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.GridSelect
 import XMonad.Actions.NoBorders
-
+import XMonad.StackSet (hidden, shift, tag, view, greedyView)
 import XMonad.Util.Scratchpad 
 
 workspaceKeys :: [KeySym]
@@ -31,7 +27,7 @@ keysToAdd cfg modifier = fromList $
   -- Dynamic Workspaces
   , ((modifier, xK_y), removeWorkspace)
   , ((modifier, xK_f), selectWorkspace myXPConfig)
-  , ((modifier, xK_g), withWorkspace myXPConfig (windows . S.shift))
+  , ((modifier, xK_g), withWorkspace myXPConfig (windows . shift))
 
   -- Terminals and stuff
   , ((modifier, xK_p), shellPrompt myXPConfig)
@@ -52,10 +48,10 @@ keysToAdd cfg modifier = fromList $
   , ((0, 0x1008ff14), spawn "mpd-play-pause") ]     -- XF86AudioPlay
 
   -- For Programmers Dvorak
-  ++ mapWS modifier (windows . S.greedyView) wsWithKeys
-  ++ mapWS (modifier .|. shiftMask) (\ i -> (windows $ S.shift i) >> (windows $ S.greedyView i)) wsWithKeys
+  ++ mapWS modifier (windows . greedyView) wsWithKeys
+  ++ mapWS (modifier .|. shiftMask) (\ i -> (windows $ shift i) >> (windows $ greedyView i)) wsWithKeys
   where
     wsWithKeys = zip myWorkspaces workspaceKeys
-    toggleWS   = windows $ S.view =<< S.tag . head . filter ((\ x -> x /= "NSP") . S.tag) . S.hidden
+    toggleWS   = windows $ view =<< tag . head . filter ((\ x -> x /= "NSP") . tag) . hidden
 
     mapWS m a ws = map (\ (i, k) -> ((m, k), a i)) ws

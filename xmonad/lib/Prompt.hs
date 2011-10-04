@@ -1,9 +1,10 @@
 module Prompt where
 
-import XMonad
-import System.Directory
 import Environment
 
+import System.Directory
+
+import XMonad
 import XMonad.Prompt
 import XMonad.Prompt.Shell hiding (shellPrompt, getCommands)
 
