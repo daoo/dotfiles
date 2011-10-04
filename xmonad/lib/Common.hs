@@ -2,24 +2,15 @@ module Common where
 
 import Config
 
-import Data.Ratio ((%))
 import System.IO (Handle)
 
--- Xmonad
 import XMonad
-import XMonad.Util.Run
-
--- Hooks
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.ManageDocks
-
--- Layouts
-import XMonad.Layout.IM
-import XMonad.Layout.Named (named)
+import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
-import XMonad.Layout.Reflect
+import XMonad.Util.Run
 
 -- Manage Hook
 myManageHook :: ManageHook
