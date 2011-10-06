@@ -112,7 +112,7 @@ autocmd Filetype snippet setlocal sts=0 sw=8 noet
 autocmd Filetype make setlocal sts=0 sw=8 noet
 " }}}
 " {{{ Commands
-cmap W %!sudo tee > /dev/null %
+command! W %!sudo tee > /dev/null %
 " }}}
 " {{{ Disabled Stupid Keys
 " Arrow keys
