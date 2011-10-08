@@ -7,6 +7,12 @@ if [[ -f "$mpd_dir/pid" ]]; then
   # mpd running
   mpc -q toggle
 else
+  if $(which mpdscribble > /dev/null); then
+    if !$(pidof mpdscribble > /dev/null); then
+      mpdscribble
+    fi
+  fi
+
   $mpd
   sleep 1 # Sleep a second to let mpd start
   mpc -q play
