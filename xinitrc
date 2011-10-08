@@ -8,7 +8,7 @@ if [ -f "/usr/share/X11/xkb/symbols/usaswe" ]; then
   setxkbmap usaswe
 fi
 xmodmap -e "remove Lock = Caps_Lock"
-xmodmap -e "keysym Caps_Lock = Return"
+xmodmap -e "keysym Caps_Lock = BackSpace"
 
 xmonad
 
