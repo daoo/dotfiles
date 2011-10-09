@@ -80,6 +80,9 @@ set cindent
 set expandtab
 set shiftwidth=2
 set softtabstop=2
+
+" Formatting
+set formatoptions=tcqro
 " }}}
 " {{{ Visual Settings
 set lazyredraw
