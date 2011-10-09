@@ -2,6 +2,8 @@ snippet mai
 	public static void main(final String[] args) {
 		${1:/* code */}
 	}
+snippet pf
+	private final ${1:int} ${2:var};
 snippet cons
 	public ${1:`Filename("", "untitled")`}(${2}) {
 		${3}
@@ -14,7 +16,9 @@ snippet set
 	public void set${1:Something}(final ${2:int} ${3:something}) {
 		this.$3 = $3;
 	}${4}
+snippet pm
+	private ${1:void} ${2:method}(${3:void}) {
+		${4}
+	}
 snippet println
 	System.out.println("${1}");
-snippet priv
-	private final ${1:int} ${2:var};
