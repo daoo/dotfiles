@@ -152,10 +152,7 @@ let mapleader=","
 noremap Q <NOP>
 
 " F-keys
-if exists("loaded_nerd_tree")
-  nnoremap <F2> :NERDTreeToggle<CR>
-endif
-
+nnoremap <F2> :NERDTreeToggle<CR>
 nnoremap <F3> :TagbarToggle<CR>
 nnoremap <F5> :make run<CR>
 nnoremap <F8> :make<CR>
