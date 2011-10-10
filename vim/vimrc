@@ -166,21 +166,13 @@ nnoremap <Leader>ss :AS<CR>
 " Misc
 nnoremap <Leader>cd :cd %:p:h<CR>
 
+" Searching
 nnoremap <Leader>fc :nohlsearch<CR>
 nnoremap <Leader>fg :Ack '<cword>'<CR>
-nnoremap <Leader>fl /<c-r>=expand("<cword>")<cr><CR>
-nnoremap <Leader>fr :%s/<c-r>=expand("<cword>")<cr>/
+nnoremap <Leader>fl /<C-r>=expand("<cword>")<CR><CR>
+nnoremap <Leader>fr :%s/<C-r>=expand("<cword>")<CR>/
 
 nnoremap <Leader>jw :ToggleWord<CR>
-
-" Completion
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <C-Space> pumvisible() \|\| &omnifunc == '' ?
-\ "\<lt>C-n>" :
-\ "\<lt>C-x>\<lt>C-o><c-r>=pumvisible() ?" .
-\ "\"\\<lt>c-n>\\<lt>c-p>\\<lt>c-n>\" :" .
-\ "\" \\<lt>bs>\\<lt>C-n>\"\<CR>"
-imap <C-@> <C-Space>
 
 " Tabular
 nnoremap <Leader>ap :%s/( /(/g<CR>:%s/ )/)/g<CR>
@@ -189,8 +181,8 @@ nnoremap <Leader>ab :Tabularize braces<CR>
 nnoremap <Leader>ac :Tabularize commas<CR>
 
 " Move lines up and down
-nnoremap <C-Up> :move -2<CR>
-nnoremap <C-Down> :move +<CR>
+nnoremap <Up> :move -2<CR>
+nnoremap <Down> :move +<CR>
 
 " Redraw window so search terms are centered
 nnoremap n nzz
@@ -200,11 +192,15 @@ nnoremap N Nzz
 map <C-s> :w<CR>
 imap <C-s> <Esc>:w<CR>a
 
-" Easier SplitNavigation
+" Easier split navigation
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" Line navigation
+nnoremap H 0
+nnoremap L $
 " }}}
 
 " vim: fdm=marker :
