@@ -119,19 +119,19 @@ command! W %!sudo tee > /dev/null %
 " }}}
 " {{{ Disabled Stupid Keys
 " Arrow keys
-inoremap <Down>  <NOP>
-inoremap <Left>  <NOP>
-inoremap <Right> <NOP>
-inoremap <Up>    <NOP>
-noremap  <Down>  <NOP>
-noremap  <Left>  <NOP>
-noremap  <Right> <NOP>
-noremap  <Up>    <NOP>
+inoremap <down>  <nop>
+inoremap <left>  <nop>
+inoremap <right> <nop>
+inoremap <up>    <nop>
+noremap  <down>  <nop>
+noremap  <left>  <nop>
+noremap  <right> <nop>
+noremap  <up>    <nop>
 
-inoremap <C-Left>  <NOP>
-inoremap <C-Right> <NOP>
-noremap  <C-Left>  <NOP>
-noremap  <C-Right> <NOP>
+inoremap <c-left>  <nop>
+inoremap <c-right> <nop>
+noremap  <c-left>  <nop>
+noremap  <c-right> <nop>
 
 " Above arrow keys
 inoremap <del>      <nop>
@@ -149,43 +149,47 @@ noremap  <pageup>   <nop>
 let mapleader=","
 
 " Disable Ex mode
-noremap Q <NOP>
+noremap Q <nop>
+
+" Quick edit
+nnoremap ,eve :vsplit $MYVIMRC<cr>
+nnoremap ,evs :source $MYVIMRC<cr>
 
 " Quick edit
 nnoremap ,eve :vsplit $MYVIMRC<cr>
 nnoremap ,evs :source $MYVIMRC<cr>
 
 " F-keys
-nnoremap <F2> :NERDTreeToggle<CR>
-nnoremap <F3> :TagbarToggle<CR>
-nnoremap <F5> :make run<CR>
-nnoremap <F8> :make<CR>
-nnoremap <F10> :CommandTFlush<CR>
+nnoremap <f2> :NERDTreeToggle<cr>
+nnoremap <f3> :TagbarToggle<cr>
+nnoremap <f5> :make run<cr>
+nnoremap <f8> :make<cr>
+nnoremap <f10> :CommandTFlush<cr>
 
 " a.vim
-nnoremap <Leader>sa :A<CR>
-nnoremap <Leader>sv :AV<CR>
-nnoremap <Leader>ss :AS<CR>
+nnoremap <leader>sa :A<cr>
+nnoremap <leader>sv :AV<cr>
+nnoremap <leader>ss :AS<cr>
 
 " Misc
 nnoremap <leader>cd :cd %:p:h<cr>
 nnoremap <leader>jw :ToggleWord<cr>
 
 " Searching
-nnoremap <Leader>fc :nohlsearch<CR>
-nnoremap <Leader>fg :Ack '<cword>'<CR>
-nnoremap <Leader>fl /<C-r>=expand("<cword>")<CR><CR>
-nnoremap <Leader>fr :%s/<C-r>=expand("<cword>")<CR>/
+nnoremap <leader>fc :nohlsearch<cr>
+nnoremap <leader>fg :Ack '<cword>'<cr>
+nnoremap <leader>fl /<c-r>=expand("<cword>")<cr><cr>
+nnoremap <leader>fr :%s/<c-r>=expand("<cword>")<cr>/
 
 " Tabular
-nnoremap <Leader>ap :%s/( /(/g<CR>:%s/ )/)/g<CR>
-nnoremap <Leader>aa :Tabularize assignment<CR>
-nnoremap <Leader>ab :Tabularize braces<CR>
-nnoremap <Leader>ac :Tabularize commas<CR>
+nnoremap <leader>ap :%s/( /(/g<cr>:%s/ )/)/g<cr>
+nnoremap <leader>aa :Tabularize assignment<cr>
+nnoremap <leader>ab :Tabularize braces<cr>
+nnoremap <leader>ac :Tabularize commas<cr>
 
 " Move lines up and down
-nnoremap <Up> :move -2<CR>
-nnoremap <Down> :move +<CR>
+nnoremap <up> :move -2<cr>
+nnoremap <down> :move +<cr>
 
 " Redraw window so search terms are centered
 nnoremap n nzz
@@ -196,10 +200,10 @@ noremap <c-s> :w<cr>
 inoremap <c-s> <esc>:w<cr>a
 
 " Easier split navigation
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+nnoremap <c-h> <c-w>h
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-l> <c-w>l
 
 " Line navigation
 nnoremap H 0
