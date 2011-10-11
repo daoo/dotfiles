@@ -134,22 +134,26 @@ noremap  <C-Left>  <NOP>
 noremap  <C-Right> <NOP>
 
 " Above arrow keys
-inoremap <Del>      <NOP>
-inoremap <End>      <NOP>
-inoremap <Home>     <NOP>
-inoremap <PageDown> <NOP>
-inoremap <PageUp>   <NOP>
-noremap  <Del>      <NOP>
-noremap  <End>      <NOP>
-noremap  <Home>     <NOP>
-noremap  <PageDown> <NOP>
-noremap  <PageUp>   <NOP>
+inoremap <del>      <nop>
+inoremap <end>      <nop>
+inoremap <home>     <nop>
+inoremap <pagedown> <nop>
+inoremap <pageup>   <nop>
+noremap  <del>      <nop>
+noremap  <end>      <nop>
+noremap  <home>     <nop>
+noremap  <pagedown> <nop>
+noremap  <pageup>   <nop>
 " }}}
 " {{{ Key Bindings
 let mapleader=","
 
 " Disable Ex mode
 noremap Q <NOP>
+
+" Quick edit
+nnoremap ,eve :vsplit $MYVIMRC<cr>
+nnoremap ,evs :source $MYVIMRC<cr>
 
 " F-keys
 nnoremap <F2> :NERDTreeToggle<CR>
@@ -164,15 +168,14 @@ nnoremap <Leader>sv :AV<CR>
 nnoremap <Leader>ss :AS<CR>
 
 " Misc
-nnoremap <Leader>cd :cd %:p:h<CR>
+nnoremap <leader>cd :cd %:p:h<cr>
+nnoremap <leader>jw :ToggleWord<cr>
 
 " Searching
 nnoremap <Leader>fc :nohlsearch<CR>
 nnoremap <Leader>fg :Ack '<cword>'<CR>
 nnoremap <Leader>fl /<C-r>=expand("<cword>")<CR><CR>
 nnoremap <Leader>fr :%s/<C-r>=expand("<cword>")<CR>/
-
-nnoremap <Leader>jw :ToggleWord<CR>
 
 " Tabular
 nnoremap <Leader>ap :%s/( /(/g<CR>:%s/ )/)/g<CR>
@@ -189,8 +192,8 @@ nnoremap n nzz
 nnoremap N Nzz
 
 " Saving
-map <C-s> :w<CR>
-imap <C-s> <Esc>:w<CR>a
+noremap <c-s> :w<cr>
+inoremap <c-s> <esc>:w<cr>a
 
 " Easier split navigation
 nnoremap <C-h> <C-w>h
