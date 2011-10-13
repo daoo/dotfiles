@@ -110,9 +110,12 @@ set t_vb=
 colorscheme mustang
 syntax on
 " }}}
-" {{{ Filetypes Settings
-autocmd Filetype snippet setlocal sts=0 sw=8 noet
-autocmd Filetype make setlocal sts=0 sw=8 noet
+" {{{ Auto commands
+augroup filetypes
+  autocmd!
+  autocmd Filetype snippet setlocal sts=0 sw=8 noet
+  autocmd Filetype make setlocal sts=0 sw=8 noet
+augroup END
 " }}}
 " {{{ Commands
 command! W %!sudo tee > /dev/null %
