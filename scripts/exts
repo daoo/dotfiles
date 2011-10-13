@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'find'
+
+dir  = "."
+exts = Array.new()
+
+Find.find(dir) do |path|
+  if not File.directory?(path)
+    ext = File.extname(path)
+    ext_sym = ext.to_sym
+    if (not ext.empty?) and (not exts.include?(ext_sym))
+      exts << ext_sym
+      puts ext
+    end
+  end
+end
+
