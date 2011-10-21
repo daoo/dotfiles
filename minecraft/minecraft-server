@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function list_dirs() {
   for f in $1/*; do
-    if [ -d "$f" ]; then
-      echo $(basename $f)
+    if [[ -d $f ]]; then
+      basename "$f"
     fi
   done
 }
@@ -15,14 +15,14 @@ function ask() {
   read ans
   case "$ans" in
     "y"|"Y") return 0 ;;
-    *) return 1 ;;
+    *)       return 1 ;;
   esac
 }
 
 function launch() {
   # Assume these exists
-  local server=$1
-  local world=$2
+  local server="$1"
+  local world="$2"
 
   local server_dir="$minecraft_dir/servers/$server"
 
@@ -36,30 +36,30 @@ function launch() {
   $command
 }
 
-minecraft_dir=$HOME/games/minecraft/server
-server_jar=$minecraft_dir/minecraft_server.jar
+minecraft_dir="$HOME/games/minecraft/server"
+server_jar="$minecraft_dir/minecraft_server.jar"
 
 javaopts="-server -Xmx1024M -Xms512M"
 command="java $javaopts -jar $server_jar nogui"
 
-server=$1
-world=$2
+server="$1"
+world="$2"
 
 # Check for empty input
-if [ -z "$server" ]; then
+if [[ -z "$server" ]]; then
   echo "Availible servers:"
   list_dirs "$minecraft_dir/servers"
   exit 1
 fi
 
-if [ -z "$world" ]; then
+if [[ -z "$world" ]]; then
   echo "Availible maps:"
   list_dirs "$minecraft_dir/worlds"
   exit 1
 fi
 
 # Check for non existing dirs
-if [ ! -d "$minecraft_dir/servers/$server" ]; then
+if [[ ! -d "$minecraft_dir/servers/$server" ]]; then
   if ask "Server '$server' does not exist, create new [y/N]? "; then
     echo "Creating server..."
     mkdir "$minecraft_dir/servers/$server"
@@ -71,7 +71,7 @@ if [ ! -d "$minecraft_dir/servers/$server" ]; then
   fi
 fi
 
-if [ ! -d "$minecraft_dir/worlds/$world" ]; then
+if [[ ! -d "$minecraft_dir/worlds/$world" ]]; then
   if ask "World '$world' does not exist, create new [y/N]? "; then
     echo "Creating world..."
     mkdir "$minecraft_dir/worlds/$world"
@@ -80,4 +80,4 @@ if [ ! -d "$minecraft_dir/worlds/$world" ]; then
   fi
 fi
 
-launch $server $world
+launch "$server" "$world"

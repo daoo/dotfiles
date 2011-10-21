@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 minecraft_dir="$HOME/games/minecraft"
 home_dir="$HOME/.minecraft"
@@ -9,8 +9,8 @@ client_file="$minecraft_dir/client/minecraft.jar"
 server_file="$minecraft_dir/server/minecraft_server.jar"
 
 function update_lwjgl() {
-  local source_dir=$1
-  local output_dir=$2
+  local source_dir="$1"
+  local output_dir="$2"
 
   for jar in jinput.jar lwjgl.jar lwjgl_util.jar; do
     cp "$source_dir/jar/$jar" "$output_dir/"
@@ -32,17 +32,17 @@ function update_file() {
     exit 1
   fi
 
-  if cmp -s $tmp $file; then
+  if cmp -s "$tmp" "$file"; then
     echo "Already up-to-date."
   else
-    mv $tmp $file
+    mv "$tmp" "$file"
     echo "Update successful."
   fi
 }
 
 case "$1" in
-  "server") echo "Updating server..."; update_file $server_url $server_file ;;
-  "client") echo "Updating client..."; update_file $client_url $client_file ;;
+  "server") echo "Updating server..."; update_file "$server_url" "$server_file" ;;
+  "client") echo "Updating client..."; update_file "$client_url" "$client_file" ;;
   "lwjgl") echo "Updating lwjgl..."; update_lwjgl "$2" "$home_dir/bin" ;;
 esac
 
