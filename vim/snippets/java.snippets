@@ -1,5 +1,5 @@
 snippet mai
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		${1:/* code */}
 	}
 snippet pf
@@ -13,7 +13,7 @@ snippet get
 		return ${3:something};
 	}${4}
 snippet set
-	public void set${1:Something}(final ${2:int} ${3:something}) {
+	public void set${1:Something}(${2:int} ${3:something}) {
 		this.$3 = $3;
 	}${4}
 snippet pm
@@ -22,3 +22,5 @@ snippet pm
 	}
 snippet println
 	System.out.println("${1}");
+snippet param
+	this.${1:parameter} = $1;
