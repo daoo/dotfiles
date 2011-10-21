@@ -31,9 +31,7 @@ keysToAdd cfg modifier = fromList $
 
   -- Terminals and stuff
   , ((modifier, xK_p), shellPrompt myXPConfig)
-  , ((modifier, xK_dollar), scratchpadSpawnActionTerminal $ term cfg)
-  , ((modifier, xK_asciitilde), scratchpadSpawnActionTerminal $ term cfg)
-  , ((modifier, xK_grave), scratchpadSpawnActionTerminal $ term cfg)
+  , ((modifier, xK_i), scratchpadSpawnActionTerminal $ term cfg)
   , ((modifier, xK_Return), spawn $ term cfg)
 
   -- Software
