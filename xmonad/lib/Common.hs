@@ -15,11 +15,12 @@ import XMonad.Util.Run
 -- Manage Hook
 myManageHook :: ManageHook
 myManageHook = composeAll . concat $
-  [ moves "im"    [ "Pidgin", "Skype" ]
+  [ moves "im"    [ "Pidgin", "Finch" ]
   , moves "web"   [ "firefox-bin", "Firefox", "Navigator" ]
   , moves "code"  [ "gvim" ]
   , moves "code2" [ "Eclipse" ]
   , moves "full"  [ "Wine" ]
+  , moves "void"  [ "Skype" ]
 
   , floats name [ "MPlayer", "xmessage" ]
   , floats res [ "Dialog" ]
