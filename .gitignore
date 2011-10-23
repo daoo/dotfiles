@@ -2,10 +2,6 @@
 *.swp
 firefox/pentadactyl/info
 ncmpcpp/error.log
-vim/.netrwhist
-vim/spell/
-vim/tmp/
-vim/vim-addons/
 xmonad/bin
 xmonad/history
 xmonad/xmonad

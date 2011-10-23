@@ -25,10 +25,12 @@ urxvt:
 
 vim:
 	mkdir -p ${HOME}/.vim
-	ln -fsn $(CFGROOT)/vim ${HOME}/.vim
+	mkdir -p ${HOME}/.vim/tmp
+	ln -fsn $(CFGROOT)/vim/after ${HOME}/.vim/after
+	ln -fsn $(CFGROOT)/vim/ftplugin ${HOME}/.vim/ftplugin
+	ln -fsn $(CFGROOT)/vim/snippets ${HOME}/.vim/snippets
 	ln -fsn $(CFGROOT)/vim/vimrc ${HOME}/.vimrc
 	ln -fsn $(CFGROOT)/vim/gvimrc ${HOME}/.gvimrc
-	mkdir -p ${HOME}/.vim/tmp
 
 xdefaults:
 	ln -fsn $(CFGROOT)/Xdefaults ${HOME}/.Xdefaults
