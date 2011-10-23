@@ -1,6 +1,6 @@
 CFGROOT := $(shell pwd)
 
-all: firefox git gtk rtorrent scripts tmux vim xdefaults xinitrc xmonad zsh
+all: firefox git gtk rtorrent scripts tmux urxvt vim xdefaults xinitrc xmonad zsh
 
 firefox:
 	ln -fsn $(CFGROOT)/firefox/chrome/ ${HOME}/.mozilla/firefox/*default/
@@ -19,6 +19,9 @@ scripts:
 
 tmux:
 	ln -fsn $(CFGROOT)/tmux.conf ${HOME}/.tmux.conf
+
+urxvt:
+	ln -fsn $(CFGROOT)/urxvt ${HOME}/.urxvt
 
 vim:
 	ln -fsn $(CFGROOT)/vim ${HOME}/.vim
@@ -55,4 +58,4 @@ uninstall:
 	rm -f ${HOME}/.zsh
 	rm -f ${HOME}/.zshrc
 
-.PHONY: uninstall firefox git gtk rtorrent scripts vim xdefaults xinitrc xmonad zsh
+.PHONY: uninstall firefox git gtk rtorrent scripts urxvt vim xdefaults xinitrc xmonad zsh
