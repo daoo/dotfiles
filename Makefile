@@ -46,20 +46,4 @@ zsh:
 	ln -fsn $(CFGROOT)/zsh/zshrc ${HOME}/.zshrc
 	ln -fsn $(CFGROOT)/zsh/zprofile ${HOME}/.zprofile
 
-uninstall:
-	rm -f ${HOME}/.Xdefaults
-	rm -f ${HOME}/.gitconfig
-	rm -f ${HOME}/.gvimrc
-	rm -f ${HOME}/.mozilla/firefox/*default/chrome
-	rm -f ${HOME}/.rtorrent.rc
-	rm -f ${HOME}/.tmux.conf
-	rm -f ${HOME}/.urxvt
-	rm -f ${HOME}/.vim
-	rm -f ${HOME}/.vimrc
-	rm -f ${HOME}/.xinitrc
-	rm -f ${HOME}/.xmonad
-	rm -f ${HOME}/.zprofile
-	rm -f ${HOME}/.zsh
-	rm -f ${HOME}/.zshrc
-
-.PHONY: uninstall firefox git gtk rtorrent scripts urxvt vim xdefaults xinitrc xmonad zsh
+.PHONY: firefox git gtk rtorrent scripts urxvt vim xdefaults xinitrc xmonad zsh
