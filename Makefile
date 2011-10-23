@@ -24,6 +24,7 @@ urxvt:
 	ln -fsn $(CFGROOT)/urxvt ${HOME}/.urxvt
 
 vim:
+	mkdir -p ${HOME}/.vim
 	ln -fsn $(CFGROOT)/vim ${HOME}/.vim
 	ln -fsn $(CFGROOT)/vim/vimrc ${HOME}/.vimrc
 	ln -fsn $(CFGROOT)/vim/gvimrc ${HOME}/.gvimrc
@@ -50,6 +51,7 @@ uninstall:
 	rm -f ${HOME}/.mozilla/firefox/*default/chrome
 	rm -f ${HOME}/.rtorrent.rc
 	rm -f ${HOME}/.tmux.conf
+	rm -f ${HOME}/.urxvt
 	rm -f ${HOME}/.vim
 	rm -f ${HOME}/.vimrc
 	rm -f ${HOME}/.xinitrc
