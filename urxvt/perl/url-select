@@ -1,30 +1,23 @@
 #!/usr/bin/env perl
-# Author:   Bert Muennich
-# Website:  http://www.github.com/muennich/urxvt-perls
+# Author: Daniel Oom
 # Based on: http://www.jukie.net/~bart/blog/urxvt-url-yank
-# Version:  1.5
-# License:  GPLv2
-# Modified by Daniel Oom
 
 # Use keyboard shortcuts to select URLs.
-# This should be used as a replacement for the default matcher extension,
-# it also makes URLs clickable with the middle mouse button.
+# This should be used as a replacement for the default matcher extension.
 
 # Usage: put the following lines in your .Xdefaults:
 #   URxvt.perl-ext-common: ...,url-select
 #   URxvt.keysym.M-u: perl:url-select:select_next
 
 # Use Meta-u to activate URL selection mode, then use the following keys:
-#   k:        Select next upward URL (also with Meta-u)
+#   k:        Select next upward URL
 #   j:        Select next downward URL
 #   o/Return: Open selected URL in browser, Return: deactivate afterwards
 #   y:        Copy (yank) selected URL and deactivate selection mode
 #   q/Escape: Deactivate URL selection mode
 
 # Options:
-#   URxvt.urlLauncher:   Browser/command to open selected URL with
 #   URxvt.underlineURLs: If set to true, all URLs get underlined
-#   URvxt.urlButton:     Mouse button to click-open URLs (default: 2)
 
 use strict;
 
@@ -36,19 +29,11 @@ my $url_matcher = qr{(
 sub on_start {
   my ($self) = @_;
 
-# read resource settings
-  if ($self->x_resource('urlLauncher')) {
-    @{$self->{browser}} = split /\s+/, $self->x_resource('urlLauncher');
-  } else {
-    @{$self->{browser}} = ('x-www-browser');
-  }
+  # read resource settings
+  @{$self->{browser}} = ($ENV{'BROWSER'});
+
   if ($self->x_resource('underlineURLs') eq 'true') {
     $self->enable(line_update => \&line_update);
-  }
-  if($self->x_resource('urlButton') =~ /^\d+$/) {
-    $self->{button} = $self->x_resource('urlButton');
-  } else {
-    $self->{button} = 2;
   }
 
   ()
@@ -83,13 +68,12 @@ sub on_user_command {
   if ($cmd eq 'url-select:select_next') {
     if (not $self->{active}) {
       activate($self);
+      select_next($self, -1);
     }
-    select_next($self, -1);
   }
 
   ()
 }
-
 
 sub key_press {
   my ($self, $event, $keysym) = @_;
@@ -113,49 +97,14 @@ sub key_press {
   return 1;
 }
 
-
-sub on_button_release {
-  my ($self, $event) = @_;
-
-  if ($self->{active}) {
-    if ($event->{button} == 4 || $event->{button} == 5) {
-      return;
-    } else {
-      return 1;
-    }
-  }
-
-  my $mask = $self->ModLevel3Mask | $self->ModMetaMask |
-    urxvt::ShiftMask | urxvt::ControlMask;
-
-  if ($event->{button} == $self->{button} && ($event->{state} & $mask) == 0) {
-    my $col = $event->{col};
-    my $line = $self->line($event->{row});
-    my $text = $line->t;
-
-    while ($text =~ /$url_matcher/g) {
-      my ($url, $beg, $end) = ($1, $-[0], $+[0]);
-      --$end if $url =~ s/["')]$//;
-
-      if ($col >= $beg && $col <= $end) {
-        $self->exec_async(@{$self->{browser}}, $url);
-        return 1;
-      }
-    }
-  }
-
-  ()
-}
-
-
 sub select_next {
-# $dir < 0: up, > 0: down
+  # $dir < 0: up, > 0: down
   my ($self, $dir) = @_;
   my $row = $self->{row};
 
   if (($dir < 0 && $self->{n} > 0) ||
       ($dir > 0 && $self->{n} < $#{ $self->{found} })) {
-# another url on current line
+    # another url on current line
     $self->{n} += $dir;
     hilight($self);
     return;

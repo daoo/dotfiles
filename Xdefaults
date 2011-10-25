@@ -1,13 +1,12 @@
 URxvt.buffered: true
 URxvt.saveLines: 10000
 
-URxvt.keysym.C-u:    perl:url-select:select_next
-URxvt.keysym.C-g:    perl:copy-pasta:copy
-URxvt.keysym.C-h:    perl:copy-pasta:paste
+URxvt.keysym.M-u:    perl:url-select:select_next
+URxvt.keysym.M-g:    perl:copy-pasta:copy
+URxvt.keysym.M-h:    perl:copy-pasta:paste
 URxvt.perl-ext:      selection,url-select,copy-pasta
 URxvt.perl-lib:      .urxvt/perl
 URxvt.underlineURLs: true
-URxvt.urlLaunjher:   firefox
 
 URxvt.font: xft:Dina:size=8
 URxvt.internalBorder: 0
