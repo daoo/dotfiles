@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+color_red='\e[0;31m'
+color_green='\e[0;32m'
+text_reset='\e[0m'
+
+for repo in $(cat "$HOME/.git-repos"); do
+  cd "$HOME/$repo"
+  if [[ -z "$(git status --porcelain)" ]]; then
+    echo -en "${color_green}pushing $repo\n"
+    git push &> /dev/null
+  else
+    echo -en "${color_red}not pushing $repo\n"
+  fi
+done
+
+echo -en $text_reset

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Lists status of git repos in ~/.git-repos
+
+color_red='\e[0;31m'
+color_green='\e[0;32m'
+text_reset='\e[0m'
+
+for repo in $(cat "$HOME/.git-repos"); do
+  echo -n "$repo: "
+  cd "$HOME/$repo"
+  if [[ -z "$(git status --porcelain)" ]]; then
+    echo -en "${color_green}has no changes\n"
+  else
+    echo -en "${color_red}has changes\n"
+  fi
+
+  echo -en $text_reset
+done
