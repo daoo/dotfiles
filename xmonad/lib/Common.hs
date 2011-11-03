@@ -16,7 +16,7 @@ import XMonad.Util.Run
 myManageHook :: ManageHook
 myManageHook = composeAll . concat $
   [ moves "im"    [ "Pidgin", "Finch" ]
-  , moves "web"   [ "firefox-bin", "Firefox", "Navigator" ]
+  , moves "web"   [ "firefox-bin", "Firefox", "Navigator", "luakit" ]
   , moves "code"  [ "gvim" ]
   , moves "code2" [ "Eclipse" ]
   , moves "full"  [ "Wine" ]
