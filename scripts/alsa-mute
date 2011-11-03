@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+raise() {
+  amixer -q set Master +1
+}
+
+lower() {
+  amixer -q set Master -1
+}
+
+mute() {
+  amixer -q set Master mute
+}
+
+unmute() {
+  amixer -q set Master unmute
+}
+
+mutefile="/tmp/alsa-mute"
+
+case "$1" in
+  "mute")
+    if [[ $(cat $mutefile) = "0" ]]; then
+      mute
+      echo "1" > $mutefile
+    else
+      unmute
+      echo "0" > $mutefile
+    fi
+  ;;
+  "lower") lower ;;
+  "raise") raise ;;
+esac
+
