@@ -1,6 +1,6 @@
 CFGROOT := $(shell pwd)
 
-all: firefox git gtk rtorrent scripts tmux urxvt vim xdefaults xinitrc xmonad zsh
+all: firefox git gtk luakit rtorrent scripts tmux urxvt vim xdefaults xinitrc xmonad zsh
 
 firefox:
 	ln -fsn $(CFGROOT)/firefox/chrome/ ${HOME}/.mozilla/firefox/*default/
@@ -10,6 +10,9 @@ git:
 
 gtk:
 	ln -fsn $(CFGROOT)/gtkrc-2.0.mine ${HOME}/.gtkrc-2.0.mine
+
+luakit:
+	ln -fsn $(CFGROOT)/luakit/ ${HOME}/.config/
 
 rtorrent:
 	ln -fsn $(CFGROOT)/rtorrent.rc ${HOME}/.rtorrent.rc
@@ -46,4 +49,4 @@ zsh:
 	ln -fsn $(CFGROOT)/zsh/zshrc ${HOME}/.zshrc
 	ln -fsn $(CFGROOT)/zsh/zprofile ${HOME}/.zprofile
 
-.PHONY: firefox git gtk rtorrent scripts urxvt vim xdefaults xinitrc xmonad zsh
+.PHONY: firefox git gtk luakit rtorrent scripts urxvt vim xdefaults xinitrc xmonad zsh
