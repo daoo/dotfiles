@@ -3,7 +3,7 @@
 " {{{ Startup
 set nocompatible
 " }}}
-" {{{ VAM
+" {{{ Addons
 set runtimepath+=~/.vim/vim-addons/vim-addon-manager
 
 fun! SetupVAM()
@@ -25,11 +25,11 @@ fun! SetupVAM()
     \ 'tabular',
     \ 'tango-morning',
     \ 'toggle_words',
+    \ 'ctrlp',
     \ ]
 
   " Only add certain plugins if they meet a criteria
   if has('ruby')
-    call add(plugins, 'Command-T')
   endif
 
   if executable('ctags')
@@ -40,6 +40,8 @@ fun! SetupVAM()
 endf
 
 call SetupVAM()
+
+let g:ctrlp_map = '<leader>t'
 " }}}
 " {{{ General settings
 " Backup and temporary files
