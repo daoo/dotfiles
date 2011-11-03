@@ -5,11 +5,11 @@ list() {
 }
 
 mute() {
-	pacmd set-$1-mute $2 1 > /dev/null
+  pacmd set-$1-mute $2 1 > /dev/null
 }
 
 unmute() {
-	pacmd set-$1-mute $2 0 > /dev/null
+  pacmd set-$1-mute $2 0 > /dev/null
 }
 
 statusfile="/tmp/pa-mute"
