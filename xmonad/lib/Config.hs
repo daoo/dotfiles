@@ -23,10 +23,6 @@ softwareDefault = do
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["im", "web", "code", "code2", "other", "other2", "full", "void"]
 
--- Modkey
-myModKey :: KeyMask
-myModKey = mod4Mask
-
 -- Colors
 winBorderFocused, winBorderNormal :: String
 winBorderFocused = focusFg

@@ -23,10 +23,6 @@ main = do
   spawn $ "conky -c ~/.xmonad/conkyrc 2> /dev/null | dzen2 -p " ++ barToString right
   d <- spawnPipe $ "dzen2 -p " ++ barToString left
 
-  -- Setup keys
-  let a x = keysToAdd s (modMask x)
-  let k x = union (a x) (keys defaultConfig x)
-
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { modMask            = myModKey
     , borderWidth        = 1
@@ -39,6 +35,6 @@ main = do
     , layoutHook = myLayoutHook
 
     , terminal = term s
-    , keys     = k
+    , keys     = (\x -> union (newKeyMaps s) (keys defaultConfig x))
     , logHook  = myLogHook d }
 
