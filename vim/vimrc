@@ -8,6 +8,7 @@ set runtimepath+=~/.vim/vim-addons/vim-addon-manager
 
 fun! SetupVAM()
   let plugins = [
+    \ 'Gundo',
     \ 'Mark2666',
     \ 'The_NERD_Commenter',
     \ 'The_NERD_tree',
@@ -192,6 +193,9 @@ nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>sa :A<cr>
 nnoremap <leader>sv :AV<cr>
 nnoremap <leader>ss :AS<cr>
+
+" Gundo
+nnoremap <leader>u :GundoToggle<cr>
 
 " Move lines up and down
 nnoremap <up> :move -2<cr>
