@@ -5,12 +5,8 @@ minecraft_jar=$minecraft_dir/minecraft.jar
 
 javaopts="-server -Xmx1024M -Xms512M"
 
-if wmname=$(which wmname) > /dev/null; then
-  # Stupid hack to make minecraft work with xmonad
-  wmname "LG3D"
-fi
-
 cd "$minecraft_dir"
 
+_JAVA_AWT_WM_NONREPARENTING=1 \
 java $javaopts -cp $minecraft_jar net.minecraft.LauncherFrame
 
