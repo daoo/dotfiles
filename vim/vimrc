@@ -41,8 +41,6 @@ fun! SetupVAM()
 endf
 
 call SetupVAM()
-
-let g:ctrlp_map = '<leader>t'
 " }}}
 " {{{ General settings
 " Backup and temporary files
@@ -193,6 +191,9 @@ nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>sa :A<cr>
 nnoremap <leader>sv :AV<cr>
 nnoremap <leader>ss :AS<cr>
+
+" CtrlP
+nnoremap <leader>t :CtrlP<cr>
 
 " Gundo
 nnoremap <leader>u :GundoToggle<cr>
