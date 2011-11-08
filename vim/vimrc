@@ -28,11 +28,7 @@ fun! SetupVAM()
     \ 'toggle_words',
     \ 'ctrlp',
     \ ]
-
-  " Only add certain plugins if they meet a criteria
-  if has('ruby')
-  endif
-
+" Only add certain plugins if they meet a criteria
   if executable('ctags')
     call add(plugins, 'Tagbar')
   endif
@@ -41,6 +37,9 @@ fun! SetupVAM()
 endf
 
 call SetupVAM()
+
+" Addon settings
+let g:ctrlp_working_path_mode = 0
 " }}}
 " {{{ General settings
 " Backup and temporary files
