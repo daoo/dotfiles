@@ -113,7 +113,7 @@ syntax on
 " {{{ Auto commands
 augroup filetypes
   autocmd!
-  autocmd Filetype snippet setlocal sts=0 sw=8 noet
+  autocmd Filetype snippets setlocal sts=0 sw=8 noet
   autocmd Filetype make setlocal sts=0 sw=8 noet
 augroup END
 " }}}
