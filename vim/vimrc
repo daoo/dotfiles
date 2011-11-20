@@ -4,39 +4,54 @@
 set nocompatible
 " }}}
 " {{{ Addons
-set runtimepath+=~/.vim/vim-addons/vim-addon-manager
+filetype off
 
-fun! SetupVAM()
-  let plugins = [
-    \ 'Gundo',
-    \ 'Mark2666',
-    \ 'The_NERD_Commenter',
-    \ 'The_NERD_tree',
-    \ 'Wombat',
-    \ 'ack',
-    \ 'alex',
-    \ 'fugitive',
-    \ 'github:daoo/Mustang2',
-    \ 'github:daoo/a.vim',
-    \ 'happy',
-    \ 'repeat',
-    \ 'snipmate',
-    \ 'snipmate-snippets',
-    \ 'surround',
-    \ 'tabular',
-    \ 'tango-morning',
-    \ 'toggle_words',
-    \ 'ctrlp',
-    \ ]
-" Only add certain plugins if they meet a criteria
-  if executable('ctags')
-    call add(plugins, 'Tagbar')
-  endif
+set runtimepath+=~/.vim/bundle/vundle/
+call vundle#rc()
 
-  call vam#ActivateAddons(plugins, {'auto_install' : 0})
-endf
+" Vundle
+Bundle 'gmarik/vundle'
 
-call SetupVAM()
+" Misc
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-fugitive'
+
+" Searching
+Bundle 'Mark'
+Bundle 'mileszs/ack.vim'
+
+" Color schemes
+Bundle 'Wombat'
+Bundle 'daoo/Mustang2'
+Bundle 'tango-morning.vim'
+
+" Files
+Bundle 'alex.vim'
+Bundle 'happy.vim'
+
+" Snipmate
+Bundle 'vim-addon-mw-utils'
+Bundle 'tlib'
+Bundle 'garbas/vim-snipmate'
+Bundle 'honza/snipmate-snippets'
+
+" Editing
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'sjl/gundo.vim'
+Bundle 'tpope/vim-surround'
+Bundle 'godlygeek/tabular'
+Bundle 'toggle_words.vim'
+
+" File navigation
+Bundle 'scrooloose/nerdtree'
+Bundle 'daoo/a.vim'
+Bundle 'kien/ctrlp.vim'
+
+if executable('ctags')
+  Bundle 'Tagbar'
+endif
+
+filetype plugin indent on
 
 " Addon settings
 let g:ctrlp_working_path_mode = 0
