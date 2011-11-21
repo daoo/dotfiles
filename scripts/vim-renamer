@@ -10,7 +10,11 @@ Tempfile.open('random') do |tf|
   tf.puts("# Lines starting wiht # will be ignored")
   tf.puts("# Do not change the order of the file names")
   old_names.each do |name|
-    tf.puts(name)
+    tf.print(name)
+    if File.directory?(name)
+      tf.print("/")
+    end
+    tf.puts()
   end
   tf.flush()
 
