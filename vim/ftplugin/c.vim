@@ -1,6 +1,5 @@
 " Custom C(++) settings
 
-" {{{ Fold Copyright
 function! FoldCopyright(...)
   if !exists( "b:foldedCopyright" )
     let b:foldedCopyright = 1
@@ -9,6 +8,3 @@ function! FoldCopyright(...)
 endfunction
 
 autocmd BufReadPost cpp,hpp call FoldCopyright()
-" }}}
-
-" vim: fdm=marker :
