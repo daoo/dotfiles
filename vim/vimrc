@@ -17,7 +17,7 @@ Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-fugitive'
 
 " Searching
-Bundle 'Mark'
+Bundle 't9md/vim-quickhl'
 Bundle 'mileszs/ack.vim'
 
 " Color schemes
@@ -193,6 +193,12 @@ nnoremap <leader>fr :%s/<c-r>=expand("<cword>")<cr>/
 " Git
 nnoremap <leader>gc :Gcommit<cr>
 nnoremap <leader>gs :Gstatus<cr>
+
+" Quickhl
+nmap <leader>m <Plug>(quickhl-toggle)
+xmap <leader>m <Plug>(quickhl-toggle)
+nmap <leader>M <Plug>(quickhl-reset)
+xmap <leader>M <Plug>(quickhl-reset)
 
 " a.vim
 nnoremap <leader>sa :A<cr>
