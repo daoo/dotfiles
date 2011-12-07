@@ -30,10 +30,11 @@ vim:
 	mkdir -p ${HOME}/.vim
 	mkdir -p ${HOME}/.vim/tmp
 	ln -fsn $(CFGROOT)/vim/after ${HOME}/.vim/after
+	ln -fsn $(CFGROOT)/vim/bundles.vim ${HOME}/.vim/bundles.vim
 	ln -fsn $(CFGROOT)/vim/ftplugin ${HOME}/.vim/ftplugin
+	ln -fsn $(CFGROOT)/vim/gvimrc ${HOME}/.gvimrc
 	ln -fsn $(CFGROOT)/vim/snippets ${HOME}/.vim/snippets
 	ln -fsn $(CFGROOT)/vim/vimrc ${HOME}/.vimrc
-	ln -fsn $(CFGROOT)/vim/gvimrc ${HOME}/.gvimrc
 
 xdefaults:
 	ln -fsn $(CFGROOT)/Xdefaults ${HOME}/.Xdefaults
