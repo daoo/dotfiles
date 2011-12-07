@@ -15,6 +15,7 @@ Bundle 'gmarik/vundle'
 " Misc
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-fugitive'
+Bundle 'Rename2'
 
 " Searching
 Bundle 't9md/vim-quickhl'
