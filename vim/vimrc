@@ -49,7 +49,7 @@ Bundle 'daoo/a.vim'
 Bundle 'kien/ctrlp.vim'
 
 if executable('ctags')
-  Bundle 'Tagbar'
+  Bundle 'majutsushi/tagbar'
 endif
 
 filetype plugin indent on
