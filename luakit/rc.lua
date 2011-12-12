@@ -72,6 +72,8 @@ add_binds("normal", {
 ----------------------------------
 -- Optional user script loading --
 ----------------------------------
+-- AdBlock
+--require "adblock"
 
 -- Add sqlite3 cookiejar
 require "cookies"
