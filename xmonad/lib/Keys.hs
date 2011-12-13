@@ -53,19 +53,14 @@ newKeyMaps cfg = fromList $
   -- Software
   , ((myModKey, xK_x), spawn $ browser cfg)
   , ((myModKey, xK_b), spawn $ editor cfg)
-  , ((myModKey, xK_m), spawn $ lock cfg)
-  
-  -- Multimedia keys
-  , ((0, xf86Favorites), spawn "mpc prev > /dev/null")
-  , ((0, xf86Email),     spawn "mpc next > /dev/null")
-  , ((0, xf86AudioMute), spawn "pa-mute")
-  , ((0, xf86AudioPlay), spawn "mpd-play-pause") ]
+  , ((myModKey, xK_m), spawn $ lock cfg) ]
 
   -- For Programmers Dvorak
-  ++ mapWS myModKey (windows . greedyView) wsWithKeys
-  ++ mapWS (myModKey .|. shiftMask) (\ i -> (windows $ shift i) >> (windows $ greedyView i)) wsWithKeys
+  {-++ mapWS myModKey (windows . greedyView) wsWithKeys
+  ++ mapWS (myModKey .|. shiftMask) (\ i -> (windows $ shift i) >> (windows $ greedyView i)) wsWithKeys-}
   where
-    wsWithKeys = zip myWorkspaces workspaceKeys
-    toggleWS   = windows $ view =<< tag . head . filter ((\ x -> x /= "NSP") . tag) . hidden
+    --wsWithKeys   = zip myWorkspaces workspaceKeys
+    --mapWS m a ws = map (\ (i, k) -> ((m, k), a i)) ws
 
-    mapWS m a ws = map (\ (i, k) -> ((m, k), a i)) ws
+    -- Ignore NSP, aquire workspaces
+    toggleWS = windows $ view = << tag . head . filter ((\ x -> x /= "NSP") . tag) . hidden
