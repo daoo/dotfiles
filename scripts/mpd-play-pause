@@ -8,7 +8,7 @@ if [[ -f "$mpd_dir/pid" ]]; then
   mpc -q toggle
 else
   if $(which mpdscribble > /dev/null); then
-    if !$(pidof mpdscribble > /dev/null); then
+    if ! $(pidof mpdscribble > /dev/null); then
       mpdscribble
     fi
   fi
