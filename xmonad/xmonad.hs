@@ -18,10 +18,8 @@ main :: IO ()
 main = do
   s <- softwareDefault
 
-  let (left, right) = (defaultBar, defaultBar)
-
-  spawn $ "conky -c ~/.xmonad/conkyrc 2> /dev/null | dzen2 -p " ++ barToString right
-  d <- spawnPipe $ "dzen2 -p " ++ barToString left
+  spawn conkyCmd
+  d <- spawnPipe dzenCmd
 
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { modMask            = myModKey
@@ -38,3 +36,8 @@ main = do
     , keys     = (\x -> union (newKeyMaps s) (keys defaultConfig x))
     , logHook  = myLogHook d }
 
+  where
+    conkyCmd = "conky -c ~/.xmonad/conkyrc 2> /dev/null | dzen2 -p " ++ barToString right
+    dzenCmd  = "dzen2 -p " ++ barToString left
+
+    (left, right) = (defaultBar, defaultBar)
