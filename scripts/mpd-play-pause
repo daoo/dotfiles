@@ -9,7 +9,7 @@ if [[ -f "$mpd_dir/pid" ]]; then
 else
   if $(which mpdscribble > /dev/null); then
     if ! $(pidof mpdscribble > /dev/null); then
-      mpdscribble
+      mpdscribble &
     fi
   fi
 
