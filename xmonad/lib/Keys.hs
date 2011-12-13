@@ -63,4 +63,4 @@ newKeyMaps cfg = fromList $
     --mapWS m a ws = map (\ (i, k) -> ((m, k), a i)) ws
 
     -- Ignore NSP, aquire workspaces
-    toggleWS = windows $ view = << tag . head . filter ((\ x -> x /= "NSP") . tag) . hidden
+    toggleWS = windows $ view =<< tag . head . filter ((\ x -> x /= "NSP") . tag) . hidden
