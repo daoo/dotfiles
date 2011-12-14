@@ -7,9 +7,9 @@
 # PS1
 if [ -z "$SSH_CLIENT" ]; then
   # Not connected through ssh
-  PS1='%n:%~$ '
+  PS1="$USER:%~$ "
 else
-  PS1='%n@%m:%~$ '
+  PS1="$USER@$HOST:%~$ "
 fi
 
 # Title
