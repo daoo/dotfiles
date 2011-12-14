@@ -1,16 +1,19 @@
 #!/usr/bin/env bash
 
 blinks=5
-if [[ $1 > 0 ]]
+if [[ $1 > 0 ]]; then
   blinks=$1
+fi
 
 delay=1
-if [[ $2 > 0 ]]
+if [[ $2 > 0 ]]; then
   delay=$2
+fi
 
-for i in {1..$blinks} do
+for i in {1..$blinks}; do
   xset led on
   sleep $delay
   xset led off
   sleep $delay
 done
+
