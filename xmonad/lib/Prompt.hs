@@ -22,5 +22,5 @@ getCommands = do
 shellPrompt :: XPConfig -> X ()
 shellPrompt c = do
   cmds <- io $ getCommands
-  mkXPrompt Shell c (getShellCompl cmds) (spawn . encodeOutput)
+  mkXPrompt Shell c (getShellCompl cmds) spawn
 
