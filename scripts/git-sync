@@ -6,8 +6,8 @@ text_reset='\e[0m'
 
 command=$1
 
-if [[ -z $command || ($command != "push" && $command != "pull") ]]; then
-  echo "Usage: git-command (push|pull)"
+if [[ -z $command || ($command != "push" && $command != "fetch") ]]; then
+  echo "Usage: git-command (push|fetch)"
   exit 1
 fi
 
