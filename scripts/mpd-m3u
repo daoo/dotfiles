@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
-mpc -q clear
-cat $1 | mpc -q add
+if [[ ! -f "$1" ]]; then
+  echo "Usage: mpd-m3u playlist.m3u"
+else
+  mpc -q clear
+  cat "$1" | mpc -q add
+fi
 

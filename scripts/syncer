@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 
+require 'set'
 require 'find'
 require 'tempfile'
 
 def main(argv)
   if argv.length < 2
-    puts "Usage: syncer [OPTIONS] INFILE OUTDIR"
-    puts "Options:"
+    puts "Usage: syncer INFILE OUTDIR"
     exit 0
   end
 
@@ -24,11 +24,18 @@ def main(argv)
     exit 1
   end
 
-  m3u = []
-  File.open(infile) do |f|
-    m3u = f.readlines()
+  inlines = Array.new()
+  File.open(infile) do |path|
+    inlines = path.readlines()
   end
-  m3u = m3u.collect { |l| l.chomp }
+
+  m3u = Array.new()
+  m3u_file_names = Set.new()
+  inlines.each do |path|
+    tmp = path.chomp
+    m3u << tmp
+    m3u_file_names.add(File.basename(tmp))
+  end
 
   # Find and remove sourcedir, needed for rsync
   m3u_split = m3u.collect { |l| l.split(File::SEPARATOR) }
@@ -49,12 +56,11 @@ def main(argv)
     system("rsync --progress --delete --size-only --files-from='#{tf.path}' '#{sourcedir}' '#{outdir}'")
 
     # Remove files in outdir that are not in infile
-    m3u_file_names = m3u.collect { |path| File.basename(path) }
     Find.find(outdir) do |path|
       if !File.directory?(path)
         checkname = File.basename(path)
         # NOTE: Only compares file names, might clash if there are several albums with same song names (unlikely)...
-        if !m3u_file_names.any? { |name| name == checkname }
+        if !m3u_file_names.include?(checkname)
           print "Remove #{checkname} [y/N]? "
           ans = gets.chomp.downcase
           if ans == "y"

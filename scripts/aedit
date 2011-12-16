@@ -1,44 +1,53 @@
 #!/usr/bin/env bash
 
-rnd() {
-  echo `</dev/urandom tr -dc A-Za-z0-9 | head -c16`
+md5sum_dir() {
+  tar c "$1" | md5sum | cut -d ' ' -f 1
 }
 
 # Check for atool
-if ! atool=$(which atool) 2> /dev/null; then
+if ! which atool &> /dev/null; then
   echo "atool not found" >&2
   exit 1
 fi
 
 # Check parameters
-file="$@"
-repack=1
+file="$1"
 
-if [[ -a $file ]]; then
+if [[ -a "$file" ]]; then
   # Some basic information about the archive
   name="$(basename "$file")"
-  archive=$(readlink -f "$file")
-  dir="$(dirname "$(readlink -f "$file")")"
+  archive="$(readlink -f "$file")"
+  old_pwd="$PWD"
 
-  echo "Extracting..."
   # Extract to a tmp dir
-  tmpdir=`mktemp -d "/tmp/aedit-XXXXXXXX"`
-  $atool --extract-to=$tmpdir "$@"
+  echo "Extracting..."
+  working_dir="$(mktemp -d "/tmp/aedit-XXXXXXXX")"
+  atool --extract-to="$working_dir" "$file" > /dev/null
 
-  echo "Launching shell..."
+  old_checksum="$(md5sum_dir "$working_dir")"
+
   # Start a new shell in the tmp directory
-  cd "$tmpdir"
-  $SHELL
+  echo "Launching shell..."
+  cd "$working_dir"
+  "$SHELL"
 
-  if [[ $repack ]]; then
+  new_checksum="$(md5sum_dir "$working_dir")"
+
+  if [[ $old_checksum = $new_checksum ]]; then
+    echo "No changes, not repacking."
+  else
     echo "Repacking..."
-    mv "$archive" "/tmp/$name.`rnd`" # Backup
-    $atool -a -f "$archive" $(ls -b $tmpdir)
+
+    # Make backup
+    backupfile="$(mktemp "/tmp/$name-XXXXXXXX")"
+    mv "$archive" "$backupfile"
+
+    atool -a -f "$archive" $(ls -b "$working_dir") > /dev/null
   fi
 
   echo "Done."
-  rm -r "$tmpdir"
-  cd "$dir"
+  rm -r "$working_dir"
+  cd "$old_pwd"
 else
   echo "File '$file' does not exist." >&2
 fi

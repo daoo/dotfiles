@@ -1,16 +1,16 @@
 #!/usr/bin/env ruby
 
+require 'set'
 require 'find'
 
 dir  = "."
-exts = Array.new()
+exts = Set.new()
 
 Find.find(dir) do |path|
   if not File.directory?(path)
     ext = File.extname(path)
-    ext_sym = ext.to_sym
-    if (not ext.empty?) and (not exts.include?(ext_sym))
-      exts << ext_sym
+    if (not ext.empty?) and (not exts.include?(ext))
+      exts << ext
       puts ext
     end
   end

@@ -17,16 +17,27 @@ languages =
       :before => "module" }
   }
 
+def do_substitution(header, year, name)
+  return header.collect { |s|
+    s.sub("$year", year)
+     .sub("$name", name)
+  }
+end
+
 def ensure_headers(files, lang, year, name)
+  header = do_substitution(lang[:header], year, name)
+  before = lang[:before]
+
   files.each do |file|
-    lines = []
+    lines = Array.new()
     File.open(file) do |f|
       lines = f.readlines
     end
 
-    header    = lang[:header].collect { |s| s.sub("$year", year).sub("$name", name) }
-    no_header = lines.drop_while { |l| !l.start_with?(lang[:before]) }
-    output    = header + no_header
+    # Remove everything before a specific line
+    no_header = lines.drop_while { |l| !l.start_with?(before) }
+
+    output = header + no_header
 
     File.open(file, 'w') do |f|
       f.puts output
@@ -56,4 +67,6 @@ else
   files = `find . -iname '*#{lang[:ext]}'`.split("\n")
 
   ensure_headers(files, lang, year, name)
+
+  exit 0
 end
