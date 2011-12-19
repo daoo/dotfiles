@@ -1,4 +1,4 @@
------------------------------------------------------------------------
+----------------------------------------------------------------------
 -- luakit configuration file, more information at http://luakit.org/ --
 -----------------------------------------------------------------------
 
@@ -39,12 +39,13 @@ search_engines = {
   we  = "https://secure.wikimedia.org/wikipedia/en/w/index.php?search=%s",
   ws  = "https://secure.wikimedia.org/wikipedia/sv/w/index.php?search=%s",
   tfd = "http://www.thefreedictionary.com/%s",
-  tr  = "http://folkets-lexikon.csc.kth.se/folkets/folkets.en.html#%s&0",
+  tr  = "http://folkets-lexikon.csc.kth.se/folkets/folkets.en.html#%s",
   ud  = "http://www.urbandictionary.com/define.php?term=%s",
   w   = "http://www.wolframalpha.com/input/?i=%s",
 
   aur = "https://aur.archlinux.org/packages.php?K=%s",
   pak = "https://www.archlinux.org/packages/?q=%s",
+  aw  = "https://wiki.archlinux.org/index.php?go=Go&search=%s",
 
   ug   = "http://www.ultimate-guitar.com/search.php?value=%s&search_type=title",
   y    = "http://www.youtube.com/results?search_query=%s",
