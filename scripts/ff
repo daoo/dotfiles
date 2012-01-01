@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-find . -iname "*$@*" -and -not -type d
+find . -iname "*$@*" -and -type f
 
