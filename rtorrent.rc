@@ -3,7 +3,8 @@ directory = ~/downloads
 session   = ~/.rtorrent/session/
 
 # Connections
-max_peers      = 100
+min_peers      = 50
+max_peers      = 200
 max_peers_seed = 10
 max_uploads    = 15
 
