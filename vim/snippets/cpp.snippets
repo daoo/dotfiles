@@ -5,3 +5,11 @@ snippet iface
 			${2:/* members */}
 	};
 
+# Header include guard
+snippet guardpp
+	#ifndef ${1:`toupper(Filename('$1_HPP_', 'UNTITLED_HPP_'))`}
+	#define $1
+
+	${2}
+
+	#endif /* end of include guard: $1 */
