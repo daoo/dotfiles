@@ -2,12 +2,8 @@
 
 " {{{ Startup
 set nocompatible
-" }}}
-" {{{ Addons
-source ~/.vim/bundles.vim
 
-" Addon settings
-let g:ctrlp_working_path_mode = 0
+source ~/.vim/bundles.vim
 " }}}
 " {{{ General settings
 " Backup and temporary files

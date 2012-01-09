@@ -8,13 +8,13 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Misc
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-fugitive'
 Bundle 'Rename2'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-repeat'
 
 " Searching
-Bundle 't9md/vim-quickhl'
 Bundle 'mileszs/ack.vim'
+Bundle 't9md/vim-quickhl'
 
 " Color schemes
 Bundle 'Wombat'
@@ -29,16 +29,16 @@ Bundle 'happy.vim'
 Bundle 'UltiSnips'
 
 " Editing
+Bundle 'godlygeek/tabular'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'sjl/gundo.vim'
-Bundle 'tpope/vim-surround'
-Bundle 'godlygeek/tabular'
 Bundle 'toggle_words.vim'
+Bundle 'tpope/vim-surround'
 
 " File navigation
-Bundle 'scrooloose/nerdtree'
 Bundle 'daoo/a.vim'
 Bundle 'kien/ctrlp.vim'
+Bundle 'scrooloose/nerdtree'
 
 if executable('ctags')
   Bundle 'majutsushi/tagbar'
@@ -46,3 +46,5 @@ endif
 
 filetype plugin indent on
 
+" Settings
+let g:ctrlp_working_path_mode = 0
