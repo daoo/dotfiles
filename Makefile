@@ -43,7 +43,12 @@ xinitrc:
 	ln -fsn $(CFGROOT)/xinitrc ${HOME}/.xinitrc
 
 xmonad:
-	ln -fsn $(CFGROOT)/xmonad ${HOME}/.xmonad
+	mkdir -p ${HOME}/.xmonad/
+	mkdir -p ${HOME}/.xmonad/lib
+	ln -fsn $(CFGROOT)/xmonad/conkyrc ${HOME}/.xmonad/conkyrc
+	ln -fsn $(CFGROOT)/xmonad/xmonad.hs ${HOME}/.xmonad/xmonad.hs
+	ln -fsn $(CFGROOT)/xmonad/icons ${HOME}/.xmonad/icons
+	ln -fsn $(CFGROOT)/xmonad/lib/*.hs ${HOME}/.xmonad/lib/
 
 zsh:
 	ln -fsn $(CFGROOT)/zsh ${HOME}/.zsh
