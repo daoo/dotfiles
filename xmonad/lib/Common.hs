@@ -15,21 +15,21 @@ import XMonad.Util.Run
 -- Manage Hook
 myManageHook :: ManageHook
 myManageHook = composeAll . concat $
-  [ moves "im"    [ "Pidgin", "Finch" ]
-  , moves "web"   [ "firefox-bin", "Firefox", "Navigator", "luakit" ]
-  , moves "code"  [ "gvim" ]
-  , moves "code2" [ "Eclipse" ]
-  , moves "full"  [ "Wine" ]
-  , moves "void"  [ "Skype" ]
+  [ move "im"    [ "Pidgin", "Finch" ]
+  , move "web"   [ "firefox-bin", "Firefox", "Navigator", "luakit" ]
+  , move "code"  [ "gvim" ]
+  , move "code2" [ "Eclipse" ]
+  , move "other" [ "LibreOffice" ]
+  , move "full"  [ "Wine" ]
+  , move "void"  [ "Skype" ]
 
-  , floats name [ "MPlayer", "xmessage" ]
-  , floats res [ "Dialog" ]
-  , [ isFullscreen --> doFullFloat ] ]
+  , float name [ "MPlayer", "xmessage" ]
+  , float res [ "Dialog" ] ]
   where
-    moves w  = map (\a -> name a --> doShift w)
-    floats m = map (\a -> m a --> doCenterFloat)
+    move to = map (\a -> name a --> doShift to)
+    float f = map (\a -> f a --> doCenterFloat)
 
-    name a = appName  =? a <||> className =? a
+    name a = appName =? a <||> className =? a
     res a  = resource =? a
 
 -- Layout Hook

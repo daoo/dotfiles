@@ -33,7 +33,7 @@ main = do
     , layoutHook = myLayoutHook
 
     , terminal = term s
-    , keys     = (\x -> union (newKeyMaps s) (keys defaultConfig x))
+    , keys     = \x -> union (newKeyMaps s) (keys defaultConfig x)
     , logHook  = myLogHook d }
 
   where
