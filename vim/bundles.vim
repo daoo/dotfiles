@@ -25,11 +25,8 @@ Bundle 'tango-morning.vim'
 Bundle 'alex.vim'
 Bundle 'happy.vim'
 
-" Snipmate
-Bundle 'vim-addon-mw-utils'
-Bundle 'tlib'
-Bundle 'garbas/vim-snipmate'
-Bundle 'honza/snipmate-snippets'
+" Snippets
+Bundle 'UltiSnips'
 
 " Editing
 Bundle 'scrooloose/nerdcommenter'
