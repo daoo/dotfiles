@@ -65,7 +65,7 @@ require "binds"
 add_binds("normal", {
   lousy.bind.buf("^gq$",
     function (w)
-      luakit.spawn("quvi -f best --exec 'mplayer -cache-min 15 %u' " .. w:get_current().uri)
+      luakit.spawn("quvi -f best --exec 'mplayer -cache-min 15 %u' " .. w.view.uri)
     end
   )
 })
