@@ -1,31 +1,27 @@
 #!/usr/bin/env ruby
 
-languages =
-  { :java =>
-    { :header => [ "/*",
-                   " * Copyright (c) $year $name, see license.txt for more info.",
-                   " */",
-                   "" ],
-      :ext => ".java",
-      :before => "package" },
-    :haskell =>
-    { :header => [ "--",
-                   "-- Copyright (c) $year $name, see license.txt for more info.",
-                   "--",
-                   "" ],
-      :ext => ".hs",
-      :before => "module" }
-  }
+languages = {
+  "java" => {
+    :ext    => ".java",
+    :before => "package",
+    :header => lambda { |data|
+      return [ "/*",
+               " * Copyright (c) #{data[:year]} #{data[:name]}, see license.txt for more info.",
+               " */",
+               "" ] } },
+  "haskell" => {
+    :ext    => ".hs",
+    :before => "module",
+    :header => lambda { |data|
+      return [ "--",
+               "-- Copyright (c) #{data[:year]} #{data[:name]}, see license.txt for more info.",
+               "--",
+               "" ] } }
+}
 
-def do_substitution(header, year, name)
-  return header.collect { |s|
-    s.sub("$year", year)
-     .sub("$name", name)
-  }
-end
 
-def ensure_headers(files, lang, year, name)
-  header = do_substitution(lang[:header], year, name)
+def ensure_headers(files, lang, data)
+  header = lang[:header].call(data)
   before = lang[:before]
 
   files.each do |file|
@@ -54,19 +50,19 @@ else
   year     = ARGV[1]
   name     = ARGV[2]
 
-  case lang_str
-  when "java"
-    lang = languages[:java]
-  when "haskell"
-    lang = languages[:haskell]
+  if languages.has_key?(lang_str)
+    lang = languages[lang_str]
+
+    # TODO: Use ruby methods instead
+    files = `find . -iname '*#{lang[:ext]}'`.split("\n")
+
+    data = { :name => name, :year => year }
+
+    ensure_headers(files, lang, data)
+
+    exit 0
   else
-    puts "Language not valid"
+    puts "Language #{lang} is not supported"
+    exit 1
   end
-
-  # TODO: Use ruby methods instead
-  files = `find . -iname '*#{lang[:ext]}'`.split("\n")
-
-  ensure_headers(files, lang, year, name)
-
-  exit 0
 end
