@@ -1,5 +1,7 @@
-def get_offset(align, tile_size, layer_size):
-  if align == Alignment.FIRST:
+def get_offset(align, tile_size, layer_offset, layer_size):
+  if align == Alignment.KEEP:
+    return layer_offset
+  elif align == Alignment.FIRST:
     return 0
   elif align == Alignment.SECOND:
     return tile_size / 2 - layer_size / 2
@@ -9,9 +11,10 @@ def get_offset(align, tile_size, layer_size):
   return 0
 
 class Alignment:
-  FIRST  = 0 # Top or left
-  SECOND = 1 # Middle or center
-  THIRD  = 2 # Bottom or right
+  KEEP   = 0
+  FIRST  = 1 # Top or left
+  SECOND = 2 # Middle or center
+  THIRD  = 3 # Bottom or right
 
   v_align = FIRST
   h_align = FIRST
@@ -20,9 +23,15 @@ class Alignment:
     self.h_align = h_align
     self.v_align = v_align
 
-  def get_offsets(self, tile_width, tile_height, layer):
-    x = get_offset(self.h_align, tile_width, layer.width)
-    y = get_offset(self.v_align, tile_height, layer.height)
+  # Get offsets for the layer according to the alignment rules
+  def get_offsets(self, tx, ty, tw, th, lx, ly, lw, lh):
+    # tx, ty -- tile offset relative to (0, 0)
+    # tw, th -- tile size
+    # lx, ly -- layer offset relative to (0, 0)
+    # lw, lh -- layer size
+
+    x = get_offset(self.h_align, tw, lx % tw, lw)
+    y = get_offset(self.v_align, th, ly % th, lh)
 
     return x, y
 
