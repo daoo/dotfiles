@@ -19,7 +19,6 @@ languages = {
                "" ] } }
 }
 
-
 def ensure_headers(files, lang, data)
   header = lang[:header].call(data)
   before = lang[:before]
