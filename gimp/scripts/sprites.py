@@ -11,18 +11,6 @@ def calculate_tile_size(img):
 
   return w, h
 
-def clean_up(img):
-  # Autocrop and rename all layers
-  i = 1
-  for layer in img.layers:
-    layer.name = "Sprite " + str(i)
-
-    # For some reason, autocrop always executes on the currently selected layer
-    img.active_layer = layer
-    pdb.plug_in_autocrop_layer(img, layer)
-
-    i += 1
-
 def align_and_layout(img, align, layout):
   tw, th = calculate_tile_size(img)
 

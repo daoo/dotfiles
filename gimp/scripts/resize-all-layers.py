@@ -19,19 +19,15 @@ class ResizeLayer:
     layer.scale(w, h, True)
 
 operators = [Add(), Set()]
+resizers  = [ResizeBoundary(), ResizeLayer()]
 
 def python_resize_all_layers(img, drawable, resize, operator, width, height):
   img.undo_group_start()
 
-  resizer = None
-  if resize == "bound":
-    resizer = ResizeBoundary()
-  elif resize == "layer":
-    resizer = ResizeLayer()
-
-  op = operators[operator]
-
   try:
+    op      = operators[operator]
+    resizer = resizers[resize]
+
     for layer in img.layers:
       nw = op.eval(layer.width, width)
       nh = op.eval(layer.height, height)
@@ -42,7 +38,7 @@ def python_resize_all_layers(img, drawable, resize, operator, width, height):
 
   gimp.displays_flush()
 
-register("python_fu_resize_all_layers"
+register( "python_fu_resize_all_layers"
         , "Resize all layers."
         , "Resize all layers."
         , "Daniel Oom"
@@ -50,7 +46,7 @@ register("python_fu_resize_all_layers"
         , "2011"
         , "<Image>/Filters/Sprite Sheet/Resize All..."
         , "*"
-        , [ (PF_RADIO, "resize", "Resize", "bound", (("Boundary", "bound"), ("Layer", "layer")))
+        , [ (PF_OPTION, "resize", "Resize", 0, ["Boundary", "Layer"])
           , (PF_OPTION, "operator", "Operator", 0, ["Add", "Set"])
           , (PF_INT, "width", "Width", 0)
           , (PF_INT, "height", "Height", 0) ]

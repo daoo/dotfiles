@@ -7,13 +7,22 @@ def python_clean_up_sheet(img, drawable):
   img.undo_group_start()
 
   try:
-    clean_up(img)
+    # Autocrop and rename all layers
+    i = 1
+    for layer in img.layers:
+      layer.name = "Sprite " + str(i)
+
+      # For some reason, autocrop always executes on the currently selected layer
+      img.active_layer = layer
+      pdb.plug_in_autocrop_layer(img, layer)
+
+      i += 1
   finally:
     img.undo_group_end()
 
   gimp.displays_flush()
 
-register("python_fu_clean_up_sheet"
+register( "python_fu_clean_up_sheet"
         , "Clean up all layers to make the image more suited as a sprite sheet."
         , "Clean up all layers to make the image more suited as a sprite sheet."
         , "Daniel Oom"
