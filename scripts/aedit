@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 md5sum_dir() {
-  tar c "$1" | md5sum | cut -d ' ' -f 1
+  tar c "$1" 2> /dev/null | md5sum | cut -d ' ' -f 1
 }
 
 # Check for atool
@@ -11,7 +11,15 @@ if ! which atool &> /dev/null; then
 fi
 
 # Check parameters
-file="$1"
+dry=0
+file=""
+while (( "$#" )); do
+  case "$1" in
+    "-d") dry=1 ;;
+    *) file="$1"
+  esac
+  shift
+done
 
 if [[ -a "$file" ]]; then
   # Some basic information about the archive
@@ -22,7 +30,7 @@ if [[ -a "$file" ]]; then
   # Extract to a tmp dir
   echo "Extracting..."
   working_dir="$(mktemp -d "/tmp/aedit-XXXXXXXX")"
-  atool --extract-to="$working_dir" "$file" > /dev/null
+  atool --extract-to="$working_dir" "$file" &> /dev/null
 
   old_checksum="$(md5sum_dir "$working_dir")"
 
@@ -33,16 +41,20 @@ if [[ -a "$file" ]]; then
 
   new_checksum="$(md5sum_dir "$working_dir")"
 
-  if [[ $old_checksum = $new_checksum ]]; then
-    echo "No changes, not repacking."
+  if [[ $dry -eq 0 ]]; then
+    if [[ $old_checksum = $new_checksum ]]; then
+      echo "No changes, not repacking."
+    else
+      echo "Repacking..."
+
+      # Make backup
+      backupfile="$(mktemp "/tmp/$name-XXXXXXXX")"
+      mv "$archive" "$backupfile"
+
+      atool -a -f "$archive" $(ls -b "$working_dir") &> /dev/null
+    fi
   else
-    echo "Repacking..."
-
-    # Make backup
-    backupfile="$(mktemp "/tmp/$name-XXXXXXXX")"
-    mv "$archive" "$backupfile"
-
-    atool -a -f "$archive" $(ls -b "$working_dir") > /dev/null
+    echo "Dry run, not repacking."
   fi
 
   echo "Done."
