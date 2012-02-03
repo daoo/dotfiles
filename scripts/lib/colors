@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+color_red='\e[0;31m'
+color_green='\e[0;32m'
+text_reset='\e[0m'
+
+function echo_color() {
+  echo -en "$1$2$text_reset\n"
+}
+

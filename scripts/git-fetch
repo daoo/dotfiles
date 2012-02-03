@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+source "$HOME/bin/scripts/lib/checksums"
+
+function fetch_head() {
+  md5sum_only "./.git/FETCH_HEAD"
+}
+
+interactive_merge=0
+if [[ "$1" -eq "-i" ]]; then
+  interactive_merge=1
+fi
+
+for repo in $(cat "$HOME/.git-repos"); do
+  cd "$HOME/$repo"
+  echo "fetching $repo"
+
+  old_fetch_head=$(fetch_head)
+
+  git fetch &> /dev/null
+
+  new_fetch_head=$(fetch_head)
+
+  if [[ $interactive_merge = 1 ]]; then
+    if [[ $old_fetch_head != $new_fetch_head ]]; then
+      echo "merging"
+      $SHELL
+    fi
+  fi
+done

@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-md5sum_dir() {
-  tar c "$1" 2> /dev/null | md5sum | cut -d ' ' -f 1
+source "$HOME/bin/scripts/lib/checksums"
+
+function shell_in_dir() {
+  cd "$1"
+  $SHELL
 }
 
 # Check for atool
@@ -32,21 +35,20 @@ if [[ -a "$file" ]]; then
   working_dir="$(mktemp -d "/tmp/aedit-XXXXXXXX")"
   atool --extract-to="$working_dir" "$file" &> /dev/null
 
-  old_checksum="$(md5sum_dir "$working_dir")"
-
-  # Start a new shell in the tmp directory
-  echo "Launching shell..."
-  cd "$working_dir"
-  "$SHELL"
-
-  new_checksum="$(md5sum_dir "$working_dir")"
-
   if [[ $dry -eq 0 ]]; then
+    old_checksum="$(md5sum_dir "$working_dir")"
+
+    # Start a new shell in the tmp directory
+    echo "Launching shell..."
+    shell_in_dir "$working_dir"
+
+    new_checksum="$(md5sum_dir "$working_dir")"
+
     if [[ $old_checksum = $new_checksum ]]; then
       echo "No changes, not repacking."
     else
       echo "Repacking..."
-
+      
       # Make backup
       backupfile="$(mktemp "/tmp/$name-XXXXXXXX")"
       mv "$archive" "$backupfile"
@@ -54,6 +56,10 @@ if [[ -a "$file" ]]; then
       atool -a -f "$archive" $(ls -b "$working_dir") &> /dev/null
     fi
   else
+    # Start a new shell in the tmp directory
+    echo "Launching shell..."
+    shell_in_dir "$working_dir"
+
     echo "Dry run, not repacking."
   fi
 
