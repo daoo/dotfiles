@@ -84,6 +84,7 @@ command! W %!sudo tee > /dev/null %
 " {{{ Disabled Stupid Keys
 
 noremap K <nop>
+noremap Q <nop>
 
 " Arrow keys
 inoremap <down>  <nop>
@@ -114,9 +115,6 @@ noremap  <pageup>   <nop>
 " }}}
 " {{{ Key Bindings
 let mapleader=","
-
-" Disable Ex mode
-noremap Q <nop>
 
 " F-keys
 nnoremap <f2> :NERDTreeToggle<cr>
