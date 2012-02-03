@@ -82,6 +82,9 @@ syntax on
 command! W %!sudo tee > /dev/null %
 " }}}
 " {{{ Disabled Stupid Keys
+
+noremap K <nop>
+
 " Arrow keys
 inoremap <down>  <nop>
 inoremap <left>  <nop>
