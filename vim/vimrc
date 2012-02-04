@@ -116,7 +116,6 @@ noremap  <pageup>   <nop>
 " {{{ Key Bindings
 let mapleader=","
 
-nnoremap ; :
 " Calculator
 inoremap <c-b> <c-o>yiW<end>=<c-r>=<c-r>0<cr>
 nnoremap <c-b> yiWA=<c-r>=<c-r>0<cr><esc>
