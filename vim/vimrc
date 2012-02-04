@@ -116,6 +116,10 @@ noremap  <pageup>   <nop>
 " {{{ Key Bindings
 let mapleader=","
 
+" Hex editor
+map <Leader>hon :%!xxd<CR>
+map <Leader>hof :%!xxd -r<CR>
+
 " Calculator
 inoremap <c-b> <c-o>yiW<end>=<c-r>=<c-r>0<cr>
 nnoremap <c-b> yiWA=<c-r>=<c-r>0<cr><esc>
