@@ -25,11 +25,6 @@ set foldlevel=0
 set wildmenu
 set wildmode=list:longest,full
 
-set wildignore =*.gif,*.png,*.jpg
-set wildignore+=*.swp,*.bak
-set wildignore+=*.pyc,*.class,*.o,*.hi
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
-
 " History
 set history=500
 set undolevels=500

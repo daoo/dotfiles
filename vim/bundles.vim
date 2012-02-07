@@ -48,3 +48,8 @@ filetype plugin indent on
 
 " Settings
 let g:ctrlp_working_path_mode = 0
+
+let g:ctrlp_custom_ignore = {
+  \ 'file': '\.gif$\|\.png$\|\.jpg$\|\.swp$\|\.bak*.pyc$\|\.class$\|\.o$\|\.hi',
+  \ 'dir': '\.git$\|\.hg$\|\.svn$'
+  \ }
