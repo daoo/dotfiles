@@ -7,6 +7,5 @@ javaopts="-server -Xmx1024M -Xms512M"
 
 cd "$minecraft_dir"
 
-_JAVA_AWT_WM_NONREPARENTING=1 \
 java $javaopts -cp $minecraft_jar net.minecraft.LauncherFrame
 
