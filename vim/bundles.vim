@@ -11,6 +11,7 @@ Bundle 'gmarik/vundle'
 Bundle 'Rename2'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-repeat'
+Bundle 'Rip-Rip/clang_complete'
 
 " Searching
 Bundle 'mileszs/ack.vim'
