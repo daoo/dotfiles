@@ -124,7 +124,6 @@ nnoremap <f2> :NERDTreeToggle<cr>
 nnoremap <f3> :TagbarToggle<cr>
 nnoremap <f5> :make run<cr>
 nnoremap <f8> :make<cr>
-nnoremap <f10> :CommandTFlush<cr>
 
 " Tabular
 nnoremap <leader>ap :%s/( /(/g<cr>:%s/ )/)/g<cr>
@@ -136,6 +135,9 @@ nnoremap <leader>ac :Tabularize commas<cr>
 " Misc
 nnoremap <leader>cd :cd %:p:h<cr>
 nnoremap <leader>jw :ToggleWord<cr>
+nnoremap <leader>t :CtrlP<cr>
+nnoremap <leader>u :GundoToggle<cr>
+inoremap <c-space> <c-x><c-o>
 
 " Quick edit
 nnoremap <leader>eve :vsplit $MYVIMRC<cr>
@@ -161,12 +163,6 @@ xmap <leader>M <Plug>(quickhl-reset)
 nnoremap <leader>sa :A<cr>
 nnoremap <leader>sv :AV<cr>
 nnoremap <leader>ss :AS<cr>
-
-" CtrlP
-nnoremap <leader>t :CtrlP<cr>
-
-" Gundo
-nnoremap <leader>u :GundoToggle<cr>
 
 " Move lines up and down
 nnoremap <up> :move -2<cr>
