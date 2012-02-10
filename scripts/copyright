@@ -29,13 +29,17 @@ def ensure_headers(files, lang, data)
       lines = f.readlines
     end
 
-    # Remove everything before a specific line
-    no_header = lines.drop_while { |l| !l.start_with?(before) }
+    lines.map! { |line| line.chomp }
 
-    output = header + no_header
+    if not lines[0, header.length] == header
+      # Remove everything before a specific line
+      no_header = lines.drop_while { |l| !l.start_with?(before) }
 
-    File.open(file, 'w') do |f|
-      f.puts output
+      output = header + no_header
+
+      File.open(file, 'w') do |f|
+        f.puts output
+      end
     end
   end
 end
