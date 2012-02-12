@@ -1,22 +1,32 @@
 #!/usr/bin/env bash
 
-function list_dirs() {
-  for f in $1/*; do
-    if [[ -d $f ]]; then
-      basename "$f"
-    fi
-  done
+minecraft_dir="$HOME/games/minecraft/server"
+server_jar="$minecraft_dir/minecraft_server.jar"
+
+javaopts="-server -Xmx1024M -Xms512M"
+command="java $javaopts -jar $server_jar nogui"
+
+function desc() {
+  local df="$1/description.txt"
+  if [[ -f "$df" ]]; then
+    cat "$df"
+  else
+    echo "No description availible"
+  fi
 }
 
-function ask() {
-  echo -n "$1"
+function menu() {
+  local i=0
+  for f in $1/*; do
+    if [[ -d $f ]]; then
+      servers[$i]=$(basename "$f")
+      let i++
+      servers[$i]=$($2 $f)
+      let i++
+    fi
+  done
 
-  inp=""
-  read ans
-  case "$ans" in
-    "y"|"Y") return 0 ;;
-    *)       return 1 ;;
-  esac
+  dialog --menu "Choose server:" 0 60 15 "${servers[@]}"
 }
 
 function launch() {
@@ -36,48 +46,16 @@ function launch() {
   $command
 }
 
-minecraft_dir="$HOME/games/minecraft/server"
-server_jar="$minecraft_dir/minecraft_server.jar"
-
-javaopts="-server -Xmx1024M -Xms512M"
-command="java $javaopts -jar $server_jar nogui"
-
-server="$1"
-world="$2"
-
-# Check for empty input
-if [[ -z "$server" ]]; then
-  echo "Availible servers:"
-  list_dirs "$minecraft_dir/servers"
+menu "$minecraft_dir/servers" desc 2> "/tmp/server.ans"
+if [[ $? -ne 0 ]]; then
   exit 1
 fi
+server=$(cat "/tmp/server.ans")
 
-if [[ -z "$world" ]]; then
-  echo "Availible maps:"
-  list_dirs "$minecraft_dir/worlds"
+menu "$minecraft_dir/worlds" desc 2> "/tmp/world.ans"
+if [[ $? -ne 0 ]]; then
   exit 1
 fi
-
-# Check for non existing dirs
-if [[ ! -d "$minecraft_dir/servers/$server" ]]; then
-  if ask "Server '$server' does not exist, create new [y/N]? "; then
-    echo "Creating server..."
-    mkdir "$minecraft_dir/servers/$server"
-
-    # Launch minecraft-server once and stop it immediately
-    echo "stop" | $command
-  else
-    exit 1
-  fi
-fi
-
-if [[ ! -d "$minecraft_dir/worlds/$world" ]]; then
-  if ask "World '$world' does not exist, create new [y/N]? "; then
-    echo "Creating world..."
-    mkdir "$minecraft_dir/worlds/$world"
-  else
-    exit 1
-  fi
-fi
+world=$(cat "/tmp/world.ans")
 
 launch "$server" "$world"
