@@ -1,30 +1,24 @@
-#!/usr/bin/env bash
+#!/usr/bin/env ruby
 
-source "$HOME/bin/scripts/lib/checksums"
+def md5sum(file)
+  return `md5sum #{file}`[0, 32]
+end
 
-function fetch_head() {
-  md5sum_only "./.git/FETCH_HEAD"
-}
+File.open("#{ENV["HOME"]}/.git-repos") do |f|
+  while (line = f.gets)
+    repo = line.chomp
+    puts "Syncing #{repo}"
 
-interactive_merge=0
-if [[ "$1" -eq "-i" ]]; then
-  interactive_merge=1
-fi
-
-for repo in $(cat "$HOME/.git-repos"); do
-  cd "$HOME/$repo"
-  echo "fetching $repo"
-
-  old_fetch_head=$(fetch_head)
-
-  git fetch &> /dev/null
-
-  new_fetch_head=$(fetch_head)
-
-  if [[ $interactive_merge = 1 ]]; then
-    if [[ $old_fetch_head != $new_fetch_head ]]; then
-      echo "merging"
-      $SHELL
-    fi
-  fi
-done
+    dir        = File.join(ENV["HOME"], repo)
+    git_dir    = File.join(dir, ".git/")
+    fetch_head = File.join(git_dir, "FETCH_HEAD")
+    
+    old = md5sum(fetch_head)
+    system("git --git-dir=#{git_dir} fetch --quiet")
+    new = md5sum(fetch_head)
+    if old != new
+      puts "MERGE ALERT!"
+      #`#{ENV["SHELL"]}`
+    end
+  end
+end
