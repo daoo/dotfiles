@@ -1,11 +1,59 @@
-#!/bin/bash
+#!/usr/bin/env ruby
 
-minecraft_dir=$HOME/games/minecraft/client
-minecraft_jar=$minecraft_dir/minecraft.jar
+MINECRAFT_DIR = File.join(ENV["HOME"], "games/minecraft")
+LAUNCHER_JAR  = File.join(MINECRAFT_DIR, "launcher.jar")
+CLIENTS_DIR   = File.join(MINECRAFT_DIR, "client")
+MOD_DIR       = File.join(MINECRAFT_DIR, "mods")
 
-javaopts="-server -Xmx1024M -Xms512M"
+LOG_FILE = File.join(MINECRAFT_DIR, "minecraft.log")
 
-cd "$minecraft_dir"
+JAVAOPTS = "-server -Xmx1024M -Xms512M"
 
-java $javaopts -cp $minecraft_jar net.minecraft.LauncherFrame
+def seconds_to_str(time)
+  hours   = (time / 3600).to_i
+  minutes = (time / 60 - (hours * 3600)).to_i
+  seconds = (time - (minutes * 60 + hours * 3600)).to_i
 
+  return "%02d:%02d:%02d" % [hours, minutes, seconds]
+end
+
+def run_minecraft(jar)
+  # TODO: Replace jar
+  # TODO: Apply mods
+
+  start_time = Time.now()
+  puts "Launching minecraft at #{start_time}"
+
+  IO.popen("java #{JAVAOPTS} -cp #{LAUNCHER_JAR} net.minecraft.LauncherFrame") do |io|
+    File.open(LOG_FILE, 'w') do |f|
+      while (line = io.gets) do
+        f.puts(line)
+      end
+    end
+  end
+
+  end_time = Time.now()
+  puts "Minecraft closed at #{end_time}"
+  puts "You have been playing for #{seconds_to_str(end_time - start_time)}"
+end
+
+def dialog_menu(options)
+  str = ""
+  options.each do |o|
+    str << '"'
+    str << o[0]
+    str << "\" \""
+    str << o[1]
+    str << '" '
+  end
+
+  system("dialog --menu 'TODO TITLE' 0 50 10 #{str} 2> /tmp/minecraft.ans")
+
+  file = File.open("/tmp/minecraft.ans") { |f| f.gets }
+
+  return file
+end
+
+jars = Dir.entries(CLIENTS_DIR).select { |x| x != "." and x != ".." }
+
+puts dialog_menu(jars.map { |jar| [jar, "nothing here yet"] })
