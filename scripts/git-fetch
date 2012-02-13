@@ -1,5 +1,13 @@
 #!/usr/bin/env ruby
 
+TEXT_RESET       = "\e[0m"
+TEXT_YELLOW_BOLD = "\e[1;33m"
+TEXT_PURPLE      = "\e[0;35m"
+
+def puts_color(color, str)
+  puts "#{color}#{str}#{TEXT_RESET}"
+end
+
 def md5sum(file)
   return `md5sum #{file}`[0, 32]
 end
@@ -7,7 +15,7 @@ end
 File.open("#{ENV["HOME"]}/.git-repos") do |f|
   while (line = f.gets)
     repo = line.chomp
-    puts "Syncing #{repo}"
+    puts_color(TEXT_PURPLE, "Syncing #{repo}")
 
     dir        = File.join(ENV["HOME"], repo)
     git_dir    = File.join(dir, ".git/")
@@ -17,8 +25,9 @@ File.open("#{ENV["HOME"]}/.git-repos") do |f|
     system("git --git-dir=#{git_dir} fetch --quiet")
     new = md5sum(fetch_head)
     if old != new
-      puts "MERGE ALERT!"
-      #`#{ENV["SHELL"]}`
+      puts_color(TEXT_YELLOW_BOLD, "Fetch resulted in new HEAD")
+      puts_color(TEXT_YELLOW_BOLD, "Opening #{ENV["SHELL"]} in #{dir}")
+      system(ENV["SHELL"])
     end
   end
 end
