@@ -33,14 +33,22 @@ setopt nobeep
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 export EDITOR="vim"
 export PAGER="less"
+export GREP_OPTIONS='--color=auto'
 export LESS="-FiXr"
+
+# Jobs
+setopt LONG_LIST_JOBS     # List jobs in the long format by default.
+setopt AUTO_RESUME        # Attempt to resume existing job before creating a new process.
+setopt NOTIFY             # Report status of background jobs immediately.
+unsetopt BG_NICE          # Don't run all background jobs at a lower priority.
+unsetopt HUP              # Don't kill jobs on shell exit.
+unsetopt CHECK_JOBS       # Don't report on jobs when shell exit.
 
 # Disable ctrl-q and ctrl-s
 stty -ixon
 # }}}
 # {{{ Aliases
 # Give some commands fancy colors
-alias grep='grep --color=auto'
 alias ls='ls -h -F --color=auto'
 alias tree='tree -C'
 alias pacman='pacman-color'
@@ -74,15 +82,15 @@ bindkey '' history-search-forward
 bindkey '' history-incremental-search-backward
 bindkey '' push-line
 # }}}
-# {{{ Autocompletion
-# Completion
-autoload -U compinit
-compinit
-zstyle ':completion:*' special-dirs true
-
-if [ -f "/etc/zsh_command_not_found" ]; then
-  . /etc/zsh_command_not_found
-fi
+# {{{ Oh-my-zsh
+zstyle ':omz:editor' keymap 'vi'
+zstyle ':omz:editor' dot-expansion 'no'
+zstyle ':omz:*:*' case-sensitive 'no'
+zstyle ':omz:*:*' color 'yes'
+zstyle ':omz:terminal' auto-title 'yes'
+zstyle ':omz:load' plugin 'archive' 'git'
+zstyle ':omz:prompt' theme 'adam2'
+source "$HOME/.oh-my-zsh/init.zsh"
 # }}}
 # {{{ Local settings
 if [ -f ~/.zlocal ]; then
