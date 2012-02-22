@@ -4,45 +4,30 @@
 [ -z "$PS1" ] && return
 
 # {{{ Config
-# PS1
-if [ -z "$SSH_CLIENT" ]; then
-  # Not connected through ssh
-  PS1="$USER:%~$ "
-else
-  PS1="$USER@$HOST:%~$ "
-fi
-
-# Title
-case "$TERM" in
-  xterm*|*rxvt*)
-    # Set the title
-    precmd () {print -Pn "\e]0;%~ (%n@%m)\a"}
-  ;;
-esac
-
 # History
 HISTFILE=~/.zhistory
 HISTSIZE=100000
 SAVEHIST=100000
-setopt appendhistory
-setopt histignoredups
-setopt incappendhistory
+setopt append_history
+setopt hist_ignore_dups
+setopt inc_append_history
 
 # Stuff
 setopt nobeep
-export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
-export EDITOR="vim"
-export PAGER="less"
-export GREP_OPTIONS='--color=auto'
-export LESS="-FiXr"
+
+EDITOR="vim"
+PAGER="less"
+
+GREP_OPTIONS='--color=auto'
+LESS="-FiXr"
 
 # Jobs
-setopt LONG_LIST_JOBS     # List jobs in the long format by default.
-setopt AUTO_RESUME        # Attempt to resume existing job before creating a new process.
-setopt NOTIFY             # Report status of background jobs immediately.
-unsetopt BG_NICE          # Don't run all background jobs at a lower priority.
-unsetopt HUP              # Don't kill jobs on shell exit.
-unsetopt CHECK_JOBS       # Don't report on jobs when shell exit.
+setopt long_list_jobs
+setopt auto_resume
+setopt notify
+setopt nohup
+unsetopt bg_nice
+unsetopt check_jobs
 
 # Disable ctrl-q and ctrl-s
 stty -ixon
@@ -71,7 +56,6 @@ alias :w='echo you are not in vim anymore'
 
 # Other
 alias bell="echo -e '\a'"
-alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
 alias calc='noglob calc'
 alias g='git'
 alias y='yaourt'
@@ -82,15 +66,105 @@ bindkey '' history-search-forward
 bindkey '' history-incremental-search-backward
 bindkey '' push-line
 # }}}
-# {{{ Oh-my-zsh
-zstyle ':omz:editor' keymap 'vi'
-zstyle ':omz:editor' dot-expansion 'no'
-zstyle ':omz:*:*' case-sensitive 'no'
-zstyle ':omz:*:*' color 'yes'
-zstyle ':omz:terminal' auto-title 'yes'
-zstyle ':omz:load' plugin 'archive' 'git'
-zstyle ':omz:prompt' theme 'adam2'
-source "$HOME/.oh-my-zsh/init.zsh"
+# {{{ Prompt and Colors
+autoload -U promptinit
+promptinit
+prompt adam2
+
+export LESS_TERMCAP_mb=$'\E[01;31m'      # begin blinking
+export LESS_TERMCAP_md=$'\E[01;31m'      # begin bold
+export LESS_TERMCAP_me=$'\E[0m'          # end mode
+export LESS_TERMCAP_se=$'\E[0m'          # end standout-mode
+export LESS_TERMCAP_so=$'\E[00;47;30m'   # begin standout-mode
+export LESS_TERMCAP_ue=$'\E[0m'          # end underline
+export LESS_TERMCAP_us=$'\E[01;32m'      # begin underline
+# }}}
+# {{{ Auto completion
+autoload -Uz compinit && compinit -i
+
+setopt complete_in_word    # Complete from both ends of a word.
+setopt always_to_end       # Move cursor to the end of a completed word.
+setopt path_dirs           # Perform path search even on command names with slashes.
+setopt auto_menu           # Show completion menu on a succesive tab press.
+setopt auto_list           # Automatically list choices on ambiguous completion.
+setopt auto_param_slash    # If completed parameter is a directory, add a trailing slash.
+unsetopt menu_complete     # Do not autoselect the first completion entry.
+unsetopt flow_control      # Disable start/stop characters in shell editor.
+
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
+zstyle ':completion::complete:*' use-cache on
+zstyle ':completion::complete:*' cache-path "$HOME/.zcache"
+
+# in-case-sensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+unsetopt CASE_GLOB
+
+# Group matches and describe.
+zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*:matches' group 'yes'
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
+zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
+zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' verbose yes
+
+# Fuzzy match mistyped completions.
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+# Increase the number of errors based on the length of the typed word.
+zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
+
+# Don't complete unavailable commands.
+zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
+
+# Array completion element sorting.
+zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+
+# Directories
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
+zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directories' 'users' 'expand'
+zstyle ':completion:*' squeeze-slashes true
+
+# History
+zstyle ':completion:*:history-words' stop yes
+zstyle ':completion:*:history-words' remove-all-dups yes
+zstyle ':completion:*:history-words' list false
+zstyle ':completion:*:history-words' menu yes
+
+# Environmental Variables
+zstyle ':completion::*:(-command-|export):*' fake-parameters ${${${_comps[(I)-value-*]#*,}%%,*}:#-*-}
+
+# Populate hostname completion.
+zstyle -e ':completion:*:hosts' hosts 'reply=(
+  ${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) 2>/dev/null)"}%%[#| ]*}//,/ }
+  ${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2>/dev/null))"}%%\#*}
+  ${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
+)'
+
+# Ignore multiple entries.
+zstyle ':completion:*:(rm|kill|diff):*' ignore-line yes
+zstyle ':completion:*:rm:*' file-patterns '*:all-files'
+
+# Kill
+zstyle ':completion:*:*:*:*:processes' command 'ps -u $USER -o pid,user,comm -w'
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;36=0=01'
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:*:kill:*' force-list always
+zstyle ':completion:*:*:kill:*' insert-ids single
+
+# Man
+zstyle ':completion:*:manuals' separate-sections true
+zstyle ':completion:*:manuals.(^1*)' insert-sections true
 # }}}
 # {{{ Local settings
 if [ -f ~/.zlocal ]; then
