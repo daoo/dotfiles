@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+
+require "#{ENV['HOME']}/dotfiles/minecraft/minecraft.rb"
+require "fileutils"
+require "tempfile"
+
+module Client
+  include Minecraft
+
+  def Client.run(jar, mods)
+    if not mods.empty?
+      puts "Extracting jar..."
+      FileUtils.mkdir_p(TMP_DIR)
+      Utils.unzip(mod_path, TMP_DIR)
+      FileUtils.rm_rf(File.join(TMP_DIR, "META-INF"))
+
+      mods.each do |mod|
+        puts "Extracting #{mod}"
+        mod_path = File.join(MODS_DIR, mod)
+        Utils.unzip(mod_path, TMP_DIR)
+      end
+
+      Utils.zip(TMP_DIR, TMP_JAR)
+
+      FileUtils.rm_rf(TMP_DIR)
+    else
+      FileUtils.cp(jar, TMP_JAR)
+    end
+
+    if File.exists?(JAR_FILE)
+      puts "Backing up first..."
+      File.rename(JAR_FILE, JAR_BACKUP_FILE)
+    end
+    puts "Putting new jar in place..."
+    FileUtils.mv(TMP_JAR, JAR_FILE)
+
+    start_time = Time.now()
+    puts "Launching minecraft at #{start_time}"
+
+    IO.popen("java #{JAVAOPTS} -cp #{LAUNCHER_JAR} net.minecraft.LauncherFrame") do |io|
+      File.open(LOG_FILE, 'w') do |f|
+        while (line = io.gets) do
+          f.puts(line)
+        end
+      end
+    end
+
+    end_time = Time.now()
+    puts "Minecraft closed at #{end_time}"
+
+    puts "Cleaning up..."
+    FileUitls.rm_f(JAR_FILE)
+    FileUitls.mv(JAR_BACKUP_FILE, JAR_FILE)
+
+    puts "You have been playing for #{seconds_to_str(end_time - start_time)}"
+  end
+end
+
+jars      = Minecraft.list_files(Client::CLIENTS_DIR)
+jars_opts = jars.map { |jar| { :id => jar, :desc => "nothing here yet" } }
+
+mods      = Minecraft.list_files(Client::MODS_DIR)
+mods_opts = mods.map { |mod| { :id => mod, :desc => "nothing here yet" } }
+
+jar_res = Minecraft.dialog_menu("Choose client version", jars_opts)
+if jar_res != nil
+  mods_res = Minecraft.dialog_checklist("Choose mods", mods_opts)
+  if mods_res != nil
+    jar = File.join(Client::CLIENTS_DIR, jar_res)
+    Client.run(jar, mods_res)
+  end
+end
