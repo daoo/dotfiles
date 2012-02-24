@@ -44,6 +44,10 @@ module Utils
     system("zip -rqq #{target} *")
     Dir.chdir(pwd)
   end
+
+  def Utils.is_same?(file1, file2)
+    return system("diff -q #{file1} #{file2} > /dev/null")
+  end
 end
 # }}}
 # {{{ Minecraft
@@ -64,6 +68,9 @@ module Minecraft
   SERVERS_DIR  = File.join(INSTALL_DIR, "server")
   MODS_DIR     = File.join(INSTALL_DIR, "mods")
   LOG_FILE     = File.join(INSTALL_DIR, "minecraft.log")
+
+  RELEASE_CLIENT_JAR = File.join(CLIENTS_DIR, "release.jar")
+  RELEASE_SERVER_JAR = File.join(SERVERS_DIR, "release.jar")
 
   # urls, lwjgl
   LWJGL_RSS = URI.parse("http://sourceforge.net/api/file/index/project-id/58488/mtime/desc/limit/20/rss")
@@ -113,6 +120,16 @@ module Updater
     end
 
     return res
+  end
+
+  def Updater.get_latest_server_release()
+    Updater.download(Minecraft::RELEASE_SERVER_URL, Minecraft::TMP_MINECRAFT_JAR)
+    if not Utils.is_same?(Minecraft::TMP_MINECRAFT_JAR, Minecraft::RELEASE_SERVER_JAR)
+      FileUtils.mv(Minecraft::TMP_MINECRAFT_JAR, Minecraft::RELEASE_SERVER_JAR)
+      return true
+    end
+
+    return false
   end
 
   # Connect to assets.minecraft.net and retrive the latest snapshot version.
@@ -266,6 +283,16 @@ class Dialog
   end
 end
 
+class MessageBoxDialog < Dialog
+  def initialize(message)
+    @message = message
+  end
+
+  def run()
+    @result, @exit = Dialog.execute("dialog --msgbox '#{@message}' 10 75")
+  end
+end
+
 class YesNoDialog < Dialog
   def initialize(title)
     @title = title
@@ -292,13 +319,14 @@ class InputDialog < Dialog
 end
 
 class MenuDialog < Dialog
-  def initialize(title, options)
+  def initialize(title, options, cancel = "Cancel")
     @title   = title
     @options = build_options(options)
+    @cancel  = cancel
   end
 
   def run()
-    @result, @exit = Dialog.execute("dialog --menu '#{@title}' 0 50 10 #{@options}")
+    @result, @exit = Dialog.execute("dialog --cancel-label #{@cancel} --menu '#{@title}' 0 50 10 #{@options}")
   end
 
   private
@@ -376,17 +404,46 @@ class SelectManyFilesDialog < Dialog
 end
 # }}}
 
-puts Updater.download_lwjgl()
-exit 0
-
 while true do
-  diag = MenuDialog.new("Welcome!", ["client", "sever", "check for updates"])
+  diag = MenuDialog.new("Welcome!", ["client", "sever", "check for updates"], "Exit")
   diag.run()
   if diag.get_exit()
     action = diag.get_result()
     if action == "client"
     elsif action == "server"
     elsif action == "check for updates"
+      msg = ""
+
+      #print "Checking for server release... "
+      #if Updater.get_latest_server_release()
+        #puts "Updated!"
+      #else
+        #puts "No update found."
+      #end
+
+      snapshot = Updater.get_latest_snapshot()
+      msg << "Checking for client snapshot... "
+      if Updater.download_client_snapshot(snapshot)
+        msg << "Downloaded client #{snapshot}!\n"
+      else
+        msg << "No new snapshots found.\n"
+      end
+
+      msg << "Checking for server snapshot... "
+      if Updater.download_server_snapshot(snapshot)
+        msg << "Downloaded server #{snapshot}!\n"
+      else
+        msg << "No new snapshots found.\n"
+      end
+
+      msg << "Checking for new lwjgl... "
+      if Updater.download_lwjgl()
+        msg << "Downloaded new lwjgl!\n"
+      else
+        msg << "No new lwjgl found.\n"
+      end
+
+      MessageBoxDialog.new(msg).run()
     end
   else
     break
