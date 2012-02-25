@@ -27,7 +27,7 @@ File.open("#{ENV["HOME"]}/.git-repos") do |f|
     if old != new
       puts_color(TEXT_YELLOW_BOLD, "Fetch resulted in new HEAD")
       puts_color(TEXT_YELLOW_BOLD, "Opening #{ENV["SHELL"]} in #{dir}")
-      system(ENV["SHELL"])
+      system("cd #{dir} && #{ENV['SHELL']}")
     end
   end
 end
