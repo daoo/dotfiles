@@ -1,8 +1,15 @@
+#!/usr/bin/env ruby
+#
+# A minecraft launcher written by daoo.
+# Fully featured, can update the client and the server, fetch snapshots, update
+# update lwjgl, etc.
+#
+
 require "date"
 require "fileutils"
-require "tempfile"
-require "net/http"
+require "open-uri"
 require "rexml/document"
+require "tempfile"
 
 # {{{ Utils
 module Utils
@@ -46,7 +53,21 @@ module Utils
   end
 
   def Utils.is_same?(file1, file2)
-    return system("diff -q #{file1} #{file2} > /dev/null")
+    if File.exists?(file1) and File.exists?(file2)
+      return system("diff -q #{file1} #{file2} > /dev/null")
+    else
+      return false
+    end
+  end
+
+  # Download an URL to a file.
+  # Raises error if http request fails.
+  def Utils.download(url, file)
+    open(url.to_s) do |f|
+      File.open(file, "w") do |out|
+        out.write(f.readlines)
+      end
+    end
   end
 end
 # }}}
@@ -73,14 +94,14 @@ module Minecraft
   RELEASE_SERVER_JAR = File.join(SERVERS_DIR, "release.jar")
 
   # urls, lwjgl
-  LWJGL_RSS = URI.parse("http://sourceforge.net/api/file/index/project-id/58488/mtime/desc/limit/20/rss")
+  LWJGL_RSS = "http://sourceforge.net/api/file/index/project-id/58488/mtime/desc/limit/20/rss"
 
   # urls, release versions
-  RELEASE_LAUNCHER_URL = URI.parse("https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft.jar")
-  RELEASE_SERVER_URL   = URI.parse("https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar")
+  RELEASE_LAUNCHER_URL = "https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft.jar"
+  RELEASE_SERVER_URL   = "https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar"
 
   # urls, snapshots, needs an advanced downloading mechanism
-  SNAPSHOT_URL = URI.parse("http://assets.minecraft.net/")
+  SNAPSHOT_URL = "http://assets.minecraft.net"
 
   # tmp
   TMP_MINECRAFT_DIR = "/tmp/minecraft.jar/"
@@ -102,9 +123,14 @@ end
 # {{{ Updater
 module Updater
   # Parse an xml file for the latest of element.
-  def Updater.get_latest(uri, top_filter, result_regexp, date_item, result_item)
-    data = Net::HTTP.get_response(uri).body
-    doc  = REXML::Document.new(data)
+  def Updater.get_latest(url, top_filter, result_regexp, date_item, result_item)
+    data = ""
+    open(url) do |f|
+      f.each do |line|
+        data << line
+      end
+    end
+    doc = REXML::Document.new(data)
 
     latest = nil
     res    = nil
@@ -122,18 +148,26 @@ module Updater
     return res
   end
 
-  def Updater.get_latest_server_release()
-    Updater.download(Minecraft::RELEASE_SERVER_URL, Minecraft::TMP_MINECRAFT_JAR)
-    if not Utils.is_same?(Minecraft::TMP_MINECRAFT_JAR, Minecraft::RELEASE_SERVER_JAR)
-      FileUtils.mv(Minecraft::TMP_MINECRAFT_JAR, Minecraft::RELEASE_SERVER_JAR)
-      return true
+  def Updater.get_latest_release(url, target_jar)
+    res = false
+
+    Tempfile.open("release.jar") do |tmp|
+      open(url) do |f|
+        tmp.write(f.readlines)
+      end
+      tmp.flush
+
+      if not Utils.is_same?(tmp.path, target_jar)
+        FileUtils.cp(tmp.path, target_jar)
+
+        res = true
+      end
     end
 
-    return false
+    return res
   end
 
   # Connect to assets.minecraft.net and retrive the latest snapshot version.
-  # Can raise Net::HTTP errors.
   def Updater.get_latest_snapshot()
     key = Updater.get_latest(
       Minecraft::SNAPSHOT_URL,
@@ -156,27 +190,13 @@ module Updater
       "link")
   end
 
-  # Download an URI to a file.
-  # Raises error if http request fails.
-  def Updater.download(uri, file)
-    Net::HTTP.get_response(uri) do |resp|
-      if resp.is_a?(Net::HTTPSuccess)
-        File.open(file, "w") do |f|
-          f.write(resp.body)
-        end
-      else
-        raise "Could not download file at uri #{uri.to_s}"
-      end
-    end
-  end
-
   # Download a specific client snapshot.
   # Returns true if a new snapshot was downloaded.
   def Updater.download_client_snapshot(snapshot)
     client_file = File.join(Minecraft::CLIENTS_DIR, snapshot + ".jar")
     if not File.exists?(client_file)
-      client_uri = URI.join(Minecraft::SNAPSHOT_URL, snapshot + "/minecraft.jar")
-      download(client_uri, client_file)
+      client_url = "#{Minecraft::SNAPSHOT_URL}/#{snapshot}/minecraft.jar"
+      Utils.download(client_url, client_file)
 
       return true
     end
@@ -189,8 +209,8 @@ module Updater
   def Updater.download_server_snapshot(snapshot)
     server_file = File.join(Minecraft::SERVERS_DIR, snapshot + ".jar")
     if not File.exists?(server_file)
-      server_uri = URI.join(Minecraft::SNAPSHOT_URL, snapshot + "/minecraft_server.jar")
-      download(server_uri, server_file)
+      server_url = "#{Minecraft::SNAPSHOT_URL}/#{snapshot}/minecraft_server.jar"
+      Utils.download(server_url, server_file)
 
       return true
     end
@@ -213,18 +233,11 @@ module Updater
       # Carefully extract the version from the URL
       new_version = lwjgl_url.match(/\d\.\d\.\d/)[0]
 
-      # Download the zip file from sourceforge
-      # Now, one does not simply download a file from sourceforge
-      # We have to follow all redirects
-      uri  = URI.parse(lwjgl_url)
-      resp = Net::HTTP.get_response(uri)
-      while resp.header["location"]
-        uri  = URI.parse(resp.header["location"])
-        resp = Net::HTTP.get_response(uri)
-      end
-
       Tempfile.open("lwjgl.zip") do |tmp|
-        tmp.write(resp.body)
+        open(lwjgl_url) do |zip|
+          tmp.write(zip.read)
+        end
+        tmp.flush
 
         # Okay, now we got the zip, extract it
         FileUtils.rm_rf(Minecraft::TMP_LWJGL_DIR)
@@ -286,10 +299,25 @@ end
 class MessageBoxDialog < Dialog
   def initialize(message)
     @message = message
+    @finished = false
+  end
+
+  def <<(str)
+    @message << str
+    run()
+  end
+
+  def finish()
+    @finished = true
+    run()
   end
 
   def run()
-    @result, @exit = Dialog.execute("dialog --msgbox '#{@message}' 10 75")
+    if @finished
+      @result, @exit = Dialog.execute("dialog --msgbox '#{@message}' 10 75")
+    else
+      @result, @exit = Dialog.execute("dialog --infobox '#{@message}' 10 75")
+    end
   end
 end
 
@@ -412,38 +440,45 @@ while true do
     if action == "client"
     elsif action == "server"
     elsif action == "check for updates"
-      msg = ""
+      msgBox = MessageBoxDialog.new("")
 
-      #print "Checking for server release... "
-      #if Updater.get_latest_server_release()
-        #puts "Updated!"
-      #else
-        #puts "No update found."
-      #end
+      msgBox << "Checking for launcher release... "
+      if Updater.get_latest_release(Minecraft::RELEASE_LAUNCHER_URL, Minecraft::LAUNCHER_JAR)
+        msgBox << "Updated!\n"
+      else
+        msgBox << "No update found.\n"
+      end
+
+      msgBox << "Checking for server release... "
+      if Updater.get_latest_release(Minecraft::RELEASE_SERVER_URL, Minecraft::RELEASE_SERVER_JAR)
+        msgBox << "Updated!\n"
+      else
+        msgBox << "No update found.\n"
+      end
 
       snapshot = Updater.get_latest_snapshot()
-      msg << "Checking for client snapshot... "
+      msgBox << "Checking for client snapshot... "
       if Updater.download_client_snapshot(snapshot)
-        msg << "Downloaded client #{snapshot}!\n"
+        msgBox << "Downloaded client #{snapshot}!\n"
       else
-        msg << "No new snapshots found.\n"
+        msgBox << "No new snapshots found.\n"
       end
 
-      msg << "Checking for server snapshot... "
+      msgBox << "Checking for server snapshot... "
       if Updater.download_server_snapshot(snapshot)
-        msg << "Downloaded server #{snapshot}!\n"
+        msgBox << "Downloaded server #{snapshot}!\n"
       else
-        msg << "No new snapshots found.\n"
+        msgBox << "No new snapshots found.\n"
       end
 
-      msg << "Checking for new lwjgl... "
+      msgBox << "Checking for new lwjgl... "
       if Updater.download_lwjgl()
-        msg << "Downloaded new lwjgl!\n"
+        msgBox << "Downloaded new lwjgl!\n"
       else
-        msg << "No new lwjgl found.\n"
+        msgBox << "No new lwjgl found.\n"
       end
 
-      MessageBoxDialog.new(msg).run()
+      msgBox.finish()
     end
   else
     break
