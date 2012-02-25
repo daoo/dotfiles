@@ -12,6 +12,7 @@ Bundle 'Rename2'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-repeat'
 Bundle 'Rip-Rip/clang_complete'
+Bundle 'inkarkat/argtextobj.vim'
 
 " Searching
 Bundle 'mileszs/ack.vim'
@@ -51,6 +52,6 @@ filetype plugin indent on
 let g:ctrlp_working_path_mode = 0
 
 let g:ctrlp_custom_ignore = {
-  \ 'file': '\.gif$\|\.png$\|\.jpg$\|\.swp$\|\.bak*.pyc$\|\.class$\|\.o$\|\.hi',
+  \ 'file': '\.xcf$\|\.gif$\|\.png$\|\.jpg$\|\.swp$\|\.bak$\|\.pyc$\|\.class$\|\.o$\|\.hi$',
   \ 'dir': '\.git$\|\.hg$\|\.svn$'
   \ }
