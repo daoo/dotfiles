@@ -65,9 +65,23 @@ module Utils
   def Utils.download(url, file)
     open(url.to_s) do |f|
       File.open(file, "w") do |out|
-        out.write(f.readlines)
+        out.write(f.read)
       end
     end
+  end
+end
+
+class Tempdir
+  def initialize(dir)
+    @dir = dir
+
+    FileUtils.mkdir_p(dir)
+    yield self
+    FileUtils.rm_rf(dir)
+  end
+
+  def path()
+    return @dir
   end
 end
 # }}}
@@ -105,7 +119,6 @@ module Minecraft
 
   # tmp
   TMP_MINECRAFT_DIR = "/tmp/minecraft.jar/"
-  TMP_MINECRAFT_JAR = "/tmp/tmp-minecraft.jar"
   TMP_LWJGL_DIR     = "/tmp/lwjgl.zip/"
 
   # lwjgl files
@@ -118,6 +131,62 @@ module Minecraft
 
   # helper files
   LWJGL_VERSION = File.join(DOT_DIR, "lwjgl-version")
+end
+# }}}
+# {{{ Client
+module Client
+  def Client.apply_mods(jar, mods, target_jar)
+    if not mods.empty?
+      Tempdir.new(Minecraft::TMP_MINECRAFT_DIR) do |dir|
+        puts "Extracting jar..."
+        Utils.unzip(mod_path, dir.path)
+        FileUtils.rm_rf(File.join(dir.path, "META-INF"))
+
+        mods.each do |mod|
+          puts "Extracting #{mod}"
+          mod_path = File.join(MODS_DIR, mod)
+          Utils.unzip(mod_path, dir.path)
+        end
+
+        Utils.zip(dir.path, target_jar)
+      end
+    else
+      FileUtils.cp(jar, target_jar)
+    end
+  end
+
+  def Client.run(jar, mods)
+    Tempfile.new("client.jar") do |tmp_jar|
+      apply_mods(jar, mods, tmp_jar)
+
+      if File.exists?(Minecraft::JAR_FILE)
+        puts "Backing up first..."
+        File.rename(Minecraft::JAR_FILE, Minecraft::JAR_BACKUP_FILE)
+      end
+      puts "Putting new jar in place..."
+      FileUtils.cp(tmp_jar, JAR_FILE)
+    end
+
+    start_time = Time.now()
+    puts "Launching minecraft at #{start_time}"
+
+    IO.popen("java #{Minecraft::JAVAOPTS} -cp #{Minecraft::LAUNCHER_JAR} net.minecraft.LauncherFrame") do |io|
+      File.open(Minecraft::LOG_FILE, "w") do |f|
+        while (line = io.gets) do
+          f.puts(line)
+        end
+      end
+    end
+
+    end_time = Time.now()
+    puts "Minecraft closed at #{end_time}"
+
+    puts "Cleaning up..."
+    FileUtils.rm_f(Minecraft::JAR_FILE)
+    FileUtils.mv(Minecraft::JAR_BACKUP_FILE, Minecraft::JAR_FILE)
+
+    puts "You have been playing for #{Utils.seconds_to_str(end_time - start_time)}"
+  end
 end
 # }}}
 # {{{ Updater
@@ -153,7 +222,7 @@ module Updater
 
     Tempfile.open("release.jar") do |tmp|
       open(url) do |f|
-        tmp.write(f.readlines)
+        tmp.write(f.read)
       end
       tmp.flush
 
@@ -240,14 +309,13 @@ module Updater
         tmp.flush
 
         # Okay, now we got the zip, extract it
-        FileUtils.rm_rf(Minecraft::TMP_LWJGL_DIR)
-        Utils.unzip(tmp.path, Minecraft::TMP_LWJGL_DIR, ["*.jar", "*.so"], true)
+        Tempdir.new(Minecraft::TMP_LWJGL_DIR) do |dir|
+          Utils.unzip(tmp.path, dir.path, ["*.jar", "*.so"], true)
 
-        # Copy the correct files
-        FileUtils.cp(Minecraft::LWJGL_JARS, Minecraft::BIN_DIR)
-        FileUtils.cp(Minecraft::LWJGL_LIBS, Minecraft::NATIVES_DIR)
-
-        FileUtils.rm_rf(Minecraft::TMP_LWJGL_DIR)
+          # Copy the correct files
+          FileUtils.cp(Minecraft::LWJGL_JARS, Minecraft::BIN_DIR)
+          FileUtils.cp(Minecraft::LWJGL_LIBS, Minecraft::NATIVES_DIR)
+        end
 
         File.open(Minecraft::LWJGL_VERSION, "w") do |f|
           f.write(new_version)
@@ -438,6 +506,19 @@ while true do
   if diag.get_exit()
     action = diag.get_result()
     if action == "client"
+      diagClient = SelectFileDialog.new("Select client version", Minecraft::CLIENTS_DIR)
+      diagClient.run()
+      if diagClient.get_exit()
+        client = File.join(Minecraft::CLIENTS_DIR, diagClient.get_result())
+
+        diagMods = SelectManyFilesDialog.new("Select mods", Minecraft::MODS_DIR)
+        diagMods.run()
+        if diagMods.get_exit()
+          mods = diagMods.get_result()
+
+          Client.run(client, mods)
+        end
+      end
     elsif action == "server"
     elsif action == "check for updates"
       msgBox = MessageBoxDialog.new("")
