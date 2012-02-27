@@ -26,6 +26,7 @@ Bundle 'tango-morning.vim'
 " Files
 Bundle 'alex.vim'
 Bundle 'happy.vim'
+Bundle 'tpope/vim-markdown'
 
 " Snippets
 Bundle 'UltiSnips'
