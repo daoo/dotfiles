@@ -23,6 +23,10 @@ module Utils
     end
   end
 
+  def Utils.dir_empty?(dir)
+    Dir.entries(dir).length == 2
+  end
+
   # Convert seconds to the hh:mm:ss format.
   def Utils.seconds_to_str(time)
     hours   = (time / 3600).to_i
@@ -135,6 +139,9 @@ end
 # }}}
 # {{{ Client
 module Client
+  #
+  # Create a new jar, with some mods applied
+  #
   def Client.apply_mods(jar, mods, target_jar)
     if not mods.empty?
       Tempdir.new(Minecraft::TMP_MINECRAFT_DIR) do |dir|
@@ -144,7 +151,7 @@ module Client
 
         mods.each do |mod|
           puts "Extracting #{mod}"
-          mod_path = File.join(MODS_DIR, mod)
+          mod_path = File.join(Minecraft::MODS_DIR, mod)
           Utils.unzip(mod_path, dir.path)
         end
 
@@ -156,15 +163,15 @@ module Client
   end
 
   def Client.run(jar, mods)
-    Tempfile.new("client.jar") do |tmp_jar|
-      apply_mods(jar, mods, tmp_jar)
+    Tempfile.open("client.jar") do |tmp_jar|
+      apply_mods(jar, mods, tmp_jar.path)
 
       if File.exists?(Minecraft::JAR_FILE)
         puts "Backing up first..."
         File.rename(Minecraft::JAR_FILE, Minecraft::JAR_BACKUP_FILE)
       end
       puts "Putting new jar in place..."
-      FileUtils.cp(tmp_jar, JAR_FILE)
+      FileUtils.cp(tmp_jar, Minecraft::JAR_FILE)
     end
 
     start_time = Time.now()
@@ -183,7 +190,10 @@ module Client
 
     puts "Cleaning up..."
     FileUtils.rm_f(Minecraft::JAR_FILE)
-    FileUtils.mv(Minecraft::JAR_BACKUP_FILE, Minecraft::JAR_FILE)
+
+    if File.exists?(Minecraft::JAR_BACKUP_FILE)
+      FileUtils.mv(Minecraft::JAR_BACKUP_FILE, Minecraft::JAR_FILE)
+    end
 
     puts "You have been playing for #{Utils.seconds_to_str(end_time - start_time)}"
   end
@@ -508,17 +518,26 @@ while true do
     if action == "client"
       diagClient = SelectFileDialog.new("Select client version", Minecraft::CLIENTS_DIR)
       diagClient.run()
-      if diagClient.get_exit()
-        client = File.join(Minecraft::CLIENTS_DIR, diagClient.get_result())
+      if not diagClient.get_exit()
+        next
+      end
+      client = File.join(Minecraft::CLIENTS_DIR, diagClient.get_result())
 
+      mods = []
+      if not Utils.dir_empty?(Minecraft::MODS_DIR)
         diagMods = SelectManyFilesDialog.new("Select mods", Minecraft::MODS_DIR)
         diagMods.run()
-        if diagMods.get_exit()
-          mods = diagMods.get_result()
+        if not diagMods.get_exit()
+          next
+        end
 
-          Client.run(client, mods)
+        res = diagMods.get_result()
+        if res != nil and not res.empty?
+          mods = diagMods.get_result()
         end
       end
+
+      Client.run(client, mods)
     elsif action == "server"
     elsif action == "check for updates"
       msgBox = MessageBoxDialog.new("")
