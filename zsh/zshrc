@@ -15,11 +15,11 @@ setopt inc_append_history
 # Stuff
 setopt nobeep
 
-EDITOR="vim"
-PAGER="less"
+export EDITOR="vim"
+export PAGER="less"
 
-GREP_OPTIONS='--color=auto'
-LESS="-FiXr"
+export GREP_OPTIONS='--color=auto'
+export LESS="-FiXr"
 
 # Jobs
 setopt long_list_jobs
