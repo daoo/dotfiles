@@ -1,0 +1,176 @@
+#!/usr/bin/env ruby
+
+require "date"
+require "fileutils"
+require "open-uri"
+require "rexml/document"
+require "tempfile"
+
+require_relative './minecraft.rb'
+
+# {{{ Updaters
+# {{{ LWJGL
+class LWJGLUpdater
+  LWJGL_RSS = "http://sourceforge.net/api/file/index/project-id/58488/mtime/desc/limit/20/rss"
+
+  LWJGL_JARS    = ["jinput.jar", "lwjgl.jar", "lwjgl_util.jar"]
+  LWJGL_LIBS_64 = ["libjinput-linux64.so", "liblwjgl64.so", "libopenal64.so"]
+
+  LWJGL_VERSION_FILE = File.join(Minecraft::DOT_DIR, "lwjgl-version")
+
+  TMP_LWJGL_ZIP = "lwjgl.zip"
+  TMP_LWJGL_DIR = "/tmp/lwjgl.zip/"
+
+  def initialize()
+  end
+
+  def name()
+    return "LWJGL"
+  end
+
+  def get_latest()
+    rss = RSSParser.new(LWJGL_RSS)
+    return rss.get_latest(
+      "rss/channel/item",
+      "link",
+      /lwjgl-[\.0-9]+\.zip\/download$/,
+      "pubDate"
+    )
+  end
+
+  def download()
+    data    = get_latest()
+    url     = data[:data]
+    version = url.match(/\d\.\d\.\d/)[0]
+
+    Tempfile.open(TMP_LWJGL_ZIP) do |tmp|
+      tmp.rewind()
+      tmp.write(open(url).read())
+      tmp.fsync()
+
+      Tempdir.new(TMP_LWJGL_DIR) do |dir|
+        jar_unzips = LWJGL_JARS.map { |a| "*/jar/" + a }
+        lib_unzips = LWJGL_LIBS_64.map { |a| "*/native/linux/" + a }
+        Utils.unzip(tmp.path, dir.path, jar_unzips + lib_unzips, true)
+
+        # Copy the correct files
+        LWJGL_JARS.each do |jar|
+          FileUtils.cp(File.join(dir.path, jar), Minecraft::BIN_DIR)
+        end
+        
+        LWJGL_LIBS_64.each do |lib|
+          FileUtils.cp(File.join(dir.path, lib), Minecraft::NATIVES_DIR)
+        end
+      end
+
+      return [version]
+    end
+
+    return []
+  end
+end
+# }}}
+# {{{ Assets
+class AssetsUpdater
+  ASSETS_URL = "http://assets.minecraft.net"
+  ASSETS_VERSION_FILE = File.join(Minecraft::DOT_DIR, "assets-version")
+
+  SERVER = 0
+  CLIENT = 1
+
+  def initialize()
+  end
+
+  def name()
+    return "prereleases"
+  end
+
+  def get_latest()
+    rss = RSSParser.new(ASSETS_URL)
+    return rss.get_newer(
+      "ListBucketResult/Contents",
+      "Key",
+      /.*\.jar$/,
+      "LastModified",
+      Date.today - 7
+    )
+  end
+
+  def download()
+    data = get_latest()
+
+    downloads = []
+    if data != nil
+      data.each do |d|
+        rel     = d[:data]
+        url     = "#{ASSETS_URL}/#{rel}"
+        version = rel.match(/[a-zA-Z_0-9]+/)[0]
+        type    = rel.match(/server/) == nil ? SERVER : CLIENT
+
+        target_file = nil
+        if type == SERVER
+          target_file = File.join(Minecraft::SERVERS_DIR, version + ".jar")
+        elsif type == CLIENT
+          target_file = File.join(Minecraft::CLIENTS_DIR, version + ".jar")
+        end
+
+        if not File.exists?(target_file)
+          Utils.download(url, target_file)
+
+          downloads << "#{type == SERVER ? "server" : "client"}-#{version}"
+        end
+      end
+    end
+
+    return downloads
+  end
+end
+# }}}
+# {{{ URL
+class URLUpdater
+  def initialize(url, file)
+    @url  = url
+    @file = file
+  end
+
+  def name()
+    return File.basename(@file)
+  end
+
+  def download()
+    Tempfile.open("URLUpdater") do |f|
+      f.write(open(@url).read())
+      f.fsync()
+
+      if not Utils.is_same?(f.path, @file)
+        FileUtils.cp(f.path, @file)
+
+        return [@file]
+      end
+    end
+
+    return []
+  end
+end
+# }}}
+# }}}
+
+updaters = {
+  "lwjgl"    => LWJGLUpdater.new(),
+  "pre"      => AssetsUpdater.new(),
+  "launcher" => URLUpdater.new("https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft.jar", Minecraft::LAUNCHER_JAR),
+  "server"   => URLUpdater.new("https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar", Minecraft::RELEASE_SERVER_JAR)
+}
+
+updater = updaters[ARGV[0]]
+if updater == nil
+  puts "Usage:"
+  puts "minecraft-updater [#{updaters.keys.join('|')}]"
+else
+  puts "Updating #{updater.name()}..."
+  res = updater.download()
+  puts "Done, result:"
+  puts res
+end
+
+# vim: set fdm=marker :

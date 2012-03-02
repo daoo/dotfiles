@@ -1,61 +1,45 @@
-#!/usr/bin/env bash
+#!/usr/bin/env ruby
 
-minecraft_dir="$HOME/games/minecraft/server"
-server_jar="$minecraft_dir/minecraft_server.jar"
+require "fileutils"
 
-javaopts="-server -Xmx1024M -Xms512M"
-command="java $javaopts -jar $server_jar nogui"
+require_relative "./minecraft.rb"
 
-function desc() {
-  local df="$1/description.txt"
-  if [[ -f "$df" ]]; then
-    cat "$df"
-  else
-    echo "No description availible"
-  fi
-}
+class Server
+  def initialize(jar)
+    @jar = jar
+  end
 
-function menu() {
-  local i=0
-  for f in $1/*; do
-    if [[ -d $f ]]; then
-      servers[$i]=$(basename "$f")
-      let i++
-      servers[$i]=$($2 $f)
-      let i++
-    fi
-  done
+  def run(config, world)
+    FileUtils.ln_sf(world, config)
+    system("sed -i 's/level-name=.*/level-name=#{File.basename(world)}/' '#{File.join(config, 'server.properties')}'")
+    system("java #{Minecraft::JAVAOPTS} -jar #{@jar} nogui")
+  end
+end
 
-  dialog --menu "Choose server:" 0 60 15 "${servers[@]}"
-}
+jar = Minecraft::SERVER_RELEASE_JAR
 
-function launch() {
-  # Assume these exists
-  local server="$1"
-  local world="$2"
+diagConfig = SelectFileDialog.new(
+  "Select Config",
+  Minecraft::SERVER_CONFIGS_DIR,
+  lambda { |f| File.read(File.join(f, "description.txt")) }
+)
+diagConfig.run()
+config = diagConfig.get_result()
 
-  local server_dir="$minecraft_dir/servers/$server"
+diagWorld = SelectFileDialog.new(
+  "Select World",
+  Minecraft::SERVER_WORLDS_DIR,
+  lambda do |f|
+    df = File.join(f, "description.txt")
+    if File.exists?(df)
+      return File.read(df)
+    else
+      return "no description"
+    end
+  end
+)
+diagWorld.run()
+world = diagWorld.get_result()
 
-  # Create link
-  ln -fsn "$minecraft_dir/worlds/$world" "$server_dir/$world"
-
-  # Set world name
-  sed -i "s/level-name=.*/level-name=$world/" "$server_dir/server.properties"
-  
-  cd "$server_dir"
-  $command
-}
-
-menu "$minecraft_dir/servers" desc 2> "/tmp/server.ans"
-if [[ $? -ne 0 ]]; then
-  exit 1
-fi
-server=$(cat "/tmp/server.ans")
-
-menu "$minecraft_dir/worlds" desc 2> "/tmp/world.ans"
-if [[ $? -ne 0 ]]; then
-  exit 1
-fi
-world=$(cat "/tmp/world.ans")
-
-launch "$server" "$world"
+server = Server.new(jar)
+server.run(config, world)

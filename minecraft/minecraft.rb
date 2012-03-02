@@ -1,26 +1,18 @@
 #!/usr/bin/env ruby
-#
-# A minecraft launcher written by daoo.
-# Fully featured, can update the client and the server, fetch snapshots, update
-# update lwjgl, etc.
-#
 
-require "date"
-require "fileutils"
-require "open-uri"
-require "rexml/document"
 require "tempfile"
 
 # {{{ Utils
 module Utils
-  # Yield each file in a directory.
-  # Excluding "." and "..".
-  def Utils.each_file(dir)
+  def Utils.list_files(dir)
+    res = []
     Dir.entries(dir).each do |f|
       if f != "." and f != ".."
-        yield f
+        res << f
       end
     end
+
+    return res.sort
   end
 
   def Utils.dir_empty?(dir)
@@ -67,11 +59,59 @@ module Utils
   # Download an URL to a file.
   # Raises error if http request fails.
   def Utils.download(url, file)
-    open(url.to_s) do |f|
-      File.open(file, "w") do |out|
-        out.write(f.read)
+    File.write(file, open(url).read())
+  end
+end
+
+class RSSParser 
+  def initialize(url)
+    @url = url
+
+    data = ""
+    open(url) do |f|
+      f.each do |line|
+        data << line
       end
     end
+    @doc = REXML::Document.new(data)
+  end
+
+  def get_newer(top_filter, data_item, data_regex, date_item, some_date)
+    if some_date == nil
+      # Default to downloading everything that have been released the latest
+      # week, hence the -7
+      some_date = Date.today() - 7
+    end
+
+    newer = []
+    @doc.elements.each(top_filter) do |e|
+      data = e.elements[data_item].text
+      if data.match(data_regex) != nil
+        date = Date.parse(e.elements[date_item].text)
+        if date > some_date
+          newer << { :data => data, :date => date }
+        end
+      end
+    end
+
+    return newer
+  end
+
+  def get_latest(top_filter, data_item, data_regex, date_item)
+    latest = nil
+    data   = nil
+    @doc.elements.each(top_filter) do |e|
+      tmp = e.elements[data_item].text
+      if tmp.match(data_regex) != nil
+        date = Date.parse(e.elements[date_item].text)
+        if latest == nil or date > latest
+          latest = date
+          data   = { :data => tmp, :date => date }
+        end
+      end
+    end
+
+    return data
   end
 end
 
@@ -86,256 +126,6 @@ class Tempdir
 
   def path()
     return @dir
-  end
-end
-# }}}
-# {{{ Minecraft
-module Minecraft
-  JAVAOPTS    = "-server -Xmx1024M -Xms512M"
-
-  # ~/.minecraft
-  DOT_DIR         = File.join(ENV["HOME"], ".minecraft")
-  BIN_DIR         = File.join(DOT_DIR, "bin")
-  NATIVES_DIR     = File.join(BIN_DIR, "natives")
-  JAR_FILE        = File.join(BIN_DIR, "minecraft.jar")
-  JAR_BACKUP_FILE = File.join(BIN_DIR, "minecraft.jar.bak")
-
-  # install dir
-  INSTALL_DIR  = File.join(ENV["HOME"], "games/minecraft")
-  LAUNCHER_JAR = File.join(INSTALL_DIR, "launcher.jar")
-  CLIENTS_DIR  = File.join(INSTALL_DIR, "client")
-  SERVERS_DIR  = File.join(INSTALL_DIR, "server")
-  MODS_DIR     = File.join(INSTALL_DIR, "mods")
-  LOG_FILE     = File.join(INSTALL_DIR, "minecraft.log")
-
-  RELEASE_CLIENT_JAR = File.join(CLIENTS_DIR, "release.jar")
-  RELEASE_SERVER_JAR = File.join(SERVERS_DIR, "release.jar")
-
-  # urls, lwjgl
-  LWJGL_RSS = "http://sourceforge.net/api/file/index/project-id/58488/mtime/desc/limit/20/rss"
-
-  # urls, release versions
-  RELEASE_LAUNCHER_URL = "https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft.jar"
-  RELEASE_SERVER_URL   = "https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar"
-
-  # urls, snapshots, needs an advanced downloading mechanism
-  SNAPSHOT_URL = "http://assets.minecraft.net"
-
-  # tmp
-  TMP_MINECRAFT_DIR = "/tmp/minecraft.jar/"
-  TMP_LWJGL_DIR     = "/tmp/lwjgl.zip/"
-
-  # lwjgl files
-  LWJGL_JARS = ["jinput.jar", "lwjgl.jar", "lwjgl_util.jar"].map { |jar|
-    File.join(TMP_LWJGL_DIR, jar)
-  }
-  LWJGL_LIBS = ["libjinput-linux64.so", "libjinput-linux.so", "liblwjgl64.so", "liblwjgl.so", "libopenal64.so", "libopenal.so"].map { |lib|
-    File.join(TMP_LWJGL_DIR, lib)
-  }
-
-  # helper files
-  LWJGL_VERSION = File.join(DOT_DIR, "lwjgl-version")
-end
-# }}}
-# {{{ Client
-module Client
-  #
-  # Create a new jar, with some mods applied
-  #
-  def Client.apply_mods(jar, mods, target_jar)
-    if not mods.empty?
-      Tempdir.new(Minecraft::TMP_MINECRAFT_DIR) do |dir|
-        puts "Extracting jar..."
-        Utils.unzip(mod_path, dir.path)
-        FileUtils.rm_rf(File.join(dir.path, "META-INF"))
-
-        mods.each do |mod|
-          puts "Extracting #{mod}"
-          mod_path = File.join(Minecraft::MODS_DIR, mod)
-          Utils.unzip(mod_path, dir.path)
-        end
-
-        Utils.zip(dir.path, target_jar)
-      end
-    else
-      FileUtils.cp(jar, target_jar)
-    end
-  end
-
-  def Client.run(jar, mods)
-    Tempfile.open("client.jar") do |tmp_jar|
-      apply_mods(jar, mods, tmp_jar.path)
-
-      if File.exists?(Minecraft::JAR_FILE)
-        puts "Backing up first..."
-        File.rename(Minecraft::JAR_FILE, Minecraft::JAR_BACKUP_FILE)
-      end
-      puts "Putting new jar in place..."
-      FileUtils.cp(tmp_jar, Minecraft::JAR_FILE)
-    end
-
-    start_time = Time.now()
-    puts "Launching minecraft at #{start_time}"
-
-    IO.popen("java #{Minecraft::JAVAOPTS} -cp #{Minecraft::LAUNCHER_JAR} net.minecraft.LauncherFrame") do |io|
-      File.open(Minecraft::LOG_FILE, "w") do |f|
-        while (line = io.gets) do
-          f.puts(line)
-        end
-      end
-    end
-
-    end_time = Time.now()
-    puts "Minecraft closed at #{end_time}"
-
-    puts "Cleaning up..."
-    FileUtils.rm_f(Minecraft::JAR_FILE)
-
-    if File.exists?(Minecraft::JAR_BACKUP_FILE)
-      FileUtils.mv(Minecraft::JAR_BACKUP_FILE, Minecraft::JAR_FILE)
-    end
-
-    puts "You have been playing for #{Utils.seconds_to_str(end_time - start_time)}"
-  end
-end
-# }}}
-# {{{ Updater
-module Updater
-  # Parse an xml file for the latest of element.
-  def Updater.get_latest(url, top_filter, result_regexp, date_item, result_item)
-    data = ""
-    open(url) do |f|
-      f.each do |line|
-        data << line
-      end
-    end
-    doc = REXML::Document.new(data)
-
-    latest = nil
-    res    = nil
-    doc.elements.each(top_filter) do |e|
-      k = e.elements[result_item].text
-      if k.match(result_regexp) != nil
-        d = Date.parse(e.elements[date_item].text)
-        if latest == nil or d > latest
-          latest = d
-          res    = k
-        end
-      end
-    end
-
-    return res
-  end
-
-  def Updater.get_latest_release(url, target_jar)
-    res = false
-
-    Tempfile.open("release.jar") do |tmp|
-      open(url) do |f|
-        tmp.write(f.read)
-      end
-      tmp.flush
-
-      if not Utils.is_same?(tmp.path, target_jar)
-        FileUtils.cp(tmp.path, target_jar)
-
-        res = true
-      end
-    end
-
-    return res
-  end
-
-  # Connect to assets.minecraft.net and retrive the latest snapshot version.
-  def Updater.get_latest_snapshot()
-    key = Updater.get_latest(
-      Minecraft::SNAPSHOT_URL,
-      "ListBucketResult/Contents",
-      /\d\dw\d\d[a-z]\/$/,
-      "LastModified",
-      "Key")
-
-    # Remove the trailing slash
-    return key[0, key.length - 1]
-  end
-
-  # Get the latest version of lwjgl
-  def Updater.get_latest_lwjgl()
-    return Updater.get_latest(
-      Minecraft::LWJGL_RSS,
-      "rss/channel/item",
-      /lwjgl-[\.0-9]+\.zip\/download$/,
-      "pubDate",
-      "link")
-  end
-
-  # Download a specific client snapshot.
-  # Returns true if a new snapshot was downloaded.
-  def Updater.download_client_snapshot(snapshot)
-    client_file = File.join(Minecraft::CLIENTS_DIR, snapshot + ".jar")
-    if not File.exists?(client_file)
-      client_url = "#{Minecraft::SNAPSHOT_URL}/#{snapshot}/minecraft.jar"
-      Utils.download(client_url, client_file)
-
-      return true
-    end
-
-    return false
-  end
-
-  # Download a specific server snapshot.
-  # Returns true if a new snapshot was downloaded.
-  def Updater.download_server_snapshot(snapshot)
-    server_file = File.join(Minecraft::SERVERS_DIR, snapshot + ".jar")
-    if not File.exists?(server_file)
-      server_url = "#{Minecraft::SNAPSHOT_URL}/#{snapshot}/minecraft_server.jar"
-      Utils.download(server_url, server_file)
-
-      return true
-    end
-
-    return false
-  end
-
-  # Download and update lwjgl if needed.
-  def Updater.download_lwjgl()
-    lwjgl_version = nil
-    if File.exists?(Minecraft::LWJGL_VERSION)
-      File.open(Minecraft::LWJGL_VERSION, "r") do |f|
-        lwjgl_version = f.readline
-      end
-    end
-
-    lwjgl_url = Updater.get_latest_lwjgl()
-    if lwjgl_version == nil or not lwjgl_url.include?(lwjgl_version)
-      # OK, we can download a new version of LWJGL
-      # Carefully extract the version from the URL
-      new_version = lwjgl_url.match(/\d\.\d\.\d/)[0]
-
-      Tempfile.open("lwjgl.zip") do |tmp|
-        open(lwjgl_url) do |zip|
-          tmp.write(zip.read)
-        end
-        tmp.flush
-
-        # Okay, now we got the zip, extract it
-        Tempdir.new(Minecraft::TMP_LWJGL_DIR) do |dir|
-          Utils.unzip(tmp.path, dir.path, ["*.jar", "*.so"], true)
-
-          # Copy the correct files
-          FileUtils.cp(Minecraft::LWJGL_JARS, Minecraft::BIN_DIR)
-          FileUtils.cp(Minecraft::LWJGL_LIBS, Minecraft::NATIVES_DIR)
-        end
-
-        File.open(Minecraft::LWJGL_VERSION, "w") do |f|
-          f.write(new_version)
-        end
-
-        return true
-      end
-    end
-
-    return false
   end
 end
 # }}}
@@ -432,7 +222,8 @@ class MenuDialog < Dialog
   end
 
   def run()
-    @result, @exit = Dialog.execute("dialog --cancel-label #{@cancel} --menu '#{@title}' 0 50 10 #{@options}")
+    @result, @exit = Dialog.execute(
+      "dialog --cancel-label #{@cancel} --menu '#{@title}' 0 50 10 #{@options}")
   end
 
   private
@@ -441,9 +232,9 @@ class MenuDialog < Dialog
     str = ""
     options.each do |opt|
       str << '"'
-      str << opt
+      str << opt[:tag]
       str << "\" \""
-      str << "todo"
+      str << opt[:desc]
       str << '" '
     end
 
@@ -452,26 +243,28 @@ class MenuDialog < Dialog
 end
 
 class SelectFileDialog < Dialog
-  # TODO file desc
-  def initialize(title, dir)
-    @title = title
-    @dir   = dir
+  def initialize(title, dir, get_desc)
+    @title    = title
+    @dir      = dir
+    @get_desc = get_desc
   end
 
   def run()
     options = build_options()
-    @result, @exit = Dialog.execute("dialog --menu '#{@title}' 0 50 10 #{options}")
+    result, @exit = Dialog.execute(
+      "dialog --menu '#{@title}' 0 50 10 #{options}")
+    @result = File.join(@dir, result)
   end
 
   private
 
   def build_options()
     str = ""
-    Utils.each_file(@dir) do |f|
+    Utils.list_files(@dir).each do |f|
       str << '"'
       str << f
-      str << "\" \""
-      str << "todo"
+      str << '" "'
+      str << @get_desc.call(File.join(@dir, f))
       str << '" '
     end
 
@@ -479,110 +272,44 @@ class SelectFileDialog < Dialog
   end
 end
 
-class SelectManyFilesDialog < Dialog
+class SelectManyFilesDialog < SelectFileDialog
   # TODO file desc
-  def initialize(title, dir)
-    @title = title
-    @dir   = dir
+  def initialize(title, dir, get_desc)
+    super(title, dir, get_desc)
   end
 
   def run()
     options = build_options()
-    @result, @exit = Dialog.execute("dialog --checklist '#{@title}' 0 50 10 #{options}")
-  end
-
-  private
-
-  def build_options()
-    str = ""
-    Utils.each_file(@dir) do |f|
-      str << '"'
-      str << f
-      str << "\" \""
-      str << "todo"
-      str << '" off '
-    end
-
-    puts str
-
-    return str
+    result, @exit = Dialog.execute(
+      "dialog --checklist '#{@title}' 0 50 10 #{options}")
+    @result = File.join(@dir, result)
   end
 end
 # }}}
+# {{{ Minecraft
+module Minecraft
+  JAVAOPTS = "-server -Xmx1024M -Xms512M"
 
-while true do
-  diag = MenuDialog.new("Welcome!", ["client", "sever", "check for updates"], "Exit")
-  diag.run()
-  if diag.get_exit()
-    action = diag.get_result()
-    if action == "client"
-      diagClient = SelectFileDialog.new("Select client version", Minecraft::CLIENTS_DIR)
-      diagClient.run()
-      if not diagClient.get_exit()
-        next
-      end
-      client = File.join(Minecraft::CLIENTS_DIR, diagClient.get_result())
+  # ~/.minecraft
+  DOT_DIR         = File.join(ENV["HOME"], ".minecraft")
+  BIN_DIR         = File.join(DOT_DIR, "bin")
+  NATIVES_DIR     = File.join(BIN_DIR, "natives")
+  JAR_FILE        = File.join(BIN_DIR, "minecraft.jar")
+  JAR_BACKUP_FILE = File.join(BIN_DIR, "minecraft.jar.bak")
 
-      mods = []
-      if not Utils.dir_empty?(Minecraft::MODS_DIR)
-        diagMods = SelectManyFilesDialog.new("Select mods", Minecraft::MODS_DIR)
-        diagMods.run()
-        if not diagMods.get_exit()
-          next
-        end
+  # install dir
+  INSTALL_DIR  = File.join(ENV["HOME"], "games/minecraft")
+  LAUNCHER_JAR = File.join(INSTALL_DIR, "launcher.jar")
 
-        res = diagMods.get_result()
-        if res != nil and not res.empty?
-          mods = diagMods.get_result()
-        end
-      end
+  CLIENT_JARS_DIR    = File.join(INSTALL_DIR, "clients")
+  CLIENT_MODS_DIR    = File.join(INSTALL_DIR, "mods")
+  CLIENT_RELEASE_JAR = File.join(CLIENT_JARS_DIR, "release.jar")
 
-      Client.run(client, mods)
-    elsif action == "server"
-    elsif action == "check for updates"
-      msgBox = MessageBoxDialog.new("")
-
-      msgBox << "Checking for launcher release... "
-      if Updater.get_latest_release(Minecraft::RELEASE_LAUNCHER_URL, Minecraft::LAUNCHER_JAR)
-        msgBox << "Updated!\n"
-      else
-        msgBox << "No update found.\n"
-      end
-
-      msgBox << "Checking for server release... "
-      if Updater.get_latest_release(Minecraft::RELEASE_SERVER_URL, Minecraft::RELEASE_SERVER_JAR)
-        msgBox << "Updated!\n"
-      else
-        msgBox << "No update found.\n"
-      end
-
-      snapshot = Updater.get_latest_snapshot()
-      msgBox << "Checking for client snapshot... "
-      if Updater.download_client_snapshot(snapshot)
-        msgBox << "Downloaded client #{snapshot}!\n"
-      else
-        msgBox << "No new snapshots found.\n"
-      end
-
-      msgBox << "Checking for server snapshot... "
-      if Updater.download_server_snapshot(snapshot)
-        msgBox << "Downloaded server #{snapshot}!\n"
-      else
-        msgBox << "No new snapshots found.\n"
-      end
-
-      msgBox << "Checking for new lwjgl... "
-      if Updater.download_lwjgl()
-        msgBox << "Downloaded new lwjgl!\n"
-      else
-        msgBox << "No new lwjgl found.\n"
-      end
-
-      msgBox.finish()
-    end
-  else
-    break
-  end
+  SERVER_JARS_DIR    = File.join(INSTALL_DIR, "servers")
+  SERVER_CONFIGS_DIR = File.join(INSTALL_DIR, "configs")
+  SERVER_WORLDS_DIR  = File.join(INSTALL_DIR, "worlds")
+  SERVER_RELEASE_JAR = File.join(SERVER_JARS_DIR, "release.jar")
 end
+# }}}
 
 # vim: set fdm=marker :
