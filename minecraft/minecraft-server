@@ -12,7 +12,7 @@ class Server
   def run(config, world)
     FileUtils.ln_sf(world, config)
     system("sed -i 's/level-name=.*/level-name=#{File.basename(world)}/' '#{File.join(config, 'server.properties')}'")
-    system("java #{Minecraft::JAVAOPTS} -jar #{@jar} nogui")
+    system("cd #{config} && java #{Minecraft::JAVAOPTS} -jar #{@jar} nogui")
   end
 end
 
