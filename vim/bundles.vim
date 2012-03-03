@@ -53,6 +53,6 @@ filetype plugin indent on
 let g:ctrlp_working_path_mode = 0
 
 let g:ctrlp_custom_ignore = {
-  \ 'file': '\.xcf$\|\.gif$\|\.png$\|\.jpg$\|\.swp$\|\.bak$\|\.pyc$\|\.class$\|\.o$\|\.hi$',
+  \ 'file': '\.pdf$\|\.xcf$\|\.gif$\|\.png$\|\.jpg$\|\.swp$\|\.bak$\|\.pyc$\|\.class$\|\.o$\|\.hi$',
   \ 'dir': '\.git$\|\.hg$\|\.svn$'
   \ }
