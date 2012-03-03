@@ -159,7 +159,7 @@ updaters = {
   "lwjgl"    => LWJGLUpdater.new(),
   "pre"      => AssetsUpdater.new(),
   "launcher" => URLUpdater.new("https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft.jar", Minecraft::LAUNCHER_JAR),
-  "server"   => URLUpdater.new("https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar", Minecraft::RELEASE_SERVER_JAR)
+  "server"   => URLUpdater.new("https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar", Minecraft::SERVER_RELEASE_JAR)
 }
 
 updater = updaters[ARGV[0]]
