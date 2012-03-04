@@ -101,16 +101,18 @@ prompt_daoo_setup() {
   add-zsh-hook precmd prompt_daoo_precmd
 }
 
+prompt_expanded_length() {
+  printf ${#${(S%%)1//\%\{*\%\}}}
+}
+
 prompt_daoo_precmd() {
-  local line1_a_width=${#${(S%%)line1_a//(\%\{*\%\})}}
-  local line1_b_width=${#${(S%%)line1_b//(\%\{*\%\})}}
+  local line1_a_width=$(prompt_expanded_length $line1_a)
+  local line1_b_width=$(prompt_expanded_length $line1_b)
 
   local fill_width=$(($COLUMNS - $line1_a_width - $line1_b_width))
   local fill="${(l:$fill_width::-:)}"
 
   PS1="${line1_a}${fill}${line1_b}${line2}%b%f"
-
-  zle_highlight[(r)default:*]="default"
 }
 
 prompt_daoo_setup
