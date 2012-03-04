@@ -29,6 +29,15 @@ setopt nohup
 unsetopt bg_nice
 unsetopt check_jobs
 
+# Less color
+export LESS_TERMCAP_mb=$'\E[01;31m'      # begin blinking
+export LESS_TERMCAP_md=$'\E[01;31m'      # begin bold
+export LESS_TERMCAP_me=$'\E[0m'          # end mode
+export LESS_TERMCAP_se=$'\E[0m'          # end standout-mode
+export LESS_TERMCAP_so=$'\E[00;47;30m'   # begin standout-mode
+export LESS_TERMCAP_ue=$'\E[0m'          # end underline
+export LESS_TERMCAP_us=$'\E[01;32m'      # begin underline
+
 # Disable ctrl-q and ctrl-s
 stty -ixon
 # }}}
@@ -66,18 +75,45 @@ bindkey '' history-search-forward
 bindkey '' history-incremental-search-backward
 bindkey '' push-line
 # }}}
-# {{{ Prompt and Colors
+# {{{ Prompt
 autoload -U promptinit
 promptinit
-prompt adam2
+#prompt adam2
+autoload -U colors && colors
 
-export LESS_TERMCAP_mb=$'\E[01;31m'      # begin blinking
-export LESS_TERMCAP_md=$'\E[01;31m'      # begin bold
-export LESS_TERMCAP_me=$'\E[0m'          # end mode
-export LESS_TERMCAP_se=$'\E[0m'          # end standout-mode
-export LESS_TERMCAP_so=$'\E[00;47;30m'   # begin standout-mode
-export LESS_TERMCAP_ue=$'\E[0m'          # end underline
-export LESS_TERMCAP_us=$'\E[01;32m'      # begin underline
+prompt_daoo_setup() {
+  local prompt_color='cyan'
+
+  local special_start="%{%B%F{black}%}"
+  local special_end="%{%b%}"
+
+  local prompt_l_paren="$special_start($special_end"
+  local prompt_r_paren="$special_start)$special_end"
+  local at_char="$special_start@$special_end"
+
+  line1_a="-${prompt_l_paren}%{%B$fg[magenta]%}%~%{$reset_color%b%}${prompt_r_paren}-"
+  line1_b="-${prompt_l_paren}%n${at_char}%m${prompt_r_paren}-"
+  line2="--%F{white}> "
+
+  prompt_opts=(cr subst percent)
+
+  autoload add-zsh-hook
+  add-zsh-hook precmd prompt_daoo_precmd
+}
+
+prompt_daoo_precmd() {
+  local line1_a_width=${#${(S%%)line1_a//(\%\{*\%\})}}
+  local line1_b_width=${#${(S%%)line1_b//(\%\{*\%\})}}
+
+  local fill_width=$(($COLUMNS - $line1_a_width - $line1_b_width))
+  local fill="${(l:$fill_width::-:)}"
+
+  PS1="${line1_a}${fill}${line1_b}${line2}%b%f"
+
+  zle_highlight[(r)default:*]="default"
+}
+
+prompt_daoo_setup
 # }}}
 # {{{ Auto completion
 autoload -Uz compinit && compinit -i
