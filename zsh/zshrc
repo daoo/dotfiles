@@ -82,18 +82,24 @@ promptinit
 autoload -U colors && colors
 
 prompt_daoo_setup() {
-  local prompt_color='cyan'
+  local prompt_color='yellow'
+
+  local color_start="%{%F{$prompt_color}%B%}"
+  local color_end="%{%f%b%}"
 
   local special_start="%{%B%F{black}%}"
   local special_end="%{%b%}"
 
   local prompt_l_paren="$special_start($special_end"
   local prompt_r_paren="$special_start)$special_end"
-  local at_char="$special_start@$special_end"
+  local prompt_at_char="$special_start@$special_end"
+  local prompt_hyphen="${color_start}-${color_end}"
 
-  line1_a="-${prompt_l_paren}%{%B$fg[magenta]%}%~%{$reset_color%b%}${prompt_r_paren}-"
-  line1_b="-${prompt_l_paren}%n${at_char}%m${prompt_r_paren}-"
-  line2="--%F{white}> "
+  local prompt_dir="%{%B%F{magenta}%}%~%{%f%b%}"
+
+  line1_a="${prompt_hyphen}${prompt_l_paren}${prompt_dir}${prompt_r_paren}${color_start}${color_start}-"
+  line1_b="-${color_end}${prompt_l_paren}%n${prompt_at_char}%m${prompt_r_paren}${prompt_hyphen}"
+  line2="${color_start}--${color_end}%F{white}> "
 
   prompt_opts=(cr subst percent)
 
