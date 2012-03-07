@@ -3,7 +3,7 @@
 # Skip all this for non-interactive shells
 [ -z "$PS1" ] && return
 
-# {{{ Config
+# [[[ Config
 # History
 HISTFILE=~/.zhistory
 HISTSIZE=100000
@@ -40,8 +40,8 @@ export LESS_TERMCAP_us=$'\E[01;32m'      # begin underline
 
 # Disable ctrl-q and ctrl-s
 stty -ixon
-# }}}
-# {{{ Aliases
+# ]]]
+# [[[ Aliases
 # Give some commands fancy colors
 alias ls='ls -h -F --color=auto'
 alias tree='tree -C'
@@ -68,14 +68,14 @@ alias bell="echo -e '\a'"
 alias calc='noglob calc'
 alias g='git'
 alias y='yaourt'
-# }}}
-# {{{ Binds
+# ]]]
+# [[[ Binds
 bindkey '' history-search-backward
 bindkey '' history-search-forward
 bindkey '' history-incremental-search-backward
 bindkey '' push-line
-# }}}
-# {{{ Prompt
+# ]]]
+# [[[ Prompt
 autoload -U promptinit
 promptinit
 #prompt adam2
@@ -116,8 +116,8 @@ prompt_daoo_precmd() {
 }
 
 prompt_daoo_setup
-# }}}
-# {{{ Auto completion
+# ]]]
+# [[[ Auto completion
 autoload -Uz compinit && compinit -i
 
 setopt complete_in_word    # Complete from both ends of a word.
@@ -203,11 +203,11 @@ zstyle ':completion:*:*:kill:*' insert-ids single
 # Man
 zstyle ':completion:*:manuals' separate-sections true
 zstyle ':completion:*:manuals.(^1*)' insert-sections true
-# }}}
-# {{{ Local settings
+# ]]]
+# [[[ Local settings
 if [ -f ~/.zlocal ]; then
   . ~/.zlocal
 fi
-# }}}
+# ]]]
 
-# vim: fdm=marker :
+# vim: fm=[[[,]]] fdm=marker :
