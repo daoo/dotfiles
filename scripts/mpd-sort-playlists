@@ -4,7 +4,9 @@ mpd_dir="$HOME/.mpd"
 playlist_dir="$mpd_dir/playlists"
 
 for m3u in $playlist_dir/*.m3u; do
-  echo "Sorting $(basename $m3u)"
-  sort "$m3u" -o "$m3u"
+  if [[ -f "$m3u" ]]; then
+    echo "Sorting $(basename "$m3u")"
+    sort "$m3u" -o "$m3u"
+  fi
 done
 

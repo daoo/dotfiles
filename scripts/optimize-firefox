@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 
 for dir in ~/.mozilla/firefox/*.*/; do
-  echo
-  echo "$dir"
-  cd "$dir"
-  for i in *.sqlite; do
-    echo "$i"
-    sqlite3 "$i" vacuum
-    sqlite3 "$i" reindex
-  done
+  if [ -d "$dir" ]; then
+    echo
+    echo "$dir"
+    cd "$dir"
+    for file in ./*.sqlite; do
+      if [ -f "$file" ]; then
+        echo "$file"
+        sqlite3 "$file" vacuum
+        sqlite3 "$file" reindex
+      fi
+    done
+  fi
 done
 

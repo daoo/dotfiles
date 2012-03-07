@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 list() {
-  pacmd list-$1 | grep index | awk -F': ' '{print $2}'
+  pacmd list-$1 | grep index | awk -F ': ' '{print $2}'
 }
 
 mute() {
@@ -14,21 +14,21 @@ unmute() {
 
 statusfile="/tmp/pa-mute"
 
-if [[ $(cat $statusfile) = "0" ]]; then
-  action=mute
-  echo "1" > $statusfile
-else
+if [[ -f "$statusfile" && $(cat "$statusfile") = "1" ]]; then
   action=unmute
-  echo "0" > $statusfile
+  echo "0" > "$statusfile"
+else
+  action=mute
+  echo "1" > "$statusfile"
 fi
 
 # Sinks
-for s in `list sinks`; do
-  $action sink $s
+for s in $(list sinks); do
+  $action sink "$s"
 done
 
 # Sources
-for s in `list sources`; do
-  $action source $s
+for s in $(list sources); do
+  $action source "$s"
 done
 
