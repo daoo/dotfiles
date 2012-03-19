@@ -29,7 +29,7 @@ Bundle 'happy.vim'
 Bundle 'tpope/vim-markdown'
 
 " Snippets
-Bundle 'UltiSnips'
+Bundle 'SirVer/ultisnips'
 
 " Editing
 Bundle 'godlygeek/tabular'
@@ -56,3 +56,5 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\.pdf$\|\.xcf$\|\.gif$\|\.png$\|\.jpg$\|\.swp$\|\.bak$\|\.pyc$\|\.class$\|\.o$\|\.hi$',
   \ 'dir': '\.git$\|\.hg$\|\.svn$'
   \ }
+
+let g:tagbar_compact = 1
