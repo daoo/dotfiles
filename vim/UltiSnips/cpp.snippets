@@ -19,7 +19,14 @@ class ${1:I`!p snip.rv = snip.basename or "Name"`} {
 endsnippet
 
 snippet ns "namespace" !b
-namespace ${1:namespace} {
-	$0
+namespace ${1:`!p
+if path:
+	dir_path = os.path.dirname(path)
+	ns_path = dir_path.partition("/src/")[2]
+	result = re.sub("/", "::", ns_path).lower()
+	snip.rv = result or "somespace"
+else:
+	snip.rv = "somespace"`} {
+	${0}
 }
 endsnippet
