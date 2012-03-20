@@ -18,3 +18,5 @@
 [user]
   name  = daoo
   email = daoo314@gmail.com
+[push]
+  default = current
