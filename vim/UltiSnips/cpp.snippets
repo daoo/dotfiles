@@ -1,3 +1,7 @@
+snippet inh "include header" b
+#include "`!p snip.rv = snip.basename + ".hpp"`"
+endsnippet
+
 snippet cl "class" !b
 class ${1:`!p snip.rv = snip.basename or "Name"`} {
 	public:
@@ -19,14 +23,15 @@ class ${1:I`!p snip.rv = snip.basename or "Name"`} {
 endsnippet
 
 snippet ns "namespace" !b
-namespace ${1:`!p
-if path:
-	dir_path = os.path.dirname(path)
-	ns_path = dir_path.partition("/src/")[2]
-	result = re.sub("/", "::", ns_path).lower()
-	snip.rv = result or "somespace"
-else:
-	snip.rv = "somespace"`} {
-	${0}
+namespace ${1:namespace} {
+	$0
 }
+endsnippet
+
+snippet us "using namespace" b
+using namespace ${0:std};
+endsnippet
+
+snippet usb "using namespace boost" b
+using namespace boost${0:::something};
 endsnippet
