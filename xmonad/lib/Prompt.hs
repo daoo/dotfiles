@@ -1,8 +1,7 @@
 module Prompt where
 
-import Environment
-
 import System.Directory
+import System.Environment
 
 import XMonad
 import XMonad.Prompt
@@ -10,7 +9,7 @@ import XMonad.Prompt.Shell hiding (shellPrompt, getCommands)
 
 getCommands :: IO [String]
 getCommands = do
-    home <- getEnvDefault "HOME" ""
+    home <- getEnv "HOME"
     let d = home ++ "/.xmonad/bin"
 
     exists <- doesDirectoryExist d

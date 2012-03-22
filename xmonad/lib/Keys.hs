@@ -2,7 +2,6 @@ module Keys (newKeyMaps, myModKey) where
 
 import Config
 import Prompt
-import Software
 
 import Data.Map hiding (filter, map)
 
@@ -34,8 +33,8 @@ xf86Email          = 0x1008ff19
 xf86Favorites      = 0x1008ff30
 xf86TouchpadToggle = 0x1008ffa9
 
-newKeyMaps :: Software -> Map (KeyMask, KeySym) (X ())
-newKeyMaps cfg = fromList $
+newKeyMaps :: Map (KeyMask, KeySym) (X ())
+newKeyMaps = fromList $
   [ ((myModKey, xK_u), withFocused toggleBorder)
   , ((myModKey, xK_o), toggleWS)
   , ((myModKey, xK_d), goToSelected defaultGSConfig)
@@ -47,13 +46,19 @@ newKeyMaps cfg = fromList $
 
   -- Terminals and stuff
   , ((myModKey, xK_p), shellPrompt myXPConfig)
-  , ((myModKey, xK_i), scratchpadSpawnActionTerminal $ term cfg)
-  , ((myModKey, xK_Return), spawn $ term cfg)
+  , ((myModKey, xK_i), scratchpadSpawnActionTerminal "urxvt")
+  , ((myModKey, xK_Return), spawn "urxvt")
 
   -- Software
-  , ((myModKey, xK_x), spawn $ browser cfg)
-  , ((myModKey, xK_b), spawn $ editor cfg)
-  , ((myModKey, xK_m), spawn $ lock cfg) ]
+  , ((myModKey, xK_x), spawn "firefox")
+  , ((myModKey, xK_b), spawn "gvim")
+  , ((myModKey, xK_m), spawn "slimlock")
+
+  -- Multimedia keys
+  , ((0, xf86AudioMute), spawn "alsa-mute")
+  , ((0, xf86AudioLower), spawn "amixer -q set Master 1-")
+  , ((0, xf86AudioRaise), spawn "amixer -q set Master 1+")
+  , ((0, xf86TouchpadToggle), spawn "toggle-touch > /dev/null") ]
 
   -- For Programmers Dvorak
   {-++ mapWS myModKey (windows . greedyView) wsWithKeys

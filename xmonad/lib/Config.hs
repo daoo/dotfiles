@@ -3,21 +3,10 @@ module Config where
 import Data.Map (fromList, union)
 
 import Bar
-import Environment
-import Software
 
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Prompt
-
--- Software
-softwareDefault :: IO Software
-softwareDefault = do
-  b <- getEnvDefault "BROWSER" "firefox"
-  e <- getEnvDefault "GUI_EDITOR" "gvim"
-  t <- getEnvDefault "TERMINAL" "urxvt"
-  l <- getEnvDefault "SCREENSAVER" ""
-  return Software { term = t , browser = b , editor = e, lock = l }
 
 -- Workspaces
 myWorkspaces :: [WorkspaceId]
