@@ -9,7 +9,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.NoBorders
-import XMonad.Layout.PerWorkspace (onWorkspace)
+import XMonad.Layout.PerWorkspace (PerWorkspace, onWorkspace)
 import XMonad.Util.Run
 
 -- Manage Hook
@@ -33,13 +33,12 @@ myManageHook = composeAll . concat $
     res a  = resource =? a
 
 -- Layout Hook
-myLayoutHook = onWorkspace "full" fullscreenLHook $
-               defaultLHook
+myLayoutHook = onWorkspace "full" fullscreenLHook defaultLHook
   where
-    defaultLHook    = avoidStruts $ lessBorders ambiguity $ defaultLayout
-    fullscreenLHook = noBorders $ fullFirstLayout 
+    defaultLHook    = avoidStruts $ lessBorders ambiguity defaultLayout
+    fullscreenLHook = noBorders fullFirstLayout 
 
-    ambiguity = (Combine Difference Screen OnlyFloat)
+    ambiguity = Combine Difference Screen OnlyFloat
 
     fullFirstLayout = Full ||| tiled ||| Mirror tiled
     defaultLayout   = tiled ||| Mirror tiled ||| Full

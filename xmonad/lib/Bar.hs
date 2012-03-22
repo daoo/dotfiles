@@ -1,7 +1,5 @@
 module Bar where
 
-import Data.List (intersperse)
-
 -- Bars
 data BarAlign = AlignLeft | AlignCenter | AlignRight
 
@@ -19,7 +17,7 @@ data Bar = Bar {
 } deriving (Show)
 
 barToString :: Bar -> String
-barToString bar = concat $ intersperse " " bar'
+barToString bar = unwords bar'
   where
     bar' = [ "-fn", show $ barFont bar
            , "-fg", show $ barFg bar

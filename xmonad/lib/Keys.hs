@@ -9,7 +9,7 @@ import XMonad
 import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.GridSelect
 import XMonad.Actions.NoBorders
-import XMonad.StackSet (hidden, shift, tag, view, greedyView)
+import XMonad.StackSet (hidden, shift, tag, view)
 import XMonad.Util.Scratchpad 
 
 -- Modkey
@@ -17,10 +17,10 @@ myModKey :: KeyMask
 myModKey = mod4Mask
 
 -- For programmers dvorak
-workspaceKeys :: [KeySym]
+{-workspaceKeys :: [KeySym]
 workspaceKeys = [ xK_ampersand, xK_bracketleft, xK_braceleft, xK_braceright
                 , xK_parenleft, xK_equal, xK_asterisk, xK_parenright, xK_plus
-                , xK_bracketright, xK_exclam ]
+                , xK_bracketright, xK_exclam ]-}
 
 -- Some media keys
 xf86AudioMute, xf86AudioLower, xf86AudioRaise, xf86AudioPlay, xf86Email,
@@ -34,7 +34,7 @@ xf86Favorites      = 0x1008ff30
 xf86TouchpadToggle = 0x1008ffa9
 
 newKeyMaps :: Map (KeyMask, KeySym) (X ())
-newKeyMaps = fromList $
+newKeyMaps = fromList
   [ ((myModKey, xK_u), withFocused toggleBorder)
   , ((myModKey, xK_o), toggleWS)
   , ((myModKey, xK_d), goToSelected defaultGSConfig)
@@ -68,4 +68,4 @@ newKeyMaps = fromList $
     --mapWS m a ws = map (\ (i, k) -> ((m, k), a i)) ws
 
     -- Ignore NSP, aquire workspaces
-    toggleWS = windows $ view =<< tag . head . filter ((\ x -> x /= "NSP") . tag) . hidden
+    toggleWS = windows $ view =<< tag . head . filter ((/= "NSP") . tag) . hidden

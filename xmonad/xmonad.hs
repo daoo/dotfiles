@@ -30,7 +30,7 @@ main = do
     , layoutHook = myLayoutHook
 
     , terminal = "urxvt"
-    , keys     = \x -> union newKeyMaps (keys defaultConfig x)
+    , keys     = union newKeyMaps . keys defaultConfig
     , logHook  = myLogHook d }
 
   where

@@ -64,7 +64,7 @@ myPP = defaultPP
   , ppSep             = " | " }
   where
     color     = dzenColor
-    noNSP ws  = if (ws == "NSP") then "" else ws
+    noNSP ws  = if ws == "NSP" then "" else ws
 
 -- Default Bar
 defaultBar :: Bar
