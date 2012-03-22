@@ -42,7 +42,7 @@ myLayoutHook = onWorkspace "full" fullscreenLHook defaultLHook
 
     fullFirstLayout = Full ||| tiled ||| Mirror tiled
     defaultLayout   = tiled ||| Mirror tiled ||| Full
-    tiled           = Tall 1 (3.0/100.0) (1.0/2.0)
+    tiled           = Tall 1 0.03 0.5
 
 -- Log Hook
 myLogHook :: Handle -> X ()
