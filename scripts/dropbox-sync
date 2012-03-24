@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+def dropbox_status()
+  return `dropbox status`.chomp
+end
+
+if dropbox_status() == "Idle"
+  exit
+end
+
+puts "Daemon not running, starting..."
+system("dropbox start > /dev/null")
+sleep(2)
+
+tmp1 = ""
+tmp2 = dropbox_status()
+while tmp2 != "Idle" do
+  if tmp1 != tmp2
+    tmp1 = tmp2
+    puts tmp1
+  end
+
+  sleep(2)
+  tmp2 = dropbox_status()
+end
+
+puts "Sync finished, stoping dropbox."
+
+system("dropbox stop > /dev/null")
