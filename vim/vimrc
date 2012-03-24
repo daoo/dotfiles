@@ -182,6 +182,10 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
 
+" Tabs
+nnoremap <c-tab> :tabnext<cr>
+nnoremap <c-s-tab> :tabprevious<cr>
+
 " Line navigation
 nnoremap H 0
 nnoremap L $
