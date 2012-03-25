@@ -1,0 +1,10 @@
+snippet module "module" b
+module `!p
+if path:
+	dir_path = os.path.dirname(os.path.abspath(path))
+	mod_path = re.sub(".*/src/", "", dir_path)
+	result   = re.sub("/", ".", mod_path)
+	snip.rv  = result + "." + snip.basename
+else:
+	snip.rv = snip.basename` where
+endsnippet
