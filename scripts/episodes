@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-
 # Episodes
-# By Daniel Oom
+# By daoo
 
 # TODO: custom command
 command="mplayer"

@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+#
+# Run the dropbox until everything is in sync, then shut down.
+#
 
 def dropbox_status()
   return `dropbox status`.chomp

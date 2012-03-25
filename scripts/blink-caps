@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+#
+# Small scripts that uses xset to blink the caps lock led.
+#
 
 DEFAULT_BLINKS = 5
 DEFAULT_DELAY  = 1
@@ -12,4 +15,3 @@ blinks.times do
   system("xset led off")
   sleep(delay)
 end
-

@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+#
+# Make sure all source files have copyright headers.
+#
 
 languages = {
   "java" => {
