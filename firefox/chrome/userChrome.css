@@ -1,7 +1,0 @@
-#appmenu-toolbar-button {
-  list-style-image: url("chrome://branding/content/icon16.png");
-}
-#appmenu-toolbar-button > .toolbarbutton-text,
-#appmenu-toolbar-button > .toolbarbutton-menu-dropmarker {
-  display: none !important;
-}
