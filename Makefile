@@ -1,6 +1,9 @@
 CFGROOT := $(shell pwd)
 
-all: firefox git gtk luakit rtorrent scripts tmux urxvt vim xdefaults xinitrc xmonad zsh
+all:
+	@echo "make install"
+
+install: firefox git gtk luakit rtorrent scripts tmux urxvt vim xdefaults xinitrc xmonad zsh
 
 firefox:
 	ln -fsn $(CFGROOT)/firefox/chrome/ ${HOME}/.mozilla/firefox/*default/
