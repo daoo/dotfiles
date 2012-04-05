@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+device="$1"
+dir="$2"
+
+if [[ -z "$device" || -z "$dir" ]]; then
+  echo "Usage: nfs-mount DEVICE DIR"
+  echo "Example: nfs-mount chuunder:downloads/ /media/network"
+  exit 1
+elif [[ ! -d "$dir" ]]; then
+  echo "Error: \"$dir\" is not a directory."
+  exit 1
+fi
+
+echo "Mounting $device at $dir..."
+
+# some daemons needed for nfs
+sudo rc.d start netfs rpcbind nfs-common &> /dev/null
+
+sudo mount "$device" "$dir"
+

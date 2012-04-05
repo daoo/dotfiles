@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+device="$1"
+dir="$2"
+
+if [[ -z "$device" || -z "$dir" ]]; then
+  echo "Usage: samba-mount DEVICE DIR"
+  echo "Example: samba-mount chuunder:downloads/ /media/network"
+  exit 1
+elif [[ ! -d "$dir" ]]; then
+  echo "Error: \"$dir\" is not a directory."
+  exit 1
+fi
+
+echo -n "workgroup: "
+read workgroup
+
+while [[ -z "$user" ]]; do
+  echo -n "user: "
+  read user
+done
+
+echo "Mounting $device at $dir..."
+
+# netfs is needed for proper unmount at shutdown
+sudo rc.d start netfs &> /dev/null
+
+# ALERT: Useful comment coming up
+# NOTE: Using directio, it is important in some way, don't remember.
+
+sudo mount -t cifs \
+  -o user="$workgroup/$user",uid=1000,gid=100,rw,directio \
+  "$device" "$dir"
+
