@@ -253,7 +253,11 @@ class SelectFileDialog < Dialog
     options = build_options()
     result, @exit = Dialog.execute(
       "dialog --menu '#{@title}' 0 50 10 #{options}")
-    @result = File.join(@dir, result)
+    if @exit
+      @result = File.join(@dir, result)
+    else
+      @result = nil
+    end
   end
 
   private

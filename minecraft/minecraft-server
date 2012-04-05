@@ -16,7 +16,16 @@ class Server
   end
 end
 
-jar = Minecraft::SERVER_RELEASE_JAR
+diagJar = SelectFileDialog.new(
+  "Select Jar",
+  Minecraft::SERVER_JARS_DIR,
+  lambda { |f| "nothing here yet" }
+)
+diagJar.run()
+if not diagJar.get_exit()
+  exit 0
+end
+jar = diagJar.get_result()
 
 diagConfig = SelectFileDialog.new(
   "Select Config",
@@ -24,6 +33,10 @@ diagConfig = SelectFileDialog.new(
   lambda { |f| File.read(File.join(f, "description.txt")) }
 )
 diagConfig.run()
+if not diagConfig.get_exit()
+  exit 0
+end
+
 config = diagConfig.get_result()
 
 diagWorld = SelectFileDialog.new(
@@ -39,6 +52,10 @@ diagWorld = SelectFileDialog.new(
   end
 )
 diagWorld.run()
+if not diagWorld.get_exit()
+  exit 0
+end
+
 world = diagWorld.get_result()
 
 server = Server.new(jar)

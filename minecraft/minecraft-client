@@ -36,21 +36,21 @@ class Client
   end
 
   def run(mods)
-    Tempfile.open("client.jar") do |tmp_jar|
-      if mods.empty?
-        tmp_jar.write(File.read(@jar))
-      else
-        apply_mods(mods, tmp_jar.path)
-      end
+    #Tempfile.open("client.jar") do |tmp_jar|
+      #if mods.empty?
+        #tmp_jar.write(File.read(@jar))
+      #else
+        #apply_mods(mods, tmp_jar.path)
+      #end
 
-      if File.exists?(Minecraft::JAR_FILE)
-        puts "Backing up first..."
-        File.rename(Minecraft::JAR_FILE, Minecraft::JAR_BACKUP_FILE)
-      end
+      #if File.exists?(Minecraft::JAR_FILE)
+        #puts "Backing up first..."
+        #File.rename(Minecraft::JAR_FILE, Minecraft::JAR_BACKUP_FILE)
+      #end
 
-      puts "Putting new jar in place..."
-      FileUtils.cp(tmp_jar, Minecraft::JAR_FILE)
-    end
+      #puts "Putting new jar in place..."
+      #FileUtils.cp(tmp_jar, Minecraft::JAR_FILE)
+    #end
 
     start_time = Time.now()
     puts "Launching minecraft at #{start_time}"
@@ -61,11 +61,11 @@ class Client
     puts "Minecraft closed at #{end_time}"
 
     puts "Cleaning up..."
-    FileUtils.rm_f(Minecraft::JAR_FILE)
+    #FileUtils.rm_f(Minecraft::JAR_FILE)
 
-    if File.exists?(Minecraft::JAR_BACKUP_FILE)
-      FileUtils.mv(Minecraft::JAR_BACKUP_FILE, Minecraft::JAR_FILE)
-    end
+    #if File.exists?(Minecraft::JAR_BACKUP_FILE)
+      #FileUtils.mv(Minecraft::JAR_BACKUP_FILE, Minecraft::JAR_FILE)
+    #end
 
     puts "You have been playing for #{Utils.seconds_to_str(end_time - start_time)}"
   end
