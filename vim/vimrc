@@ -58,11 +58,6 @@ set cursorcolumn
 " Status line and command line
 set showcmd
 set laststatus=2
-if exists('g:loaded_fugitive')
-  set statusline=%f%m%y%{fugitive#statusline()}%=col:%c%V\ lin:%l\/%L\ %P
-else
-  set statusline=%f%m%y%=col:%c%V\ lin:%l\/%L\ %P
-endif
 
 " Disable error bells
 set noerrorbells
@@ -70,7 +65,7 @@ set visualbell
 set t_vb=
 
 " Color scheme
-colorscheme mustang
+colorscheme wombat
 syntax on
 " }}}
 " {{{ Commands
@@ -152,10 +147,10 @@ nnoremap <leader>fr :%s/<c-r>=expand("<cword>")<cr>/
 nnoremap N Nzz
 nnoremap n nzz
 
-nnoremap <leader>M <Plug>(quickhl-reset)
-nnoremap <leader>m <Plug>(quickhl-toggle)
-xnoremap <leader>M <Plug>(quickhl-reset)
-xnoremap <leader>m <Plug>(quickhl-toggle)
+nmap <leader>M <Plug>(quickhl-reset)
+nmap <leader>m <Plug>(quickhl-toggle)
+xmap <leader>M <Plug>(quickhl-reset)
+xmap <leader>m <Plug>(quickhl-toggle)
 
 " Move lines up and down
 nnoremap <up> :move -2<cr>
