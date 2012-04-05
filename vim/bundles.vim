@@ -22,7 +22,6 @@ Bundle 't9md/vim-quickhl'
 " Color schemes
 Bundle 'Wombat'
 Bundle 'daoo/Mustang2'
-Bundle 'shawncplus/skittles_berry'
 Bundle 'tango-morning.vim'
 
 " Files
