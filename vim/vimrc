@@ -142,7 +142,8 @@ nnoremap <leader>evs :source $MYVIMRC<cr>
 nnoremap <leader>fc :nohlsearch<cr>
 nnoremap <leader>fg :Ack '<cword>'<cr>
 nnoremap <leader>fl /<c-r>=expand("<cword>")<cr><cr>
-nnoremap <leader>fr :%s/<c-r>=expand("<cword>")<cr>/
+nnoremap <leader>fr :%s@<c-r>=expand("<cword>")<cr>@
+vnoremap <leader>fr y:%s@<c-r>"@
 
 nnoremap N Nzz
 nnoremap n nzz
