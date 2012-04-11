@@ -1,76 +1,84 @@
-#!/usr/bin/env bash
+#!/usr/bin/env ruby
 # Episodes
 # By daoo
 
+require 'fileutils'
+require 'open3'
+
 # TODO: custom command
-command="mplayer"
-state_file="./.episodes-state"
+COMMAND    = "mplayer"
+STATE_FILE = "./.episodes-state"
 
-function print_help() {
-  echo "n - next file"
-  echo "q - remove and quit"
-  echo "u - keep and quit"
-}
+def print_help()
+  puts "Y - remove and play next file (default)"
+  puts "n - keep and quit"
+  puts "q - remove and quit"
+  puts "? - display this help"
+end
 
-function init() {
-  if [[ -f "$state_file" ]]; then
-    echo "Already initialized."
+def init()
+  if File.exists?(STATE_FILE)
+    puts "Already initialized."
     exit 1
   else
-    echo "Initializing..."
-    ls > $state_file
+    puts "Initializing..."
+    files = Dir.entries(Dir.pwd()).select { |file| file != "." and file !+ ".." }
+    File.write(STATE_FILE, files.join("\n"))
 
-    echo "Found $(cat $state_file | wc -l) file(s)"
+    puts "Found $(cat $state_file | wc -l) file(s)"
 
-    echo "Done"
+    puts "Done"
     exit 0
-  fi
-}
+  end
+end
 
-function uninit() {
-  if [[ -f "$state_file" ]]; then
-    echo "Okay."
-    rm $state_file
+def uninit()
+  if File.exists?(STATE_FILE) then
+    puts "Okay."
+    File.delete(STATE_FILE)
     exit 0
   else
-    echo "Not initialized"
+    puts "Not initialized."
     exit 0
-  fi
-}
+  end
+end
 
-function remove() {
-  sed -i 1d $state_file
-}
+case ARGV[0]
+  when "--init"
+    init()
+  when "--uninit"
+    uninit()
+end
 
-case "$1" in
-  --init)   init ;;
-  --uninit) uninit ;;
-esac
-
-if [[ -f "$state_file" ]]; then
+if File.exists?(STATE_FILE)
   # Backup and get state
-  cp $state_file $state_file.bak
+  FileUtils.cp(STATE_FILE, STATE_FILE + ".bak")
 
-  quit=0
-  while [[ ($quit -ne 1) && (-s $state_file) ]]; do
-    file=$(head -n1 $state_file)
+  movie_files = File.readlines(STATE_FILE)
 
-    echo "$file"
-    if $command "$file" &> /dev/null; then
-      echo -n "Remove file from state [n,q,u,?]? "
+  quit = false
+  while not quit and not movie_files.empty? do
+    file = movie_files.first()
+    puts file
 
-      inp=""
-      read inp
+    stdin, stdout, stderr = Open3.popen3("#{COMMAND} #{file} &> /dev/null")
+    stdout.readlines
+    stderr.readlines
 
-      case "$inp" in
-        'n') remove ;;
-        'u') quit=1 ;;
-        'q') remove; quit=1 ;;
-        '?') print_help ;;
-      esac
-    fi
-  done
+    print "Remove file from state [Y,n,q,?]? "
+    inp = gets.chomp.downcase
+
+    if inp == "y" or inp == "q" or inp.empty?
+      movie_files.shift()
+    end
+
+    if inp == "q" or inp == "n"
+      quit = true
+    end
+  end
+
+  File.write(STATE_FILE, movie_files.join("\n"))
 else
-  echo "Directory need to be initialized."
-  echo "Run episodes --init"
-fi
+  puts "Directory need to be initialized."
+  puts "Run episodes --init"
+end
