@@ -54,7 +54,7 @@ if File.exists?(STATE_FILE)
   # Backup and get state
   FileUtils.cp(STATE_FILE, STATE_FILE + ".bak")
 
-  movie_files = File.readlines(STATE_FILE)
+  movie_files = File.readlines(STATE_FILE).map { |s| s.chomp }
 
   quit = false
   while not quit and not movie_files.empty? do
