@@ -22,12 +22,13 @@ def init()
     exit 1
   else
     puts "Initializing..."
-    files = Dir.entries(Dir.pwd()).select { |file| file != "." and file !+ ".." }
+    files = Dir.entries(Dir.pwd())
+    files.select! { |file| file != "." and file != ".." }
+    files.sort!
+
     File.write(STATE_FILE, files.join("\n"))
 
-    puts "Found $(cat $state_file | wc -l) file(s)"
-
-    puts "Done"
+    puts "Found #{files.length} file(s)"
     exit 0
   end
 end
@@ -44,41 +45,39 @@ def uninit()
 end
 
 case ARGV[0]
-  when "--init"
+  when "init"
     init()
-  when "--uninit"
+  when "remove"
     uninit()
+  else
+    if File.exists?(STATE_FILE)
+      movie_files = File.readlines(STATE_FILE).map { |s| s.chomp }
+
+      quit = false
+      while not quit and not movie_files.empty? do
+        file = movie_files.first()
+        puts file
+
+        stdin, stdout, stderr = Open3.popen3("#{COMMAND} #{file} &> /dev/null")
+        stdout.readlines
+        stderr.readlines
+
+        print "Remove file from state [Y,n,q,?]? "
+        inp = gets.chomp.downcase
+
+        if inp == "y" or inp == "q" or inp.empty?
+          movie_files.shift()
+        end
+
+        if inp == "q" or inp == "n"
+          quit = true
+        end
+      end
+
+      File.write(STATE_FILE, movie_files.join("\n"))
+    else
+      puts "Directory need to be initialized."
+      puts "Run episodes --init"
+    end
 end
 
-if File.exists?(STATE_FILE)
-  # Backup and get state
-  FileUtils.cp(STATE_FILE, STATE_FILE + ".bak")
-
-  movie_files = File.readlines(STATE_FILE).map { |s| s.chomp }
-
-  quit = false
-  while not quit and not movie_files.empty? do
-    file = movie_files.first()
-    puts file
-
-    stdin, stdout, stderr = Open3.popen3("#{COMMAND} #{file} &> /dev/null")
-    stdout.readlines
-    stderr.readlines
-
-    print "Remove file from state [Y,n,q,?]? "
-    inp = gets.chomp.downcase
-
-    if inp == "y" or inp == "q" or inp.empty?
-      movie_files.shift()
-    end
-
-    if inp == "q" or inp == "n"
-      quit = true
-    end
-  end
-
-  File.write(STATE_FILE, movie_files.join("\n"))
-else
-  puts "Directory need to be initialized."
-  puts "Run episodes --init"
-end
