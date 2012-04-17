@@ -13,7 +13,7 @@ download_rate = 0
 upload_rate   = 75
 
 # Other
-check_hash    = no
+check_hash    = yes
 dht           = auto
 encryption    = allow_incoming,try_outgoing,enable_retry
 peer_exchange = yes
