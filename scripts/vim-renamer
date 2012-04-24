@@ -1,20 +1,56 @@
 #!/usr/bin/env ruby
 
 require 'fileutils'
+require 'pathname'
 require 'tempfile'
 
+def files_recursive(dir)
+  if not File.directory?(dir)
+    raise "Error, #{dir} not a directory"
+  end
+
+  lst       = []
+  unvisited = [Pathname.new(dir)]
+  while not unvisited.empty? do
+    path = unvisited.pop()
+
+    path.children.each do |child|
+      if child.file?
+        lst << child.to_s
+      elsif child.directory?
+        lst << child.to_s + "/"
+        unvisited << child
+      end
+    end
+  end
+
+  return lst
+end
+
+def files(dir)
+  return Pathname(dir).children.map do |child|
+    if child.directory?
+      child.to_s + "/"
+    else
+      child.to_s
+    end
+  end
+end
+
+recursive = ARGV.size > 0 and ARGV[0] == "-r"
+
 # Works with PWD
-old_names = Dir.glob("*").sort
+if recursive
+  old_names = files_recursive(".")
+else
+  old_names = files(".")
+end
 
 Tempfile.open('random') do |tf|
   tf.puts("# Lines starting wiht # will be ignored")
   tf.puts("# Do not change the order of the file names")
   old_names.each do |name|
-    tf.print(name)
-    if File.directory?(name)
-      tf.print("/")
-    end
-    tf.puts()
+    tf.puts(name)
   end
   tf.flush()
 
