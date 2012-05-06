@@ -39,9 +39,11 @@ set hlsearch
 set incsearch
 
 " Indentation
-set cindent
 set expandtab
+set nojoinspaces
+set shiftround
 set shiftwidth=2
+set smarttab
 set softtabstop=2
 
 " Formatting
