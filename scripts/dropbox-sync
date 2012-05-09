@@ -7,25 +7,34 @@ def dropbox_status()
   return `dropbox status`.chomp
 end
 
-if dropbox_status() == "Idle"
-  exit
+def is_idle()
+  return dropbox_status() == "Idle"
+end
+
+def wait_for_idle(delta = 2)
+  tmp1 = ""
+  tmp2 = dropbox_status()
+  while tmp2 != "Idle" do
+    if tmp1 != tmp2
+      tmp1 = tmp2
+      puts tmp1
+    end
+
+    sleep(delta)
+    tmp2 = dropbox_status()
+  end
+end
+
+if is_idle()
+  exit 0
 end
 
 puts "Daemon not running, starting..."
 system("dropbox start > /dev/null")
+
+wait_for_idle(1)
 sleep(2)
-
-tmp1 = ""
-tmp2 = dropbox_status()
-while tmp2 != "Idle" do
-  if tmp1 != tmp2
-    tmp1 = tmp2
-    puts tmp1
-  end
-
-  sleep(2)
-  tmp2 = dropbox_status()
-end
+wait_for_idle()
 
 puts "Sync finished, stoping dropbox."
 
