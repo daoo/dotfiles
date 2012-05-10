@@ -136,7 +136,7 @@ nnoremap <leader>gc :Gcommit<cr>
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>jw :ToggleWord<cr>
 nnoremap <leader>t :CtrlP<cr>
-vnoremap <c-b> c<c-r>=<c-r>0<cr>
+vnoremap <c-b> c<c-r>=<c-r>-<cr>
 nnoremap <leader>eve :vsplit $MYVIMRC<cr>
 nnoremap <leader>evs :source $MYVIMRC<cr>
 
