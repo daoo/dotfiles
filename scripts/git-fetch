@@ -13,6 +13,12 @@ def md5sum(file)
   return `md5sum #{file}`[0, 32]
 end
 
+silent = false
+case ARGV[0]
+  when "-q", "--quiet"
+    silent = true
+end
+
 File.open("#{ENV["HOME"]}/.git-repos") do |f|
   while (line = f.gets)
     repo = line.chomp
@@ -27,11 +33,14 @@ File.open("#{ENV["HOME"]}/.git-repos") do |f|
       puts_color(TEXT_RED, "Error while running fetch")
       exit 1
     end
-    new = md5sum(fetch_head)
-    if old != new
-      puts_color(TEXT_YELLOW_BOLD, "Fetch resulted in new HEAD")
-      puts_color(TEXT_YELLOW_BOLD, "Opening #{ENV["SHELL"]} in #{dir}")
-      system("cd #{dir} && #{ENV['SHELL']}")
+
+    if not silent
+      new = md5sum(fetch_head)
+      if old != new
+        puts_color(TEXT_YELLOW_BOLD, "Fetch resulted in new HEAD")
+        puts_color(TEXT_YELLOW_BOLD, "Opening #{ENV["SHELL"]} in #{dir}")
+        system("cd #{dir} && #{ENV['SHELL']}")
+      end
     end
   end
 end
