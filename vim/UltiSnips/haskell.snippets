@@ -1,10 +1,14 @@
 snippet module "module" b
-module `!p
-if path:
-	dir_path = os.path.dirname(os.path.abspath(path))
-	mod_path = re.sub(".*/src/", "", dir_path)
-	result   = re.sub("/", ".", mod_path)
-	snip.rv  = result + "." + snip.basename
+`!p
+if path and os.path.exists(path):
+	(base, ext) = os.path.splitext(os.path.abspath(path))
+	tmp = base.split("/")
+	while tmp:
+		s = tmp.pop(0)
+		if s == "src":
+			break
+
+	snip.rv = "module " + ".".join(tmp) + " where"
 else:
-	snip.rv = snip.basename` where
+	snip.rv = "module " + snip.basename + " where"`
 endsnippet
