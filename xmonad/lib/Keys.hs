@@ -10,7 +10,7 @@ import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.GridSelect
 import XMonad.Actions.NoBorders
 import XMonad.StackSet (hidden, shift, tag, view)
-import XMonad.Util.Scratchpad 
+import XMonad.Util.Scratchpad
 
 -- Modkey
 myModKey :: KeyMask
@@ -58,7 +58,7 @@ newKeyMaps = fromList
   , ((0, xf86AudioMute), spawn "alsa-mute")
   , ((0, xf86AudioLower), spawn "amixer -q set Master 1-")
   , ((0, xf86AudioRaise), spawn "amixer -q set Master 1+")
-  , ((0, xf86TouchpadToggle), spawn "toggle-touch > /dev/null") ]
+  ]
 
   -- For Programmers Dvorak
   {-++ mapWS myModKey (windows . greedyView) wsWithKeys

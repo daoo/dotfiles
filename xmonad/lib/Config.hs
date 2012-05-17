@@ -49,7 +49,9 @@ myXPConfig = defaultXPConfig
   , promptBorderWidth = 0
 
   -- Make Ctrl-C in prompt stop input
-  , promptKeymap = fromList [((controlMask,xK_c), quit)] `union` promptKeymap defaultXPConfig }
+  , promptKeymap = kmap }
+  where
+    kmap = union (fromList [((controlMask, xK_c), quit)]) (promptKeymap defaultXPConfig)
 
 -- Log Hook
 myPP :: PP
