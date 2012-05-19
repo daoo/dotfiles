@@ -8,10 +8,11 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Misc
-Bundle 'inkarkat/argtextobj.vim'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'Rename2'
-Bundle 'rip-rip/clang_complete'
+Bundle 'inkarkat/argtextobj.vim'
+" Bundle 'rip-rip/clang_complete'
+Bundle 'scrooloose/syntastic'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-repeat'
 
@@ -51,10 +52,9 @@ endif
 filetype plugin indent on
 
 " Settings
-let g:clang_library_path = '/usr/lib/llvm/libclang.so'
+let g:clang_library_path = '/usr/lib/llvm/'
 let g:clang_snippets     = 0
-let g:clang_use_library  = 0
-let g:clang_user_options = '|| exit 0'
+let g:clang_use_library  = 1
 
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_switch_buffer     = 0
