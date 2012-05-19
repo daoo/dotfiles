@@ -14,23 +14,26 @@ import XMonad.Util.Run
 
 -- Manage Hook
 myManageHook :: ManageHook
-myManageHook = composeAll . concat $
-  [ move "im"    [ "Pidgin", "Finch" ]
-  , move "web"   [ "firefox-bin", "Firefox", "Navigator", "luakit" ]
-  , move "code"  [ "gvim" ]
-  , move "code2" [ "Eclipse" ]
-  , move "other" [ "LibreOffice" ]
-  , move "full"  [ "Wine" ]
-  , move "void"  [ "Skype" ]
-
-  , float name [ "MPlayer", "xmessage" ]
-  , float res [ "Dialog" ] ]
+myManageHook = composeAll hooks
   where
-    move to = map (\a -> name a --> doShift to)
-    float f = map (\a -> f a --> doCenterFloat)
+    hooks = 
+      [ isApp ["Pidgin", "Finch"]                               --> doShift "im"
+      , isApp ["firefox-bin", "Firefox", "Navigator", "luakit"] --> doShift "web"
+      , isApp ["gvim"]                                          --> doShift "code"
+      , isApp ["Eclipse"]                                       --> doShift "code2"
+      , isApp ["LibreOffice"]                                   --> doShift "other"
+      , isApp ["Wine"]                                          --> doShift "full"
+      , isApp ["Skype"]                                         --> doShift "void"
+      , isApp ["MPlayer", "xmessage"] <||> isRes ["Dialog"]     --> doCenterFloat
+      ]
+
+    isApp :: [String] -> Query Bool
+    isApp = foldr1 (<||>) . map name
+
+    isRes :: [String] -> Query Bool
+    isRes = foldr1 (<||>) . map (resource =?)
 
     name a = appName =? a <||> className =? a
-    res a  = resource =? a
 
 -- Layout Hook
 myLayoutHook = onWorkspace "full" fullscreenLHook defaultLHook
