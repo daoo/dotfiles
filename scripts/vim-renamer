@@ -46,6 +46,8 @@ else
   old_names = files(".")
 end
 
+old_names.sort!
+
 Tempfile.open('random') do |tf|
   tf.puts("# Lines starting wiht # will be ignored")
   tf.puts("# Do not change the order of the file names")
