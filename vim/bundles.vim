@@ -52,9 +52,9 @@ endif
 filetype plugin indent on
 
 " Settings
-let g:clang_library_path = '/usr/lib/llvm/'
-let g:clang_snippets     = 0
-let g:clang_use_library  = 1
+" let g:clang_library_path = '/usr/lib/llvm/'
+" let g:clang_snippets     = 0
+" let g:clang_use_library  = 1
 
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_switch_buffer     = 0
