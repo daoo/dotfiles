@@ -45,7 +45,7 @@ newKeyMaps = fromList
   , ((myModKey, xK_g), withWorkspace myXPConfig (windows . shift))
 
   -- Terminals and stuff
-  , ((myModKey, xK_p), shellPrompt myXPConfig)
+  , ((myModKey, xK_p), launchPrompt myXPConfig)
   , ((myModKey, xK_i), scratchpadSpawnActionTerminal "urxvt")
   , ((myModKey, xK_Return), spawn "urxvt")
 

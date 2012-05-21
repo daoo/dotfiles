@@ -9,7 +9,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.NoBorders
-import XMonad.Layout.PerWorkspace (PerWorkspace, onWorkspace)
+import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Util.Run
 
 -- Manage Hook

@@ -2,9 +2,9 @@ module Prompt where
 
 import XMonad
 import XMonad.Prompt
-import XMonad.Prompt.Shell hiding (shellPrompt)
+import XMonad.Prompt.Input
 
-shellPrompt :: XPConfig -> X ()
-shellPrompt c = mkXPrompt Shell c (getShellCompl cmds) spawn
+launchPrompt :: XPConfig -> X ()
+launchPrompt c = inputPromptWithCompl c "Run" (mkComplFunFromList cmds) ?+ spawn
   where
     cmds = [ "firefox", "gvim" ]
