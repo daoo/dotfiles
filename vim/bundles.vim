@@ -66,4 +66,7 @@ let g:ctrlp_custom_ignore = {
 
 let g:tagbar_compact = 1
 
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_include_dirs = [ 'src' ]
+
 let g:Powerline_symbols = 'compatible'
