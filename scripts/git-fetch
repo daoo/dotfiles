@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+GIT_FORMAT="%C(yellow)%h%Creset %C(blue)(%an)%Creset %s"
+
 TEXT_RESET       = "\e[0m"
 TEXT_RED         = "\e[0;31m"
 TEXT_PURPLE      = "\e[0;35m"
@@ -9,14 +11,22 @@ def puts_color(color, str)
   puts "#{color}#{str}#{TEXT_RESET}"
 end
 
-def md5sum(file)
-  return `md5sum #{file}`[0, 32]
+def git_fetch(repo)
+  return system("git --git-dir=\"#{repo}\" fetch --quiet")
 end
 
-silent = false
+def git_rev_parse(repo, commit_id)
+  return `git --git-dir="#{repo}" rev-parse #{commit_id}`.chomp()
+end
+
+def git_log(repo, from, to)
+  return `git --git-dir="#{repo}" log --format=format:"#{GIT_FORMAT}" #{from}..#{to}`
+end
+
+interactive = true
 case ARGV[0]
   when "-q", "--quiet"
-    silent = true
+    interactive = false
 end
 
 File.open("#{ENV["HOME"]}/.git-repos") do |f|
@@ -24,19 +34,22 @@ File.open("#{ENV["HOME"]}/.git-repos") do |f|
     repo = line.chomp
     puts_color(TEXT_PURPLE, "Syncing #{repo}")
 
-    dir        = File.join(ENV["HOME"], repo)
-    git_dir    = File.join(dir, ".git/")
-    fetch_head = File.join(git_dir, "FETCH_HEAD")
+    dir     = File.join(ENV["HOME"], repo)
+    git_dir = File.join(dir, ".git/")
     
-    old = md5sum(fetch_head)
-    if not system("git --git-dir=#{git_dir} fetch --quiet")
+    if not git_fetch(git_dir)
       puts_color(TEXT_RED, "Error while running fetch")
       exit 1
     end
 
-    if not silent
-      new = md5sum(fetch_head)
-      if old != new
+    new_commits = git_log(git_dir, "master", "origin/master")
+    if not new_commits.empty?
+      puts "  New commits:"
+      new_commits.each_line do |line|
+        puts "    #{line}"
+      end
+
+      if interactive
         puts_color(TEXT_YELLOW_BOLD, "Fetch resulted in new HEAD")
         puts_color(TEXT_YELLOW_BOLD, "Opening #{ENV["SHELL"]} in #{dir}")
         system("cd #{dir} && #{ENV['SHELL']}")
