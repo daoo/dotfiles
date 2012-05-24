@@ -2,7 +2,7 @@
 
 # Lists status of git repos in ~/.git-repos
 
-GIT_FORMAT="%C(yellow)%h%Creset %C(blue)(%an)%Creset %s"
+GIT_FORMAT="%C(yellow)%ar%Creset %C(blue)(%ae)%Creset %s"
 
 TEXT_GREEN  = "\e[0;32m"
 TEXT_PURPLE = "\e[0;35m"
@@ -27,7 +27,7 @@ File.open("#{ENV["HOME"]}/.git-repos") do |f|
     dir     = File.join(ENV["HOME"], repo)
     git_dir = File.join(dir, ".git/")
 
-    print_color(TEXT_RESET, "#{dir}: ")
+    print_color(TEXT_RESET, "#{repo}: ")
 
     mod_files = git_modified_files(git_dir, dir)
     new_commits = git_log(git_dir, "origin/master", "master")
