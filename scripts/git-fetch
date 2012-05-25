@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-GIT_FORMAT="%C(yellow)%h%Creset %C(blue)(%an)%Creset %s"
+GIT_FORMAT="%C(yellow)%ar%Creset %C(blue)(%ae)%Creset %s"
 
 TEXT_RESET       = "\e[0m"
 TEXT_RED         = "\e[0;31m"
