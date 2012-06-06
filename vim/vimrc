@@ -117,13 +117,11 @@ nnoremap <f8> :make<cr>
 nnoremap <f9> :make ctags<cr>
 nnoremap <f10> :make lint<cr>
 
-" Tabular
+" Tabular and clean up
+nnoremap <leader>a- :Tabularize /-><cr>
 nnoremap <leader>aa :Tabularize assignment<cr>
 nnoremap <leader>ab :Tabularize braces<cr>
 nnoremap <leader>ac :Tabularize commas<cr>
-nnoremap <leader>a- :Tabularize /-><cr>
-
-" Clean up
 nnoremap <leader>ae :%s/\s\+$//<cr>
 nnoremap <leader>ap {jV}k:sort<cr>
 nnoremap <leader>as :%s/( /(/g<cr>:%s/ )/)/g<cr>
@@ -133,13 +131,13 @@ inoremap <c-space> <c-x><c-o>
 nnoremap <Leader>hof :%!xxd -r<CR>
 nnoremap <Leader>hon :%!xxd<CR>
 nnoremap <leader>cd :cd %:p:h<cr>
+nnoremap <leader>eve :vsplit $MYVIMRC<cr>
+nnoremap <leader>evs :source $MYVIMRC<cr>
 nnoremap <leader>gc :Gcommit<cr>
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>jw :ToggleWord<cr>
 nnoremap <leader>t :CtrlP<cr>
 vnoremap <c-b> c<c-r>=<c-r>-<cr>
-nnoremap <leader>eve :vsplit $MYVIMRC<cr>
-nnoremap <leader>evs :source $MYVIMRC<cr>
 
 " Searching
 nnoremap <leader>fc :nohlsearch<cr>
@@ -157,8 +155,8 @@ xmap <leader>M <Plug>(quickhl-reset)
 xmap <leader>m <Plug>(quickhl-toggle)
 
 " Move lines up and down
-nnoremap <up> :move -2<cr>
 nnoremap <down> :move +<cr>
+nnoremap <up> :move -2<cr>
 
 " Saving
 noremap <c-s> :w<cr>
