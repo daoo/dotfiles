@@ -1,6 +1,6 @@
 snippet module "module" b
 `!p
-if path and os.path.exists(path):
+if path and os.path.exists(path) and "src/" in path:
 	(base, ext) = os.path.splitext(os.path.abspath(path))
 	tmp = base.split("/")
 	while tmp:
