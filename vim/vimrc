@@ -131,6 +131,7 @@ inoremap <c-space> <c-x><c-o>
 nnoremap <Leader>hof :%!xxd -r<CR>
 nnoremap <Leader>hon :%!xxd<CR>
 nnoremap <leader>cd :cd %:p:h<cr>
+nnoremap <leader>cp :%y+<cr>
 nnoremap <leader>eve :vsplit $MYVIMRC<cr>
 nnoremap <leader>evs :source $MYVIMRC<cr>
 nnoremap <leader>gc :Gcommit<cr>
