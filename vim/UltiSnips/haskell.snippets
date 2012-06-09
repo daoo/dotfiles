@@ -1,14 +1,17 @@
 snippet module "module" b
-`!p
-if path and os.path.exists(path) and "src/" in path:
+module `!p
+if path and os.path.exists(path):
 	(base, ext) = os.path.splitext(os.path.abspath(path))
-	tmp = base.split("/")
+	tmp         = base.split("/")
+	module      = []
 	while tmp:
-		s = tmp.pop(0)
-		if s == "src":
+		s = tmp.pop()
+		if s[0] in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+			module.insert(0, s)
+		else:
 			break
 
-	snip.rv = "module " + ".".join(tmp) + " where"
+	snip.rv = ".".join(module)
 else:
-	snip.rv = "module " + snip.basename + " where"`
+	snip.rv = snip.basename` where
 endsnippet

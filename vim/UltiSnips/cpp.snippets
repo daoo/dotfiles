@@ -1,8 +1,8 @@
-snippet inh "include header" b
+snippet inc "include header" b!
 #include "`!p snip.rv = snip.basename + ".hpp"`"
 endsnippet
 
-snippet cl "class" !b
+snippet cl "class" b
 class ${1:`!p snip.rv = snip.basename or "Name"`} {
 	public:
 		${1/(\w+).*/$1/}(${2:arguments});
@@ -22,13 +22,27 @@ class ${1:I`!p snip.rv = snip.basename or "Name"`} {
 };
 endsnippet
 
-snippet ns "namespace" !b
+snippet ns "namespace" b
 namespace ${1:`!p
-if path:
-	dir_path = os.path.dirname(os.path.abspath(path))
-	ns_path  = re.sub(".*/src/", "", dir_path)
-	result   = re.sub("/", "::", ns_path).lower()
-	snip.rv  = result or "somespace"
+res = None
+if path and os.path.exists(path):
+	full_path = os.path.abspath(path)
+	if "src/" in full_path:
+		dir_path = os.path.dirname(full_path)
+		tmp      = dir_path.split("/")
+		ns       = []
+		while tmp:
+			s = tmp.pop()
+			if s == "src":
+				break
+			else:
+				ns.insert(0, s.lower())
+
+		if ns:
+			res = "::".join(ns)
+
+if res:
+	snip.rv = res
 else:
 	snip.rv = "somespace"`} {
 	${0}
