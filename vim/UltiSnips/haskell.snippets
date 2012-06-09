@@ -6,7 +6,7 @@ if path and os.path.exists(path):
 	module      = []
 	while tmp:
 		s = tmp.pop()
-		if s[0] in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+		if s[0].isupper():
 			module.insert(0, s)
 		else:
 			break
