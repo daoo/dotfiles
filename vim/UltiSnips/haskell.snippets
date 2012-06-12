@@ -1,17 +1,21 @@
 snippet module "module" b
 module `!p
-if path and os.path.exists(path):
-	(base, ext) = os.path.splitext(os.path.abspath(path))
-	tmp         = base.split("/")
-	module      = []
-	while tmp:
-		s = tmp.pop()
-		if s[0].isupper():
-			module.insert(0, s)
-		else:
-			break
+file_path = "Main"
+if path and path != "None":
+	if os.path.exists(path):
+		file_path = os.path.abspath(path)
+	else:
+		file_path = path
 
-	snip.rv = ".".join(module)
-else:
-	snip.rv = snip.basename` where
+(base, ext) = os.path.splitext(file_path)
+tmp         = base.split("/")
+module      = []
+while tmp:
+	s = tmp.pop()
+	if s[0].isupper():
+		module.insert(0, s)
+	else:
+		break
+
+snip.rv = ".".join(module)` where
 endsnippet
