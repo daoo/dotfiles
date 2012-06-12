@@ -31,7 +31,7 @@ Bundle 'happy.vim'
 Bundle 'tpope/vim-markdown'
 
 " Snippets
-Bundle 'sirver/ultisnips'
+Bundle 'SirVer/ultisnips'
 
 " Editing
 Bundle 'godlygeek/tabular'
