@@ -109,9 +109,9 @@ class AssetsUpdater
 
         target_file = nil
         if type == SERVER
-          target_file = File.join(Minecraft::SERVERS_DIR, version + ".jar")
+          target_file = File.join(Minecraft::SERVER_JARS_DIR, version + ".jar")
         elsif type == CLIENT
-          target_file = File.join(Minecraft::CLIENTS_DIR, version + ".jar")
+          target_file = File.join(Minecraft::CLIENT_JARS_DIR, version + ".jar")
         end
 
         if not File.exists?(target_file)

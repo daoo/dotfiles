@@ -50,7 +50,7 @@ module Utils
 
   def Utils.is_same?(file1, file2)
     if File.exists?(file1) and File.exists?(file2)
-      return system("diff -q #{file1} #{file2} > /dev/null")
+      return FileUtils.compare_file(file1, file2)
     else
       return false
     end
@@ -60,6 +60,10 @@ module Utils
   # Raises error if http request fails.
   def Utils.download(url, file)
     File.write(file, open(url).read())
+  end
+
+  def Utils.run_launcher()
+    system("java #{Minecraft::JAVAOPTS} -cp #{Minecraft::LAUNCHER_JAR}:#{Minecraft::JAR_FILE} net.minecraft.LauncherFrame")
   end
 end
 

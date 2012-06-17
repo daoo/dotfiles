@@ -1,78 +1,45 @@
 #!/usr/bin/env ruby
 
-require "tempfile"
 require_relative "./minecraft.rb"
 
-# {{{ Client
-class Client
-  TMP_MINECRAFT_DIR = "/tmp/minecraft.jar/"
-
-  def initialize(jar)
-    @jar  = jar
-    @opts = Minecraft::JAVAOPTS
+def run(jar, opts)
+  if File.exists?(Minecraft::JAR_FILE)
+    puts "Backing up first..."
+    File.rename(Minecraft::JAR_FILE, Minecraft::JAR_BACKUP_FILE)
   end
 
-  #
-  # Create a new jar with some mods applied and put it somewhere.
-  #
-  def Client.apply_mods(mods, target)
-    if not mods.empty?
-      Tempdir.new(mod) do |dir|
-        puts "Extracting jar..."
-        Utils.unzip(@jar, dir.path)
-        FileUtils.rm_rf(File.join(dir.path, "META-INF"))
+  puts "Putting new jar in place..."
+  FileUtils.cp(jar, Minecraft::JAR_FILE)
 
-        mods.each do |mod|
-          puts "Extracting #{mod}"
-          mod_path = File.join(Minecraft::MODS_DIR, mod)
-          Utils.unzip(mod_path, dir.path)
-        end
+  start_time = Time.now()
+  puts "Launching minecraft at #{start_time}"
 
-        Utils.zip(dir.path, target_jar)
-      end
-    else
-      FileUtils.cp(jar, target_jar)
-    end
+  Utils.run_launcher()
+
+  end_time = Time.now()
+  puts "Minecraft closed at #{end_time}"
+
+  puts "Cleaning up..."
+  FileUtils.rm_f(Minecraft::JAR_FILE)
+
+  if File.exists?(Minecraft::JAR_BACKUP_FILE)
+    FileUtils.mv(Minecraft::JAR_BACKUP_FILE, Minecraft::JAR_FILE)
   end
 
-  def run(mods)
-    #Tempfile.open("client.jar") do |tmp_jar|
-      #if mods.empty?
-        #tmp_jar.write(File.read(@jar))
-      #else
-        #apply_mods(mods, tmp_jar.path)
-      #end
-
-      #if File.exists?(Minecraft::JAR_FILE)
-        #puts "Backing up first..."
-        #File.rename(Minecraft::JAR_FILE, Minecraft::JAR_BACKUP_FILE)
-      #end
-
-      #puts "Putting new jar in place..."
-      #FileUtils.cp(tmp_jar, Minecraft::JAR_FILE)
-    #end
-
-    start_time = Time.now()
-    puts "Launching minecraft at #{start_time}"
-
-    system("java #{@opts} -jar #{Minecraft::LAUNCHER_JAR}")
-
-    end_time = Time.now()
-    puts "Minecraft closed at #{end_time}"
-
-    puts "Cleaning up..."
-    #FileUtils.rm_f(Minecraft::JAR_FILE)
-
-    #if File.exists?(Minecraft::JAR_BACKUP_FILE)
-      #FileUtils.mv(Minecraft::JAR_BACKUP_FILE, Minecraft::JAR_FILE)
-    #end
-
-    puts "You have been playing for #{Utils.seconds_to_str(end_time - start_time)}"
-  end
+  puts "You have been playing for #{Utils.seconds_to_str(end_time - start_time)}"
 end
-# }}}
 
-client = Client.new(File.join(Minecraft::CLIENT_JARS_DIR, "1.2.3.jar"))
-client.run([])
+diagJar = SelectFileDialog.new(
+  "Select Jar",
+  Minecraft::CLIENT_JARS_DIR,
+  lambda { |f| "nothing here yet" }
+)
+diagJar.run()
+if not diagJar.get_exit()
+  exit 0
+end
+jar = diagJar.get_result()
+
+run(jar, Minecraft::JAVAOPTS)
 
 # vim: set fdm=marker :
