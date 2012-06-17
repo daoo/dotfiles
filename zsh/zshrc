@@ -90,16 +90,20 @@ prompt_daoo_setup() {
   local special_start="%{%B%F{black}%}"
   local special_end="%{%b%}"
 
-  local prompt_l_paren="$special_start($special_end"
-  local prompt_r_paren="$special_start)$special_end"
-  local prompt_at_char="$special_start@$special_end"
-  local prompt_hyphen="${color_start}-${color_end}"
+  local l_bracket="${special_start}[${special_end}"
+  local r_bracket="${special_start}]${special_end}"
+  local l_paren="$special_start($special_end"
+  local r_paren="$special_start)$special_end"
+  local at_char="$special_start@$special_end"
+  local hyphen="${color_start}-${color_end}"
 
-  local prompt_dir="%{%B%F{magenta}%}%~%{%f%b%}"
+  local dir="${l_paren}%{%B%F{magenta}%}%~%{%f%b%}${r_paren}"
+  local host_info="${l_paren}%n${at_char}%m${r_paren}"
+  local time="${l_bracket}%D${special_start}|${special_end}%*${r_bracket}"
 
-  line1_a="${prompt_hyphen}${prompt_l_paren}${prompt_dir}${prompt_r_paren}${color_start}${color_start}-"
-  line1_b="-${color_end}${prompt_l_paren}%n${prompt_at_char}%m${prompt_r_paren}${prompt_hyphen}"
-  line2="${color_start}--${color_end}%F{white}> "
+  line1_a="${hyphen}${dir}${color_start}"
+  line1_b="${color_end}${time}${hyphen}${host_info}${color_start}-"
+  line2="--${color_end}%F{white}> "
 
   prompt_opts=(cr subst percent)
 
