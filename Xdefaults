@@ -1,43 +1,36 @@
-URxvt.buffered: true
+URxvt.buffered:  true
 URxvt.saveLines: 10000
 
-URxvt.keysym.M-u:    perl:url-select:select_next
 URxvt.keysym.M-g:    perl:copy-pasta:copy
 URxvt.keysym.M-h:    perl:copy-pasta:paste
+URxvt.keysym.M-u:    perl:url-select:select_next
 URxvt.perl-ext:      selection,url-select,copy-pasta
 URxvt.perl-lib:      .urxvt/perl
 URxvt.underlineURLs: true
 
-URxvt.font: xft:Dina:size=8
-URxvt.internalBorder: 0
-URxvt.scrollBar: false
+URxvt.font:            xft:Dina:size=8
+URxvt.internalBorder:  0
+URxvt.scrollBar:       false
 URxvt.scrollBar_right: false
-URxvt.urgentOnBell: true
-URxvt.visualBell: false
+URxvt.urgentOnBell:    true
+URxvt.visualBell:      false
 
 *background: #141414
-*foreground: #D4D4D4
-!black
-*color0: #262729
-*color8: #555544
-!red
-*color1: #ae2c00
-*color9: #f55900
-!green
-*color2: #668800
-*color10: #88aa22
-!brown/yellow
-*color3:  #B88B10
-*color11: #FFC135
-!blue
+*foreground: #d4d4d4
+
+*color0:  #262729
+*color1:  #ae2c00
+*color2:  #668800
+*color3:  #b88b10
 *color4:  #204a87
+*color5:  #85608b
+*color6:  #5485a4
+*color7:  #767779
+*color8:  #555544
+*color9:  #f55900
+*color10: #88aa22
+*color11: #ffc135
 *color12: #3465a4
-!magenta
-*color5: #85608b
 *color13: #ad7fa8
-!cyan
-*color6: #5485a4
-*color14: #85A8C0
-!white
-*color7: #767779
+*color14: #85a8c0
 *color15: #b6b8b9
