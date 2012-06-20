@@ -75,7 +75,6 @@ command! W %!sudo tee > /dev/null %
 " }}}
 " {{{ Disabled Stupid Keys
 
-noremap K <nop>
 noremap Q <nop>
 
 " Arrow keys
@@ -139,6 +138,7 @@ nnoremap <leader>gc :Gcommit<cr>
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>jw :ToggleWord<cr>
 nnoremap <leader>t :CtrlP<cr>
+nnoremap K kJ
 vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
 
 " Searching
