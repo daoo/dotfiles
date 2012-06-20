@@ -139,7 +139,7 @@ nnoremap <leader>gc :Gcommit<cr>
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>jw :ToggleWord<cr>
 nnoremap <leader>t :CtrlP<cr>
-vnoremap <c-b> c<c-r>=<c-r>-<cr>
+vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
 
 " Searching
 nnoremap <leader>fc :nohlsearch<cr>
