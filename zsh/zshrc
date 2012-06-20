@@ -13,6 +13,8 @@ setopt hist_ignore_dups
 setopt inc_append_history
 
 # Stuff
+export FPATH="$HOME/.zsh/:$FPATH"
+
 setopt nobeep
 
 export EDITOR="vim"
