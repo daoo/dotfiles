@@ -17,22 +17,22 @@ winBorderFocused, winBorderNormal :: String
 winBorderFocused = focusFg
 winBorderNormal  = panelBg
 
-panelFg, panelBg, titleFg, titleBg, focusFg, focusBg, urgentFg, urgentBg, visibleFg,
-  visibleBg, occupiedFg, occupiedBg, viewsFg, viewsBg :: String
-panelFg    = "#b8b8b8"
-panelBg    = "#2e3436"
-titleFg    = "#d3d7cf"
-titleBg    = panelBg
-focusFg    = "#729fcf"
+focusBg, focusFg, occupiedBg, occupiedFg, panelBg, panelFg, titleBg, titleFg,
+  urgentBg, urgentFg, viewsBg, viewsFg, visibleBg, visibleFg :: String
 focusBg    = panelBg
-urgentFg   = "#ef2929"
-urgentBg   = panelBg
-visibleFg  = "#ad7fa8"
-visibleBg  = panelBg
-occupiedFg = "#b8b8b8"
+focusFg    = "#729fcf"
 occupiedBg = panelBg
-viewsFg    = "#757575"
+occupiedFg = "#b8b8b8"
+panelBg    = "#2e3436"
+panelFg    = "#b8b8b8"
+titleBg    = panelBg
+titleFg    = "#d3d7cf"
+urgentBg   = panelBg
+urgentFg   = "#ef2929"
 viewsBg    = panelBg
+viewsFg    = "#757575"
+visibleBg  = panelBg
+visibleFg  = "#ad7fa8"
 
 -- Fonts
 panelFont :: String
@@ -41,41 +41,41 @@ panelFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 -- XPConfig
 myXPConfig :: XPConfig
 myXPConfig = defaultXPConfig
-  { font              = panelFont
-  , bgColor           = panelBg
-  , fgColor           = panelFg
+  { bgColor           = panelBg
   , bgHLight          = focusFg
+  , fgColor           = panelFg
+  , font              = panelFont
   , position          = Bottom
   , promptBorderWidth = 0
 
   -- Make Ctrl-C in prompt stop input
-  , promptKeymap = kmap }
-  where
-    kmap = union (fromList [((controlMask, xK_c), quit)]) (promptKeymap defaultXPConfig)
+  , promptKeymap = fromList [((controlMask, xK_c), quit)] `union` promptKeymap defaultXPConfig
+  }
 
 -- Log Hook
 myPP :: PP
 myPP = defaultPP
-  { ppUrgent          = color urgentFg urgentBg . dzenStrip
-  , ppCurrent         = color focusFg focusBg
-  , ppVisible         = color visibleFg visibleBg
-  , ppHidden          = color occupiedFg occupiedBg . noNSP
-  , ppHiddenNoWindows = color viewsFg viewsBg . noNSP
-  , ppTitle           = color titleFg titleBg
+  { ppCurrent         = dzenColor focusFg focusBg
+  , ppHidden          = dzenColor occupiedFg occupiedBg . noNSP
+  , ppHiddenNoWindows = dzenColor viewsFg viewsBg . noNSP
+  , ppSep             = " | "
+  , ppTitle           = dzenColor titleFg titleBg
+  , ppUrgent          = dzenColor urgentFg urgentBg . dzenStrip
+  , ppVisible         = dzenColor visibleFg visibleBg
   , ppWsSep           = " "
-  , ppSep             = " | " }
+  }
   where
-    color     = dzenColor
-    noNSP ws  = if ws == "NSP" then "" else ws
+    noNSP w = if w == "NSP" then "" else w
 
 -- Default Bar
 defaultBar :: Bar
 defaultBar = Bar
-  { barFont   = panelFont
-  , barFg     = panelFg
+  { barAlign  = AlignCenter
   , barBg     = panelBg
-  , barWidth  = 0
+  , barFg     = panelFg
+  , barFont   = panelFont
   , barHeight = 13
+  , barWidth  = 0
   , barX      = 0
   , barY      = 0
-  , barAlign  = AlignCenter }
+  }

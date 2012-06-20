@@ -14,24 +14,22 @@ import XMonad.Util.Run
 
 -- Manage Hook
 myManageHook :: ManageHook
-myManageHook = composeAll hooks
+myManageHook = composeAll
+  [ isApp ["Pidgin", "Finch"]                               --> doShift "im"
+  , isApp ["firefox-bin", "Firefox", "Navigator", "luakit"] --> doShift "web"
+  , isApp ["gvim"]                                          --> doShift "code"
+  , isApp ["Eclipse"]                                       --> doShift "code2"
+  , isApp ["LibreOffice"]                                   --> doShift "other"
+  , isApp ["Wine"]                                          --> doShift "full"
+  , isApp ["Skype"]                                         --> doShift "void"
+  , isApp ["MPlayer", "xmessage"] <||> isRes ["Dialog"]     --> doCenterFloat
+  ]
   where
-    hooks = 
-      [ isApp ["Pidgin", "Finch"]                               --> doShift "im"
-      , isApp ["firefox-bin", "Firefox", "Navigator", "luakit"] --> doShift "web"
-      , isApp ["gvim"]                                          --> doShift "code"
-      , isApp ["Eclipse"]                                       --> doShift "code2"
-      , isApp ["LibreOffice"]                                   --> doShift "other"
-      , isApp ["Wine"]                                          --> doShift "full"
-      , isApp ["Skype"]                                         --> doShift "void"
-      , isApp ["MPlayer", "xmessage"] <||> isRes ["Dialog"]     --> doCenterFloat
-      ]
-
     isApp :: [String] -> Query Bool
-    isApp = foldr1 (<||>) . map name
+    isApp = foldr ((<||>) . name) (return False)
 
     isRes :: [String] -> Query Bool
-    isRes = foldr1 (<||>) . map (resource =?)
+    isRes = foldr ((<||>) . (resource =?)) (return False)
 
     name a = appName =? a <||> className =? a
 
