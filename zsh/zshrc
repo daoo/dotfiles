@@ -142,7 +142,7 @@ unsetopt flow_control      # Disable start/stop characters in shell editor.
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 zstyle ':completion::complete:*' use-cache on
-zstyle ':completion::complete:*' cache-path "$HOME/.zcache"
+zstyle ':completion::complete:*' cache-path "/tmp/zcache"
 
 # Group matches and describe.
 zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
