@@ -2,6 +2,7 @@ module Common where
 
 import Config
 
+import Control.Applicative
 import System.IO (Handle)
 
 import XMonad
@@ -25,27 +26,20 @@ myManageHook = composeAll
   , isApp ["MPlayer", "xmessage"] <||> isRes ["Dialog"]     --> doCenterFloat
   ]
   where
-    isApp :: [String] -> Query Bool
-    isApp = foldr ((<||>) . name) (return False)
+    comp f = foldr ((<||>) . f) (return False)
 
-    isRes :: [String] -> Query Bool
-    isRes = foldr ((<||>) . (resource =?)) (return False)
-
-    name a = appName =? a <||> className =? a
+    isApp = comp ((<||>) . (appName =?) <*> (className =?))
+    isRes = comp (resource =?)
 
 -- Layout Hook
 myLayoutHook = onWorkspace "full" fullscreenLHook defaultLHook
   where
-    defaultLHook    = avoidStruts $ lessBorders ambiguity defaultLayout
-    fullscreenLHook = noBorders fullFirstLayout 
+    defaultLHook    = avoidStruts $ lessBorders ambiguity $ tiled ||| Mirror tiled ||| Full
+    fullscreenLHook = noBorders $ Full ||| tiled ||| Mirror tiled
 
     ambiguity = Combine Difference Screen OnlyFloat
-
-    fullFirstLayout = Full ||| tiled ||| Mirror tiled
-    defaultLayout   = tiled ||| Mirror tiled ||| Full
-    tiled           = Tall 1 0.03 0.5
+    tiled     = Tall 1 0.03 0.5
 
 -- Log Hook
 myLogHook :: Handle -> X ()
 myLogHook h = dynamicLogWithPP $ myPP { ppOutput = hPutStrLn h }
-
