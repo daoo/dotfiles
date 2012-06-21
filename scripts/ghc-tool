@@ -1,0 +1,78 @@
+#!/usr/bin/env ruby
+
+GHC_DIR = File.join(ENV["HOME"], ".ghc")
+PKG_DIR = File.join(File.join(GHC_DIR, Dir.entries(GHC_DIR).last), "package.conf.d")
+
+def getPackages()
+  Dir.entries(PKG_DIR)
+    .select { |d| d != "." and d != ".." }
+    .map { |s| Package.new(File.join(PKG_DIR, s)) }
+end
+
+class Package 
+  def initialize(file)
+    if file.empty?
+      raise "Empty package file"
+    elsif not File.exists?(file)
+      raise "File does not exist, #{file}"
+    end
+
+    @file = file
+
+    @depends = []
+    lines = File.readlines(@file)
+    while not lines.empty?
+      line = lines.shift
+      if line.start_with?("name")
+        @name = line.split(": ")[1].chomp
+      elsif line.start_with?("version")
+        @version = line.split(": ")[1].chomp
+      elsif line.start_with?("depends")
+        @depends << line[9 .. -1].chomp
+
+        line = lines.shift
+        while line[1].start_with?("         ")
+          @depends << line[9 .. -1].chomp
+          line = lines.shift
+        end
+      end
+    end
+
+    @registered = true
+  end
+
+  def unregister()
+    if @registered
+      if system("ghc-pkg unregister '#{name}'")
+        @registered = false
+      end
+    end
+  end
+
+  def depends()
+    return @depends
+  end
+
+  def show()
+    return [@name, @version, @depends.join(", ")].join("|")
+  end
+
+  def name()
+    return @name
+  end
+
+  def hash()
+    return @file.hash()
+  end
+end
+
+pkgs = getPackages()
+
+if pkgs.empty?
+  puts "No packages registered"
+  return false
+end
+
+pkgs.each do |pkg|
+  puts pkg.show()
+end
