@@ -14,6 +14,9 @@ git:
 gtk:
 	ln -fsn $(cfgdir)/gtkrc-2.0.mine ${HOME}/.gtkrc-2.0.mine
 
+keymap:
+	ln -fsn $(cfgdir)/usaswe /usr/share/X11/xkb/symbols/usaswe
+
 luakit:
 	ln -fsn $(cfgdir)/luakit/ ${HOME}/.config/
 
@@ -58,4 +61,4 @@ zsh:
 	ln -fsn $(cfgdir)/zsh/zshrc ${HOME}/.zshrc
 	ln -fsn $(cfgdir)/zsh/zprofile ${HOME}/.zprofile
 
-.PHONY: firefox git gtk luakit rtorrent scripts urxvt vim xdefaults xinitrc xmonad zsh
+.PHONY: firefox git gtk keymap luakit rtorrent scripts urxvt vim xdefaults xinitrc xmonad zsh
