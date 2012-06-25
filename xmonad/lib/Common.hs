@@ -28,7 +28,7 @@ myManageHook = composeAll
   where
     comp f = foldr ((<||>) . f) (return False)
 
-    isApp = comp ((<||>) . (appName =?) <*> (className =?))
+    isApp = comp ((<||>) <$> (appName =?) <*> (className =?))
     isRes = comp (resource =?)
 
 -- Layout Hook
