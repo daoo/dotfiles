@@ -171,6 +171,9 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
 nnoremap <c-s-tab> :tabprevious<cr>
 nnoremap <c-tab> :tabnext<cr>
+nnoremap <leader>bd :bdelete<cr>
+nnoremap <leader>bn :bnext<cr>
+nnoremap <leader>bp :bprevious<cr>
 nnoremap <leader>sa :A<cr>
 nnoremap <leader>ss :AS<cr>
 nnoremap <leader>sv :AV<cr>
