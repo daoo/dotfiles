@@ -29,7 +29,6 @@ sudo rc.d start netfs &> /dev/null
 # ALERT: Useful comment coming up
 # NOTE: Using directio, it is important in some way, don't remember.
 
-sudo mount -t cifs \
+mount -t cifs \
   -o user="$user",workgroup="$workgroup",uid=$UID,gid=$GID,rw,directio \
   "$device" "$dir"
-
