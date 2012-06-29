@@ -134,10 +134,6 @@ nnoremap <leader>cd :cd %:p:h<cr>
 nnoremap <leader>cp :%y+<cr>
 nnoremap <leader>eve :vsplit $MYVIMRC<cr>
 nnoremap <leader>evs :source $MYVIMRC<cr>
-nnoremap <leader>gc :Gcommit<cr>
-nnoremap <leader>gs :Gstatus<cr>
-nnoremap <leader>jw :ToggleWord<cr>
-nnoremap <leader>t :CtrlP<cr>
 nnoremap K kJ
 vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
 
@@ -151,14 +147,15 @@ vnoremap <leader>fr y:%s@<c-r>"@
 nnoremap N Nzz
 nnoremap n nzz
 
+" Plugins
 nmap <leader>M <Plug>(quickhl-reset)
 nmap <leader>m <Plug>(quickhl-toggle)
+nnoremap <leader>gc :Gcommit<cr>
+nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>jw :ToggleWord<cr>
+nnoremap <leader>t :CtrlP<cr>
 xmap <leader>M <Plug>(quickhl-reset)
 xmap <leader>m <Plug>(quickhl-toggle)
-
-" Move lines up and down
-nnoremap <down> :move +<cr>
-nnoremap <up> :move -2<cr>
 
 " Saving
 noremap <c-s> :w<cr>
@@ -178,7 +175,9 @@ nnoremap <leader>sa :A<cr>
 nnoremap <leader>ss :AS<cr>
 nnoremap <leader>sv :AV<cr>
 
-" Line navigation
+" Lines
+nnoremap <down> :move +<cr>
+nnoremap <up> :move -2<cr>
 nnoremap H 0
 nnoremap L $
 " }}}
