@@ -30,6 +30,6 @@ sudo rc.d start netfs &> /dev/null
 # NOTE: Using directio, it is important in some way, don't remember.
 
 sudo mount -t cifs \
-  -o user="$user",workgroup="$workgroup",uid=1000,gid=100,rw,directio \
+  -o user="$user",workgroup="$workgroup",uid=$UID,gid=$GID,rw,directio \
   "$device" "$dir"
 

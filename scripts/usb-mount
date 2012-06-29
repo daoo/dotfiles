@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-mount -o rw,noexec,noatime,noauto,async,umask=1000 "$1" "$2"
+mount -o rw,noexec,noatime,noauto,async,umask=$UID "$1" "$2"
 
