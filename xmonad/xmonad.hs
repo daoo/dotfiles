@@ -19,19 +19,18 @@ main = do
   d <- spawnPipe dzenCmd
 
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
-    { modMask            = myModKey
-    , borderWidth        = 1
-    , normalBorderColor  = winBorderNormal
-    , focusedBorderColor = winBorderFocused
-    , workspaces         = myWorkspaces
+    { borderWidth        = 1
     , focusFollowsMouse  = False
-
-    , manageHook = myManageHook <+> manageDocks <+> scratchpadManageHookDefault
-    , layoutHook = myLayoutHook
-
-    , terminal = "urxvt"
-    , keys     = union newKeyMaps . keys defaultConfig
-    , logHook  = myLogHook d }
+    , focusedBorderColor = winBorderFocused
+    , keys               = union newKeyMaps . keys defaultConfig
+    , layoutHook         = myLayoutHook
+    , logHook            = myLogHook d
+    , manageHook         = myManageHook <+> manageDocks <+> scratchpadManageHookDefault
+    , modMask            = myModKey
+    , normalBorderColor  = winBorderNormal
+    , terminal           = "urxvt"
+    , workspaces         = myWorkspaces
+    }
 
   where
     conkyCmd = "conky -c ~/.xmonad/conkyrc 2> /dev/null | dzen2 -p " ++ barToString right
