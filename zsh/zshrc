@@ -85,7 +85,7 @@ autoload -U colors && colors
 
 prompt_daoo_setup() {
   local colors && set -A colors cyan magenta blue yellow green grey
-  local i=$(($(echo -n $HOST | cksum | cut -d ' ' -f 1) % ${#colors}))
+  local i=$((1 + $(echo -n $HOST | cksum | cut -d ' ' -f 1) % ${#colors}))
   local prompt_color=$fg[$colors[$i]]
 
   local color_start="%{%F${prompt_color}%}"
