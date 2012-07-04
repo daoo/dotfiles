@@ -84,10 +84,12 @@ promptinit
 autoload -U colors && colors
 
 prompt_daoo_setup() {
-  local prompt_color='yellow'
+  local colors && set -A colors cyan magenta blue yellow green grey
+  local i=$(($(echo -n $HOST | cksum | cut -d ' ' -f 1) % ${#colors}))
+  local prompt_color=$fg[$colors[$i]]
 
-  local color_start="%{%F{$prompt_color}%B%}"
-  local color_end="%{%f%b%}"
+  local color_start="%{%F${prompt_color}%}"
+  local color_end="%{%f%}"
 
   local special_start="%{%B%F{black}%}"
   local special_end="%{%b%}"
