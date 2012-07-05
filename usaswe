@@ -13,5 +13,4 @@ xkb_symbols "euro" {
     key <AC11> { [ apostrophe  , quotedbl  , adiaeresis , Adiaeresis ] };
     key <AC10> { [ semicolon   , colon     , odiaeresis , Odiaeresis ] };
     key <AD11> { [ bracketleft , braceleft , aring      , Aring ]	};
-
 };
