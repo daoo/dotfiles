@@ -84,7 +84,7 @@ autoload -U colors && colors
 setopt prompt_subst
 
 prompt_git_info() {
-  if [[ -d "./.git" ]]; then
+  if [[ -f "./.git/HEAD" ]]; then
     #if git diff-index --quiet --name-only HEAD --; then
       #echo -n "%{%F{green}%}"
     #else
