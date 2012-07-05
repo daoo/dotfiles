@@ -16,6 +16,7 @@ gtk:
 
 keymap:
 	ln -fsn $(cfgdir)/usaswe /usr/share/X11/xkb/symbols/usaswe
+	ln -fsn $(cfgdir)/dvpse /usr/share/X11/xkb/symbols/dvpse
 
 luakit:
 	ln -fsn $(cfgdir)/luakit/ ${HOME}/.config/

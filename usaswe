@@ -5,10 +5,13 @@ xkb_symbols "euro" {
     name[Group1]= "USA - Customized";
 
     include "us(basic)"
-
     include "level3(ralt_switch)"
+    include "capslock(escape)"
 
-    key <AC11> { [apostrophe,  quotedbl,  adiaeresis, Adiaeresis] };
-    key <AC10> { [semicolon,   colon,     odiaeresis, Odiaeresis] };
-    key <AD11> { [bracketleft, braceleft, aring,      Aring]	};
+    // Swedish alphabet
+    //           [ Unmodified  , Shift     , AltGr      , Shift + AltGr ]
+    key <AC11> { [ apostrophe  , quotedbl  , adiaeresis , Adiaeresis ] };
+    key <AC10> { [ semicolon   , colon     , odiaeresis , Odiaeresis ] };
+    key <AD11> { [ bracketleft , braceleft , aring      , Aring ]	};
+
 };

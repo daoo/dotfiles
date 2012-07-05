@@ -1,0 +1,22 @@
+default
+partial alphanumeric_keys
+xkb_symbols "dvpse" {
+    name[Group1]= "Programmer Dvorak - Customized for Swedish Keyboards";
+
+    include "dvp(basic)"
+    include "level3(ralt_switch)"
+
+    // Swedish alphabet
+    //           [ Unmodified , Shift      , AltGr      , Shift + AltGr ]
+    key <AC11> { [ minus      , underscore , adiaeresis , Adiaeresis ] };
+    key <AC10> { [ n          , N          , odiaeresis , Odiaeresis ] };
+    key <AD11> { [ slash      , question   , aring      , Aring ]	};
+
+    // Swap capslock and esc
+    include "capslock(escape)"
+
+    // Swap ctrl and weird key left of z on qwerty
+    replace key <AB00> { [ Control_L, Control_L, Control_L, Control_L ] };
+    modifier_map Control { <AB00>, <LCTL> };
+    remove key <LCTL>;
+};
