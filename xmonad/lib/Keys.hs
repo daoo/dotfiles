@@ -40,7 +40,7 @@ newKeyMaps = fromList
   , ((myModKey, xK_d), goToSelected defaultGSConfig)
 
   -- Dynamic Workspaces
-  , ((myModKey, xK_y), removeWorkspace)
+  , ((myModKey, xK_y), removeEmptyWorkspace)
   , ((myModKey, xK_f), selectWorkspace myXPConfig)
   , ((myModKey, xK_g), withWorkspace myXPConfig (windows . shift))
 
