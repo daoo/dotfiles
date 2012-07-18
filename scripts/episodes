@@ -6,7 +6,7 @@ require 'fileutils'
 require 'open3'
 
 # TODO: custom command
-COMMAND    = "mplayer"
+COMMAND    = "mplayer -really-quiet"
 STATE_FILE = "./.episodes-state"
 
 def print_help()
@@ -18,10 +18,10 @@ end
 
 def init()
   if File.exists?(STATE_FILE)
-    puts "Already initialized."
+    puts "Already initialized"
     exit 1
   else
-    puts "Initializing..."
+    puts "Initializing"
     files = Dir.entries(Dir.pwd())
     files.select! { |file| file != "." and file != ".." }
     files.sort!
@@ -35,12 +35,12 @@ end
 
 def uninit()
   if File.exists?(STATE_FILE) then
-    puts "Okay."
+    puts "Okay"
     File.delete(STATE_FILE)
     exit 0
   else
-    puts "Not initialized."
-    exit 0
+    puts "Not initialized"
+    exit 1
   end
 end
 
@@ -58,9 +58,7 @@ case ARGV[0]
         file = movie_files.first()
         puts file
 
-        stdin, stdout, stderr = Open3.popen3("#{COMMAND} #{file} &> /dev/null")
-        stdout.readlines
-        stderr.readlines
+        system("#{COMMAND} \"#{file}\"")
 
         print "Remove file from state [Y,n,q,?]? "
         inp = gets.chomp.downcase
@@ -74,10 +72,15 @@ case ARGV[0]
         end
       end
 
-      File.write(STATE_FILE, movie_files.join("\n"))
+      if movie_files.empty?
+        puts "No more episodes, removing state file"
+        File.delete(STATE_FILE)
+      else
+        puts "Writing state file"
+        File.write(STATE_FILE, movie_files.join("\n"))
+      end
     else
       puts "Directory need to be initialized."
-      puts "Run episodes --init"
+      puts "Run episodes init"
     end
 end
-
