@@ -45,15 +45,15 @@ stty -ixon
 # ]]]
 # [[[ Aliases
 # Give some commands fancy colors
-alias ls='ls -h -F --color=auto'
+alias ls='ls -hF --color=auto --group-directories-first'
 alias tree='tree -C'
 alias pacman='pacman-color'
 
 # Some for ls
 alias l='ls'
-alias ll='ls -lh'
+alias ll='ls -l'
 alias la='ls -a'
-alias lla='ls -lha'
+alias lla='ls -la'
 
 # Up up and away
 alias '..'='cd ..'
