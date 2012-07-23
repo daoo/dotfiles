@@ -3,20 +3,17 @@ cfgdir := $(shell pwd)
 all:
 	@echo "make install"
 
-install: firefox git gtk luakit rtorrent scripts tmux urxvt vim xdefaults xinitrc xmonad zsh
-
-firefox:
-	ln -fsn $(cfgdir)/firefox/chrome/ ${HOME}/.mozilla/firefox/*default/
+install: git gtk luakit rtorrent scripts tmux urxvt vim xdefaults xinitrc xmonad zsh
 
 git:
-	ln -fsn $(cfgdir)/git/gitconfig ${HOME}/.gitconfig
+	ln -fsn $(cfgdir)/gitconfig ${HOME}/.gitconfig
 
 gtk:
 	ln -fsn $(cfgdir)/gtkrc-2.0.mine ${HOME}/.gtkrc-2.0.mine
 
 keymap:
-	ln -fsn $(cfgdir)/usaswe /usr/share/X11/xkb/symbols/usaswe
-	ln -fsn $(cfgdir)/dvpse /usr/share/X11/xkb/symbols/dvpse
+	ln -fsn $(cfgdir)/keymaps/usaswe /usr/share/X11/xkb/symbols/usaswe
+	ln -fsn $(cfgdir)/keymaps/dvpse /usr/share/X11/xkb/symbols/dvpse
 
 luakit:
 	ln -fsn $(cfgdir)/luakit/ ${HOME}/.config/
@@ -44,7 +41,7 @@ vim:
 	ln -fsn $(cfgdir)/vim/vimrc ${HOME}/.vimrc
 
 xdefaults:
-	ln -fsn $(cfgdir)/Xdefaults ${HOME}/.Xdefaults
+	ln -fsn $(cfgdir)/xdefaults ${HOME}/.Xdefaults
 
 xinitrc:
 	ln -fsn $(cfgdir)/xinitrc ${HOME}/.xinitrc
@@ -62,4 +59,4 @@ zsh:
 	ln -fsn $(cfgdir)/zsh/zshrc ${HOME}/.zshrc
 	ln -fsn $(cfgdir)/zsh/zprofile ${HOME}/.zprofile
 
-.PHONY: firefox git gtk keymap luakit rtorrent scripts urxvt vim xdefaults xinitrc xmonad zsh
+.PHONY: git gtk keymap luakit rtorrent scripts urxvt vim xdefaults xinitrc xmonad zsh
