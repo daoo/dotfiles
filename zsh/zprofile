@@ -1,4 +1,3 @@
 #!/bin/zsh
 
-export PATH="$HOME/bin:$HOME/bin/scripts:$PATH"
-
+export PATH="$HOME/bin:$HOME/bin/scripts:$HOME/.cabal/bin:$PATH"
