@@ -1,0 +1,64 @@
+#!/usr/bin/env ruby
+
+# sync wallpapers from a remote computer, resizes to local resolution and
+# discards wallpapers with the wrong aspect ratio
+
+def print_help()
+  puts "Usage: #{__FILE__} SOURCE TARGET WIDTH HEIGHT"
+end
+
+if ARGV.length != 2
+  print_help()
+  exit 1
+end
+
+REMOTE = ARGV[0]
+LOCAL  = ARGV[1]
+WIDTH  = ARGV[2].to_i
+HEIGHT = ARGV[3].to_i
+ASPECT = WIDTH / HEIGHT
+
+if REMOTE.empty? or LOCAL.empty?
+  print_help()
+  exit 1
+end
+
+def rsync(remote, local)
+  lines = `rsync -rauvzn #{remote} #{local}`.split("\n").map { |s| s.chomp }
+  files = lines[2, lines.length - 5]
+  return files.select { |file| not file.end_with?("/") }
+end
+
+def image_size(file)
+  str = `identify -format '%w,%h' #{file}`
+  if $? == 0
+    ar = str.split(",")
+    return ar[0].to_i, ar[1].to_i
+  else
+    raise "#{file} is not an image"
+  end
+end
+
+def image_resize(file, w, h)
+  system("mogrify -resize #{w}x#{h} #{file}")
+end
+
+files = rsync(REMOTE, LOCAL)
+
+files.each do |file|
+  full_path = File.join(LOCAL, file)
+  begin
+    w, h = image_size(full_path)
+    a    = w / h
+
+    if a == ASPECT
+      if w != WIDTH and h != HEIGHT
+        image_resize(full_path, WIDTH, HEIGHT)
+      end
+    else
+      FileUtils.rm(full_path)
+    end
+  rescue
+    # do nothing
+  end
+end
