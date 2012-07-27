@@ -7,7 +7,7 @@ def print_help()
   puts "Usage: #{__FILE__} SOURCE TARGET WIDTH HEIGHT"
 end
 
-if ARGV.length != 2
+if ARGV.length != 4
   print_help()
   exit 1
 end
@@ -24,7 +24,7 @@ if REMOTE.empty? or LOCAL.empty?
 end
 
 def rsync(remote, local)
-  lines = `rsync -rauvzn #{remote} #{local}`.split("\n").map { |s| s.chomp }
+  lines = `rsync -rauvz #{remote} #{local}`.split("\n").map { |s| s.chomp }
   files = lines[2, lines.length - 5]
   return files.select { |file| not file.end_with?("/") }
 end
