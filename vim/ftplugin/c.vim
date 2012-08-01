@@ -7,4 +7,4 @@ function! FoldCopyright(...)
   endif
 endfunction
 
-autocmd BufReadPost cpp,hpp call FoldCopyright()
+autocmd BufReadPost c,h,cpp,hpp call FoldCopyright()
