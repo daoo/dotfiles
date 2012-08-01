@@ -51,7 +51,7 @@ set relativenumber
 set t_vb=
 set visualbell
 
-colorscheme wombat
+colorscheme mustang
 syntax on
 " }}}
 " {{{ Commands

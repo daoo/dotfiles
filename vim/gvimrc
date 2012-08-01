@@ -2,3 +2,4 @@ set guifont=Dina\ 8
 set guioptions=
 set mouse=
 set t_vb=
+colorscheme wombat
