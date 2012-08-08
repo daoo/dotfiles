@@ -23,7 +23,7 @@ Bundle 'mileszs/ack.vim'
 Bundle 't9md/vim-quickhl'
 
 " Color schemes
-Bundle 'Wombat'
+Bundle 'daoo/Wombat'
 Bundle 'daoo/Mustang2'
 Bundle 'skammer/vim-css-color'
 Bundle 'tango-morning.vim'
