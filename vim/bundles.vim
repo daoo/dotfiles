@@ -10,16 +10,19 @@ Bundle 'Lokaltog/vim-powerline'
 Bundle 'Rename2'
 Bundle 'Rip-Rip/clang_complete'
 Bundle 'Shougo/neocomplcache'
+Bundle 'Shougo/vimproc'
 Bundle 'SirVer/ultisnips'
 Bundle 'alex.vim'
 Bundle 'coderifous/textobj-word-column.vim'
 Bundle 'daoo/Mustang2'
 Bundle 'daoo/Wombat'
 Bundle 'daoo/a.vim'
+Bundle 'eagletmt/ghcmod-vim'
 Bundle 'godlygeek/tabular'
 Bundle 'happy.vim'
 Bundle 'inkarkat/argtextobj.vim'
 Bundle 'kien/ctrlp.vim'
+Bundle 'lukerandall/haskellmode-vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
@@ -40,6 +43,13 @@ filetype plugin indent on
 " let g:clang_library_path = '/usr/lib/llvm/'
 " let g:clang_snippets     = 0
 " let g:clang_use_library  = 1
+
+let g:haddock_browser    = "/usr/bin/firefox"
+let g:ghc                = "/usr/bin/ghc"
+let g:ghcmod_ghc_options = [ '-isrc' ]
+let b:ghc_staticoptions  = '-isrc'
+
+let g:syntastic_haskell_checker_args = '-isrc'
 
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_switch_buffer     = 0
