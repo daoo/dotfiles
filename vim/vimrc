@@ -111,7 +111,6 @@ let mapleader=","
 
 " F-keys
 nnoremap <f2> :NERDTreeToggle<cr>
-nnoremap <f3> :TagbarToggle<cr>
 nnoremap <f4> :GundoToggle<cr>
 nnoremap <f5> :make run<cr>
 nnoremap <f8> :make<cr>

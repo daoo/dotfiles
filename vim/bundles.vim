@@ -49,8 +49,6 @@ let g:ctrlp_custom_ignore = {
   \ 'dir': '\.git$\|\.hg$\|\.svn$'
   \ }
 
-let g:tagbar_compact = 1
-
 let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_include_dirs = [ 'src' ]
 
