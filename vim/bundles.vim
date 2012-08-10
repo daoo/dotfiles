@@ -4,54 +4,35 @@ filetype off
 set runtimepath+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-" {{{ Bundles
 Bundle 'gmarik/vundle'
 
-" Misc
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'Rename2'
 Bundle 'Rip-Rip/clang_complete'
 Bundle 'Shougo/neocomplcache'
-Bundle 'coderifous/textobj-word-column.vim'
-Bundle 'inkarkat/argtextobj.vim'
-Bundle 'scrooloose/syntastic'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-repeat'
-
-" Searching
-Bundle 'mileszs/ack.vim'
-Bundle 't9md/vim-quickhl'
-
-" Color schemes
-Bundle 'daoo/Wombat'
-Bundle 'daoo/Mustang2'
-Bundle 'skammer/vim-css-color'
-Bundle 'tango-morning.vim'
-
-" Files
-Bundle 'alex.vim'
-Bundle 'happy.vim'
-Bundle 'tpope/vim-markdown'
-
-" Snippets
 Bundle 'SirVer/ultisnips'
-
-" Editing
-Bundle 'godlygeek/tabular'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'sjl/gundo.vim'
-Bundle 'toggle_words.vim'
-Bundle 'tpope/vim-surround'
-
-" File navigation
+Bundle 'alex.vim'
+Bundle 'coderifous/textobj-word-column.vim'
+Bundle 'daoo/Mustang2'
+Bundle 'daoo/Wombat'
 Bundle 'daoo/a.vim'
+Bundle 'godlygeek/tabular'
+Bundle 'happy.vim'
+Bundle 'inkarkat/argtextobj.vim'
 Bundle 'kien/ctrlp.vim'
+Bundle 'mileszs/ack.vim'
+Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
-
-if executable('ctags')
-  Bundle 'majutsushi/tagbar'
-endif
-" }}}
+Bundle 'scrooloose/syntastic'
+Bundle 'sjl/gundo.vim'
+Bundle 'skammer/vim-css-color'
+Bundle 't9md/vim-quickhl'
+Bundle 'tango-morning.vim'
+Bundle 'toggle_words.vim'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-markdown'
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-surround'
 
 filetype plugin indent on
 
