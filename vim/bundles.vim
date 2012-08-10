@@ -104,4 +104,28 @@ let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " }}}
+" {{{ Maps
+nnoremap <f2> :NERDTreeToggle<cr>
+nnoremap <f4> :GundoToggle<cr>
+
+nmap <leader>M <Plug>(quickhl-reset)
+nmap <leader>m <Plug>(quickhl-toggle)
+xmap <leader>M <Plug>(quickhl-reset)
+xmap <leader>m <Plug>(quickhl-toggle)
+
+nnoremap <leader>sa :A<cr>
+nnoremap <leader>ss :AS<cr>
+nnoremap <leader>sv :AV<cr>
+
+nnoremap <leader>gc :Gcommit<cr>
+nnoremap <leader>gs :Gstatus<cr>
+
+nnoremap <leader>jw :ToggleWord<cr>
+nnoremap <leader>t :CtrlP<cr>
+
+nnoremap <leader>a- :Tabularize /-><cr>
+nnoremap <leader>aa :Tabularize assignment<cr>
+nnoremap <leader>ab :Tabularize braces<cr>
+nnoremap <leader>ac :Tabularize commas<cr>
+" }}}
 " vim: fdm=marker :
