@@ -2,6 +2,7 @@
 
 " {{{ Startup
 set nocompatible
+let mapleader=","
 
 source ~/.vim/bundles.vim
 " }}}
@@ -107,8 +108,6 @@ noremap  <pagedown> <nop>
 noremap  <pageup>   <nop>
 " }}}
 " {{{ Key Bindings
-let mapleader=","
-
 " F-keys
 nnoremap <f5> :make run<cr>
 nnoremap <f8> :make<cr>
@@ -156,9 +155,6 @@ nnoremap <c-tab> :tabnext<cr>
 nnoremap <leader>bd :bdelete<cr>
 nnoremap <leader>bn :bnext<cr>
 nnoremap <leader>bp :bprevious<cr>
-nnoremap <leader>sa :A<cr>
-nnoremap <leader>ss :AS<cr>
-nnoremap <leader>sv :AV<cr>
 
 " Lines
 nnoremap <down> :move +<cr>
