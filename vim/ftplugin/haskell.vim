@@ -4,5 +4,3 @@ let hs_highlight_delimiters = 1
 let hs_highlight_delimiters = 1
 let hs_highlight_types      = 1
 let hs_highlight_more_types = 1
-
-compiler ghc
