@@ -121,8 +121,8 @@ nnoremap <leader>ap {jV}k:sort<cr>
 nnoremap <leader>as :%s/( /(/g<cr>:%s/ )/)/g<cr>
 
 " Misc
-nnoremap <Leader>hof :%!xxd -r<CR>
-nnoremap <Leader>hon :%!xxd<CR>
+nnoremap <Leader>hof :%!xxd -r<cr>
+nnoremap <Leader>hon :%!xxd<cr>
 nnoremap <leader>cd :cd %:p:h<cr>
 nnoremap <leader>cp :%y+<cr>
 nnoremap <leader>ef :e %<cr>
