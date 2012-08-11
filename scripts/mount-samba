@@ -2,8 +2,10 @@
 
 device="$1"
 dir="$2"
+workgroup="$3"
+user="$4"
 
-if [[ -z "$device" || -z "$dir" ]]; then
+if [[ -z "$device" || -z "$dir" || -z "$workgroup" || -z "$user" ]]; then
   echo "Usage: samba-mount DEVICE DIR"
   echo "Example: samba-mount chuundar:downloads /media/network"
   exit 1
@@ -12,23 +14,9 @@ elif [[ ! -d "$dir" ]]; then
   exit 1
 fi
 
-echo -n "workgroup: "
-read workgroup
-
-while [[ -z "$user" ]]; do
-  echo -n "user: "
-  read user
-done
-
 echo "Mounting $device at $dir..."
 echo "Logging in as $workgroup\\$user"
 
-# netfs is needed for proper unmount at shutdown
-sudo rc.d start netfs &> /dev/null
-
-# ALERT: Useful comment coming up
-# NOTE: Using directio, it is important in some way, don't remember.
-
 mount -t cifs \
-  -o user="$user",workgroup="$workgroup",uid=$UID,gid=$GID,rw,directio \
+  -o user="$user",workgroup="$workgroup",rw,uid=daniel,gid=users \
   "$device" "$dir"

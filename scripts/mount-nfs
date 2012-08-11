@@ -14,8 +14,5 @@ fi
 
 echo "Mounting $device at $dir..."
 
-# some daemons needed for nfs
-sudo rc.d start netfs rpcbind nfs-common &> /dev/null
-
+sudo systemctl start rpcbind.service rpc-statd.service
 sudo mount "$device" "$dir"
-
