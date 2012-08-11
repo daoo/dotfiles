@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-find . -iname "*$@*" -and -type f
-
+find . -iname "*$(printf "%s*" $*)" -and -type f
