@@ -110,7 +110,7 @@ noremap  <pageup>   <nop>
 " {{{ Key Bindings
 " F-keys
 nnoremap <f5> :make run<cr>
-nnoremap <f8> :make<cr>
+nnoremap <f8> :silent! :make \| :redraw! \| :botright :cw<cr>
 nnoremap <f9> :make ctags<cr>
 nnoremap <f10> :make lint<cr>
 
