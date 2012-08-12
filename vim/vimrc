@@ -1,9 +1,7 @@
 " daoo's .vimrc
 
 " {{{ Startup
-set nocompatible
 let mapleader=","
-
 source ~/.vim/bundles.vim
 " }}}
 " {{{ Basic settings
