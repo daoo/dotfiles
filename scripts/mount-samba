@@ -6,8 +6,8 @@ workgroup="$3"
 user="$4"
 
 if [[ -z "$device" || -z "$dir" || -z "$workgroup" || -z "$user" ]]; then
-  echo "Usage: samba-mount DEVICE DIR"
-  echo "Example: samba-mount chuundar:downloads /media/network"
+  echo "Usage: samba-mount DEVICE DIR WORKGROUP USER"
+  echo "Example: samba-mount host:share /media/network MYWORKGROUP myuser"
   exit 1
 elif [[ ! -d "$dir" ]]; then
   echo "Error: \"$dir\" is not a directory."
