@@ -2,37 +2,31 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include "functions.h"
 #include "settings.h"
 
-typedef enum power_state_enum {
-  BATTERY, AC
-} power_state;
+typedef enum adapter_state_enum {
+  AC, BATTERY
+} adapter_state;
 
 typedef enum lid_state_enum {
-  OPEN_CLOSED
+  OPEN, CLOSED
 } lid_state;
 
-const char POWER_STATE_FILE[] = "/run/powersave/power";
-const char LID_STATE_FILE[]   = "/run/powersave/lid";
+typedef enum save_state_enum {
+  FULL, SAVE
+} save_state;
 
-bool get_power_state(power_state* state) {
-  FILE* fptr = fopen(POWER_STATE_FILE, "r");
-  if (fptr) {
-    int c = fgetc(fptr);
-    fclose(fptr);
-    *state = (power_state) c;
-    return true;
-  }
+const char ADAPTER_STATE_FILE[] = "/run/powersave/adapter";
+const char LID_STATE_FILE[]     = "/run/powersave/lid";
+const char SAVE_STATE_FILE[]    = "/run/powersave/save";
 
-  return false;
+void get_state(const char* file, void* state) {
+  read_char(file, (int*) state);
 }
 
-void set_power_state(power_state state) {
-  FILE* fptr = fopen(POWER_STATE_FILE, "w");
-  if (fptr) {
-    fputc(state, fptr);
-    fclose(fptr);
-  }
+void set_state(const char* file, int state) {
+  write_char(file, state);
 }
 
 int main(int argc, char const* argv[]) {

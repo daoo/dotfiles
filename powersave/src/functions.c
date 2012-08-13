@@ -38,6 +38,18 @@ read_error read_char(const char* file, int* ptr) {
   return READ_SUCCESS;
 }
 
+write_error write_char(const char* file, int chr) {
+  FILE* fptr = fopen(file, "w");
+  if (fptr) {
+    int r = fputc(chr, fptr);
+    fclose(fptr);
+
+    return r == EOF ? FAIL_WRITE : WRITE_SUCCESS;
+  }
+
+  return FAIL_OPEN_WRITE;
+}
+
 bool path_exists(const char* file) {
   assert(file && "file string is null");
   return access(file, F_OK) == 0 ? true : false;

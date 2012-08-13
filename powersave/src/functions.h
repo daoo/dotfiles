@@ -16,7 +16,10 @@ typedef enum write_error_enum {
 } write_error;
 
 write_error write_string(const char* file, const char* value, size_t length);
+
 read_error read_char(const char* file, int* ptr);
+write_error write_char(const char* file, int value);
+
 bool path_exists(const char* file);
 
 #endif /* end of include guard: FUNCTIONS_H_ZPC8J5AU */
