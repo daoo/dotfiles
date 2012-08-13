@@ -7,5 +7,6 @@ void opt(const char* file, const char* value, size_t length);
 void check(const char* file);
 void load(const char* module);
 void unload(const char* module);
+void run(const char* cmd);
 
 #endif /* end of include guard: POWER_H_BFSJD5O8 */

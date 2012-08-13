@@ -1,10 +1,12 @@
 #include "power.h"
-#include <stdio.h>
+
 #include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 void opt(const char* file, const char* value, size_t length) {
-  assert(file && "file ptr is null");
-  assert(value && "value ptr is null");
+  assert(file && "file string is null");
+  assert(value && "value string is null");
   assert(length > 0 && "length must be greater than zero");
 
   switch (write_string(file, value, length)) {
@@ -20,7 +22,7 @@ void opt(const char* file, const char* value, size_t length) {
 }
 
 void check(const char* file) {
-  assert(file && "file ptr is null");
+  assert(file && "file string is null");
 
   FILE* fptr;
   fptr = fopen(file, "r");
@@ -35,4 +37,9 @@ void check(const char* file) {
     putchar(c);
   }
   fclose(fptr);
+}
+
+void run(const char* cmd) {
+  assert(cmd && "cmd string is null");
+  system(cmd);
 }
