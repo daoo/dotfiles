@@ -5,6 +5,10 @@
 #include "functions.h"
 #include "settings.h"
 
+bool eq(const char* a, const char* b) {
+  return strcmp(a, b) == 0;
+}
+
 typedef enum adapter_state_enum {
   AC, BATTERY
 } adapter_state;
@@ -29,13 +33,40 @@ void set_state(const char* file, int state) {
   write_char(file, state);
 }
 
+save_state calculate_new_state(save_state old, adapter_state adpt, lid_state lid) {
+  return lid == OPEN && adpt == AC ? FULL : SAVE;
+}
+
 int main(int argc, char const* argv[]) {
+  save_state old = FULL;
+  save_state new = FULL;
+
+  lid_state lid;
+  adapter_state adapt;
+
   if (argc > 1) {
-    if (strcmp(argv[0], "--ac") == 0) {
-    } else if (strcmp(argv[0], "--battery") == 0) {
-    } else if (strcmp(argv[0], "--lid") == 0) {
-      if (strcmp(argv[1], "open") == 0) {
-      } else if (strcmp(argv[1], "close") == 0) {
+    if (eq(argv[1], "--ac")) {
+      new = calculate_new_state(old, AC, lid);
+    } else if (eq(argv[1], "--battery")) {
+      new = calculate_new_state(old, BATTERY, lid);
+    } else if (eq(argv[1], "--lid-open")) {
+      new = calculate_new_state(old, adapt, OPEN);
+    } else if (eq(argv[1], "--lid-close")) {
+      new = calculate_new_state(old, adapt, CLOSED);
+    } else if (eq(argv[1], "--power-save")) {
+      new = SAVE;
+    } else if (eq(argv[1], "--power-full")) {
+      new = FULL;
+    }
+
+    if (new != old) {
+      switch (new) {
+        case FULL:
+          settings_full();
+          break;
+        case SAVE:
+          settings_save();
+          break;
       }
     }
   } else {
