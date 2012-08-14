@@ -41,5 +41,8 @@ void check(const char* file) {
 
 void run(const char* cmd) {
   assert(cmd && "cmd string is null");
-  system(cmd);
+  int ecode = system(cmd);
+  if (ecode != 0) {
+    printf("[error] failed running '%s', exit code %d\n", cmd, ecode);
+  }
 }
