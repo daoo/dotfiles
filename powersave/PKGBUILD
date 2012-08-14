@@ -21,6 +21,9 @@ build() {
 package() {
   cd "${srcdir}/"
   mkdir -p "${pkgdir}/usr/bin"
+  mkdir -p "${pkgdir}/usr/lib/tmpfiles.d/"
+  cp "tmpfiles.conf" "${pkgdir}/usr/lib/tmpfiles.d/powersave.conf"
+
   make DESTDIR="${pkgdir}" install
 }
 

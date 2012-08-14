@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include <sys/stat.h>
 
 #include "functions.h"
 #include "settings.h"
@@ -48,10 +47,6 @@ save_state calculate_new_state(adapter_state adpt, lid_state lid) {
 }
 
 int main(int argc, char const* argv[]) {
-  if (!path_exists(RUN_DIR)) {
-    mkdir(RUN_DIR, 0755);
-  }
-
   save_state old = get_state(SAVE_STATE_FILE, DEFAULT_SAVE_STATE);
   save_state new = old;
 
