@@ -1,0 +1,27 @@
+pkgname=powersave
+pkgver=1.0
+pkgrel=1
+pkgdesc="PKGBUILD for the powersave program."
+url="http://github.com/daoo"
+arch=('x86_64' 'i686')
+license=('GPLv3')
+depends=()
+optdepends=()
+makedepends=('gcc' 'make' 'xz')
+conflicts=()
+replaces=()
+backup=()
+source=("powersave.tar.xz")
+
+build() {
+  cd "${srcdir}/"
+  make release cc=gcc
+}
+
+package() {
+  cd "${srcdir}/"
+  mkdir -p "${pkgdir}/usr/bin"
+  make DESTDIR="${pkgdir}" install
+}
+
+# vim:set ts=2 sw=2 et:
