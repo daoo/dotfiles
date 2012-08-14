@@ -5,12 +5,7 @@ pkgdesc="PKGBUILD for the powersave program."
 url="http://github.com/daoo"
 arch=('x86_64' 'i686')
 license=('GPLv3')
-depends=()
-optdepends=()
 makedepends=('gcc' 'make' 'xz')
-conflicts=()
-replaces=()
-backup=()
 source=("powersave.tar.xz")
 
 build() {
