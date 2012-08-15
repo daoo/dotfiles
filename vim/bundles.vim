@@ -101,6 +101,7 @@ augroup OmniCompl
   au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   au FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   au FileType python setlocal omnifunc=pythoncomplete#Complete
+  au FileType ruby setlocal omnifunc=rubycomplete#Complete
   au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup END
 
@@ -108,11 +109,6 @@ augroup END
 if !exists('g:neocomplcache_omni_patterns')
   let g:neocomplcache_omni_patterns = {}
 endif
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-"autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
-let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " }}}
 " {{{ Maps
 nnoremap <f2> :NERDTreeToggle<cr>
