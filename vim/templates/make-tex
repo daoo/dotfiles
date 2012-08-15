@@ -1,0 +1,12 @@
+outdir  = build
+options = -file-line-error -halt-on-error -output-directory $(outdir)
+
+all: file.pdf
+
+file.pdf: file.tex
+	pdflatex $(options) file.tex
+
+clean:
+	rm build/*
+
+.PHONY: clean
