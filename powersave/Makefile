@@ -1,12 +1,12 @@
 exe = powersave
 dir = build
 
-cc     = clang
-flags  = -std=c99 -Isrc
+cc     = clang++
+flags  = -std=c++11 -Isrc
 cflags = -Wall -Wextra -pedantic
 
-sources = $(shell find src/ -type f -and -iname '*.c' -or -iname '*.h')
-cfiles = $(shell find src/ -type f -and -iname '*.c')
+sources = $(shell find src/ -type f -and -iname '*.cpp' -or -iname '*.hpp')
+cfiles = $(shell find src/ -type f -and -iname '*.cpp')
 
 params = -o $(dir)/$(exe) $(flags) $(cflags)
 
