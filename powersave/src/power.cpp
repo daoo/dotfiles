@@ -1,11 +1,8 @@
 #include "power.hpp"
-
 #include "files.hpp"
-#include <cassert>
-#include <cstdio>
+
 #include <cstdlib>
 #include <iostream>
-#include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
 

@@ -1,9 +1,9 @@
-#include <string>
-#include <iostream>
-
 #include "files.hpp"
 #include "functions.hpp"
 #include "settings.hpp"
+
+#include <iostream>
+#include <string>
 
 using namespace files;
 using namespace settings;
