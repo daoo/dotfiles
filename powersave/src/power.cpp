@@ -67,5 +67,6 @@ namespace power {
   }
 
   void is_loaded(const string&) {
+    cerr << "[error] is_loaded is not implemented\n";
   }
 }
