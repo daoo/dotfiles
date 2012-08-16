@@ -1,6 +1,7 @@
 #include "files.hpp"
 #include "functions.hpp"
 #include "settings.hpp"
+#include "state.hpp"
 
 #include <iostream>
 #include <string>
@@ -8,18 +9,6 @@
 using namespace files;
 using namespace settings;
 using namespace std;
-
-typedef enum adapter_state_enum {
-  AC, BATTERY
-} adapter_state;
-
-typedef enum lid_state_enum {
-  OPEN, CLOSED
-} lid_state;
-
-typedef enum save_state_enum {
-  FULL, SAVE
-} save_state;
 
 const save_state DEFAULT_SAVE_STATE       = FULL;
 const lid_state DEFAULT_LID_STATE         = OPEN;
@@ -29,24 +18,6 @@ const string RUN_DIR            = "/run/powersave";
 const string ADAPTER_STATE_FILE = "/run/powersave/adapter";
 const string LID_STATE_FILE     = "/run/powersave/lid";
 const string SAVE_STATE_FILE    = "/run/powersave/save";
-
-template <typename T>
-T get_state(const string& file, T def) {
-  try {
-    return static_cast<T>(read<char>(file));
-  } catch (const io_exception& ex) {
-    return def;
-  }
-}
-
-template <typename T>
-void set_state(const string& file, T state) {
-  write<char>(file, static_cast<char>(state));
-}
-
-save_state calculate_new_state(adapter_state adpt, lid_state lid) {
-  return lid == OPEN && adpt == AC ? FULL : SAVE;
-}
 
 int main(int argc, char const* argv[]) {
   save_state old = get_state<save_state>(SAVE_STATE_FILE, FULL);
