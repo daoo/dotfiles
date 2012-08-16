@@ -8,6 +8,7 @@
 
 using namespace files;
 using namespace settings;
+using namespace state;
 using namespace std;
 
 const save_state DEFAULT_SAVE_STATE       = FULL;
