@@ -8,6 +8,7 @@ source ~/.vim/bundles.vim
 set autowrite
 set backspace=start,indent,eol
 set expandtab
+set fillchars=vert:│
 set foldlevel=0
 set foldmethod=indent
 set foldnestmax=10
