@@ -14,7 +14,7 @@ debug: builddir
 	$(cc) -g -DDEBUG $(params) $(cfiles)
 
 release: builddir
-	$(cc) -O3 -flto -DNDEBUG -mtune=native -march=native $(params) $(cfiles)
+	$(cc) -O4 -DNDEBUG -mtune=native -march=native $(params) $(cfiles)
 
 install:
 	cp $(dir)/$(exe) $(DESTDIR)/usr/bin/
