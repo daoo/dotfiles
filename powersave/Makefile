@@ -1,7 +1,7 @@
 exe = powersave
 dir = build
 
-cc     = clang++
+cxx    = clang++
 flags  = -std=c++11 -Isrc
 cflags = -Wall -Wextra -pedantic
 
@@ -11,10 +11,10 @@ cfiles = $(shell find src/ -type f -and -iname '*.cpp')
 params = -o $(dir)/$(exe) $(flags) $(cflags)
 
 debug: builddir
-	$(cc) -g -DDEBUG $(params) $(cfiles)
+	$(cxx) -g -DDEBUG $(params) $(cfiles)
 
 release: builddir
-	$(cc) -O4 -DNDEBUG -mtune=native -march=native $(params) $(cfiles)
+	$(cxx) -O4 -DNDEBUG -mtune=native -march=native $(params) $(cfiles)
 
 install:
 	cp $(dir)/$(exe) $(DESTDIR)/usr/bin/
