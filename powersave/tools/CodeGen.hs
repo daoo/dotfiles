@@ -4,6 +4,7 @@ import Control.Monad
 import Control.Monad.Writer
 import Data.List
 import System.Directory
+import System.Environment
 import System.FilePath
 
 data Func = File String String FilePath
@@ -61,8 +62,25 @@ filterSetting (File _ _ f) = doesFileExist f
 filterSetting _            = return True
 
 funcToCppCheck :: Func -> String
-funcToCppCheck (File _ _ p)   = "check(\"" ++ p ++ "\");"
-funcToCppCheck (StopModule m) = "is_loaded(\"" ++ m ++ "\");"
+funcToCppCheck (File _ _ p)   = showString "check(" $ shows p ");"
+funcToCppCheck (StopModule m) = showString "is_loaded(" $ shows m ");"
+
+funcToCppSave :: Func -> String
+funcToCppSave (File v _ p)   = showString "opt(" $ shows p $ showString ", " $ shows v ");"
+funcToCppSave (StopModule m) = showString "unload(" $ shows m ");"
+
+funcToCppFull :: Func -> String
+funcToCppFull (File _ v p)   = showString "opt(" $ shows p $ showString ", " $ shows v ");"
+funcToCppFull (StopModule m) = showString "load(" $ shows m ");"
+
+mainArg :: [String] -> IO ()
+mainArg arg = case arg of
+  ["check"] -> go funcToCppCheck
+  ["save"]  -> go funcToCppSave
+  ["full"]  -> go funcToCppFull
+  _         -> putStrLn "specific one of: check, save, full"
+  where
+    go f = allSettings >>= filterM filterSetting >>= mapM_ (putStrLn . f)
 
 main :: IO ()
-main = allSettings >>= filterM filterSetting >>= mapM_ (putStrLn . funcToCppCheck)
+main = getArgs >>= mainArg
