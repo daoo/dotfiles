@@ -23,7 +23,7 @@ pkgbuild:
 	rm -rf /tmp/powersave
 	mkdir /tmp/powersave
 	cp PKGBUILD /tmp/powersave
-	tar -c Makefile $(sources) tmpfiles.conf | xz > /tmp/powersave/powersave.tar.xz
+	tar -c Makefile $(sources) | xz > /tmp/powersave/powersave.tar.xz
 	(cd /tmp/powersave; makepkg --skipinteg)
 
 builddir:
