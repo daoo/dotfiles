@@ -10,7 +10,7 @@ source=("powersave.tar.xz")
 
 build() {
   cd "${srcdir}/"
-  make release cc=gcc
+  make release cxx=g++
 }
 
 package() {
