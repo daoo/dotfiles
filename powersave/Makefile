@@ -5,8 +5,8 @@ cxx    = clang++
 flags  = -std=c++11 -Isrc
 cflags = -Wall -Wextra -pedantic
 
-sources = $(shell find src/ -type f -and -iname '*.cpp' -or -iname '*.hpp')
-cfiles = $(shell find src/ -type f -and -iname '*.cpp')
+sources = $(wildcard src/*.cpp src/*.hpp)
+cfiles = $(wildcard src/*.cpp)
 
 params = -o $(dir)/$(exe) $(flags) $(cflags)
 
