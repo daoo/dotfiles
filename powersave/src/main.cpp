@@ -1,9 +1,9 @@
-#include "settings.hpp"
+#include "native.hpp"
 
 #include <iostream>
 #include <string>
 
-using namespace settings;
+using namespace native;
 using namespace std;
 
 int main(int argc, char const* argv[]) {
