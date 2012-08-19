@@ -8,7 +8,7 @@ using namespace std;
 
 void print_help() {
   cout << "Usage: powersave ACTION\n\n";
-  cout << "Availble actions are:\n";
+  cout << "Available actions are:\n";
   cout << "   auto   save power depending on battery status\n";
   cout << "   full   force full power\n";
   cout << "   print  print the state of all power saving settings\n";
