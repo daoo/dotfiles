@@ -52,8 +52,8 @@ alias pacman='pacman-color'
 # Some for ls
 alias l='ls'
 alias ll='ls -l'
-alias la='ls -a'
-alias lla='ls -la'
+alias la='ls --almost-all'
+alias lla='ls -l --almost-all'
 
 # Up up and away
 alias '..'='cd ..'
