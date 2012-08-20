@@ -30,11 +30,6 @@ namespace files {
     }
   }
 
-  std::vector<std::string> list_dir(const std::string& path);
-
-  std::string path_join(const std::string& a, const std::string& b);
-  std::string path_join(const std::string& a, const std::string& b, const std::string& c);
-
   bool path_exists(const std::string& file);
 }
 
