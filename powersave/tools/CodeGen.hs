@@ -45,11 +45,11 @@ allSettings = do
     , File "1" "1" "/sys/devices/system/cpu/sched_smt_power_savings"
 
     -- Disks
-    , File "5"         "0"               "/proc/sys/vm/laptop_mode"
-    , File "90"        "30"              "/proc/sys/vm/dirty_ratio"
-    , File "1"         "10"              "/proc/sys/vm/dirty_background_ratio"
-    , File "60000"     "600"             "/proc/sys/vm/dirty_expire_centisecs"
-    , File "60000"     "600"             "/proc/sys/vm/dirty_writeback_centisecs"
+    , File "5"    "0"    "/proc/sys/vm/laptop_mode"
+    , File "90"   "20"   "/proc/sys/vm/dirty_ratio"
+    , File "1"    "10"   "/proc/sys/vm/dirty_background_ratio"
+    , File "1500" "3000" "/proc/sys/vm/dirty_expire_centisecs"
+    , File "1500" "500"  "/proc/sys/vm/dirty_writeback_centisecs"
 
     -- Modules
     --, StopModule "bluetooth"
