@@ -28,6 +28,3 @@ pkgbuild:
 
 builddir:
 	mkdir -p $(dir)
-
-codegen: builddir
-	ghc --make -O3 -outputdir $(dir) -hidir $(dir) -o build/codegen tools/CodeGen.hs
