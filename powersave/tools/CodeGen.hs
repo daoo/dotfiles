@@ -7,6 +7,9 @@ import System.Directory
 import System.Environment
 import System.FilePath
 
+-- TODO: More power modes
+-- TODO: Auto detect default values
+
 type Full = String
 type Save = String
 
