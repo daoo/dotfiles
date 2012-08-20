@@ -7,7 +7,10 @@ import System.Directory
 import System.Environment
 import System.FilePath
 
-data Func = File String String FilePath
+type Full = String
+type Save = String
+
+data Func = File Save Full FilePath
           | StopModule String
   deriving Show
 
