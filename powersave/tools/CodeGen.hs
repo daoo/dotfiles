@@ -1,7 +1,6 @@
 module Main where
 
 import Control.Monad
-import Control.Monad.Writer
 import Data.List
 import System.Directory
 import System.Environment
