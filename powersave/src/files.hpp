@@ -5,6 +5,7 @@
 
 #include <fstream>
 #include <string>
+#include <vector>
 
 namespace files {
   template <typename T>
@@ -29,6 +30,7 @@ namespace files {
     }
   }
 
+  std::vector<std::string> list_dir(const std::string& path);
   bool path_exists(const std::string& file);
 }
 
