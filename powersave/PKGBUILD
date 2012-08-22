@@ -15,8 +15,7 @@ build() {
 
 package() {
   cd "${srcdir}/"
-  mkdir -p "${pkgdir}/usr/bin"
-  make DESTDIR="${pkgdir}" install
+  install -Dm 755 "build/$pkgname" "$pkgdir/usr/bin/$pkgname"
 }
 
 # vim:set ts=2 sw=2 et:

@@ -16,9 +16,6 @@ debug: builddir
 release: builddir
 	$(cxx) -O4 -DNLOGGING -DNDEBUG -mtune=native -march=native $(params) $(cfiles)
 
-install:
-	cp $(dir)/$(exe) $(DESTDIR)/usr/bin/
-
 pkgbuild:
 	rm -rf /tmp/powersave
 	mkdir /tmp/powersave
