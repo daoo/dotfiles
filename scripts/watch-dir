@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-if [[ -d "$1" ]]; then
-  while inotifywait -re close_write,moved_to,create "$1"; do
-    $2
-  done
-fi

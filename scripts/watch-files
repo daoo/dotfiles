@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [[ -d "$1" ]]; then
+  while inotifywait -qre close_write,moved_to,create "$1"; do
+    $2
+  done
+elif [[ -f "$1" ]]; then
+  while inotifywait -qe close_write,moved_to,create "$(dirname $1)"; do
+    $2
+  done
+fi
