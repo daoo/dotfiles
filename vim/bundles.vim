@@ -69,20 +69,10 @@ let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_smart_case = 1
 let g:neocomplcache_enable_camel_case_completion = 1
 let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
-" Define dictionary.
-"let g:neocomplcache_dictionary_filetype_lists = { 'default' : '' }
-
-" Define keyword.
-if !exists('g:neocomplcache_keyword_patterns')
-  let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+let g:neocomplcache_min_syntax_length = 4
 
 " Plugin key-mappings.
-inoremap <expr><c-space> neocomplcache#manual_omni_complete()
+inoremap <expr><c-space> neocomplcache#complete_common_string()
 inoremap <expr><bs>  neocomplcache#smart_close_popup() . "\<c-h>"
 inoremap <expr><c-e> neocomplcache#cancel_popup()
 inoremap <expr><c-g> neocomplcache#undo_completion()
@@ -90,9 +80,6 @@ inoremap <expr><c-h> neocomplcache#smart_close_popup() . "\<c-h>"
 inoremap <expr><c-l> neocomplcache#complete_common_string()
 inoremap <expr><c-y> neocomplcache#close_popup()
 inoremap <expr><cr>  neocomplcache#smart_close_popup() . "\<cr>"
-
-" AutoComplPop like behavior.
-let g:neocomplcache_enable_auto_select = 1
 
 " Enable omni completion.
 augroup OmniCompl
