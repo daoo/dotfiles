@@ -40,9 +40,12 @@ Bundle 'tpope/vim-surround'
 filetype plugin indent on
 
 " {{{ General Settings
-" let g:clang_library_path = '/usr/lib/llvm/'
-" let g:clang_snippets     = 0
-" let g:clang_use_library  = 1
+let g:clang_complete_auto        = 0
+let g:clang_library_path         = '/usr/lib/llvm/'
+let g:clang_snippets             = 1
+let g:clang_snippets_engine      = 'ultisnips'
+let g:clang_trailing_placeholder = 1
+let g:clang_use_library          = 1
 
 let g:haddock_browser    = "/usr/bin/firefox"
 let g:ghc                = "/usr/bin/ghc"
