@@ -64,6 +64,6 @@ newKeyMaps = fromList $
 
   -- For Programmers Dvorak
   ++ dvorakMaps myModKey (windows . greedyView)
-  ++ dvorakMaps (myModKey .|. shiftMask) (\ws -> windows (shift ws) >> windows (greedyView ws))
+  ++ dvorakMaps (myModKey .|. shiftMask) (windows . shift)
   where
     toggleWS = windows $ view =<< tag . head . filter ((/= "NSP") . tag) . hidden
