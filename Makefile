@@ -22,6 +22,7 @@ rtorrent:
 	ln -fsn $(cfgdir)/rtorrent.rc ${HOME}/.rtorrent.rc
 
 scripts:
+	mkdir -p ${HOME}/bin
 	ln -fsn $(cfgdir)/scripts ${HOME}/bin/
 
 tmux:
