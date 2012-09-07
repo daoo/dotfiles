@@ -70,6 +70,7 @@ alias bell="echo -e '\a'"
 alias calc='noglob calc'
 alias g='git'
 alias y='yaourt'
+alias ctl='sudo systemctl'
 # ]]]
 # [[[ Binds
 bindkey '' history-search-backward
