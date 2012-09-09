@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-wm="$(which blackbox)"
-command="/tmp/tmp-new-x-run"
-
-echo -e "$wm &\n$@" > $command
-chmod +x $command
-
-echo "starting '$@'"
-xinit $command -- :1 || exit 1
+if [[ $# -ge 1 ]]; then
+  cd $HOME
+  tmpgame="$(mktemp)"
+  DISPLAY=:1.0
+  echo -e "openbox &\n$*" > "$tmpgame"
+  xinit "$tmpgame" -- :1 -xf86config .xorg-game.conf || exit 1
+  rm -f "$tmpgame"
+else
+  echo "not a valid argument"
+fi
