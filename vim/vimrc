@@ -120,13 +120,13 @@ nnoremap <leader>ap {jV}k:sort<cr>
 nnoremap <leader>as :%s/( /(/g<cr>:%s/ )/)/g<cr>
 
 " Misc
-nnoremap <leader>hof :%!xxd -r<cr>
-nnoremap <leader>hon :%!xxd<cr>
 nnoremap <leader>cd :cd %:p:h<cr>
 nnoremap <leader>cp :%y+<cr>
 nnoremap <leader>ef :e %<cr>
 nnoremap <leader>eve :vsplit $MYVIMRC<cr>
 nnoremap <leader>evs :source $MYVIMRC<cr>
+nnoremap <leader>hof :%!xxd -r<cr>
+nnoremap <leader>hon :%!xxd<cr>
 nnoremap <leader>se :setlocal spell spelllang=en_us<cr>
 nnoremap <leader>so :setlocal spell spelllang=<cr>
 nnoremap K kJ
