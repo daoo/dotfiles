@@ -109,12 +109,9 @@ nmap <leader>m <Plug>(quickhl-toggle)
 xmap <leader>M <Plug>(quickhl-reset)
 xmap <leader>m <Plug>(quickhl-toggle)
 
-nnoremap <leader>sa :A<cr>
-nnoremap <leader>ss :AS<cr>
-nnoremap <leader>sv :AV<cr>
-
-nnoremap <leader>gc :Gcommit<cr>
-nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>ha :A<cr>
+nnoremap <leader>hs :AS<cr>
+nnoremap <leader>hv :AV<cr>
 
 nnoremap <leader>jw :ToggleWord<cr>
 nnoremap <leader>t :CtrlP<cr>
