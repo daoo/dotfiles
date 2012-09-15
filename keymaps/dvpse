@@ -8,8 +8,8 @@ xkb_symbols "dvpse" {
     include "capslock(escape)"
 
     // Swedish alphabet
-    //           [ Unmodified , Shift      , AltGr      , Shift + AltGr ]
-    key <AC11> { [ minus      , underscore , adiaeresis , Adiaeresis    ] };
-    key <AC10> { [ s          , S          , odiaeresis , Odiaeresis    ] };
-    key <AD11> { [ slash      , question   , aring      , Aring         ] };
+    //           [ Unmodified , Shift , AltGr      , Shift + AltGr ]
+    key <AC01> { [ a          , A     , adiaeresis , Adiaeresis    ] };
+    key <AC02> { [ o          , O     , odiaeresis , Odiaeresis    ] };
+    key <AC03> { [ e          , E     , aring      , Aring         ] };
 };
