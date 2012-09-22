@@ -4,7 +4,7 @@ if [[ $# -ge 1 ]]; then
   cd $HOME
   tmpgame="$(mktemp)"
   DISPLAY=:1.0
-  echo -e "openbox &\n$*" > "$tmpgame"
+  echo -e "openbox &\nsetxkbmap dvpse\n$*" > "$tmpgame"
   xinit "$tmpgame" -- :1 -xf86config .xorg-game.conf || exit 1
   rm -f "$tmpgame"
 else
