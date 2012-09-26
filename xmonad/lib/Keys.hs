@@ -39,12 +39,12 @@ newKeyMaps :: Map (KeyMask, KeySym) (X ())
 newKeyMaps = fromList $
   [ ((myModKey, xK_u), withFocused toggleBorder)
   , ((myModKey, xK_o), toggleWS)
-  , ((myModKey, xK_d), goToSelected defaultGSConfig)
+  , ((myModKey, xK_r), goToSelected defaultGSConfig)
 
   -- Dynamic Workspaces
-  , ((myModKey, xK_y), removeEmptyWorkspace)
-  , ((myModKey, xK_f), selectWorkspace myXPConfig)
-  , ((myModKey, xK_g), withWorkspace myXPConfig (windows . shift))
+  , ((myModKey .|. shiftMask, xK_g), removeEmptyWorkspace)
+  , ((myModKey, xK_g), selectWorkspace myXPConfig)
+  , ((myModKey, xK_c), withWorkspace myXPConfig (windows . shift))
 
   -- Terminals and stuff
   , ((myModKey, xK_p), launchPrompt myXPConfig)
@@ -54,7 +54,6 @@ newKeyMaps = fromList $
   -- Software
   , ((myModKey, xK_x), spawn "firefox")
   , ((myModKey, xK_b), spawn "gvim")
-  , ((myModKey, xK_m), spawn "slimlock")
 
   -- Multimedia keys
   , ((0, xf86AudioMute), spawn "alsa-mute")
