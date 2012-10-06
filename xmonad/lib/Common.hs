@@ -48,7 +48,7 @@ myLayoutHook = onWorkspace "im" imLayout $ onWorkspace "full" fullLayout default
     tiled     = Tall 1 0.03 0.5
     im        = withIM (1%7) skypeBuddyList (Grid ||| Full)
 
-    skypeBuddyList = ClassName "Skype" `And` Role "MainWindow"
+    skypeBuddyList = ClassName "Skype"
 
 -- Log Hook
 myLogHook :: Handle -> X ()
