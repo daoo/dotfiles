@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+for id in $(xdotool search --name "^\*.*Skype"); do
+  seturgent "$id"
+done
