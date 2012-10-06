@@ -3,12 +3,15 @@ module Common where
 import Config
 
 import Control.Applicative
+import Data.Ratio
 import System.IO (Handle)
 
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
+import XMonad.Layout.Grid
+import XMonad.Layout.IM
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Util.Run
@@ -35,13 +38,17 @@ myManageHook = composeAll
     wmName       = stringProperty "WM_NAME"
 
 -- Layout Hook
-myLayoutHook = onWorkspace "full" fullscreenLHook defaultLHook
+myLayoutHook = onWorkspace "im" imLayout $ onWorkspace "full" fullLayout defaultLayout
   where
-    defaultLHook    = avoidStruts $ lessBorders ambiguity $ tiled ||| Mirror tiled ||| Full
-    fullscreenLHook = noBorders $ Full ||| tiled ||| Mirror tiled
+    defaultLayout = avoidStruts $ lessBorders ambiguity $ tiled ||| Mirror tiled ||| Full
+    imLayout      = avoidStruts $ lessBorders ambiguity $ im
+    fullLayout    = noBorders $ Full ||| tiled ||| Mirror tiled
 
     ambiguity = Combine Difference Screen OnlyFloat
     tiled     = Tall 1 0.03 0.5
+    im        = withIM (1%7) skypeBuddyList (Grid ||| Full)
+
+    skypeBuddyList = ClassName "Skype" `And` Role "MainWindow"
 
 -- Log Hook
 myLogHook :: Handle -> X ()
