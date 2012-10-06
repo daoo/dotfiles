@@ -16,15 +16,18 @@ import XMonad.Util.Run
 -- Manage Hook
 myManageHook :: ManageHook
 myManageHook = composeAll
-  [ isApp ["Pidgin", "Finch", "Skype"]                      --> doShift "im"
-  , isApp ["firefox-bin", "Firefox", "Navigator", "luakit"] --> doShift "web"
-  , isApp ["gvim"]                                          --> doShift "code"
-  , isApp ["Eclipse"]                                       --> doShift "code2"
-  , isApp ["LibreOffice"]                                   --> doShift "other"
-  , isApp ["Wine"]                                          --> doShift "full"
-  , isApp ["MPlayer", "xmessage"] <||> isRes ["Dialog"]     --> doCenterFloat
+  [ "im"    `shift` ["Pidgin", "Finch", "Skype"]
+  , "web"   `shift` ["firefox-bin", "Firefox", "Navigator", "luakit"]
+  , "code"  `shift` ["gvim"]
+  , "code2" `shift` ["Eclipse"]
+  , "other" `shift` ["LibreOffice"]
+  , "full"  `shift` ["Wine"]
+
+  , isApp ["MPlayer", "xmessage"] <||> isRes ["Dialog"] --> doCenterFloat
   ]
   where
+    shift w a = isApp a --> doShift w
+
     comp f = foldr ((<||>) . f) (return False)
 
     isApp = comp ((<||>) <$> (appName =?) <*> (className =?))
