@@ -18,6 +18,10 @@ keymap:
 luakit:
 	ln -fsn $(cfgdir)/luakit/ ${HOME}/.config/
 
+mpd:
+	mkdir -p ${HOME}/.mpd
+	cp $(cfgdir)/mpd/mpd.conf ${HOME}/.mpd/
+
 rtorrent:
 	ln -fsn $(cfgdir)/rtorrent.rc ${HOME}/.rtorrent.rc
 
