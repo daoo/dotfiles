@@ -22,16 +22,17 @@ myManageHook = composeAll
   , "code2" `shift` ["Eclipse"]
   , "full"  `shift` ["Wine"]
 
-  , comp (appName =?) ["MPlayer", "xmessage", "Options"]   --> doCenterFloat
-  , comp (appName =?) ["Dialog", "Options", "Preferences"] --> doCenterFloat
+  , comp (appName =?) ["MPlayer", "xmessage"] --> doCenterFloat
 
-  , (windowRole =? "Preferences") --> doCenterFloat
+  , (wmName =? "Options")           --> doCenterFloat
+  , (wmWindowRole =? "Preferences") --> doCenterFloat
   ]
   where
     shift w a = comp (className =?) a --> doShift w
     comp f    = foldr ((<||>) . f) (return False)
 
-    windowRole = stringProperty "WM_WINDOW_ROLE"
+    wmWindowRole = stringProperty "WM_WINDOW_ROLE"
+    wmName       = stringProperty "WM_NAME"
 
 -- Layout Hook
 myLayoutHook = onWorkspace "full" fullscreenLHook defaultLHook
