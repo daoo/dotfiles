@@ -16,25 +16,22 @@ import XMonad.Util.Run
 -- Manage Hook
 myManageHook :: ManageHook
 myManageHook = composeAll
-  [ "im"    `shift` ["Pidgin", "Finch", "Skype"]
+  [ "im"    `shift` ["Skype"]
   , "web"   `shift` ["Browser", "Firefox", "luakit"]
-  , "code"  `shift` ["gvim"]
+  , "code"  `shift` ["Gvim"]
   , "code2" `shift` ["Eclipse"]
-  , "other" `shift` ["LibreOffice"]
   , "full"  `shift` ["Wine"]
 
-  , isApp ["MPlayer", "xmessage"]   --> doCenterFloat
-  , isRes ["Dialog", "Preferences"] --> doCenterFloat
+  , comp (appName =?) ["MPlayer", "xmessage", "Options"]   --> doCenterFloat
+  , comp (appName =?) ["Dialog", "Options", "Preferences"] --> doCenterFloat
 
-  , (className =? "Skype") <&&> (appName =? "Options") --> doCenterFloat
+  , (windowRole =? "Preferences") --> doCenterFloat
   ]
   where
-    shift w a = isApp a --> doShift w
+    shift w a = comp (className =?) a --> doShift w
+    comp f    = foldr ((<||>) . f) (return False)
 
-    comp f = foldr ((<||>) . f) (return False)
-
-    isApp = comp ((<||>) <$> (appName =?) <*> (className =?))
-    isRes = comp (resource =?)
+    windowRole = stringProperty "WM_WINDOW_ROLE"
 
 -- Layout Hook
 myLayoutHook = onWorkspace "full" fullscreenLHook defaultLHook
