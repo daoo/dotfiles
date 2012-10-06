@@ -17,13 +17,16 @@ import XMonad.Util.Run
 myManageHook :: ManageHook
 myManageHook = composeAll
   [ "im"    `shift` ["Pidgin", "Finch", "Skype"]
-  , "web"   `shift` ["firefox-bin", "Firefox", "Navigator", "luakit"]
+  , "web"   `shift` ["Browser", "Firefox", "luakit"]
   , "code"  `shift` ["gvim"]
   , "code2" `shift` ["Eclipse"]
   , "other" `shift` ["LibreOffice"]
   , "full"  `shift` ["Wine"]
 
-  , isApp ["MPlayer", "xmessage"] <||> isRes ["Dialog"] --> doCenterFloat
+  , isApp ["MPlayer", "xmessage"]   --> doCenterFloat
+  , isRes ["Dialog", "Preferences"] --> doCenterFloat
+
+  , (className =? "Skype") <&&> (appName =? "Options") --> doCenterFloat
   ]
   where
     shift w a = isApp a --> doShift w
