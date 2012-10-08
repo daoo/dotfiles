@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-for id in $(xdotool search --name "^\*.*Skype"); do
+for id in $(xdotool search "Skype"); do
   seturgent "$id"
 done
