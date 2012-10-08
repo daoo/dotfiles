@@ -14,6 +14,7 @@ import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
+import XMonad.Layout.Reflect
 import XMonad.Util.Run
 
 -- Manage Hook
@@ -41,14 +42,14 @@ myManageHook = composeAll
 myLayoutHook = onWorkspace "im" imLayout $ onWorkspace "full" fullLayout defaultLayout
   where
     defaultLayout = avoidStruts $ lessBorders ambiguity $ tiled ||| Mirror tiled ||| Full
-    imLayout      = avoidStruts $ lessBorders ambiguity $ im
+    imLayout      = avoidStruts $ lessBorders ambiguity $ reflectHoriz im
     fullLayout    = noBorders $ Full ||| tiled ||| Mirror tiled
 
     ambiguity = Combine Difference Screen OnlyFloat
     tiled     = Tall 1 0.03 0.5
     im        = withIM (1%7) skypeBuddyList (Grid ||| Full)
 
-    skypeBuddyList = ClassName "Skype"
+    skypeBuddyList = Title "daoo-- - Skype\8482"
 
 -- Log Hook
 myLogHook :: Handle -> X ()
