@@ -27,6 +27,7 @@ myManageHook = composeAll
   , "full"  `shift` ["Wine"]
 
   , comp (appName =?) ["MPlayer", "xmessage"] --> doCenterFloat
+  , comp (className =?) ["Dialog"] --> doCenterFloat
 
   , (wmName =? "Options")           --> doCenterFloat
   , (wmWindowRole =? "Preferences") --> doCenterFloat
