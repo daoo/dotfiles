@@ -13,15 +13,12 @@ Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/vimproc'
 Bundle 'SirVer/ultisnips'
 Bundle 'alex.vim'
-Bundle 'coderifous/textobj-word-column.vim'
 Bundle 'daoo/Mustang2'
 Bundle 'daoo/Wombat'
 Bundle 'daoo/a.vim'
 Bundle 'godlygeek/tabular'
 Bundle 'happy.vim'
-Bundle 'inkarkat/argtextobj.vim'
 Bundle 'kien/ctrlp.vim'
-Bundle 'lukerandall/haskellmode-vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
@@ -30,7 +27,6 @@ Bundle 'sjl/gundo.vim'
 Bundle 'skammer/vim-css-color'
 Bundle 't9md/vim-quickhl'
 Bundle 'tango-morning.vim'
-Bundle 'toggle_words.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-repeat'
@@ -112,7 +108,6 @@ nnoremap <leader>ha :A<cr>
 nnoremap <leader>hs :AS<cr>
 nnoremap <leader>hv :AV<cr>
 
-nnoremap <leader>jw :ToggleWord<cr>
 nnoremap <leader>t :CtrlP<cr>
 
 nnoremap <leader>a- :Tabularize /-><cr>
