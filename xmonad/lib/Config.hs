@@ -14,7 +14,7 @@ myWorkspaces = ["im", "web", "code", "code2", "other", "other2", "full", "void"]
 
 -- Colors
 winBorderFocused, winBorderNormal :: String
-winBorderFocused = focusFg
+winBorderFocused = "#6dff27"
 winBorderNormal  = panelBg
 
 focusBg, focusFg, occupiedBg, occupiedFg, panelBg, panelFg, titleBg, titleFg,
