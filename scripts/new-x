@@ -2,11 +2,11 @@
 
 if [[ $# -ge 1 ]]; then
   cd $HOME
-  tmpgame="$(mktemp)"
+  tmpscript="$(mktemp)"
   DISPLAY=:1.0
-  echo -e "openbox &\nsetxkbmap dvpse\n$*" > "$tmpgame"
-  xinit "$tmpgame" -- :1 -xf86config .xorg-game.conf || exit 1
-  rm -f "$tmpgame"
+  echo -e "openbox &\n$*" > "$tmpscript"
+  xinit "$tmpscript" -- :1 -xf86config .xorg-game.conf || exit 1
+  rm -f "$tmpscript"
 else
   echo "not a valid argument"
 fi
