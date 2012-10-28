@@ -160,8 +160,8 @@ nnoremap <leader>bp :bprevious<cr>
 " Lines
 nnoremap <down> :move +<cr>
 nnoremap <up> :move -2<cr>
-nnoremap H 0
-nnoremap L $
+noremap H 0
+noremap L $
 " }}}
 
 " vim: fdm=marker :
