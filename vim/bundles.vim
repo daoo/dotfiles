@@ -47,8 +47,6 @@ let g:ghc                = "/usr/bin/ghc"
 let g:ghcmod_ghc_options = [ '-isrc' ]
 let b:ghc_staticoptions  = '-isrc'
 
-let g:syntastic_haskell_checker_args = '-isrc'
-
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_switch_buffer     = 0
 
@@ -57,8 +55,10 @@ let g:ctrlp_custom_ignore = {
   \ 'dir': '\.git$\|\.hg$\|\.svn$'
   \ }
 
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_include_dirs = [ 'src' ]
+let g:syntastic_cpp_check_header     = 1
+let g:syntastic_cpp_include_dirs     = [ 'src' ]
+let g:syntastic_haskell_checker_args = '-isrc'
+let g:syntastic_quiet_warnings       = 1
 
 let g:Powerline_symbols = 'compatible'
 " }}}
