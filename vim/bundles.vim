@@ -4,9 +4,8 @@ filetype off
 set runtimepath+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
-
 Bundle 'Lokaltog/vim-powerline'
+Bundle 'Markdown'
 Bundle 'Rename2'
 Bundle 'Rip-Rip/clang_complete'
 Bundle 'Shougo/neocomplcache'
@@ -16,6 +15,7 @@ Bundle 'alex.vim'
 Bundle 'daoo/Mustang2'
 Bundle 'daoo/Wombat'
 Bundle 'daoo/a.vim'
+Bundle 'gmarik/vundle'
 Bundle 'godlygeek/tabular'
 Bundle 'happy.vim'
 Bundle 'kien/ctrlp.vim'
