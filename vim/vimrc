@@ -129,6 +129,7 @@ nnoremap <leader>hof :%!xxd -r<cr>
 nnoremap <leader>hon :%!xxd<cr>
 nnoremap <leader>se :setlocal spell spelllang=en_us<cr>
 nnoremap <leader>so :setlocal spell spelllang=<cr>
+inoremap <c-space> <c-x><c-o>
 nnoremap K kJ
 vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
 
