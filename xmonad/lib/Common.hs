@@ -8,6 +8,7 @@ import System.IO (Handle)
 
 import XMonad
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ICCCMFocus
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.Grid
@@ -54,4 +55,4 @@ myLayoutHook = onWorkspace "im" imLayout $ onWorkspace "full" fullLayout default
 
 -- Log Hook
 myLogHook :: Handle -> X ()
-myLogHook h = dynamicLogWithPP $ myPP { ppOutput = hPutStrLn h }
+myLogHook h = takeTopFocus >> dynamicLogWithPP (myPP { ppOutput = hPutStrLn h })

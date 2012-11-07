@@ -8,6 +8,7 @@ import Keys
 import Data.Map (union)
 
 import XMonad
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Util.Run
@@ -18,7 +19,7 @@ main = do
   spawn conkyCmd
   d <- spawnPipe dzenCmd
 
-  xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
+  xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { borderWidth        = 1
     , focusFollowsMouse  = False
     , focusedBorderColor = winBorderFocused
