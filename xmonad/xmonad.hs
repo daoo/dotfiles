@@ -9,6 +9,7 @@ import Data.Map (union)
 
 import XMonad
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ICCCMFocus
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Util.Run
@@ -25,7 +26,7 @@ main = do
     , focusedBorderColor = winBorderFocused
     , keys               = union newKeyMaps . keys defaultConfig
     , layoutHook         = myLayoutHook
-    , logHook            = myLogHook d
+    , logHook            = takeTopFocus <+> myLogHook d
     , manageHook         = myManageHook <+> manageDocks <+> scratchpadManageHookDefault
     , modMask            = myModKey
     , normalBorderColor  = winBorderNormal
