@@ -21,22 +21,19 @@ import XMonad.Util.Run
 -- Manage Hook
 myManageHook :: ManageHook
 myManageHook = composeAll
-  [ "im"    `shift` ["Skype"]
-  , "web"   `shift` ["Browser", "Firefox", "luakit"]
-  , "code"  `shift` ["Gvim"]
-  , "code2" `shift` ["Eclipse"]
-  , "full"  `shift` ["Wine"]
-
-  , comp (appName =?) ["MPlayer", "xmessage"] --> doCenterFloat
-  , comp (className =?) ["Dialog"] --> doCenterFloat
-
-  , (wmName =? "Options")           --> doCenterFloat
-  , (wmWindowRole =? "Preferences") --> doCenterFloat
+  [ className    =? "Skype"       --> doShift "im"
+  , className    =? "Browser"     --> doShift "web"
+  , className    =? "Firefox"     --> doShift "web"
+  , className    =? "Gvim"        --> doShift "code"
+  , className    =? "Eclipse"     --> doShift "code2"
+  , className    =? "Wine"        --> doShift "full"
+  , appName      =? "MPlayer"     --> doCenterFloat
+  , className    =? "Dialog"      --> doCenterFloat
+  , wmName       =? "Options"     --> doCenterFloat
+  , wmWindowRole =? "Preferences" --> doCenterFloat
+  , className    =? "Steam"       --> doIgnore
   ]
   where
-    shift w a = comp (className =?) a --> doShift w
-    comp f    = foldr ((<||>) . f) (return False)
-
     wmWindowRole = stringProperty "WM_WINDOW_ROLE"
     wmName       = stringProperty "WM_NAME"
 
