@@ -20,17 +20,18 @@ import XMonad.Util.Run
 -- Manage Hook
 myManageHook :: ManageHook
 myManageHook = composeAll
-  [ className    =? "Skype"       --> doShift "im"
-  , className    =? "Browser"     --> doShift "web"
-  , className    =? "Firefox"     --> doShift "web"
-  , className    =? "Gvim"        --> doShift "code"
-  , className    =? "Eclipse"     --> doShift "code2"
-  , className    =? "Wine"        --> doShift "full"
-  , appName      =? "MPlayer"     --> doCenterFloat
-  , className    =? "Dialog"      --> doCenterFloat
-  , wmName       =? "Options"     --> doCenterFloat
-  , wmWindowRole =? "Preferences" --> doCenterFloat
-  , className    =? "Steam"       --> doIgnore
+  [ className    =? "Skype"                --> doShift "im"
+  , className    =? "Browser"              --> doShift "web"
+  , className    =? "Firefox"              --> doShift "web"
+  , className    =? "Gvim"                 --> doShift "code"
+  , className    =? "Eclipse"              --> doShift "code2"
+  , className    =? "Wine"                 --> doShift "full"
+  , appName      =? "MPlayer"              --> doCenterFloat
+  , className    =? "Dialog"               --> doCenterFloat
+  , wmName       =? "Options"              --> doCenterFloat
+  , wmWindowRole =? "Preferences"          --> doCenterFloat
+  , wmWindowRole =? "GtkFileChooserDialog" --> doCenterFloat
+  , className    =? "Steam"                --> doIgnore
   ]
   where
     wmWindowRole = stringProperty "WM_WINDOW_ROLE"
