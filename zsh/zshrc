@@ -21,8 +21,10 @@ HISTFILE=~/.zhistory
 HISTSIZE=100000
 SAVEHIST=100000
 setopt append_history
+setopt extended_history
 setopt hist_ignore_dups
 setopt inc_append_history
+setopt share_history
 
 # Misc zsh settings
 export FPATH="$HOME/.zsh/:$FPATH"
