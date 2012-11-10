@@ -8,5 +8,5 @@ if [[ $# -ge 1 ]]; then
   xinit "$tmpscript" -- :1 -layout Gaming || exit 1
   rm -f "$tmpscript"
 else
-  echo "not a valid argument"
+  echo "Usage: new-x COMMAND [ARGS]"
 fi
