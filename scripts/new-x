@@ -5,7 +5,7 @@ if [[ $# -ge 1 ]]; then
   tmpscript="$(mktemp)"
   DISPLAY=:1.0
   echo -e "openbox &\n$*" > "$tmpscript"
-  xinit "$tmpscript" -- :1 -xf86config .xorg-game.conf || exit 1
+  xinit "$tmpscript" -- :1 -layout Gaming || exit 1
   rm -f "$tmpscript"
 else
   echo "not a valid argument"
