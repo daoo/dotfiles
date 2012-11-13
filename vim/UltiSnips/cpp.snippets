@@ -27,30 +27,9 @@ class ${1:I`!p snip.rv = snip.basename or "Name"`} {
 endsnippet
 
 snippet ns "namespace" b
-namespace ${1:`!p
-res = None
-if path and os.path.exists(path):
-	full_path = os.path.abspath(path)
-	if "src/" in full_path:
-		dir_path = os.path.dirname(full_path)
-		tmp      = dir_path.split("/")
-		ns       = []
-		while tmp:
-			s = tmp.pop()
-			if s == "src":
-				break
-			else:
-				ns.insert(0, s.lower())
-
-		if ns:
-			res = "::".join(ns)
-
-if res:
-	snip.rv = res
-else:
-	snip.rv = "somespace"`} {
+namespace ${1:somespace} {
 	${0}
-};
+}
 endsnippet
 
 snippet us "using namespace" b
