@@ -23,10 +23,10 @@ def git_log(repo, from, to)
   return `git --git-dir="#{repo}" log --format=format:"#{GIT_FORMAT}" #{from}..#{to}`
 end
 
-interactive = true
+interactive = false
 case ARGV[0]
-  when "-q", "--quiet"
-    interactive = false
+  when "-i", "--interactive"
+    interactive = true
 end
 
 File.open("#{ENV["HOME"]}/.git-repos") do |f|
