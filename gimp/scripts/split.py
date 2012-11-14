@@ -28,7 +28,7 @@ def python_split(img, drawable, width, height):
           x += width
 
         y += height
-      
+
       img.remove_layer(drawable)
   finally:
     img.undo_group_end()

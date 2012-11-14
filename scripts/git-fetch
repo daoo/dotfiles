@@ -36,7 +36,7 @@ File.open("#{ENV["HOME"]}/.git-repos") do |f|
 
     dir     = File.join(ENV["HOME"], repo)
     git_dir = File.join(dir, ".git/")
-    
+
     if not git_fetch(git_dir)
       puts_color(TEXT_RED, "Error while running fetch")
       exit 1

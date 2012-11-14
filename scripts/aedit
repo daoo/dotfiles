@@ -48,7 +48,7 @@ if [[ -a "$file" ]]; then
       echo "No changes, not repacking."
     else
       echo "Repacking..."
-      
+
       # Make backup
       backupfile="$(mktemp "/tmp/$name-XXXXXXXX")"
       mv "$archive" "$backupfile"

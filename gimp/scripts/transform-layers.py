@@ -9,7 +9,7 @@ def python_transform_layers(img, drawable):
 
   try:
     for layer in img.layers:
-      pdb.gimp_item_transform_flip_simple(layer, 0, True, 0)     
+      pdb.gimp_item_transform_flip_simple(layer, 0, True, 0)
   finally:
     img.undo_group_end()
 

@@ -23,7 +23,7 @@ def python_fit_to_grid(img, drawable):
       in_y = real_y - grid_y
 
       layer.resize(w, h, in_x, in_y)
-      
+
       i += 1
 
   finally:

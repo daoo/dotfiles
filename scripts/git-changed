@@ -31,7 +31,7 @@ File.open("#{ENV["HOME"]}/.git-repos") do |f|
 
     mod_files = git_modified_files(git_dir, dir)
     new_commits = git_log(git_dir, "origin/master", "master")
-    
+
     if mod_files.empty?
       print_color(TEXT_GREEN, "no modified files\n")
     else

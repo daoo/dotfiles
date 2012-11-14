@@ -49,7 +49,6 @@ class Layout:
     self.__current = x, y
 
     return old_x, old_y
-  
+
   def reset(self):
     self.__current = 0, 0
-
