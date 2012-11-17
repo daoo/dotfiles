@@ -114,7 +114,7 @@ nnoremap <f9> :make ctags<cr>
 nnoremap <f10> :make lint<cr>
 
 " Tabular and clean up
-nnoremap <leader>ae :%s/\s\+$//<cr>
+nnoremap <leader>ae :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
 nnoremap <leader>aj wby0o<esc>pVr J
 nnoremap <leader>ap {jV}k:sort<cr>
 nnoremap <leader>as :%s/( /(/g<cr>:%s/ )/)/g<cr>
