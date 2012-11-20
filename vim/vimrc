@@ -125,8 +125,6 @@ nnoremap <leader>cp :%y+<cr>
 nnoremap <leader>ef :e %<cr>
 nnoremap <leader>eve :vsplit $MYVIMRC<cr>
 nnoremap <leader>evs :source $MYVIMRC<cr>
-nnoremap <leader>hof :%!xxd -r<cr>
-nnoremap <leader>hon :%!xxd<cr>
 nnoremap <leader>se :setlocal spell spelllang=en_us<cr>
 nnoremap <leader>so :setlocal spell spelllang=<cr>
 inoremap <c-space> <c-x><c-o>
@@ -148,21 +146,8 @@ noremap <c-s> :w<cr>
 inoremap <c-s> <esc>:w<cr>a
 
 " Split/tabs navigation
-nnoremap <c-h> <c-w>h
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-l> <c-w>l
 nnoremap <c-s-tab> :tabprevious<cr>
 nnoremap <c-tab> :tabnext<cr>
-nnoremap <leader>bd :bdelete<cr>
-nnoremap <leader>bn :bnext<cr>
-nnoremap <leader>bp :bprevious<cr>
-
-" Lines
-nnoremap <down> :move +<cr>
-nnoremap <up> :move -2<cr>
-noremap H 0
-noremap L $
 " }}}
 
 " vim: fdm=marker :
