@@ -53,6 +53,9 @@ set visualbell
 
 colorscheme mustang
 syntax on
+
+" Extensions
+runtime ftplugin/man.vim
 " }}}
 " {{{ Commands
 command! W %!sudo tee > /dev/null %
