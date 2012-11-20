@@ -55,5 +55,7 @@ nnoremap <leader>a- :Tabularize /-><cr>
 nnoremap <leader>aa :Tabularize assignment<cr>
 nnoremap <leader>ab :Tabularize braces<cr>
 nnoremap <leader>ac :Tabularize commas<cr>
+
+nnoremap <c-t> :CtrlP<cr>
 " }}}
 " vim: fdm=marker :
