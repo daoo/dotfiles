@@ -5,7 +5,7 @@ xkb_symbols "dvpse" {
 
     include "dvp"
     include "level3(ralt_switch)"
-    include "capslock(escape)"
+    include "capslock(swapescape)"
 
     // Swedish alphabet
     //           [ Unmodified , Shift , AltGr      , Shift + AltGr ]
