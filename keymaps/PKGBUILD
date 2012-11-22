@@ -1,0 +1,18 @@
+pkgname=daoomaps
+pkgver=1.0
+pkgrel=1
+pkgdesc="PKGBUILD for my custom keymaps."
+url="http://github.com/daoo"
+arch=('any')
+depends=()
+makedepends=()
+source=('dvpse' 'usaswe')
+md5sums=('d7c8d29d561a5f214958048f733b43b7'
+         '9e475d84c68f68fabdd47e9b9b0fe609')
+
+package() {
+  install -Dm 755 "dvpse" "$pkgdir/usr/share/X11/xkb/symbols/dvpse"
+  install -Dm 755 "usaswe" "$pkgdir/usr/share/X11/xkb/symbols/usaswe"
+}
+
+# vim:set ts=2 sw=2 et:
