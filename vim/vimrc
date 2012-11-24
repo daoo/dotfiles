@@ -136,6 +136,7 @@ nnoremap <leader>ap {jV}k:sort<cr>
 nnoremap <leader>as :%s/( /(/g<cr>:%s/ )/)/g<cr>
 
 " Misc
+inoremap <c-space> <c-x><c-o>
 nnoremap <leader>cd :cd %:p:h<cr>
 nnoremap <leader>cp :%y+<cr>
 nnoremap <leader>ef :e %<cr>
@@ -144,7 +145,6 @@ nnoremap <leader>evs :source $MYVIMRC<cr>
 nnoremap <leader>h :call SwitchSourceHeader()<cr>
 nnoremap <leader>se :setlocal spell spelllang=en_us<cr>
 nnoremap <leader>so :setlocal spell spelllang=<cr>
-inoremap <c-space> <c-x><c-o>
 nnoremap K kJ
 vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
 
