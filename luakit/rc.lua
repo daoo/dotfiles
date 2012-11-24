@@ -3,38 +3,35 @@
 -----------------------------------------------------------------------
 
 if unique then
-    unique.new("org.luakit")
-    -- Check for a running luakit instance
-    if unique.is_running() then
-        if uris[1] then
-            for _, uri in ipairs(uris) do
-                unique.send_message("tabopen " .. uri)
-            end
-        else
-            unique.send_message("winopen")
-        end
-        luakit.quit()
+  unique.new("org.luakit")
+  -- Check for a running luakit instance
+  if unique.is_running() then
+    if uris[1] then
+      for _, uri in ipairs(uris) do
+        unique.send_message("tabopen " .. uri)
+      end
+    else
+      unique.send_message("winopen")
     end
+    luakit.quit()
+  end
 end
 
--- Load library of useful functions for luakit
 require "lousy"
-
--- Small util functions to print output (info prints only when luakit.verbose is true)
-function warn(...) io.stderr:write(string.format(...) .. "\n") end
-function info(...) if luakit.verbose then io.stdout:write(string.format(...) .. "\n") end end
-
--- Load user settings
 require "globals"
 
-globals.homepage            = "http://www.google.com/"
-globals.default_window_size = "1920x1073"
+globals.homepage = "http://www.google.com/"
 
 search_engines = {
   google = "https://encrypted.google.com/search?hl=en&q=%s",
 
-  h = "http://haskell.org/hoogle/?hoogle=%s",
-  j = "http://javadocs.org/%s",
+  cpp = "http://en.cppreference.com/mwiki/index.php?go=Go&search=%s",
+  cs  = "http://social.msdn.microsoft.com/search/en-us?query=%s",
+  h   = "http://haskell.org/hoogle/?hoogle=%s",
+  hy  = "http://en.cppreference.com/mwiki/index.php?go=Go&search=%s",
+  j   = "http://search.oracle.com/search/search?q=%s&group=Documentation",
+  gl  = "http://www.opengl.org/wiki_132/index.php?search=%s&go=Go",
+  php = "http://se.php.net/manual-lookup.php?lang=en&scope=quickref&pattern=%s",
 
   we  = "https://secure.wikimedia.org/wikipedia/en/w/index.php?search=%s",
   ws  = "https://secure.wikimedia.org/wikipedia/sv/w/index.php?search=%s",
@@ -43,14 +40,19 @@ search_engines = {
   ud  = "http://www.urbandictionary.com/define.php?term=%s",
   w   = "http://www.wolframalpha.com/input/?i=%s",
 
+  daw = "http://dragonage.wikia.com/wiki/index.php?search=%s&fulltext=Search",
+  maw = "http://masseffect.wikia.com/wiki/index.php?search=%s",
+  mcw = "http://www.minecraftwiki.net/index.php?search=%s",
+  pcg = "http://pcgamingwiki.com/index.php?search=%s",
+
   aur = "https://aur.archlinux.org/packages.php?K=%s",
   pak = "https://www.archlinux.org/packages/?q=%s",
   aw  = "https://wiki.archlinux.org/index.php?go=Go&search=%s",
 
+  imdb = "http://imdb.com/find?s=all&q=%s",
+  tvt  = "https://encrypted.google.com/search?hl=en&q=site:tvtropes.org+%s",
   ug   = "http://www.ultimate-guitar.com/search.php?value=%s&search_type=title",
   y    = "http://www.youtube.com/results?search_query=%s",
-  mw   = "http://www.minecraftwiki.net/index.php?search=%s",
-  imdb = "http://imdb.com/find?s=all&q=%s",
 }
 search_engines.default = search_engines.google
 
@@ -64,94 +66,41 @@ require "binds"
 
 add_binds("normal", {
   lousy.bind.buf("^gq$",
-    function (w)
-      luakit.spawn("quvi -f best --exec 'mplayer -cache-min 15 %u' " .. w.view.uri)
-    end
+  function (w)
+    luakit.spawn("quvi -f best --exec 'mplayer -cache-min 15 %u' " .. w.view.uri)
+  end
   )
 })
 
 ----------------------------------
 -- Optional user script loading --
 ----------------------------------
--- AdBlock
---require "adblock"
 
--- Add sqlite3 cookiejar
-require "cookies"
-
--- Cookie blocking by domain (extends cookies module)
--- Add domains to the whitelist at "$XDG_CONFIG_HOME/luakit/cookie.whitelist"
--- and blacklist at "$XDG_CONFIG_HOME/luakit/cookie.blacklist".
--- Each domain must be on it's own line and you may use "*" as a
--- wildcard character (I.e. "*google.com")
---require "cookie_blocking"
-
--- Block all cookies by default (unless whitelisted)
---cookies.default_allow = false
-
--- Add uzbl-like form filling
--- require "formfiller"
-
--- Add proxy support & manager
--- require "proxy"
-
--- Add quickmarks support & manager
-require "quickmarks"
-
--- Add session saving/loading support
-require "session"
-
--- Add command to list closed tabs & bind to open closed tabs
-require "undoclose"
-
--- Add command to list tab history items
-require "tabhistory"
-
--- Add greasemonkey-like javascript userscript support
-require "userscripts"
-
--- Add bookmarks support
 require "bookmarks"
-
--- Add download support
+require "bookmarks_chrome"
+require "cmdhist"
+require "completion"
+require "cookies"
 require "downloads"
 require "downloads_chrome"
-
--- Add vimperator-like link hinting & following
--- (depends on downloads)
 require "follow"
-
--- To use a custom character set for the follow hint labels un-comment and
--- modify the following:
---local s = follow.styles
---follow.style = s.sort(s.reverse(s.charset("asdfqwerzxcv"))) -- I'm a lefty
-
--- Add command history
-require "cmdhist"
-
--- Add search mode & binds
-require "search"
-
--- Add ordering of new tabs
-require "taborder"
-
--- Save web history
-require "history"
-require "history_chrome"
-
--- Add command completion
-require "completion"
-
--- NoScript plugin, toggle scripts and or plugins on a per-domain basis.
--- `,ts` to toggle scripts, `,tp` to toggle plugins, `,tr` to reset.
--- Remove all "enable_scripts" & "enable_plugins" lines from your
--- domain_props table (in config/globals.lua) as this module will conflict.
---require "noscript"
-
 require "follow_selected"
 require "go_input"
 require "go_next_prev"
 require "go_up"
+require "history"
+require "history_chrome"
+require "introspector"
+require "quickmarks"
+require "search"
+require "session"
+require "tabhistory"
+require "taborder"
+require "undoclose"
+require "webinspector"
+
+local s            = follow.label_styles
+follow.label_maker = s.sort(s.reverse(s.charset("ahotenusid")))
 
 -----------------------------
 -- End user script loading --
@@ -185,4 +134,3 @@ if unique then
     w.win.urgency_hint = true
   end)
 end
-
