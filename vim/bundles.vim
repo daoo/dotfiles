@@ -10,7 +10,6 @@ Bundle 'SirVer/ultisnips'
 Bundle 'alex.vim'
 Bundle 'daoo/Mustang2'
 Bundle 'daoo/Wombat'
-Bundle 'daoo/a.vim'
 Bundle 'glsl.vim'
 Bundle 'gmarik/vundle'
 Bundle 'godlygeek/tabular'
@@ -46,10 +45,6 @@ nmap <leader>M <Plug>(quickhl-reset)
 nmap <leader>m <Plug>(quickhl-toggle)
 xmap <leader>M <Plug>(quickhl-reset)
 xmap <leader>m <Plug>(quickhl-toggle)
-
-nnoremap <leader>ha :A<cr>
-nnoremap <leader>hs :AS<cr>
-nnoremap <leader>hv :AV<cr>
 
 nnoremap <leader>a- :Tabularize /-><cr>
 nnoremap <leader>aa :Tabularize assignment<cr>

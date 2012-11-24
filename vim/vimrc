@@ -78,6 +78,19 @@ augroup line_return
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \ execute 'normal! g`"zvzz' |
     \ endif
+
+function! SwitchSourceHeader()
+  let ext = expand("%:e")
+  if (ext == "cpp")
+    e %:r.hpp
+  elseif (ext == "hpp")
+    e %:r.cpp
+  elseif (ext == "h")
+    e %:r.c
+  elseif (ext == "c")
+    e %:r.h
+  endif
+endfunction
 " }}}
 " {{{ Disabled Stupid Keys
 noremap Q <nop>
@@ -128,6 +141,7 @@ nnoremap <leader>cp :%y+<cr>
 nnoremap <leader>ef :e %<cr>
 nnoremap <leader>eve :vsplit $MYVIMRC<cr>
 nnoremap <leader>evs :source $MYVIMRC<cr>
+nnoremap <leader>h :call SwitchSourceHeader()<cr>
 nnoremap <leader>se :setlocal spell spelllang=en_us<cr>
 nnoremap <leader>so :setlocal spell spelllang=<cr>
 inoremap <c-space> <c-x><c-o>
