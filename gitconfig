@@ -13,7 +13,15 @@
   st = status
   ci = commit
   co = checkout
-  w  = whatchanged
-  lg = log --oneline --decorate --graph
+
+  filelog = log -u
+  fl      = log -u
+
+  sl = stash list
+  sa = stash apply
+  ss = stash save
+
+  ls = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --date=relative
+  ll = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --numstat
 [push]
   default = current
