@@ -4,25 +4,25 @@ filetype off
 set runtimepath+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-Bundle 'Markdown'
-Bundle 'Rename2'
-Bundle 'SirVer/ultisnips'
 Bundle 'alex.vim'
+Bundle 'cpp.vim'
+Bundle 'css.vim'
+Bundle 'glsl.vim'
+Bundle 'happy.vim'
+
 Bundle 'daoo/Mustang2'
 Bundle 'daoo/Wombat'
-Bundle 'glsl.vim'
+
+Bundle 'Rename2'
+Bundle 'SirVer/ultisnips'
 Bundle 'gmarik/vundle'
 Bundle 'godlygeek/tabular'
-Bundle 'happy.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
-Bundle 'skammer/vim-css-color'
 Bundle 't9md/vim-quickhl'
-Bundle 'tango-morning.vim'
 Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 
