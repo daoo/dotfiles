@@ -25,6 +25,10 @@ scripts:
 	mkdir -p ${HOME}/bin
 	ln -fsn $(cfgdir)/scripts ${HOME}/bin/
 
+sublime:
+	ln -fns "$(cfgdir)/sublime/User/Default (Linux).sublime-keymap" "${HOME}/.config/sublime-text-2/Packages/User/Default (Linux).sublime-keymap"
+	ln -fns "$(cfgdir)/sublime/User/Preferences.sublime-settings" "${HOME}/.config/sublime-text-2/Packages/User/Preferences.sublime-settings"
+
 tmux:
 	ln -fsn $(cfgdir)/tmux.conf ${HOME}/.tmux.conf
 
@@ -61,4 +65,4 @@ zsh:
 	ln -fsn $(cfgdir)/zsh/zshrc ${HOME}/.zshrc
 	ln -fsn $(cfgdir)/zsh/zprofile ${HOME}/.zprofile
 
-.PHONY: git gtk luakit rtorrent scripts urxvt vim xdefaults xinitrc xmonad zsh
+.PHONY: git gtk luakit rtorrent scripts sublime urxvt vim xdefaults xinitrc xmonad zsh
