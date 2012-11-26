@@ -1,9 +1,12 @@
 {
 	"color_scheme": "Packages/Color Scheme - Default/Monokai Bright.tmTheme",
 	"font_size": 8,
-	"ignored_packages":
-	[
-	],
+    "folder_exclude_patterns": [".svn", ".git", ".hg", "build"],
+	"ignored_packages": [],
+	"gutter": false,
+	"rulers": [80, 120],
+	"translate_tabs_to_spaces": true,
+    "trim_trailing_white_space_on_save": true,
 	"vintage_ctrl_keys": true,
 	"vintage_start_in_command_mode": true
 }

@@ -253,11 +253,19 @@
 
 	{ "keys": ["f5"], "command": "exec", "args": {"kill": true } },
 	{ "keys": ["f8"], "command": "build" },
-	{ "keys": [",", "c", "space"], "command": "toggle_comment", "args": { "block": false } },
+	{ "keys": [",", "c", "space"]
+	, "command": "toggle_comment"
+ 	, "args": {"block": false}
+	, "context": [{"key": "setting.command_mode", "operand": false}]
+	},
 
-	{ "keys": [",", "a", "p"], "command": "sort_lines", "args": {"case_sensitive": true} },
+	//{ "keys": [",", "a", "p"], "command": "sort_lines", "args": {"case_sensitive": true},
+		//"context": [{"key": "setting.command_mode", "operand": false} ]
+	//},
 
 	{ "keys": ["ctrl+t"], "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} },
 	{ "keys": ["ctrl+shift+t"], "command": "show_overlay", "args": {"overlay": "command_palette"} },
-	{ "keys": ["ctrl+alt+t"], "command": "prompt_select_project" }
+	{ "keys": ["ctrl+alt+t"], "command": "prompt_select_project" },
+
+	{ "keys": [",", "a", "a"], "command": "alignment" }
 ]
