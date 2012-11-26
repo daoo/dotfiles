@@ -60,24 +60,12 @@ runtime ftplugin/man.vim
 " {{{ Commands
 command! W %!sudo tee > /dev/null %
 
-augroup winresize
-  au VimResized * :wincmd =
-augroup END
-
 " Only shown when not in insert mode.
 augroup trailing
   au!
   au InsertEnter * :set listchars-=trail:⌴
   au InsertLeave * :set listchars+=trail:⌴
 augroup END
-
-" Make sure Vim returns to the same line when you reopen a file.
-augroup line_return
-  au!
-  au BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \ execute 'normal! g`"zvzz' |
-    \ endif
 
 function! SwitchSourceHeader()
   let ext = expand("%:e")
