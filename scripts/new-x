@@ -1,12 +1,3 @@
 #!/usr/bin/env bash
 
-if [[ $# -ge 1 ]]; then
-  cd $HOME
-  tmpscript="$(mktemp)"
-  DISPLAY=:1.0
-  echo -e "openbox &\n$*" > "$tmpscript"
-  xinit "$tmpscript" -- :1 -layout Gaming || exit 1
-  rm -f "$tmpscript"
-else
-  echo "Usage: new-x COMMAND [ARGS]"
-fi
+DISPLAY=:1.0 xinit "openbox" -layout Gaming -- :1
