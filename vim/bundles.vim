@@ -33,8 +33,8 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_switch_buffer     = 0
 
 let g:ctrlp_custom_ignore = {
-  \ 'file': '\.pdf$\|\.xcf$\|\.gif$\|\.png$\|\.jpg$\|\.swp$\|\.bak$\|\.pyc$\|\.class$\|\.o$\|\.hi$\|\.dll$',
-  \ 'dir': '\.git$\|\.hg$\|\.svn$\|build$'
+  \ 'file': '\v[\/]\.(pdf|xcf|gif|png|jpg|swp|bak|pyc|class|o|hi|dll)$',
+  \ 'dir': '\v([\/]\.(git|hg|svn))|((src/.*)@<!build)$'
   \ }
 " }}}
 " {{{ Maps
