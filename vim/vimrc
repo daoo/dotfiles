@@ -138,7 +138,6 @@ vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
 
 " Searching
 nnoremap <leader>fc :nohlsearch<cr>
-nnoremap <leader>fg :Ack '<cword>'<cr>
 nnoremap <leader>fl /<c-r>=expand("<cword>")<cr><cr>
 nnoremap <leader>fr :%s@<c-r>=expand("<cword>")<cr>@
 vnoremap <leader>fr y:%s@<c-r>"@

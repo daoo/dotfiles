@@ -52,5 +52,7 @@ nnoremap <leader>ab :Tabularize braces<cr>
 nnoremap <leader>ac :Tabularize commas<cr>
 
 nnoremap <c-t> :CtrlP<cr>
+
+nnoremap <leader>fg :Ack '<cword>'<cr>
 " }}}
 " vim: fdm=marker :
