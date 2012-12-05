@@ -17,8 +17,9 @@
   filelog = log -u
   fl      = log -u
 
-  sl = stash list
   sa = stash apply
+  sl = stash list
+  sp = stash pop
   ss = stash save
 
   ls = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --date=relative
