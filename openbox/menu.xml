@@ -6,20 +6,15 @@
           <execute>gvim</execute>
       </action> </item>
     </menu>
-    <menu id="6" label="Graphics">
+    <menu id="7" label="Multimedia">
+      <item label="Audacity"> <action name="Execute">
+          <execute>audacity</execute>
+      </action> </item>
       <item label="Blender"> <action name="Execute">
           <execute>blender</execute>
       </action> </item>
       <item label="The GIMP"> <action name="Execute">
           <execute>gimp</execute>
-      </action> </item>
-    </menu>
-    <menu id="7" label="Multimedia">
-      <item label="ALSA mixer"> <action name="Execute">
-          <execute>urxvt -e alsamixer</execute>
-      </action> </item>
-      <item label="Audacity"> <action name="Execute">
-          <execute>audacity</execute>
       </action> </item>
     </menu>
     <menu id="5" label="Network">
@@ -44,23 +39,12 @@
           <execute>zathura</execute>
       </action> </item>
     </menu>
-    <menu id="4" label="Science">
-      <item label="bc"> <action name="Execute">
-          <execute>urxvt -e bc</execute>
-      </action> </item>
-      <item label="Mathematica"> <action name="Execute">
-          <execute>/home/daniel/software/mathematica/bin/mathematica</execute>
-      </action> </item>
-      <item label="Matlab"> <action name="Execute">
-          <execute>/home/daniel/software/matlab/bin/matlab</execute>
-      </action> </item>
-    </menu>
     <menu id="38" label="Utilities">
+      <item label="ALSA mixer"> <action name="Execute">
+          <execute>urxvt -e alsamixer</execute>
+      </action> </item>
       <item label="urxvt"> <action name="Execute">
           <execute>urxvt</execute>
-      </action> </item>
-      <item label="7-Zip FM"> <action name="Execute">
-          <execute>7zFM</execute>
       </action> </item>
     </menu>
     <separator/>
