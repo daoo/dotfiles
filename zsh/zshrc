@@ -80,7 +80,7 @@ alias :w='echo you are not in vim anymore'
 alias bell="echo -e '\a'"
 alias calc='noglob calc'
 alias g='git'
-alias aur='aura'
+alias y='yaourt'
 alias ctl='systemctl'
 # ]]]
 # [[[ Binds
