@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+objdump -dCM intel $@ | vim -c 'setfiletype asm' -
