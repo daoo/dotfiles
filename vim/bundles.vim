@@ -13,6 +13,7 @@ Bundle 'happy.vim'
 Bundle 'daoo/Mustang2'
 Bundle 'daoo/Wombat'
 
+Bundle 'Lokaltog/vim-powerline'
 Bundle 'Rename2'
 Bundle 'SirVer/ultisnips'
 Bundle 'gmarik/vundle'
