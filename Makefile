@@ -18,6 +18,12 @@ mpd:
 	mkdir -p ${HOME}/.mpd
 	cp $(cfgdir)/mpd.conf ${HOME}/.mpd/
 
+openbox:
+	mkdir -p ${HOME}/.config/openbox
+	ln -fsn $(cfgdir)/openbox/autostart ${HOME}/.config/openbox/autostart
+	ln -fsn $(cfgdir)/openbox/rc.xml ${HOME}/.config/openbox/rc.xml
+	ln -fsn $(cfgdir)/openbox/menu.xml ${HOME}/.config/openbox/menu.xml
+
 rtorrent:
 	ln -fsn $(cfgdir)/rtorrent.rc ${HOME}/.rtorrent.rc
 
@@ -65,4 +71,4 @@ zsh:
 	ln -fsn $(cfgdir)/zsh/zshrc ${HOME}/.zshrc
 	ln -fsn $(cfgdir)/zsh/zprofile ${HOME}/.zprofile
 
-.PHONY: git gtk luakit rtorrent scripts sublime urxvt vim xdefaults xinitrc xmonad zsh
+.PHONY: git gtk luakit openbox rtorrent scripts sublime urxvt vim xdefaults xinitrc xmonad zsh

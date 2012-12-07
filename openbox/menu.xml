@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_menu>
+  <menu id="root-menu" label="OpenBox 3">
+    <menu id="2" label="Editors">
+      <item label="GVim"> <action name="Execute">
+          <execute>gvim</execute>
+      </action> </item>
+    </menu>
+    <menu id="6" label="Graphics">
+      <item label="Blender"> <action name="Execute">
+          <execute>blender</execute>
+      </action> </item>
+      <item label="The GIMP"> <action name="Execute">
+          <execute>gimp</execute>
+      </action> </item>
+    </menu>
+    <menu id="7" label="Multimedia">
+      <item label="ALSA mixer"> <action name="Execute">
+          <execute>urxvt -e alsamixer</execute>
+      </action> </item>
+      <item label="Audacity"> <action name="Execute">
+          <execute>audacity</execute>
+      </action> </item>
+    </menu>
+    <menu id="5" label="Network">
+      <item label="FireFox"> <action name="Execute">
+          <execute>firefox</execute>
+      </action> </item>
+      <item label="Luakit"> <action name="Execute">
+          <execute>luakit</execute>
+      </action> </item>
+      <item label="Skype"> <action name="Execute">
+          <execute>skype</execute>
+      </action> </item>
+      <item label="Wireshark"> <action name="Execute">
+          <execute>wireshark</execute>
+      </action> </item>
+    </menu>
+    <menu id="3" label="Office">
+      <item label="LibreOffice Impress"> <action name="Execute">
+          <execute>libreoffice</execute>
+      </action> </item>
+      <item label="Zathura"> <action name="Execute">
+          <execute>zathura</execute>
+      </action> </item>
+    </menu>
+    <menu id="4" label="Science">
+      <item label="bc"> <action name="Execute">
+          <execute>urxvt -e bc</execute>
+      </action> </item>
+      <item label="Mathematica"> <action name="Execute">
+          <execute>/home/daniel/software/mathematica/bin/mathematica</execute>
+      </action> </item>
+      <item label="Matlab"> <action name="Execute">
+          <execute>/home/daniel/software/matlab/bin/matlab</execute>
+      </action> </item>
+    </menu>
+    <menu id="38" label="Utilities">
+      <item label="urxvt"> <action name="Execute">
+          <execute>urxvt</execute>
+      </action> </item>
+      <item label="7-Zip FM"> <action name="Execute">
+          <execute>7zFM</execute>
+      </action> </item>
+    </menu>
+    <separator/>
+    <menu id="40" label="OpenBox">
+      <menu id="client-list-menu"/>
+      <item label="Reconfigure"> <action name="Reconfigure"/> </item>
+      <item label="Openbox Configuration Manager"> <action name="Execute">
+          <execute>obconf</execute>
+      </action> </item>
+      <separator/>
+      <item label="Exit"> <action name="Exit"/> </item>
+    </menu>
+  </menu>
+</openbox_menu>
