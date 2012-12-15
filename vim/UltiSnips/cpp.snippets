@@ -2,34 +2,14 @@ snippet inc "include header" b!
 #include "`!p snip.rv = snip.basename + ".hpp"`"
 endsnippet
 
-snippet cl "class" b
-class ${1:`!p snip.rv = snip.basename or "Name"`} {
-	public:
-		${1/(\w+).*/$1/}(${2:arguments});
-
-		${1/(\w+).*/$1/}() = default;
-		~${1/(\w+).*/$1/}() = default;
-		${1/(\w+).*/$1/}(const ${1/(\w+).*/$1/}&) = default;
-		${1/(\w+).*/$1/}& operator=(const ${1/(\w+).*/$1/}&) = default;
-
-	private:
-		${0:/* data */}
-};
-endsnippet
-
 snippet in "interface" b
-class ${1:I`!p snip.rv = snip.basename or "Name"`} {
+class ${1:I`!p snip.rv = snip.basename or "Name"`}
+{
 	public:
 		virtual ~$1() { }
 
 		virtual ${4:void} ${2:myMethod}(${3:arguments}) = 0;
 };
-endsnippet
-
-snippet ns "namespace" b
-namespace ${1:somespace} {
-	${0}
-}
 endsnippet
 
 snippet us "using namespace" b
