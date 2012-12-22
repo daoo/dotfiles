@@ -1,3 +1,3 @@
 feh --no-fehbg --bg-tile $(find "$HOME/media/wallpapers" -type f | shuf -n 1) &
 compton -b &
-docky &
+avant-window-navigator &
