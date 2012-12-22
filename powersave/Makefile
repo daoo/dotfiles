@@ -14,7 +14,7 @@ debug: builddir
 	$(cxx) -g -DDEBUG $(params) $(cfiles)
 
 release: builddir
-	$(cxx) -O3 -flto -DNLOGGING -DNDEBUG -mtune=native -march=native $(params) $(cfiles)
+	$(cxx) -O4 -DNLOGGING -DNDEBUG -mtune=native -march=native $(params) $(cfiles)
 
 pkgbuild:
 	rm -rf /tmp/powersave
