@@ -10,23 +10,21 @@
 #include <unistd.h>
 
 namespace files {
-  template <typename T>
-  T read(const std::string& file) {
+  inline std::string read(const std::string& file) {
     std::ifstream f(file);
     if (f.is_open()) {
-      T a;
-      f >> a;
-      return a;
+      std::string line;
+      getline(f, line);
+      return line;
     } else {
       throw files::io_exception(file);
     }
   }
 
-  template <typename T>
-  void write(const std::string& file, T chr) {
+  inline void write(const std::string& file, const char* str) {
     std::ofstream f(file);
     if (f.is_open()) {
-      f << chr;
+      f << str;
     } else {
       throw files::io_exception(file);
     }

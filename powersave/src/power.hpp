@@ -4,7 +4,7 @@
 #include <string>
 
 namespace power {
-  void opt(const std::string& file, const std::string& value);
+  void opt(const std::string& file, const char* value);
   void check(const std::string& file);
 
   void run(const std::string& cmd);

@@ -12,9 +12,9 @@ using namespace files;
 using namespace std;
 
 namespace power {
-  void opt(const string& file, const string& value) {
+  void opt(const string& file, const char* value) {
     try {
-      write<string>(file, value);
+      write(file, value);
     } catch (io_exception& ex) {
       logging::error("io error while writing to file " + file);
     }
@@ -22,7 +22,7 @@ namespace power {
 
   void check(const string& file) {
     try {
-      string str = read<string>(file);
+      string str = read(file);
       cout << file << ": " << str << "\n";
     } catch (io_exception& ex) {
       logging::error("io error while reading from file " + file);
