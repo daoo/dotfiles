@@ -3,9 +3,11 @@
 
 #include "io_exception.hpp"
 
+#include <cstring>
+#include <dirent.h>
 #include <fstream>
 #include <string>
-#include <vector>
+#include <unistd.h>
 
 namespace files {
   template <typename T>
@@ -30,7 +32,9 @@ namespace files {
     }
   }
 
-  bool path_exists(const std::string& file);
+  inline bool path_exists(const char* file) {
+    return access(file, F_OK) == 0;
+  }
 }
 
 #endif /* end of include guard: FILES_HPP_8GUXMS0N */
