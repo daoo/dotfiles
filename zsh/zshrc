@@ -18,8 +18,8 @@ esac
 
 # History
 HISTFILE=~/.zhistory
-HISTSIZE=100000
-SAVEHIST=100000
+HISTSIZE=10000
+SAVEHIST=10000
 setopt append_history
 setopt extended_history
 setopt hist_ignore_dups
