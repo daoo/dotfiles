@@ -1,9 +1,7 @@
-cfgdir := $(shell pwd)
+cfgdir = $(shell pwd)
 
 all:
-	@echo "make install"
-
-install: git gtk luakit rtorrent scripts tmux urxvt vim xdefaults xinitrc xmonad zsh
+	@echo "Availible targets: git gtk luakit rtorrent scripts systemd tmux urxvt vim xdefaults xinitrc xmonad zsh"
 
 git:
 	ln -fsn $(cfgdir)/gitconfig ${HOME}/.gitconfig
@@ -34,6 +32,17 @@ scripts:
 sublime:
 	ln -fns "$(cfgdir)/sublime/User/Default (Linux).sublime-keymap" "${HOME}/.config/sublime-text-2/Packages/User/Default (Linux).sublime-keymap"
 	ln -fns "$(cfgdir)/sublime/User/Preferences.sublime-settings" "${HOME}/.config/sublime-text-2/Packages/User/Preferences.sublime-settings"
+
+systemd:
+	ln -fns $(cfgdir)/systemd/chromium.service ${HOME}/.config/systemd/user/chromium.serivce
+	ln -fns $(cfgdir)/systemd/gvim.service ${HOME}/.config/systemd/user/gvim.serivce
+	ln -fns $(cfgdir)/systemd/mpd.service ${HOME}/.config/systemd/user/mpd.service
+	ln -fns $(cfgdir)/systemd/nvidia-settings.service ${HOME}/.config/systemd/user/nvidia-settings.service
+	ln -fns $(cfgdir)/systemd/pointer.service ${HOME}/.config/systemd/user/pointer.serivce
+	ln -fns $(cfgdir)/systemd/redshift.service ${HOME}/.config/systemd/user/redshift.service
+	ln -fns $(cfgdir)/systemd/skype.service ${HOME}/.config/systemd/user/skype.serivce
+	ln -fns $(cfgdir)/systemd/unclutter.service ${HOME}/.config/systemd/user/unclutter.service
+	ln -fns $(cfgdir)/systemd/wallpaper.service ${HOME}/.config/systemd/user/wallpaper.service
 
 tmux:
 	ln -fsn $(cfgdir)/tmux.conf ${HOME}/.tmux.conf
@@ -71,4 +80,4 @@ zsh:
 	ln -fsn $(cfgdir)/zsh/zshrc ${HOME}/.zshrc
 	ln -fsn $(cfgdir)/zsh/zprofile ${HOME}/.zprofile
 
-.PHONY: git gtk luakit openbox rtorrent scripts sublime urxvt vim xdefaults xinitrc xmonad zsh
+.PHONY: git gtk luakit rtorrent scripts systemd tmux urxvt vim xdefaults xinitrc xmonad zsh

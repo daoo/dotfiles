@@ -1,0 +1,8 @@
+[Unit]
+Description=Chromium
+
+[Service]
+ExecStart=/usr/bin/chromium
+
+[Install]
+WantedBy=default.target

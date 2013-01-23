@@ -1,0 +1,8 @@
+[Unit]
+Description=Set root pointer
+
+[Service]
+ExecStart=/usr/bin/xsetroot -cursor_name left_ptr
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,8 @@
+[Unit]
+Description=GVim
+
+[Service]
+ExecStart=/usr/bin/vim -gf
+
+[Install]
+WantedBy=default.target

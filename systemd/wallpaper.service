@@ -1,0 +1,8 @@
+[Unit]
+Description=Randomize Wallpaper
+
+[Service]
+ExecStart=/home/daniel/bin/scripts/random-wallpaper /home/daniel/media/wallpapers
+
+[Install]
+WantedBy=default.target

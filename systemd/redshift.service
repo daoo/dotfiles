@@ -1,0 +1,9 @@
+[Unit]
+Description=Redshift
+
+[Service]
+ExecStart=/usr/bin/redshift -m randr -l 57.7117:11.9148 -t 6000K:4700K &
+Restart=always
+
+[Install]
+WantedBy=default.target
