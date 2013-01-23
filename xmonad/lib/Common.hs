@@ -21,8 +21,10 @@ import XMonad.Util.Run
 myManageHook :: ManageHook
 myManageHook = composeAll
   [ className    =? "Skype"                --> doShift "im"
+  , className    =? "Chromium"             --> doShift "web"
   , className    =? "Browser"              --> doShift "web"
   , className    =? "Firefox"              --> doShift "web"
+  , className    =? "Vim"                  --> doShift "code"
   , className    =? "Gvim"                 --> doShift "code"
   , className    =? "Eclipse"              --> doShift "code2"
   , className    =? "Wine"                 --> doShift "full"
