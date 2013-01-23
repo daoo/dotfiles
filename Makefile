@@ -1,7 +1,7 @@
 cfgdir = $(shell pwd)
 
 all:
-	@echo "Availible targets: git gtk luakit rtorrent scripts systemd tmux urxvt vim xdefaults xinitrc xmonad zsh"
+	@echo "Availible targets: git gtk luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xinitrc xmonad zsh"
 
 git:
 	ln -fsn $(cfgdir)/gitconfig ${HOME}/.gitconfig
@@ -80,4 +80,4 @@ zsh:
 	ln -fsn $(cfgdir)/zsh/zshrc ${HOME}/.zshrc
 	ln -fsn $(cfgdir)/zsh/zprofile ${HOME}/.zprofile
 
-.PHONY: git gtk luakit rtorrent scripts systemd tmux urxvt vim xdefaults xinitrc xmonad zsh
+.PHONY: git gtk luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xinitrc xmonad zsh
