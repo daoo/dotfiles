@@ -1,9 +1,9 @@
 [Unit]
-Description = Unclutter
+Description=Unclutter
 
 [Service]
-ExecStart = /usr/bin/unclutter
-Restart = always
+ExecStart=/usr/bin/unclutter
+Restart=always
 
 [Install]
-WantedBy = default.target
+WantedBy=default.target

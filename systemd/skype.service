@@ -1,8 +1,8 @@
 [Unit]
-Description = Skype
+Description=Skype
 
 [Service]
-ExecStart = /usr/bin/skype --disable-api
+ExecStart=/usr/bin/skype --disable-api
 
 [Install]
-WantedBy = default.target
+WantedBy=default.target
