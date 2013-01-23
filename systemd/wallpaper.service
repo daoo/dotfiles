@@ -1,8 +1,9 @@
 [Unit]
 Description=Randomize Wallpaper
+After=xorg.target
 
 [Service]
 ExecStart=/home/daniel/bin/scripts/random-wallpaper /home/daniel/media/wallpapers
 
 [Install]
-WantedBy=default.target
+WantedBy=stuff.target

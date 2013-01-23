@@ -1,8 +1,9 @@
 [Unit]
 Description=Skype
+After=xorg.target
 
 [Service]
 ExecStart=/usr/bin/skype --disable-api
 
 [Install]
-WantedBy=default.target
+WantedBy=stuff.target

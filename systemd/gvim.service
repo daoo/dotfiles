@@ -1,8 +1,9 @@
 [Unit]
 Description=GVim
+After=xorg.target
 
 [Service]
 ExecStart=/usr/bin/vim -gf
 
 [Install]
-WantedBy=default.target
+WantedBy=stuff.target

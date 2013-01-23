@@ -1,8 +1,9 @@
 [Unit]
 Description=Load nvidia settings
+After=xorg.target
 
 [Service]
 ExecStart=/usr/bin/nvidia-settings --load-config-only
 
 [Install]
-WantedBy=default.target
+WantedBy=stuff.target

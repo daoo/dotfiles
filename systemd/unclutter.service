@@ -1,9 +1,10 @@
 [Unit]
 Description=Unclutter
+After=xorg.target
 
 [Service]
 ExecStart=/usr/bin/unclutter
 Restart=always
 
 [Install]
-WantedBy=default.target
+WantedBy=stuff.target

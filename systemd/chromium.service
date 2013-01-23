@@ -1,8 +1,9 @@
 [Unit]
 Description=Chromium
+After=xorg.target
 
 [Service]
 ExecStart=/usr/bin/chromium
 
 [Install]
-WantedBy=default.target
+WantedBy=stuff.target

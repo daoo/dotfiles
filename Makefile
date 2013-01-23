@@ -41,8 +41,11 @@ systemd:
 	ln -fns $(cfgdir)/systemd/pointer.service ${HOME}/.config/systemd/user/pointer.serivce
 	ln -fns $(cfgdir)/systemd/redshift.service ${HOME}/.config/systemd/user/redshift.service
 	ln -fns $(cfgdir)/systemd/skype.service ${HOME}/.config/systemd/user/skype.serivce
+	ln -fns $(cfgdir)/systemd/stuff.target ${HOME}/.config/systemd/user/stuff.target
 	ln -fns $(cfgdir)/systemd/unclutter.service ${HOME}/.config/systemd/user/unclutter.service
 	ln -fns $(cfgdir)/systemd/wallpaper.service ${HOME}/.config/systemd/user/wallpaper.service
+	ln -fns $(cfgdir)/systemd/wm.target ${HOME}/.config/systemd/user/wm.target
+	ln -fns $(cfgdir)/systemd/xmonad.service ${HOME}/.config/systemd/user/xmonad.service
 
 tmux:
 	ln -fsn $(cfgdir)/tmux.conf ${HOME}/.tmux.conf
