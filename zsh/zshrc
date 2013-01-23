@@ -82,7 +82,7 @@ alias calc='noglob calc'
 alias g='git'
 alias y='yaourt'
 alias ctl='systemctl'
-alias uctl='systmectl --user'
+alias uctl='systemctl --user'
 # ]]]
 # [[[ Binds
 bindkey '' history-search-backward
