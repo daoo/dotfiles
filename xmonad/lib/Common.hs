@@ -33,7 +33,6 @@ myManageHook = composeAll
   , wmName       =? "Options"              --> doCenterFloat
   , wmWindowRole =? "Preferences"          --> doCenterFloat
   , wmWindowRole =? "GtkFileChooserDialog" --> doCenterFloat
-  , className    =? "Steam"                --> doIgnore
   ]
   where
     wmWindowRole = stringProperty "WM_WINDOW_ROLE"
