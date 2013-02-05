@@ -83,7 +83,8 @@ xmonad:
 
 zsh:
 	ln -fsn $(cfgdir)/zsh ${HOME}/.zsh
-	ln -fsn $(cfgdir)/zsh/zshrc ${HOME}/.zshrc
 	ln -fsn $(cfgdir)/zsh/zprofile ${HOME}/.zprofile
+	ln -fsn $(cfgdir)/zsh/zshenv ${HOME}/.zshenv
+	ln -fsn $(cfgdir)/zsh/zshrc ${HOME}/.zshrc
 
 .PHONY: git gtk haskeline luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xinitrc xmonad zsh

@@ -1,0 +1,3 @@
+#!/bin/zsh
+
+PATH="$HOME/bin:$HOME/bin/scripts:$HOME/.cabal/bin:$PATH"
