@@ -1,0 +1,2 @@
+completionType: ListCompletion
+bind: ctrl-e : r return
