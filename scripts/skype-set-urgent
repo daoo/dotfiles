@@ -1,5 +1,3 @@
 #!/usr/bin/env bash
 
-for id in $(xdotool search "Skype"); do
-  seturgent "$id"
-done
+seturgent "$(xdotool search --class --limit 1 "Skype")"
