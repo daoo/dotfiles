@@ -5,7 +5,7 @@ After=xorg.target
 Requires=xorg.target
 
 [Service]
-Environment=DISPLAY=:0
+Environment=SHELL=/bin/zsh
 ExecStart=/usr/bin/xmonad
 Restart=always
 RestartSec=10

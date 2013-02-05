@@ -3,7 +3,7 @@ Description=Randomize Wallpaper
 After=xorg.target
 
 [Service]
-ExecStart=/home/daniel/bin/scripts/random-wallpaper /home/daniel/media/wallpapers
+ExecStart=/bin/bash -c '/usr/bin/feh --bg-tile --no-fehbg "$(find %h/media/wallpapers | shuf -n 1)"'
 
 [Install]
 WantedBy=stuff.target

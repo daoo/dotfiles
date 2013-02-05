@@ -1,6 +1,6 @@
 [Unit]
 Description=Chromium
-After=xorg.target
+After=xorg.target network.target
 
 [Service]
 ExecStart=/usr/bin/chromium

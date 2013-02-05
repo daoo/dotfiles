@@ -1,14 +1,9 @@
 #!/usr/bin/env bash
 
-mpd_dir="$HOME/.mpd"
-mpd="mpd $mpd_dir/mpd.conf"
-
-if [[ -f "$mpd_dir/pid" ]]; then
+if systemctl -q --user is-active mpd.service; then
   # mpd running
   mpc -q toggle
 else
-  $mpd
-  sleep 1 # Sleep a second to let mpd start
+  systemctl -q --user start mpd.service
   mpc -q play
 fi
-

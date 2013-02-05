@@ -1,6 +1,6 @@
 [Unit]
 Description=Skype
-After=xorg.target
+After=xorg.target network.target pulseaudio.service
 
 [Service]
 ExecStart=/usr/bin/skype --disable-api

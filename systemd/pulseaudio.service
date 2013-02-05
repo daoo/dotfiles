@@ -1,0 +1,12 @@
+[Unit]
+Description=PulseAudio Sound System
+Before=sound.target
+Requires=dbus.socket
+
+[Service]
+BusName=org.pulseaudio.Server
+ExecStart=/usr/bin/pulseaudio
+Restart=always
+
+[Install]
+WantedBy=stuff.target
