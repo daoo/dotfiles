@@ -5,6 +5,7 @@ set runtimepath+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'alex.vim'
+Bundle 'coq-syntax'
 Bundle 'cpp.vim'
 Bundle 'css.vim'
 Bundle 'glsl.vim'
