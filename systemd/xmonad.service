@@ -6,6 +6,7 @@ Requires=xorg.target
 
 [Service]
 Environment=SHELL=/bin/zsh
+Environment=BROWSER=/usr/bin/chromium
 ExecStart=/usr/bin/xmonad
 Restart=always
 RestartSec=10
