@@ -1,10 +1,12 @@
 [Unit]
 Description=Music Player Daemon
 After=xorg.target pulseaudio.service media-hanharr.automount
+Wants=pulseaudio.service
 
 [Service]
 ExecStart=/usr/bin/mpd --no-daemon
 Restart=always
+RestartSec=2
 
 [Install]
 WantedBy=stuff.target

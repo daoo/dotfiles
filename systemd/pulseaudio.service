@@ -1,5 +1,6 @@
 [Unit]
 Description=PulseAudio Sound System
+After=xorg.target
 Before=sound.target
 Requires=dbus.socket
 
@@ -7,6 +8,7 @@ Requires=dbus.socket
 BusName=org.pulseaudio.Server
 ExecStart=/usr/bin/pulseaudio
 Restart=always
+RestartSec=2
 
 [Install]
 WantedBy=stuff.target
