@@ -3,6 +3,7 @@ Description=GVim
 After=xorg.target
 
 [Service]
+EnvironmentFile=/home/daniel/.systemd-environment
 ExecStart=/usr/bin/vim -gf
 
 [Install]

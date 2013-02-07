@@ -37,6 +37,7 @@ sublime:
 	ln -fsn "$(cfgdir)/sublime/User/Preferences.sublime-settings" "${HOME}/.config/sublime-text-2/Packages/User/Preferences.sublime-settings"
 
 systemd:
+	ln -fsn $(cfgdir)/systemd/environment ${HOME}/.systemd-environment
 	cp $(cfgdir)/systemd/chromium.service ${HOME}/.config/systemd/user/
 	cp $(cfgdir)/systemd/gvim.service ${HOME}/.config/systemd/user/
 	cp $(cfgdir)/systemd/mpd.service ${HOME}/.config/systemd/user/
