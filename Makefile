@@ -33,8 +33,8 @@ scripts:
 	ln -fsn $(cfgdir)/scripts ${HOME}/bin/
 
 sublime:
-	ln -fns "$(cfgdir)/sublime/User/Default (Linux).sublime-keymap" "${HOME}/.config/sublime-text-2/Packages/User/Default (Linux).sublime-keymap"
-	ln -fns "$(cfgdir)/sublime/User/Preferences.sublime-settings" "${HOME}/.config/sublime-text-2/Packages/User/Preferences.sublime-settings"
+	ln -fsn "$(cfgdir)/sublime/User/Default (Linux).sublime-keymap" "${HOME}/.config/sublime-text-2/Packages/User/Default (Linux).sublime-keymap"
+	ln -fsn "$(cfgdir)/sublime/User/Preferences.sublime-settings" "${HOME}/.config/sublime-text-2/Packages/User/Preferences.sublime-settings"
 
 systemd:
 	cp $(cfgdir)/systemd/chromium.service ${HOME}/.config/systemd/user/
