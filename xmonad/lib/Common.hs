@@ -27,6 +27,7 @@ myManageHook = composeAll
   , className    =? "Vim"                  --> doShift "code"
   , className    =? "Gvim"                 --> doShift "code"
   , className    =? "Eclipse"              --> doShift "code2"
+  , className    =? "Steam"                --> doShift "other"
   , className    =? "Wine"                 --> doShift "full"
   , appName      =? "MPlayer"              --> doCenterFloat
   , className    =? "Dialog"               --> doCenterFloat

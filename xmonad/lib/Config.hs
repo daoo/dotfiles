@@ -10,7 +10,7 @@ import XMonad.Prompt
 
 -- Workspaces
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["im", "web", "code", "code2", "other", "other2", "full", "void"]
+myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void"]
 
 -- Colors
 winBorderFocused, winBorderNormal :: String
