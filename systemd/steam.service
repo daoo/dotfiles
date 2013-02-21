@@ -1,0 +1,10 @@
+[Unit]
+Description=Steam
+After=xorg.target network.target
+
+[Service]
+EnvironmentFile=/home/daniel/.systemd-environment
+ExecStart=/usr/bin/steam
+
+[Install]
+WantedBy=stuff.target
