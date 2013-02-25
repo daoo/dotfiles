@@ -30,7 +30,7 @@ main = do
     , manageHook         = myManageHook <+> manageDocks <+> scratchpadManageHookDefault
     , modMask            = myModKey
     , normalBorderColor  = winBorderNormal
-    , terminal           = "urxvt"
+    , terminal           = "/usr/bin/urxvt"
     , workspaces         = myWorkspaces
     }
 
