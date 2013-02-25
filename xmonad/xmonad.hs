@@ -8,6 +8,7 @@ import Keys
 import Data.Map (union)
 
 import XMonad
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Util.Run
@@ -22,6 +23,7 @@ main = do
     { borderWidth        = 1
     , focusFollowsMouse  = False
     , focusedBorderColor = winBorderFocused
+    , handleEventHook    = fullscreenEventHook
     , keys               = union newKeyMaps . keys defaultConfig
     , layoutHook         = myLayoutHook
     , logHook            = myLogHook d
