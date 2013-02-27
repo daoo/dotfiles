@@ -1,0 +1,13 @@
+(require 'package)
+(package-initialize)
+
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+
+(load-file "/usr/share/emacs/site-lisp/ProofGeneral/generic/proof-site.el")
+
+(require 'evil)
+(evil-mode 1)
+
+(set-face-attribute 'default nil :font "Dina 8")

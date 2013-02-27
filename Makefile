@@ -1,7 +1,10 @@
 cfgdir = $(shell pwd)
 
 all:
-	@echo "Availible targets: git gtk haskeline luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xinitrc xmonad zsh"
+	@echo "Availible targets: emacs git gtk haskeline luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xinitrc xmonad zsh"
+
+emacs:
+	ln -fsn $(cfgdir)/emacs/emacs ${HOME}/.emacs
 
 git:
 	ln -fsn $(cfgdir)/gitconfig ${HOME}/.gitconfig
@@ -89,4 +92,4 @@ zsh:
 	ln -fsn $(cfgdir)/zsh/zshenv ${HOME}/.zshenv
 	ln -fsn $(cfgdir)/zsh/zshrc ${HOME}/.zshrc
 
-.PHONY: git gtk haskeline luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xinitrc xmonad zsh
+.PHONY: emacs git gtk haskeline luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xinitrc xmonad zsh
