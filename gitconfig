@@ -14,15 +14,16 @@
   ci = commit
   co = checkout
 
-  filelog = log -u
-  fl      = log -u
+  ff = merge origin/master
 
+  s  = stash
   sa = stash apply
   sl = stash list
   sp = stash pop
   ss = stash save
 
-  ls = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --date=relative
-  ll = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --numstat
+  l   = log --pretty = format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --date    = relative
+  ll  = log --pretty = format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --numstat
+  lll = log -u
 [push]
   default = current
