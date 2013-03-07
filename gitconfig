@@ -16,14 +16,14 @@
 
   ff = merge origin/master
 
-  s  = stash
+  s = stash
   sa = stash apply
   sl = stash list
   sp = stash pop
   ss = stash save
 
-  l   = log --pretty = format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --date    = relative
-  ll  = log --pretty = format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --numstat
+  l = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --date=relative
+  ll = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --numstat
   lll = log -u
 [push]
   default = current
