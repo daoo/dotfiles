@@ -11,3 +11,5 @@
 (evil-mode 1)
 
 (set-face-attribute 'default nil :font "Dina 8")
+
+(blink-cursor-mode (- (*) (*) (*)))
