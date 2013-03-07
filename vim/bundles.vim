@@ -4,6 +4,7 @@ filetype off
 set runtimepath+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+Bundle 'Cpp11-Syntax-Support'
 Bundle 'alex.vim'
 Bundle 'coq-syntax'
 Bundle 'cpp.vim'
@@ -31,6 +32,11 @@ Bundle 'tpope/vim-surround'
 filetype plugin indent on
 
 " {{{ General Settings
+augroup cpp11
+  au!
+  au BufNewFile,BufRead *.cpp set syntax=cpp11
+augroup END
+
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_switch_buffer     = 0
 
