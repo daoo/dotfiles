@@ -41,19 +41,7 @@ sublime:
 
 systemd:
 	ln -fsn $(cfgdir)/systemd/environment ${HOME}/.systemd-environment
-	cp $(cfgdir)/systemd/chromium.service ${HOME}/.config/systemd/user/
-	cp $(cfgdir)/systemd/gvim.service ${HOME}/.config/systemd/user/
-	cp $(cfgdir)/systemd/mpd.service ${HOME}/.config/systemd/user/
-	cp $(cfgdir)/systemd/nvidia-settings.service ${HOME}/.config/systemd/user/
-	cp $(cfgdir)/systemd/pointer.service ${HOME}/.config/systemd/user/
-	cp $(cfgdir)/systemd/pulseaudio.service ${HOME}/.config/systemd/user/
-	cp $(cfgdir)/systemd/redshift.service ${HOME}/.config/systemd/user/
-	cp $(cfgdir)/systemd/skype.service ${HOME}/.config/systemd/user/
-	cp $(cfgdir)/systemd/stuff.target ${HOME}/.config/systemd/user/
-	cp $(cfgdir)/systemd/unclutter.service ${HOME}/.config/systemd/user/
-	cp $(cfgdir)/systemd/wallpaper.service ${HOME}/.config/systemd/user/
-	cp $(cfgdir)/systemd/wm.target ${HOME}/.config/systemd/user/
-	cp $(cfgdir)/systemd/xmonad.service ${HOME}/.config/systemd/user/
+	cp $(cfgdir)/systemd/*.service ${HOME}/.config/systemd/user/
 
 tmux:
 	ln -fsn $(cfgdir)/tmux.conf ${HOME}/.tmux.conf
