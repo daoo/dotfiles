@@ -31,9 +31,10 @@ Bundle 'tpope/vim-surround'
 filetype plugin indent on
 
 " {{{ General Settings
-augroup cpp11
+augroup syntax
   au!
   au BufNewFile,BufRead *.cpp set syntax=cpp11
+  au BufNewFile,BufRead *.v set syntax=coq
 augroup END
 
 let g:ctrlp_working_path_mode = 0
