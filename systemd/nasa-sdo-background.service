@@ -1,0 +1,9 @@
+[Unit]
+Description=Wallpaper from the NASA SDO
+After=xorg.target
+
+[Service]
+ExecStart=/bin/bash -c '/usr/bin/feh --bg-fill --no-fehbg "http://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0304.jpg"'
+
+[Install]
+WantedBy=stuff.target
