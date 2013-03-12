@@ -42,6 +42,7 @@ sublime:
 systemd:
 	ln -fsn $(cfgdir)/systemd/environment ${HOME}/.systemd-environment
 	cp $(cfgdir)/systemd/*.service ${HOME}/.config/systemd/user/
+	cp $(cfgdir)/systemd/*.timer ${HOME}/.config/systemd/user/
 
 tmux:
 	ln -fsn $(cfgdir)/tmux.conf ${HOME}/.tmux.conf
