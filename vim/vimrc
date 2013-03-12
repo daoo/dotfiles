@@ -4,58 +4,73 @@
 let mapleader=","
 source ~/.vim/bundles.vim
 " }}}
-" {{{ Basic settings
-set autowrite
-set backspace=start,indent,eol
-set expandtab
+" {{{ Settings
+" moving around, searching and patterns
+set ignorecase
+set incsearch
+set smartcase
+
+" displaying text
 set fillchars=vert:│
+set lazyredraw
+set list
+set listchars=tab:▸\ ,extends:❯,precedes:❮
+set nowrap
+set relativenumber
+set scrolloff=5
+
+" syntax, highlighting and spelling
+set hlsearch
+set cursorcolumn
+set cursorline
+
+" multiple windows
+set hidden
+set laststatus=2
+
+" message and info
+set noerrorbells
+set novisualbell
+set showcmd
+set t_vb=
+
+" editing text
+set backspace=start,indent,eol
+set formatoptions=tcqro
+set nojoinspaces
+set undolevels=500
+
+" tabs and indenting
+set expandtab
+set shiftround
+set shiftwidth=2
+set smarttab
+set softtabstop=2
+
+" folding
 set foldlevel=0
 set foldmethod=indent
 set foldnestmax=10
-set formatoptions=tcqro
-set hidden
-set history=500
-set hlsearch
-set ignorecase
-set incsearch
-set laststatus=2
-set lazyredraw
-set noerrorbells
 set nofoldenable
-set nojoinspaces
-set nowrap
-set scrolloff=5
-set shiftround
-set shiftwidth=2
-set showcmd
-set smartcase
-set smarttab
-set softtabstop=2
-set synmaxcol=500
-set undolevels=500
-set wildmenu
-set wildmode=list:longest,full
 
-" Extra writing
+" reading and writing files
+set autowrite
 set backup
 set backupdir=~/.vim/tmp//
+
+" the swap file
 set directory=/tmp/vim//
 set noswapfile
 
-" Visuals
-set cursorcolumn
-set cursorline
-set list
-set listchars=tab:▸\ ,extends:❯,precedes:❮
-set relativenumber
-set t_vb=
-set visualbell
+" command line editing
+set history=500
+set wildmenu
+set wildmode=list:longest,full
 
+" other
+runtime ftplugin/man.vim
 colorscheme mustang
 syntax on
-
-" Extensions
-runtime ftplugin/man.vim
 " }}}
 " {{{ Commands
 command! W %!sudo tee > /dev/null %
