@@ -147,7 +147,8 @@ nnoremap <leader>eve :vsplit $MYVIMRC<cr>
 nnoremap <leader>evs :source $MYVIMRC<cr>
 nnoremap <leader>h :call SwitchSourceHeader()<cr>
 nnoremap <leader>se :setlocal spell spelllang=en_us<cr>
-nnoremap <leader>so :setlocal spell spelllang=<cr>
+nnoremap <leader>ss :setlocal spell spelllang=sv<cr>
+nnoremap <leader>so :setlocal nospell<cr>
 nnoremap K kJ
 vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
 
