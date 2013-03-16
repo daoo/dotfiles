@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+# Recursively convert ISO-8859-1 to UTF-8.
+#
+
+for f in *.* **/*.*; do
+  enc="$(file -b --mime-encoding "$f")"
+  if [[ $enc == "iso-8859-1" ]]; then
+    iconv -f ISO-8859-1 -t UTF-8 "$f" > "$f.utf-8"
+    cp "$f" "$f.bak"
+    mv "$f.utf-8" "$f"
+  fi
+done
