@@ -1,6 +1,3 @@
 #!/usr/bin/env bash
 
-for pkg_full in $(ghc-pkg list --user --simple-output); do
-  pkg=${pkg_full/-[0-9.]*/}
-  cabal install $pkg --reinstall
-done
+cabal list --simple-output --installed | awk '{print $1}' | uniq | xargs -I {} cabal install {} --reinstall
