@@ -29,7 +29,7 @@ xf86TouchpadToggle = 0x1008ffa9
 
 -- For programmers dvorak
 dvorakMaps :: KeyMask -> (WorkspaceId -> X ()) -> [((KeyMask, KeySym), X ())]
-dvorakMaps m f = zip (zip (repeat m) workspaceKeys) (map f myWorkspaces)
+dvorakMaps m f = zip (map ((,) m) workspaceKeys) (map f myWorkspaces)
   where
     workspaceKeys = [ xK_ampersand, xK_bracketleft, xK_braceleft, xK_braceright
                     , xK_parenleft, xK_equal, xK_asterisk, xK_parenright, xK_plus
