@@ -1,6 +1,6 @@
 [Unit]
-Description=Hourly update the NASA SDO wallpaper
+Description=Update the NASA SDO wallpaper
 
 [Timer]
 OnBootSec=0
-OnUnitInactiveSec=1h
+OnUnitInactiveSec=30min
