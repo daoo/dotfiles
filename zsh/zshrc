@@ -27,7 +27,7 @@ setopt inc_append_history
 setopt share_history
 
 # Misc zsh settings
-export FPATH="$HOME/.zsh/:$FPATH"
+export FPATH="$HOME/.zsh/fpath:$FPATH"
 setopt auto_resume
 setopt long_list_jobs
 setopt nobeep
