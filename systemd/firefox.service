@@ -1,5 +1,5 @@
 [Unit]
-Description=Chromium
+Description=Firefox
 After=xorg.target network.target
 
 [Service]
