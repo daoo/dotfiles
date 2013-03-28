@@ -76,7 +76,8 @@ xmonad:
 	ln -fsn $(cfgdir)/xmonad/lib/*.hs ${HOME}/.xmonad/lib/
 
 zsh:
-	ln -fsn $(cfgdir)/zsh ${HOME}/.zsh
+	mkdir -p ${HOME}/.zsh
+	ln -fsn $(cfgdir)/zsh/fpath ${HOME}/.zsh/fpath
 	ln -fsn $(cfgdir)/zsh/zprofile ${HOME}/.zprofile
 	ln -fsn $(cfgdir)/zsh/zshenv ${HOME}/.zshenv
 	ln -fsn $(cfgdir)/zsh/zshrc ${HOME}/.zshrc
