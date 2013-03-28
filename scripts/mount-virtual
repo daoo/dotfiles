@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+dev="$1"
+file="$2"
+
+if [[ -z "$dev" || -z "$file" ]]; then
+  echo "Usage: mount-virtual DEVDIR FILE"
+  echo "Example: mount-virtual /dev/nbd0 /path/to/some/virtual.vdi"
+  exit 1
+elif [[ ! -f "$file" ]]; then
+  echo "Error: \"$file\" is not a file."
+  exit 1
+fi
+
+# Make sure we can accommodate all partitions in the vdi
+sudo rmmod nbd
+sudo modprobe nbd max_part=16
+
+sudo qemu-nbd -c "$dev" "$file"
+
+echo "Run 'qemu-nbd -d $dev' to remove the block devices"
