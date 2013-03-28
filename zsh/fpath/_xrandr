@@ -62,10 +62,10 @@ _arguments \
   && return 0
 
 if [[ $state == value ]]; then
-    case $words[CURRENT-1] in
-        (scaling* mode)
-            _description value expl "output property 'scaling mode'"
-            compadd "$@" "$expl[@]" None Full Center Full\ aspect && return 0
-            ;;
-    esac
+  case $words[CURRENT-1] in
+    (scaling* mode)
+      _description value expl "output property 'scaling mode'"
+      compadd "$@" "$expl[@]" None Full Center Full\ aspect && return 0
+      ;;
+  esac
 fi
