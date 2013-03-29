@@ -40,7 +40,6 @@ sublime:
 	ln -fsn "$(cfgdir)/sublime/User/Preferences.sublime-settings" "${HOME}/.config/sublime-text-2/Packages/User/Preferences.sublime-settings"
 
 systemd:
-	ln -fsn $(cfgdir)/systemd/environment ${HOME}/.systemd-environment
 	cp $(cfgdir)/systemd/*.service ${HOME}/.config/systemd/user/
 	cp $(cfgdir)/systemd/*.timer ${HOME}/.config/systemd/user/
 
