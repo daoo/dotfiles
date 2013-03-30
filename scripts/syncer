@@ -1,77 +1,83 @@
 #!/usr/bin/env ruby
 
-require 'set'
 require 'find'
-require 'tempfile'
+require 'set'
 
-def main(argv)
-  if argv.length < 2
-    puts "Usage: syncer INFILE OUTDIR"
-    exit 0
-  end
+def copy(infile, basedir, outdir)
+  start = basedir.length
+  files = Set.new()
+  File.open(infile).readlines.each do |line|
+    file     = line.chomp
+    specific = file.slice(start, file.length)
+    target   = File.join(outdir, specific)
 
-  # Get infile and outdir
-  outdir = argv.pop.chomp
-  infile = argv.pop.chomp
+    if File.exists?(file)
+      if not File.exists?(target)
+        print "Copying #{specific}... "
 
-  if not File.exists?(infile)
-    puts "File #{infile} does not exist"
-    exit 1
-  end
+        dir = File.dirname(target)
+        IO.popen(["mkdir", "-p", dir]) # TODO: Only creat dir when changed
+        IO.popen(["cp", file, target])
 
-  if not Dir.exist?(outdir)
-    puts "Directory #{outdir} does not exist"
-    exit 1
-  end
-
-  inlines = Array.new()
-  File.open(infile) do |path|
-    inlines = path.readlines()
-  end
-
-  m3u = Array.new()
-  m3u_file_names = Set.new()
-  inlines.each do |path|
-    tmp = path.chomp
-    m3u << tmp
-    m3u_file_names.add(File.basename(tmp))
-  end
-
-  # Find and remove sourcedir, needed for rsync
-  m3u_split = m3u.collect { |l| l.split(File::SEPARATOR) }
-  common = m3u_split.first
-  m3u_split.each do |line|
-    common = common & line
-  end
-  sourcedir = common.join(File::SEPARATOR)
-
-  Tempfile.open('random') do |tf|
-    m3u_split.each do |full_path|
-      file = (full_path - common).join(File::SEPARATOR)
-      tf.puts file
+        puts "Done."
+      end
+    else
+      puts "File #{file} does not exist"
     end
-    # Need to flush for all m3u_split to be written
-    tf.flush
 
-    system("rsync --progress --delete --size-only --files-from='#{tf.path}' '#{sourcedir}' '#{outdir}'")
+    files << file
+  end
 
-    # Remove files in outdir that are not in infile
-    Find.find(outdir) do |path|
-      if !File.directory?(path)
-        checkname = File.basename(path)
-        # NOTE: Only compares file names, might clash if there are several albums with same song names (unlikely)...
-        if !m3u_file_names.include?(checkname)
-          print "Remove #{checkname} [y/N]? "
-          ans = gets.chomp.downcase
-          if ans == "y"
-            FileUtils.rm(path)
-          end
+  return files
+end
+
+def clean(keep, basedir, outdir)
+  start = outdir.length
+  Find.find(outdir) do |target|
+    if !File.directory?(target)
+      specific = target.slice(start, target.length)
+      file     = File.join(basedir, specific)
+
+      if !keep.include?(file)
+        print "Remove #{specific} [y/N]? "
+        ans = STDIN.gets.chomp.downcase
+        if ans == "y"
+          IO.popen(["rm", "-f", target])
         end
       end
     end
   end
 end
 
-main(ARGV)
+def main(infile, basedir, outdir)
+  files = copy(infile, basedir, outdir)
+  clean(files, basedir, outdir)
+end
+
+if ARGV.length != 3
+  puts "Usage: syncer INFILE BASEDIR OUTDIR"
+  exit 0
+end
+
+infile  = ARGV[0].chomp
+basedir = ARGV[1].chomp
+outdir  = ARGV[2].chomp
+
+if not File.exists?(infile)
+  puts "File #{infile} does not exist"
+  exit 1
+end
+
+if not Dir.exists?(basedir)
+  puts "Directory #{basedir} does not exist"
+  exit 1
+end
+
+if not Dir.exist?(outdir)
+  puts "Directory #{outdir} does not exist"
+  exit 1
+end
+
+main(infile, basedir, outdir)
 
 # vim: set fdm=marker :
