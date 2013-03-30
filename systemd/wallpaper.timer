@@ -1,5 +1,5 @@
 [Unit]
-Description=Update the NASA SDO wallpaper
+Description=Change the wallpaper periodically
 
 [Timer]
 OnBootSec=0

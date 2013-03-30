@@ -5,6 +5,7 @@ After=xorg.target
 [Service]
 EnvironmentFile=/home/daniel/.systemd-environment
 ExecStart=/usr/bin/vim -gf
+Restart=always
 
 [Install]
-WantedBy=stuff.target
+WantedBy=main-stuff.target

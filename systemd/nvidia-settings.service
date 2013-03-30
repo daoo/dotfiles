@@ -6,4 +6,5 @@ After=xorg.target
 ExecStart=/usr/bin/nvidia-settings --load-config-only
 
 [Install]
-WantedBy=stuff.target
+WantedBy=main-stuff.target
+WantedBy=gaming-stuff.target

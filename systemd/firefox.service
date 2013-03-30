@@ -7,4 +7,4 @@ EnvironmentFile=/home/daniel/.systemd-environment
 ExecStart=/usr/bin/firefox
 
 [Install]
-WantedBy=stuff.target
+WantedBy=main-stuff.target

@@ -1,6 +1,6 @@
 [Unit]
 Description=Target for xinitrc stuff
-Wants=wm.target
+Wants=gaming.target
 
 [Install]
-Alias=default.target
+Alias=gaming.target

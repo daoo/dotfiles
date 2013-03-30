@@ -10,4 +10,4 @@ KillMode=process
 Restart=always
 
 [Install]
-WantedBy=stuff.target
+WantedBy=main-stuff.target

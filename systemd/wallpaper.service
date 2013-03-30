@@ -6,4 +6,5 @@ After=xorg.target
 ExecStart=/bin/bash -c '/usr/bin/feh --bg-tile --no-fehbg "$(find %h/media/wallpapers | shuf -n 1)"'
 
 [Install]
-WantedBy=stuff.target
+WantedBy=main-stuff.target
+WantedBy=gaming-stuff.target

@@ -7,4 +7,4 @@ ExecStart=/usr/bin/unclutter
 Restart=always
 
 [Install]
-WantedBy=stuff.target
+WantedBy=main-stuff.target

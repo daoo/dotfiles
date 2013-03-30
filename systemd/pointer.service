@@ -6,4 +6,4 @@ After=xorg.target
 ExecStart=/usr/bin/xsetroot -cursor_name left_ptr
 
 [Install]
-WantedBy=stuff.target
+WantedBy=main-stuff.target
