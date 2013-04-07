@@ -2,21 +2,17 @@ module Keys (newKeyMaps, myModKey) where
 
 import Config
 import Prompt
-
-import Data.Map (Map(), fromList)
-
 import XMonad
 import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.GridSelect
 import XMonad.Actions.NoBorders
 import XMonad.StackSet (hidden, shift, tag, view, greedyView)
 import XMonad.Util.Scratchpad
+import qualified Data.Map as M
 
--- Modkey
 myModKey :: KeyMask
 myModKey = mod4Mask
 
--- Some media keys
 xf86AudioLower, xf86AudioMute, xf86AudioPlay, xf86AudioRaise, xf86Email,
   xf86Favorites, xf86TouchpadToggle :: KeySym
 xf86AudioLower     = 0x1008ff11
@@ -27,7 +23,6 @@ xf86Email          = 0x1008ff19
 xf86Favorites      = 0x1008ff30
 xf86TouchpadToggle = 0x1008ffa9
 
--- For programmers dvorak
 dvorakMaps :: KeyMask -> (WorkspaceId -> X ()) -> [((KeyMask, KeySym), X ())]
 dvorakMaps m f = zip (map ((,) m) workspaceKeys) (map f myWorkspaces)
   where
@@ -35,33 +30,24 @@ dvorakMaps m f = zip (map ((,) m) workspaceKeys) (map f myWorkspaces)
                     , xK_parenleft, xK_equal, xK_asterisk, xK_parenright, xK_plus
                     , xK_bracketright, xK_exclam ]
 
-newKeyMaps :: Map (KeyMask, KeySym) (X ())
-newKeyMaps = fromList $
+newKeyMaps :: M.Map (KeyMask, KeySym) (X ())
+newKeyMaps = M.fromList $
   [ ((myModKey, xK_u), withFocused toggleBorder)
   , ((myModKey, xK_o), toggleWS)
   , ((myModKey, xK_r), goToSelected defaultGSConfig)
 
-  -- Dynamic Workspaces
   , ((myModKey .|. shiftMask, xK_g), removeEmptyWorkspace)
   , ((myModKey, xK_g), selectWorkspace myXPConfig)
   , ((myModKey, xK_c), withWorkspace myXPConfig (windows . shift))
 
-  -- Terminals and stuff
   , ((myModKey, xK_p), launchPrompt myXPConfig)
-  , ((myModKey, xK_i), scratchpadSpawnActionTerminal "urxvt")
-  , ((myModKey, xK_Return), spawn "urxvt")
+  , ((myModKey, xK_i), scratchpadSpawnActionTerminal "/usr/bin/urxvt")
+  , ((myModKey, xK_Return), spawn "/usr/bin/urxvt")
 
-  -- Software
-  , ((myModKey, xK_x), spawn "firefox")
-  , ((myModKey, xK_b), spawn "gvim")
-
-  -- Multimedia keys
-  , ((0, xf86AudioMute), spawn "alsa-mute")
-  , ((0, xf86AudioLower), spawn "amixer -q set Master 1-")
-  , ((0, xf86AudioRaise), spawn "amixer -q set Master 1+")
+  , ((myModKey, xK_x), spawn "/usr/bin/firefox")
+  , ((myModKey, xK_b), spawn "/usr/bin/gvim")
   ]
 
-  -- For Programmers Dvorak
   ++ dvorakMaps myModKey (windows . greedyView)
   ++ dvorakMaps (myModKey .|. shiftMask) (windows . shift)
   where

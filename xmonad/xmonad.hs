@@ -3,10 +3,8 @@ module Main where
 import Bar
 import Common
 import Config
-import Keys
-
 import Data.Map (union)
-
+import Keys
 import XMonad
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks

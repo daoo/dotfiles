@@ -1,4 +1,4 @@
-module Prompt where
+module Prompt (launchPrompt) where
 
 import XMonad
 import XMonad.Prompt

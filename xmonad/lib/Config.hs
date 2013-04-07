@@ -1,18 +1,20 @@
-module Config where
-
-import Data.Map (insert)
+module Config
+  ( winBorderFocused, winBorderNormal
+  , myWorkspaces
+  , myXPConfig
+  , myPP
+  , defaultBar
+  ) where
 
 import Bar
-
+import Data.Map (insert)
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Prompt
 
--- Workspaces
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void"]
 
--- Colors
 winBorderFocused, winBorderNormal :: String
 winBorderFocused = "#6dff27"
 winBorderNormal  = panelBg
@@ -34,11 +36,9 @@ viewsFg    = "#757575"
 visibleBg  = panelBg
 visibleFg  = "#ad7fa8"
 
--- Fonts
 panelFont :: String
 panelFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 
--- XPConfig
 myXPConfig :: XPConfig
 myXPConfig = defaultXPConfig
   { bgColor           = panelBg
@@ -52,7 +52,6 @@ myXPConfig = defaultXPConfig
   , promptKeymap = insert (controlMask, xK_c) quit (promptKeymap defaultXPConfig)
   }
 
--- Log Hook
 myPP :: PP
 myPP = defaultPP
   { ppCurrent         = dzenColor focusFg focusBg
@@ -67,7 +66,6 @@ myPP = defaultPP
   where
     noNSP w = if w == "NSP" then "" else w
 
--- Default Bar
 defaultBar :: Bar
 defaultBar = Bar
   { barAlign  = AlignCenter
