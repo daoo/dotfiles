@@ -137,7 +137,7 @@ _ghc_compiler_flags ()
         {no-,}'warn-incomplete-record-updates:Warn when a record update could fail'
         {no-,}'warn-missing-fields:Warn when fields of a record are uninitialised'
         {no-,}'warn-missing-methods:Warn when class methods are undefined'
-        {no-,}'warn-missing-signatures:Warn about top-level functions without signatures'        
+        {no-,}'warn-missing-signatures:Warn about top-level functions without signatures'
         )
     _describe -t flags 'ghc' _ghc_compiler_flags_list || compadd "$@"
 }
@@ -258,7 +258,7 @@ _ghc_pkg ()
     _arguments '*:command:_ghc_pkg_command'
 }
 
-_ghc_pkg_command() 
+_ghc_pkg_command()
 {
     local -a _ghc_pkg_cmds
     _ghc_pkg_cmds=(
@@ -337,7 +337,7 @@ _ghc_pkg_update () { _files }
 
 _ghc_pkg_list () { _ghc_pkg_list_packages }
 
-_ghc_pkg_find-module () 
+_ghc_pkg_find-module ()
 {
     if (( $#WORDS == 2)); then
         if ( [[ ${+_ghc_modules} -eq 0 ]] || _cache_invalid GHC_MODULES ) &&
@@ -377,7 +377,7 @@ _ghc_pkg_list_packages ()
 
 case $service in
     ghc)
-        _ghc_compiler 
+        _ghc_compiler
         ;;
     ghci)
         _ghc_ghci
