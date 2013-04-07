@@ -58,7 +58,6 @@ stty -ixon
 # Give some commands fancy colors
 alias ls='ls -hF --si --color=auto --group-directories-first'
 alias tree='tree -C'
-alias pacman='pacman-color'
 
 # Some for ls
 alias l='ls'
