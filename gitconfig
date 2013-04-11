@@ -1,6 +1,6 @@
 [core]
   editor       = vim
-  autocrlf     = true
+  autocrlf     = input
   excludesfile = ~/.gitignore
 [color]
   branch      = auto
