@@ -16,7 +16,7 @@
   ci = commit
   co = checkout
 
-  ff = merge origin/master
+  ff = merge --ff-only origin/master
   pom = push origin master
 
   s = stash
