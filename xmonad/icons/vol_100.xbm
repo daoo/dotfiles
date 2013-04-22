@@ -1,0 +1,4 @@
+#define vol_100_width 8
+#define vol_100_height 8
+static unsigned char vol_100_bits[] = {
+   0x08, 0x4c, 0x8e, 0xaf, 0xaf, 0x8e, 0x4c, 0x08 };
