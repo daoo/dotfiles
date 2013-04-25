@@ -14,7 +14,7 @@ def print_color(color, str)
 end
 
 def git_modified_files(repo, work_tree)
-  return `git --git-dir="#{repo}" --work-tree="#{work_tree}" status --porcelain`.chomp()
+  return `git --git-dir="#{repo}" --work-tree="#{work_tree}" status -s`.chomp()
 end
 
 def git_log(repo, from, to)
@@ -24,24 +24,32 @@ end
 File.open("#{ENV["HOME"]}/.git-repos") do |f|
   while (line = f.gets)
     repo = line.chomp
+
     dir     = File.join(ENV["HOME"], repo)
     git_dir = File.join(dir, ".git/")
 
-    print_color(TEXT_RESET, "#{repo}: ")
-
-    mod_files = git_modified_files(git_dir, dir)
+    mod_files   = git_modified_files(git_dir, dir)
     new_commits = git_log(git_dir, "origin/master", "master")
 
-    if mod_files.empty?
-      print_color(TEXT_GREEN, "no modified files\n")
-    else
-      print_color(TEXT_RED, "has modified files\n")
-    end
-    if not new_commits.empty?
-      print_color(TEXT_PURPLE, "  has new commits:\n")
-      new_commits.each_line do |line|
-        puts "    #{line}"
+    if not mod_files.empty? or not new_commits.empty?
+      print_color(TEXT_RESET, "#{repo}:\n")
+      if not mod_files.empty?
+        print_color(TEXT_RED, "  modified files")
+        print_color(TEXT_RESET, ":\n")
+        mod_files.each_line do |line|
+          puts "    #{line}"
+        end
       end
+
+      if not new_commits.empty?
+        print_color(TEXT_PURPLE, "  new commits")
+        print_color(TEXT_RESET, ":\n")
+        new_commits.each_line do |line|
+          puts "    #{line}"
+        end
+      end
+
+      puts
     end
   end
 end
