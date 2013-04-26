@@ -12,11 +12,7 @@ def puts_color(color, str)
 end
 
 def git_fetch(repo)
-  return system("git --git-dir=\"#{repo}\" fetch --quiet")
-end
-
-def git_rev_parse(repo, commit_id)
-  return `git --git-dir="#{repo}" rev-parse #{commit_id}`.chomp()
+  return system("git --git-dir=\"#{repo}\" fetch --quiet &> /dev/null")
 end
 
 def git_log(repo, from, to)
@@ -37,23 +33,22 @@ File.open("#{ENV["HOME"]}/.git-repos") do |f|
     dir     = File.join(ENV["HOME"], repo)
     git_dir = File.join(dir, ".git/")
 
-    if not git_fetch(git_dir)
-      puts_color(TEXT_RED, "Error while running fetch")
-      exit 1
-    end
+    if git_fetch(git_dir)
+      new_commits = git_log(git_dir, "master", "origin/master")
+      if not new_commits.empty?
+        puts "  New commits:"
+        new_commits.each_line do |line|
+          print "   ", line.chomp, "\n"
+        end
 
-    new_commits = git_log(git_dir, "master", "origin/master")
-    if not new_commits.empty?
-      puts "  New commits:"
-      new_commits.each_line do |line|
-        puts "    #{line}"
+        if interactive
+          puts_color(TEXT_YELLOW_BOLD, "Fetch resulted in new HEAD")
+          puts_color(TEXT_YELLOW_BOLD, "Opening #{ENV["SHELL"]} in #{dir}")
+          system("cd #{dir} && #{ENV['SHELL']}")
+        end
       end
-
-      if interactive
-        puts_color(TEXT_YELLOW_BOLD, "Fetch resulted in new HEAD")
-        puts_color(TEXT_YELLOW_BOLD, "Opening #{ENV["SHELL"]} in #{dir}")
-        system("cd #{dir} && #{ENV['SHELL']}")
-      end
+    else
+      puts_color(TEXT_RED, "  Error while running fetch")
     end
   end
 end
