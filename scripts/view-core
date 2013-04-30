@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+ghc-core --no-syntax --no-asm -- -outputdir /tmp -isrc $@ | vim "setf haskell" -
