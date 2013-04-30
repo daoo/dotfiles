@@ -151,6 +151,7 @@ nnoremap <leader>ss :setlocal spell spelllang=sv<cr>
 nnoremap <leader>so :setlocal nospell<cr>
 nnoremap K kJ
 vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
+vnoremap <c-x> y`]a = <c-r>=<c-r>"<cr><esc>
 
 " Searching
 nnoremap <leader>fc :nohlsearch<cr>
