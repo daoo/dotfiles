@@ -7,7 +7,6 @@ call vundle#rc()
 Bundle 'Cpp11-Syntax-Support'
 Bundle 'alex.vim'
 Bundle 'coq-syntax'
-Bundle 'glsl.vim'
 Bundle 'happy.vim'
 
 Bundle 'daoo/Mustang2'
