@@ -1,0 +1,4 @@
+#define wifi_20_width 8
+#define wifi_20_height 8
+static unsigned char wifi_20_bits[] = {
+   0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x03, 0x03 };
