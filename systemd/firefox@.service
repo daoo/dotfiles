@@ -1,9 +1,9 @@
 [Unit]
-Description=Chromium
+Description=Firefox
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/chromium
+ExecStart=/usr/bin/firefox -P %I -no-remote
 
 [Install]
 WantedBy=main-stuff.target

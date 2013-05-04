@@ -1,7 +1,6 @@
 [Unit]
 Description=Music Player Daemon
-After=xorg.target pulseaudio.service mnt-hanharr.automount
-Wants=pulseaudio.service
+After=sound.target network.target
 
 [Service]
 ExecStart=/usr/bin/mpd --no-daemon

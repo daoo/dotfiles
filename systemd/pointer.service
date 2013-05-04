@@ -1,6 +1,5 @@
 [Unit]
 Description=Set root pointer
-After=xorg.target
 
 [Service]
 ExecStart=/usr/bin/xsetroot -cursor_name left_ptr

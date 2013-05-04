@@ -1,6 +1,5 @@
 [Unit]
 Description=PulseAudio Sound System
-After=xorg.target
 Before=sound.target
 Requires=dbus.socket
 
@@ -12,4 +11,3 @@ RestartSec=2
 
 [Install]
 WantedBy=main-stuff.target
-WantedBy=gaming-stuff.target

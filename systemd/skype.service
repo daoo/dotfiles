@@ -1,10 +1,9 @@
 [Unit]
 Description=Skype
-After=xorg.target network.target
+After=network.target pulseaudio.service
 Wants=pulseaudio.service
 
 [Service]
-EnvironmentFile=/home/daniel/.systemd-environment
 ExecStart=/usr/bin/skype --disable-api
 
 [Install]

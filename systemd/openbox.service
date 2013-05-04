@@ -5,7 +5,6 @@ After=xorg.target
 Requires=xorg.target
 
 [Service]
-EnvironmentFile=/home/daniel/.systemd-environment
 ExecStart=/usr/bin/openbox
 Restart=always
 RestartSec=10

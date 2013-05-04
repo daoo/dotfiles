@@ -1,6 +1,5 @@
 [Unit]
 Description=Redshift
-After=xorg.target
 
 [Service]
 ExecStart=/usr/bin/redshift -m randr -l 57.7117:11.9148 -t 6000K:4700K &
