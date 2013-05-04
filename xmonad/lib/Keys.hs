@@ -7,6 +7,7 @@ import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.GridSelect
 import XMonad.Actions.NoBorders
 import XMonad.StackSet (hidden, shift, tag, view, greedyView)
+import XMonad.Util.Run
 import XMonad.Util.Scratchpad
 import qualified Data.Map as M
 
@@ -42,10 +43,10 @@ newKeyMaps = M.fromList $
 
   , ((myModKey, xK_p), launchPrompt myXPConfig)
   , ((myModKey, xK_i), scratchpadSpawnActionTerminal "/usr/bin/urxvt")
-  , ((myModKey, xK_Return), spawn "/usr/bin/urxvt")
+  , ((myModKey, xK_Return), safeSpawnProg "/usr/bin/urxvt")
 
-  , ((myModKey, xK_x), spawn "/usr/bin/firefox")
-  , ((myModKey, xK_b), spawn "/usr/bin/gvim")
+  , ((myModKey, xK_x), safeSpawnProg "/usr/bin/firefox")
+  , ((myModKey, xK_b), safeSpawnProg "/usr/bin/gvim")
   ]
 
   ++ dvorakMaps myModKey (windows . greedyView)
