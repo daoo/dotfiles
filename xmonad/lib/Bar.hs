@@ -1,11 +1,15 @@
-module Bar (BarAlign (..), Bar (..), barToString) where
+module Bar
+  ( BarAlign (..)
+  , Bar (..)
+  , barToString
+  ) where
 
 data BarAlign = AlignLeft | AlignCenter | AlignRight
 
-instance Show BarAlign where
-  show AlignCenter = "c"
-  show AlignLeft   = "l"
-  show AlignRight  = "r"
+showBarAlign :: BarAlign -> String
+showBarAlign AlignCenter = "c"
+showBarAlign AlignLeft   = "l"
+showBarAlign AlignRight  = "r"
 
 data Bar = Bar
   { barAlign :: BarAlign
@@ -15,7 +19,7 @@ data Bar = Bar
   , barHeight :: Int
   , barWidth :: Int
   , barX :: Int, barY :: Int
-  } deriving Show
+  }
 
 barToString :: Bar -> String
 barToString bar = showString "-fn "  $ shows (barFont bar)
@@ -25,4 +29,4 @@ barToString bar = showString "-fn "  $ shows (barFont bar)
                 $ showString " -y "  $ shows (barY bar)
                 $ showString " -w "  $ shows (barWidth bar)
                 $ showString " -h "  $ shows (barHeight bar)
-                $ showString " -ta " $ show (barAlign bar)
+                $ showString " -ta " $ showBarAlign (barAlign bar)

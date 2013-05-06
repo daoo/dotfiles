@@ -64,7 +64,8 @@ myPP = defaultPP
   , ppWsSep           = " "
   }
   where
-    noNSP w = if w == "NSP" then "" else w
+    noNSP "NSP" = ""
+    noNSP w     = w
 
 defaultBar :: Bar
 defaultBar = Bar

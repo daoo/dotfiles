@@ -1,4 +1,8 @@
-module Common (myManageHook, myLayoutHook, myLogHook) where
+module Common
+  ( myManageHook
+  , myLayoutHook
+  , myLogHook
+  ) where
 
 import Config
 import Data.Ratio

@@ -1,4 +1,7 @@
-module Keys (newKeyMaps, myModKey) where
+module Keys
+  ( newKeyMaps
+  , myModKey
+  ) where
 
 import Config
 import Prompt
@@ -24,8 +27,9 @@ xf86Email          = 0x1008ff19
 xf86Favorites      = 0x1008ff30
 xf86TouchpadToggle = 0x1008ffa9
 
+{-# INLINE dvorakMaps #-}
 dvorakMaps :: KeyMask -> (WorkspaceId -> X ()) -> [((KeyMask, KeySym), X ())]
-dvorakMaps m f = zip (map ((,) m) workspaceKeys) (map f myWorkspaces)
+dvorakMaps m f = zipWith (\k w -> ((m, k), f w)) workspaceKeys myWorkspaces
   where
     workspaceKeys = [ xK_ampersand, xK_bracketleft, xK_braceleft, xK_braceright
                     , xK_parenleft, xK_equal, xK_asterisk, xK_parenright, xK_plus
