@@ -6,6 +6,7 @@ module Bar
 
 data BarAlign = AlignLeft | AlignCenter | AlignRight
 
+{-# INLINE showBarAlign #-}
 showBarAlign :: BarAlign -> String
 showBarAlign AlignCenter = "c"
 showBarAlign AlignLeft   = "l"
@@ -21,6 +22,7 @@ data Bar = Bar
   , barX :: Int, barY :: Int
   }
 
+{-# INLINE barToString #-}
 barToString :: Bar -> String
 barToString bar = showString "-fn "  $ shows (barFont bar)
                 $ showString " -fg " $ shows (barFg bar)
