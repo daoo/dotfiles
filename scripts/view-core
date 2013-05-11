@@ -1,3 +1,12 @@
 #!/usr/bin/env bash
 
-ghc-core --no-syntax --no-asm -- -o /tmp/Main -outputdir /tmp -isrc $@ | vim "+setf haskell" -
+ghc \
+  -o /tmp/Main \
+  -outputdir /tmp \
+  -isrc \
+  -fforce-recomp \
+  -dsuppress-coercions \
+  -dsuppress-module-prefixes \
+  -ddump-simpl \
+  $@ \
+  | vim "+setf haskell" -
