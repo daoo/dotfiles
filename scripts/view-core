@@ -7,6 +7,9 @@ ghc \
   -fforce-recomp \
   -dsuppress-coercions \
   -dsuppress-module-prefixes \
+  -dsuppress-uniques \
+  -dsuppress-idinfo \
+  -dsuppress-type-applications \
   -ddump-simpl \
   $@ \
   | vim "+setf haskell" -
