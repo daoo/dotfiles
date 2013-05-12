@@ -52,12 +52,14 @@ urxvt:
 vim:
 	mkdir -p ${HOME}/.vim
 	mkdir -p ${HOME}/.vim/tmp
+	mkdir -p ${HOME}/.vim/spell
 	ln -fsn $(cfgdir)/vim/UltiSnips ${HOME}/.vim/UltiSnips
 	ln -fsn $(cfgdir)/vim/after ${HOME}/.vim/after
 	ln -fsn $(cfgdir)/vim/bundles.vim ${HOME}/.vim/bundles.vim
 	ln -fsn $(cfgdir)/vim/ftdetect ${HOME}/.vim/ftdetect
 	ln -fsn $(cfgdir)/vim/ftplugin ${HOME}/.vim/ftplugin
 	ln -fsn $(cfgdir)/vim/gvimrc ${HOME}/.gvimrc
+	ln -fsn $(cfgdir)/vim/spell/*.add ${HOME}/.vim/spell/
 	ln -fsn $(cfgdir)/vim/vimrc ${HOME}/.vimrc
 
 xdefaults:
