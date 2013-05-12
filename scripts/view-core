@@ -10,6 +10,8 @@ ghc \
   -dsuppress-uniques \
   -dsuppress-idinfo \
   -dsuppress-type-applications \
+  -dppr-cols270 \
+  -dppr-case-as-let \
   -ddump-simpl \
   $@ \
   | vim "+setf haskell" -
