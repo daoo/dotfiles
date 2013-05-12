@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-#
-# Simple calculator that uses bc.
-#
-
-echo "scale=4; $@" | bc
-
