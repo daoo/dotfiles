@@ -5,9 +5,12 @@ set runtimepath+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'Cpp11-Syntax-Support'
+Bundle 'PKGBUILD'
 Bundle 'alex.vim'
 Bundle 'coq-syntax'
 Bundle 'happy.vim'
+Bundle 'plasticboy/vim-markdown'
+Bundle 'tikhomirov/vim-glsl'
 
 Bundle 'daoo/Mustang2'
 Bundle 'daoo/Wombat'
@@ -18,6 +21,7 @@ Bundle 'SirVer/ultisnips'
 Bundle 'gmarik/vundle'
 Bundle 'godlygeek/tabular'
 Bundle 'kien/ctrlp.vim'
+Bundle 'rking/ag.vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 't9md/vim-quickhl'
