@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
+if [[ -d "cabal-dev" ]]; then
+  dbflag="-package-db=$(echo cabal-dev/packages-*.conf)"
+else
+  dbflag=""
+fi
+
 ghc \
   -o /tmp/Main \
   -outputdir /tmp \
   -isrc \
+  $dbflag \
   -fforce-recomp \
   -dsuppress-coercions \
   -dsuppress-module-prefixes \
