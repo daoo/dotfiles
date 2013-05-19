@@ -152,6 +152,9 @@ nnoremap <leader>ef :e %<cr>
 nnoremap <leader>eve :vsplit $MYVIMRC<cr>
 nnoremap <leader>evs :source $MYVIMRC<cr>
 nnoremap <leader>h :call SwitchSourceHeader()<cr>
+nnoremap <leader>dt :diffthis<cr>
+nnoremap <leader>du :diffupdate<cr>
+nnoremap <leader>do :diffoff!<cr>
 nnoremap <leader>se :call SetSpell("en_us")<cr>
 nnoremap <leader>ss :call SetSpell("sv")<cr>
 nnoremap <leader>so :setlocal nospell<cr>
