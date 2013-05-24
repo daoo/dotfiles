@@ -4,7 +4,6 @@
 
 GIT_FORMAT="%C(yellow)%ar%Creset %C(blue)(%ae)%Creset %s"
 
-TEXT_GREEN  = "\e[0;32m"
 TEXT_PURPLE = "\e[0;35m"
 TEXT_RED    = "\e[0;31m"
 TEXT_RESET  = "\e[0m"
@@ -32,7 +31,7 @@ File.open("#{ENV["HOME"]}/.git-repos") do |f|
     new_commits = git_log(git_dir, "origin/master", "master")
 
     if not mod_files.empty? or not new_commits.empty?
-      print_color(TEXT_RESET, "#{repo}:\n")
+      print_color(TEXT_PURPLE, "#{repo}:\n")
       if not mod_files.empty?
         print_color(TEXT_RED, "  modified files")
         print_color(TEXT_RESET, ":\n")
@@ -42,7 +41,7 @@ File.open("#{ENV["HOME"]}/.git-repos") do |f|
       end
 
       if not new_commits.empty?
-        print_color(TEXT_PURPLE, "  new commits")
+        print_color(TEXT_RED, "  new commits")
         print_color(TEXT_RESET, ":\n")
         new_commits.each_line do |line|
           puts "    #{line}"

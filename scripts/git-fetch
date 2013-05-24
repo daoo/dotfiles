@@ -1,54 +1,92 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env escript
 
-GIT_FORMAT="%C(yellow)%ar%Creset %C(blue)(%ae)%Creset %s"
+-define(GIT_FORMAT, "%C(yellow)%ar%Creset %C(blue)(%ae)%Creset %s").
 
-TEXT_RESET       = "\e[0m"
-TEXT_RED         = "\e[0;31m"
-TEXT_PURPLE      = "\e[0;35m"
-TEXT_YELLOW_BOLD = "\e[1;33m"
+-define(TEXT_PURPLE , "\e[0;35m").
+-define(TEXT_RESET  , "\e[0m").
 
-def puts_color(color, str)
-  puts "#{color}#{str}#{TEXT_RESET}"
-end
+git_fetch(Repo) ->
+  os:cmd(io_lib:format(
+      "git --git-dir=\"~s\" fetch --quiet &> /dev/null", [Repo])).
 
-def git_fetch(repo)
-  return system("git --git-dir=\"#{repo}\" fetch --quiet &> /dev/null")
-end
+git_remote_url(Repo) ->
+  os:cmd(io_lib:format(
+      "git --git-dir=\"~s\" config --get remote.origin.url", [Repo])).
 
-def git_log(repo, from, to)
-  return `git --git-dir="#{repo}" log --format=format:"#{GIT_FORMAT}" #{from}..#{to}`
-end
+git_log(Repo, From, To) ->
+  os:cmd(io_lib:format(
+      "git --git-dir=\"~s\" log --format=format:\"~s\" ~s..~s",
+      [Repo, ?GIT_FORMAT, From, To])).
 
-interactive = false
-case ARGV[0]
-  when "-i", "--interactive"
-    interactive = true
-end
+url_host(Url) ->
+  case re:run(Url, "([a-zA-Z0-9]+@)?([a-zA-Z0-9\.]+):") of
+    nomatch -> error;
+    {match, [_,Host|_]} -> Host
+  end.
 
-File.open("#{ENV["HOME"]}/.git-repos") do |f|
-  while (line = f.gets)
-    repo = line.chomp
-    puts_color(TEXT_PURPLE, "Syncing #{repo}")
+indent(Str) ->
+  Lines = string:tokens(Str, "\n\r"),
+  Indented = lists:map(fun(X) -> [$ ,$ ,$ ,$ |X] end, Lines),
+  string:join(Indented, $\n).
 
-    dir     = File.join(ENV["HOME"], repo)
-    git_dir = File.join(dir, ".git/")
+readlines(FileName) ->
+  {ok, Device} = file:open(FileName, [read]),
+  get_all_lines_reversed(Device, []).
 
-    if git_fetch(git_dir)
-      new_commits = git_log(git_dir, "master", "origin/master")
-      if not new_commits.empty?
-        puts "  New commits:"
-        new_commits.each_line do |line|
-          print "   ", line.chomp, "\n"
-        end
+get_all_lines_reversed(Device, Accum) ->
+  case io:get_line(Device, "") of
+    eof  -> file:close(Device), Accum;
+    Line -> get_all_lines_reversed(Device, [string:strip(Line, both, $\n)|Accum])
+  end.
 
-        if interactive
-          puts_color(TEXT_YELLOW_BOLD, "Fetch resulted in new HEAD")
-          puts_color(TEXT_YELLOW_BOLD, "Opening #{ENV["SHELL"]} in #{dir}")
-          system("cd #{dir} && #{ENV['SHELL']}")
-        end
-      end
-    else
-      puts_color(TEXT_RED, "  Error while running fetch")
-    end
-  end
-end
+printer() ->
+  receive
+    {fetched, Repo, Dir} ->
+      io:format("~sSynced ~s~s~n", [?TEXT_PURPLE, Repo, ?TEXT_RESET]),
+      case git_log(Dir, "master", "origin/master") of
+        []         -> ok;
+        NewCommits -> io:format("  New commits:~n~s~n", [indent(NewCommits)])
+      end,
+      printer();
+    stop -> true
+  end.
+
+worker(Server, Printer) ->
+  receive
+    {fetch, Repo, Dir} ->
+      git_fetch(Dir),
+      Server ! {fetched, Repo, Dir},
+      Printer ! {fetched, Repo, Dir},
+      worker(Server, Printer);
+    stop -> true
+  end.
+
+spawn_workers(_, _, Workers, []) -> dict:to_list(Workers);
+
+spawn_workers(Server, Printer, Workers, [Repo|T]) ->
+  Dir = Repo ++ "/.git/",
+  Host = url_host(git_remote_url(Dir)),
+  case dict:find(Host, Workers) of
+    error ->
+      Pid = spawn_link(fun() -> worker(Server, Printer) end),
+      Pid ! {fetch, Repo, Dir},
+      spawn_workers(Server, Printer, dict:append(Host, Pid, Workers), T);
+
+    {ok, [Pid]} ->
+      Pid ! {fetch, Repo, Dir},
+      spawn_workers(Server, Printer, Workers, T)
+  end.
+
+wait_for_workers([]) -> ok;
+wait_for_workers(Repos) ->
+  receive
+    {fetched, Repo, _} -> wait_for_workers(lists:delete(Repo, Repos))
+  end.
+
+main(_) ->
+  Repos = readlines(".git-repos"),
+  Printer = spawn_link(fun() -> printer() end),
+  Workers = spawn_workers(self(), Printer, dict:new(), Repos),
+  wait_for_workers(Repos),
+  lists:map(fun({_, [Pid]}) -> Pid ! stop end, Workers),
+  Printer ! stop.
