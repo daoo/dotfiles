@@ -62,6 +62,6 @@ nnoremap <leader>ac :Tabularize commas<cr>
 
 nnoremap <c-t> :CtrlP<cr>
 
-nnoremap <leader>fg :Ack '<cword>'<cr>
+nnoremap <leader>fg :Ag '<cword>'<cr>
 " }}}
 " vim: fdm=marker :
