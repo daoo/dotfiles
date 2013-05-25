@@ -1,4 +1,4 @@
-#!/usr/bin/env runhaskell -O2
+#!/usr/bin/env runhaskell
 {-# LANGUAGE LambdaCase #-}
 module Main (main) where
 
