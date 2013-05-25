@@ -1,92 +1,107 @@
-#!/usr/bin/env escript
+#!/usr/bin/env runhaskell -O2
+{-# LANGUAGE LambdaCase #-}
+module Main (main) where
 
--define(GIT_FORMAT, "%C(yellow)%ar%Creset %C(blue)(%ae)%Creset %s").
+import Control.Concurrent
+import Control.Concurrent.Chan
+import Control.Monad
+import Data.List
+import System.FilePath
+import System.Process
+import qualified Data.Map as M
 
--define(TEXT_PURPLE , "\e[0;35m").
--define(TEXT_RESET  , "\e[0m").
+gitFormat :: String
+gitFormat = "%C(yellow)%ar%Creset %C(blue)(%ae)%Creset %s"
 
-git_fetch(Repo) ->
-  os:cmd(io_lib:format(
-      "git --git-dir=\"~s\" fetch --quiet &> /dev/null", [Repo])).
+textPurple, textReset :: String
+textPurple = "\x1b[0;35m"
+textReset  = "\x1b[0m"
 
-git_remote_url(Repo) ->
-  os:cmd(io_lib:format(
-      "git --git-dir=\"~s\" config --get remote.origin.url", [Repo])).
+git :: FilePath -> [String] -> IO String
+git dir args = readProcess "git"
+  (showString "--git-dir=" dir : args)
+  []
 
-git_log(Repo, From, To) ->
-  os:cmd(io_lib:format(
-      "git --git-dir=\"~s\" log --format=format:\"~s\" ~s..~s",
-      [Repo, ?GIT_FORMAT, From, To])).
+gitFetch :: FilePath -> IO String
+gitFetch = (`git` [ "fetch", "--quiet" ])
 
-url_host(Url) ->
-  case re:run(Url, "([a-zA-Z0-9]+@)?([a-zA-Z0-9\.]+):") of
-    nomatch -> error;
-    {match, [_,Host|_]} -> Host
-  end.
+gitRemoteUrl :: FilePath -> IO String
+gitRemoteUrl = (`git` [ "config", "--get", "remote.origin.url" ])
 
-indent(Str) ->
-  Lines = string:tokens(Str, "\n\r"),
-  Indented = lists:map(fun(X) -> [$ ,$ ,$ ,$ |X] end, Lines),
-  string:join(Indented, $\n).
+gitLog :: FilePath -> String -> String -> IO String
+gitLog dir from to = git dir
+  [ "log"
+  , showString "--format=format:" gitFormat
+  , showString from $ showString ".." to
+  ]
 
-readlines(FileName) ->
-  {ok, Device} = file:open(FileName, [read]),
-  get_all_lines_reversed(Device, []).
+dropWhileInclusive :: (a -> Bool) -> [a] -> [a]
+dropWhileInclusive _ []     = []
+dropWhileInclusive f (a:as) = if f a then dropWhileInclusive f as else as
 
-get_all_lines_reversed(Device, Accum) ->
-  case io:get_line(Device, "") of
-    eof  -> file:close(Device), Accum;
-    Line -> get_all_lines_reversed(Device, [string:strip(Line, both, $\n)|Accum])
-  end.
+urlHost :: String -> String
+urlHost url = case dropWhileInclusive (/='@') url of
+  []   -> takeWhile (/=':') url
+  url' -> takeWhile (/=':') url'
 
-printer() ->
-  receive
-    {fetched, Repo, Dir} ->
-      io:format("~sSynced ~s~s~n", [?TEXT_PURPLE, Repo, ?TEXT_RESET]),
-      case git_log(Dir, "master", "origin/master") of
-        []         -> ok;
-        NewCommits -> io:format("  New commits:~n~s~n", [indent(NewCommits)])
-      end,
-      printer();
-    stop -> true
-  end.
+indent :: String -> String
+indent = unlines . map ("    " ++) . lines
 
-worker(Server, Printer) ->
-  receive
-    {fetch, Repo, Dir} ->
-      git_fetch(Dir),
-      Server ! {fetched, Repo, Dir},
-      Printer ! {fetched, Repo, Dir},
-      worker(Server, Printer);
-    stop -> true
-  end.
+data PrinterMsg = StopPrinter | Print String FilePath
+data WorkerMsg  = StopWorker  | Fetch String FilePath
+data ServerMsg  = Fetched String
 
-spawn_workers(_, _, Workers, []) -> dict:to_list(Workers);
+printer :: Chan PrinterMsg -> IO ()
+printer chan = readChan chan >>= \case
+  StopPrinter -> return ()
 
-spawn_workers(Server, Printer, Workers, [Repo|T]) ->
-  Dir = Repo ++ "/.git/",
-  Host = url_host(git_remote_url(Dir)),
-  case dict:find(Host, Workers) of
-    error ->
-      Pid = spawn_link(fun() -> worker(Server, Printer) end),
-      Pid ! {fetch, Repo, Dir},
-      spawn_workers(Server, Printer, dict:append(Host, Pid, Workers), T);
+  Print repo dir -> do
+    putStrLn $ showString textPurple $ showString "Synced " $ showString repo textReset
+    gitLog dir "master" "origin/master" >>= \case
+      []  -> return ()
+      new -> putStrLn "  New commits:" >> putStrLn (indent new)
 
-    {ok, [Pid]} ->
-      Pid ! {fetch, Repo, Dir},
-      spawn_workers(Server, Printer, Workers, T)
-  end.
+    printer chan
 
-wait_for_workers([]) -> ok;
-wait_for_workers(Repos) ->
-  receive
-    {fetched, Repo, _} -> wait_for_workers(lists:delete(Repo, Repos))
-  end.
+worker :: Chan WorkerMsg -> Chan ServerMsg -> Chan PrinterMsg -> IO ()
+worker w s p = readChan w >>= \case
+  StopWorker -> return ()
 
-main(_) ->
-  Repos = readlines(".git-repos"),
-  Printer = spawn_link(fun() -> printer() end),
-  Workers = spawn_workers(self(), Printer, dict:new(), Repos),
-  wait_for_workers(Repos),
-  lists:map(fun({_, [Pid]}) -> Pid ! stop end, Workers),
-  Printer ! stop.
+  Fetch repo dir -> do
+    gitFetch dir
+    writeChan s $ Fetched repo
+    writeChan p $ Print repo dir
+    worker w s p
+
+spawnWorkers :: Chan ServerMsg -> Chan PrinterMsg -> [String] -> IO [Chan WorkerMsg]
+spawnWorkers s p = go M.empty
+  where
+    go m []           = return $ M.elems m
+    go m (repo:repos) = do
+      let dir = repo </> ".git"
+      host <- urlHost `fmap` gitRemoteUrl dir
+      w <- case M.lookup host m of
+        Nothing -> do
+          w <- newChan
+          forkIO $ worker w s p
+          return w
+        Just w -> return w
+
+      writeChan w $ Fetch repo dir
+      go (M.insert host w m) repos
+
+waitForWorkers :: Chan ServerMsg -> [String] -> IO ()
+waitForWorkers _ []    = return ()
+waitForWorkers s repos = readChan s >>=
+  \(Fetched repo) -> waitForWorkers s $ delete repo repos
+
+main :: IO ()
+main = do
+  repos <- lines `fmap` readFile ".git-repos"
+  p <- newChan
+  s <- newChan
+  forkIO $ printer p
+  ws <- spawnWorkers s p repos
+  waitForWorkers s repos
+  forM_ ws (`writeChan` StopWorker)
+  writeChan p StopPrinter
