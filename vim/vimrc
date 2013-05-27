@@ -101,7 +101,7 @@ function! SetSpell(lang)
   execute "setlocal spellfile=" . "~/.vim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
 endfunction
 " }}}
-" {{{ Disabled Stupid Keys
+" {{{ Disabled stupid keys and commands
 noremap Q <nop>
 
 " Arrow keys
@@ -131,7 +131,7 @@ noremap  <home>     <nop>
 noremap  <pagedown> <nop>
 noremap  <pageup>   <nop>
 " }}}
-" {{{ Key Bindings
+" {{{ Key bindings
 " F-keys
 nnoremap <f5> :make run<cr>
 nnoremap <f8> :silent! :make \| :redraw! \| :botright :cw<cr>
