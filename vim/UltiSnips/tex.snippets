@@ -5,3 +5,13 @@ endsnippet
 snippet sum "Sum" w
 \sum_{${1:k} = ${2:-\infty}}^{${3:\infty}}
 endsnippet
+
+snippet alg "Algorithm" b
+\begin{algorithm}[${1:H}]
+	\caption{${2:Caption}}
+	\label{alg:${3:label}}
+	\begin{algorithmic}
+		${0}
+	\end{algorithmic}
+\end{algorithm}
+endsnippet
