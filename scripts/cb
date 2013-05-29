@@ -6,39 +6,37 @@
 #   uses the contents of that file.
 # ------------------------------------------------
 
-_scs_col="\e[0;32m"; _wrn_col='\e[1;31m'; _trn_col='\e[0;33m'
+color_green='\e[0;32m'
+color_red='\e[1;31m'
+color_yellow='\e[0;33m'
+color_reset='\e[0m'
 
-# Check that xclip is installed.
 if ! type xclip > /dev/null 2>&1; then
-  echo -e "$_wrn_col""You must have the 'xclip' program installed.\e[0m"
-# Check user is not root (root doesn't have access to user xorg server)
+  echo -e "${color_red}You must have the 'xclip' program installed.$color_reset"
 elif [[ $USER == "root" ]]; then
-  echo -e "$_wrn_col""Must be regular user (not root) to copy a file to the clipboard.\e[0m"
+  echo -e "${color_red}Must be regular user (not root) to copy a file to the clipboard.$color_reset"
 else
-  # If no tty, data should be available on stdin
-  if [[ $(tty) == "not a tty" ]]; then
+  if [[ "$(tty)" == "not a tty" ]]; then
     input="$(< /dev/stdin)"
-  # Else, fetch input from params
   else
     input="$*"
   fi
-  if [[ -z $input ]]; then  # If no input, print usage message.
+
+  if [[ -z $input ]]; then
     echo "Copies a string or the contents of a file to the clipboard."
     echo "Usage: cb <string or file>"
     echo "       echo <string or file> | cb"
   else
-    # If the input is a filename that exists, then use the contents of that file.
     if [[ -e $input ]]; then
-      input="$(cat $input)"
+      input="$(< $input)"
     fi
-    # Copy input to clipboard
+
     echo -n "$input" | xclip -selection c
-    # Truncate text for status
     if (( ${#input} > 80 )); then
-      input="$(echo $input | cut -c1-80)$_trn_col...\e[0m"
+      input="$(echo $input | cut -c1-80)$color_yellow...$color_reset"
     fi
-    # Print status.
-    echo -e "$_scs_col""Copied to clipboard:\e[0m $input"
+
+    echo -e "${color_green}Copied to clipboard:$color_reset $input"
   fi
 fi
 

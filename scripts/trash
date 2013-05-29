@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ $(whoami) = "root" ]]; then
+if [[ "$USER" == "root" ]]; then
   trash_dir="/tmp/trash/"
 else
   trash_dir="$HOME/.trash/"
