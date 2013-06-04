@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+quvi -vm -e-r -e-v -f best --exec "echo %t" --exec "mplayer %u" "$1"
