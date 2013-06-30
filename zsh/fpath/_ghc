@@ -277,9 +277,9 @@ _ghc_pkg_command()
     )
 
     if (( $#WORDS == 1 )); then
-	_describe -t commands 'command' _ghc_pkg_cmds || compadd "$@"
+        _describe -t commands 'command' _ghc_pkg_cmds || compadd "$@"
     else
-    	local curcontext="$curcontext"
+        local curcontext="$curcontext"
         cmd="${${_ghc_pkg_cmds[(r)$WORDS[2]:*]%%:*}}"
         if (( $#cmd )); then
             _arguments \
@@ -341,7 +341,7 @@ _ghc_pkg_find-module ()
 {
     if (( $#WORDS == 2)); then
         if ( [[ ${+_ghc_modules} -eq 0 ]] || _cache_invalid GHC_MODULES ) &&
-	    ! _retrieve_cache GHC_MODULES;
+            ! _retrieve_cache GHC_MODULES;
         then
             _ghc_modules=( $(ghc-pkg dump | sed -n '/^exposed-modules:/{s/^exposed-modules:[ ]\+\(.*\)$/\1/;s/ /\n/;p;be};b;:e;n;/^ /{s/^[ ]\+\(.*\)$/\1/;s/ /\n/;p;be}') )
             _store_cache GHC_MODULES _ghc_modules
@@ -357,7 +357,7 @@ _ghc_pkg_check () {}
 _ghc_pkg_available_packages ()
 {
     if ( [[ ${+_ghc_pkg_packages_pkgs} -eq 0 ]] || _cache_invalid GHC_PACKAGES ) &&
-	! _retrieve_cache GHC_PACKAGES;
+        ! _retrieve_cache GHC_PACKAGES;
     then
         _ghc_pkg_packages=( $(ghc-pkg list --simple-output --names-only) )
         _store_cache GHC_PACKAGES _ghc_pkg_packages
