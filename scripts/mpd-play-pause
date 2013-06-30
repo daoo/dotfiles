@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-if systemctl -q --user is-active mpd.service; then
-  # mpd running
-  mpc -q toggle
-else
-  systemctl -q --user start mpd.service
-  mpc -q play
-fi
