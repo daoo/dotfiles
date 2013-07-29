@@ -63,8 +63,6 @@ nnoremap <leader>aa :Tabularize assignment<cr>
 nnoremap <leader>ab :Tabularize braces<cr>
 nnoremap <leader>ac :Tabularize commas<cr>
 
-nnoremap <c-t> :CtrlP<cr>
-
 nnoremap <leader>fg :Ag '<cword>'<cr>
 " }}}
 " vim: fdm=marker :
