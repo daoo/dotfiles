@@ -1,8 +1,8 @@
 set nocompatible
 filetype off
 
-set runtimepath+=~/.vim/bundle/vundle/
-call vundle#rc()
+set runtimepath+=$HOME/.vim/bundles/vundle/
+call vundle#rc('$HOME/.vim/bundles')
 
 Bundle 'Cpp11-Syntax-Support'
 Bundle 'PKGBUILD'

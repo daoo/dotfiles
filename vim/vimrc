@@ -2,7 +2,7 @@
 
 " {{{ Startup
 let mapleader=","
-source ~/.vim/bundles.vim
+source $HOME/.vim/bundles.vim
 " }}}
 " {{{ Settings
 " moving around, searching and patterns
@@ -56,7 +56,7 @@ set nofoldenable
 " reading and writing files
 set autowrite
 set backup
-set backupdir=~/.vim/tmp//
+set backupdir=$HOME/.vim/tmp//
 
 " the swap file
 set directory=/tmp/vim//
@@ -98,7 +98,7 @@ endfunction
 function! SetSpell(lang)
   setlocal spell
   execute "setlocal spelllang=" . a:lang
-  execute "setlocal spellfile=" . "~/.vim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
+  execute "setlocal spellfile=" . "$HOME/.vim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
 endfunction
 " }}}
 " {{{ Disabled stupid keys and commands
