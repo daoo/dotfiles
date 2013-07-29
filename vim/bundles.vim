@@ -15,9 +15,9 @@ Bundle 'tikhomirov/vim-glsl'
 Bundle 'daoo/Mustang2'
 Bundle 'daoo/Wombat'
 
-Bundle 'Lokaltog/vim-powerline'
 Bundle 'Rename2'
 Bundle 'SirVer/ultisnips'
+Bundle 'bling/vim-airline'
 Bundle 'gmarik/vundle'
 Bundle 'godlygeek/tabular'
 Bundle 'kien/ctrlp.vim'
@@ -32,6 +32,9 @@ Bundle 'tpope/vim-surround'
 filetype plugin indent on
 
 " {{{ General Settings
+let g:airline_right_sep=''
+let g:airline_left_sep=''
+
 augroup syntax
   au!
   au BufNewFile,BufRead *.cpp set syntax=cpp11
