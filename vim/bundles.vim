@@ -45,8 +45,8 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_switch_buffer     = 0
 
 let g:ctrlp_custom_ignore = {
-  \ 'file': '\v[\/]\.(pdf|xcf|gif|png|jpg|swp|bak|pyc|class|o|hi|dll)$',
-  \ 'dir': '\v([\/]\.(git|hg|svn))|cabal-dev/|((src/.*)@<!(build|dist))$'
+  \ 'file': '\v\.(pdf|xcf|bmp|gif|png|jpg|swp|bak|pyc|class|o|hi|exe|dll|pdb)$',
+  \ 'dir': '\v(\.(git|hg|svn))|cabal-dev/|((src/.*)@<!(build|dist))$'
   \ }
 " }}}
 " {{{ Maps
