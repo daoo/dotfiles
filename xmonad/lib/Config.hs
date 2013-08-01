@@ -1,5 +1,6 @@
 module Config
-  ( winBorderFocused, winBorderNormal
+  ( winBorderFocused
+  , winBorderNormal
   , myWorkspaces
   , myXPConfig
   , myPP

@@ -27,7 +27,6 @@ xf86Email          = 0x1008ff19
 xf86Favorites      = 0x1008ff30
 xf86TouchpadToggle = 0x1008ffa9
 
-{-# INLINE dvorakMaps #-}
 dvorakMaps :: KeyMask -> (WorkspaceId -> X ()) -> [((KeyMask, KeySym), X ())]
 dvorakMaps m f = zipWith (\k w -> ((m, k), f w)) workspaceKeys myWorkspaces
   where
