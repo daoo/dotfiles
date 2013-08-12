@@ -1,5 +1,6 @@
 URxvt.buffered:  true
 URxvt.saveLines: 10000
+URxvt.iso14755:  false
 
 URxvt.keysym.M-g:    perl:copy-pasta:copy
 URxvt.keysym.M-h:    perl:copy-pasta:paste
