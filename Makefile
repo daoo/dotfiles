@@ -55,7 +55,6 @@ vim:
 	mkdir -p ${HOME}/.vim/spell
 	ln -fsn $(here)/vim/UltiSnips ${HOME}/.vim/UltiSnips
 	ln -fsn $(here)/vim/after ${HOME}/.vim/after
-	ln -fsn $(here)/vim/bundles.vim ${HOME}/.vim/bundles.vim
 	ln -fsn $(here)/vim/ftdetect ${HOME}/.vim/ftdetect
 	ln -fsn $(here)/vim/ftplugin ${HOME}/.vim/ftplugin
 	ln -fsn $(here)/vim/gvimrc ${HOME}/.gvimrc

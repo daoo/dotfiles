@@ -1,8 +1,11 @@
 " daoo's .vimrc
 
-" {{{ Startup
+" {{{ Pathogen
 let mapleader=","
-source $HOME/.vim/bundles.vim
+set nocompatible
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
 " }}}
 " {{{ Settings
 " moving around, searching and patterns
@@ -191,5 +194,37 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
 " }}}
+" {{{ Addons
+let g:airline_right_sep=''
+let g:airline_left_sep=''
 
+augroup syntax
+  au!
+  au BufNewFile,BufRead *.cpp set syntax=cpp11
+  au BufNewFile,BufRead *.v set syntax=coq
+augroup END
+
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_switch_buffer     = 0
+
+let g:ctrlp_custom_ignore = {
+  \ 'file': '\v\.(pdf|xcf|bmp|gif|png|jpg|swp|bak|pyc|class|o|hi|exe|dll|pdb)$',
+  \ 'dir': '\v(\.(git|hg|svn))|((src/.*)@<!(build|dist|cabal-dev))$'
+  \ }
+
+nnoremap <f2> :NERDTreeToggle<cr>
+nnoremap <f4> :GundoToggle<cr>
+
+nmap <leader>M <Plug>(quickhl-reset)
+nmap <leader>m <Plug>(quickhl-toggle)
+xmap <leader>M <Plug>(quickhl-reset)
+xmap <leader>m <Plug>(quickhl-toggle)
+
+nnoremap <leader>a- :Tabularize /-><cr>
+nnoremap <leader>aa :Tabularize assignment<cr>
+nnoremap <leader>ab :Tabularize braces<cr>
+nnoremap <leader>ac :Tabularize commas<cr>
+
+nnoremap <leader>fg :Ag '<cword>'<cr>
+" }}}
 " vim: fdm=marker :
