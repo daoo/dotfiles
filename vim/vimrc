@@ -67,6 +67,9 @@ set history=500
 set wildmenu
 set wildmode=list:longest,full
 
+" multi-byte characters
+set encoding=utf-8
+
 " other
 runtime ftplugin/man.vim
 colorscheme mustang
