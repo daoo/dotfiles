@@ -1,10 +1,14 @@
 #!/usr/bin/bash
 
-if [[ "$1" = "install" ]]; then
+if [[ $1 = install-git ]]; then
   yaourt --noconfirm -S \
     vim-airline-git \
-    vim-ctrlp \
     vim-fugitive-git \
+    vim-tabular-git
+elif [[ $1 = install ]]; then
+  yaourt --noconfirm -S
+    vim-ag \
+    vim-ctrlp \
     vim-glsl \
     vim-markdown \
     vim-nerdcommenter \
@@ -15,11 +19,10 @@ if [[ "$1" = "install" ]]; then
     vim-repeat \
     vim-surround \
     vim-systemd \
-    vim-tabular-git \
     vim-ultisnips
+else
+  for dir in ~/.vim/bundle/*; do
+    cd $dir
+    git pull
+  done
 fi
-
-for dir in ~/.vim/bundles/*; do
-  cd $dir
-  git pull
-done
