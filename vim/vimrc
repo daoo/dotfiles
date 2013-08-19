@@ -77,6 +77,9 @@ set encoding=utf-8
 runtime ftplugin/man.vim
 colorscheme mustang
 syntax on
+
+highlight OverLength ctermbg=red ctermfg=white guibg=#b84300
+match OverLength /\%81v.\+/
 " }}}
 " {{{ Commands
 command! W %!sudo tee > /dev/null %
