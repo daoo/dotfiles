@@ -6,7 +6,7 @@ if [[ $1 = install-git ]]; then
     vim-fugitive-git \
     vim-tabular-git
 elif [[ $1 = install ]]; then
-  yaourt --noconfirm -S
+  yaourt --noconfirm -S \
     vim-ag \
     vim-ctrlp \
     vim-glsl \
