@@ -144,7 +144,7 @@ noremap  <pagedown> <nop>
 noremap  <pageup>   <nop>
 " }}}
 " {{{ Key bindings
-" F-keys
+" Make
 nnoremap <f5> :make run<cr>
 nnoremap <f8> :silent! :make \| :redraw! \| :botright :cw<cr>
 nnoremap <f9> :make ctags<cr>
@@ -156,32 +156,31 @@ nnoremap <leader>aj wby0o<esc>pVr J
 nnoremap <leader>ap {jV}k:sort<cr>
 nnoremap <leader>as :%s/( /(/g<cr>:%s/ )/)/g<cr>
 
-" Misc
-inoremap <c-space> <c-x><c-o>
-nnoremap <leader>cd :cd %:p:h<cr>
-nnoremap <leader>cp :%y+<cr>
+" Yanking
+nnoremap <leader>ya :%y+<cr>
+
+" Files
 nnoremap <leader>es :mksession! ~/.session.vim<cr>
 nnoremap <leader>el :source ~/.session.vim<cr>
 nnoremap <leader>ef :e %<cr>
 nnoremap <leader>eve :vsplit $MYVIMRC<cr>
 nnoremap <leader>evs :source $MYVIMRC<cr>
-nnoremap <leader>h :call SwitchSourceHeader()<cr>
-nnoremap <leader>dt :diffthis<cr>
-nnoremap <leader>du :diffupdate<cr>
-nnoremap <leader>do :diffoff!<cr>
+
+" Spell
 nnoremap <leader>se :call SetSpell("en_us")<cr>
 nnoremap <leader>ss :call SetSpell("sv")<cr>
 nnoremap <leader>so :setlocal nospell<cr>
-nnoremap K kJ
-vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
-vnoremap <c-x> y`]a = <c-r>=<c-r>"<cr><esc>
+
+" Diff
+nnoremap <leader>dt :diffthis<cr>
+nnoremap <leader>du :diffupdate<cr>
+nnoremap <leader>do :diffoff!<cr>
 
 " Searching
 nnoremap <leader>fc :nohlsearch<cr>
 nnoremap <leader>fl /<c-r>=expand("<cword>")<cr><cr>
 nnoremap <leader>fr :%s@<c-r>=expand("<cword>")<cr>@
 vnoremap <leader>fr y:%s@<c-r>"@
-
 nnoremap N Nzz
 nnoremap n nzz
 
@@ -196,6 +195,14 @@ nnoremap <c-h> <c-w>h
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
+
+" Misc
+inoremap <c-space> <c-x><c-o>
+nnoremap <leader>cd :cd %:p:h<cr>
+nnoremap <leader>h :call SwitchSourceHeader()<cr>
+nnoremap K kJ
+vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
+vnoremap <c-x> y`]a = <c-r>=<c-r>"<cr><esc>
 " }}}
 " {{{ Addons
 let g:airline_right_sep=''
