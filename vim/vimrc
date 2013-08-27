@@ -151,6 +151,10 @@ nnoremap <f9> :make ctags<cr>
 nnoremap <f10> :make lint<cr>
 
 " Tabular and clean up
+nnoremap <leader>a- :Tabularize /-><cr>
+nnoremap <leader>aa :Tabularize assignment<cr>
+nnoremap <leader>ab :Tabularize braces<cr>
+nnoremap <leader>ac :Tabularize commas<cr>
 nnoremap <leader>ae :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
 nnoremap <leader>aj wby0o<esc>pVr J
 nnoremap <leader>ap {jV}k:sort<cr>
@@ -162,6 +166,7 @@ nnoremap <leader>yp <Plug>yankstack_substitute_older_paste
 nnoremap <leader>yn <Plug>yankstack_substitute_newer_paste
 
 " Files
+nnoremap <f2> :NERDTreeToggle<cr>
 nnoremap <leader>es :mksession! ~/.session.vim<cr>
 nnoremap <leader>el :source ~/.session.vim<cr>
 nnoremap <leader>ef :e %<cr>
@@ -179,7 +184,12 @@ nnoremap <leader>du :diffupdate<cr>
 nnoremap <leader>do :diffoff!<cr>
 
 " Searching
+nnoremap <leader>M <Plug>(quickhl-reset)
+nnoremap <leader>m <Plug>(quickhl-toggle)
+xnoremap <leader>M <Plug>(quickhl-reset)
+xnoremap <leader>m <Plug>(quickhl-toggle)
 nnoremap <leader>fc :nohlsearch<cr>
+nnoremap <leader>fg :Ag '<cword>'<cr>
 nnoremap <leader>fl /<c-r>=expand("<cword>")<cr><cr>
 nnoremap <leader>fr :%s@<c-r>=expand("<cword>")<cr>@
 vnoremap <leader>fr y:%s@<c-r>"@
@@ -200,6 +210,7 @@ nnoremap <c-l> <c-w>l
 
 " Misc
 inoremap <c-space> <c-x><c-o>
+nnoremap <f4> :GundoToggle<cr>
 nnoremap <leader>cd :cd %:p:h<cr>
 nnoremap <leader>h :call SwitchSourceHeader()<cr>
 nnoremap K kJ
@@ -223,20 +234,5 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(pdf|xcf|bmp|gif|png|jpg|swp|bak|pyc|class|o|hi|exe|dll|pdb)$',
   \ 'dir': '\v(\.(git|hg|svn))|((src/.*)@<!(build|dist|cabal-dev))$'
   \ }
-
-nnoremap <f2> :NERDTreeToggle<cr>
-nnoremap <f4> :GundoToggle<cr>
-
-nmap <leader>M <Plug>(quickhl-reset)
-nmap <leader>m <Plug>(quickhl-toggle)
-xmap <leader>M <Plug>(quickhl-reset)
-xmap <leader>m <Plug>(quickhl-toggle)
-
-nnoremap <leader>a- :Tabularize /-><cr>
-nnoremap <leader>aa :Tabularize assignment<cr>
-nnoremap <leader>ab :Tabularize braces<cr>
-nnoremap <leader>ac :Tabularize commas<cr>
-
-nnoremap <leader>fg :Ag '<cword>'<cr>
 " }}}
 " vim: fdm=marker :
