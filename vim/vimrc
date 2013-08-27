@@ -158,6 +158,8 @@ nnoremap <leader>as :%s/( /(/g<cr>:%s/ )/)/g<cr>
 
 " Yanking
 nnoremap <leader>ya :%y+<cr>
+nnoremap <leader>yp <Plug>yankstack_substitute_older_paste
+nnoremap <leader>yn <Plug>yankstack_substitute_newer_paste
 
 " Files
 nnoremap <leader>es :mksession! ~/.session.vim<cr>
