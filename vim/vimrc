@@ -111,9 +111,6 @@ function! SetSpell(lang)
 endfunction
 " }}}
 " {{{ Disabled stupid keys and commands
-cmap q echo "Use ZZ instead"<cr>
-cmap q! echo "Use ZQ instead"<cr>
-
 noremap Q <nop>
 
 " Arrow keys
