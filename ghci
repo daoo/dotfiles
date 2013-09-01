@@ -1,0 +1,3 @@
+:m + Control.Monad Control.Applicative Control.Arrow Debug.Trace Text.Printf Data.Maybe Data.List Data.Monoid
+:set prompt "ghci> "
+:set -fno-print-bind-result
