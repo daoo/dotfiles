@@ -1,10 +1,13 @@
 here := $(shell pwd)
 
 all:
-	@echo "Availible targets: emacs git gtk haskeline luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xinitrc xmonad zsh"
+	@echo "Availible targets: emacs ghci git gtk haskeline luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xinitrc xmonad zsh"
 
 emacs:
 	ln -fsn $(here)/emacs/emacs ${HOME}/.emacs
+
+ghci:
+	ln -fsn $(here)/ghci ${HOME}/.ghci
 
 git:
 	ln -fsn $(here)/gitconfig ${HOME}/.gitconfig
@@ -82,4 +85,4 @@ zsh:
 	ln -fsn $(here)/zsh/zshenv ${HOME}/.zshenv
 	ln -fsn $(here)/zsh/zshrc ${HOME}/.zshrc
 
-.PHONY: emacs git gtk haskeline luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xinitrc xmonad zsh
+.PHONY: emacs ghci git gtk haskeline luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xinitrc xmonad zsh
