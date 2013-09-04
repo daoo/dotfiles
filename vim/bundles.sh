@@ -4,7 +4,8 @@ if [[ $1 = yaourt-git ]]; then
   yaourt --noconfirm -S \
     vim-airline-git \
     vim-fugitive-git \
-    vim-tabular-git
+    vim-tabular-git \
+    vim-togglelist-git
 elif [[ $1 = yaourt ]]; then
   yaourt --noconfirm -S \
     vim-ag \
@@ -26,6 +27,7 @@ elif [[ $1 = clone-all ]]; then
   git clone https://github.com/godlygeek/tabular.git ~/.vim/bundle/tabular
   git clone https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp
   git clone https://github.com/mileszs/ack.vim.git ~/.vim/bundle/ag
+  git clone https://github.com/milkypostman/vim-togglelist.git ~/.vim/bundle/togglelist
   git clone https://github.com/scrooloose/nerdcommenter.git ~/.vim/bundle/nerdcommenter
   git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
   git clone https://github.com/tikhomirov/vim-glsl.git ~/.vim/bundle/glsl

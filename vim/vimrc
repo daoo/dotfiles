@@ -147,6 +147,10 @@ nnoremap <f8> :silent! :make! \| copen<cr>
 nnoremap <f9> :make ctags<cr>
 nnoremap <f10> :make lint<cr>
 
+" Quickfix
+nmap <script> <silent> <leader>wq :call ToggleQuickfixList()<cr>
+nmap <script> <silent> <leader>wl :call ToggleLocationList()<cr>
+
 " Tabular and clean up
 nnoremap <leader>a- :Tabularize /-><cr>
 nnoremap <leader>aa :Tabularize assignment<cr>
