@@ -212,7 +212,6 @@ nnoremap <c-l> <c-w>l
 " Misc
 inoremap <c-space> <c-x><c-o>
 nnoremap <f4> :GundoToggle<cr>
-nnoremap <leader>cd :cd %:p:h<cr>
 nnoremap <leader>h :call SwitchSourceHeader()<cr>
 nnoremap K kJ
 vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
