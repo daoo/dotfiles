@@ -47,9 +47,9 @@ urlHost url = case dropWhileInclusive (/='@') url of
 indent :: String -> String
 indent = unlines . map ("    " ++) . lines
 
-data PrinterMsg = StopPrinter | Print String FilePath
-data WorkerMsg  = StopWorker  | Fetch String FilePath
-data ServerMsg  = Fetched String
+data PrinterMsg   = StopPrinter | Print String FilePath
+data WorkerMsg    = StopWorker  | Fetch String FilePath
+newtype ServerMsg = Fetched String
 
 printer :: Chan PrinterMsg -> IO ()
 printer chan = readChan chan >>= \case
