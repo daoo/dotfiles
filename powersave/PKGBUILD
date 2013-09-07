@@ -1,11 +1,11 @@
 pkgname=powersave
-pkgver=1.1
+pkgver=2
 pkgrel=1
 pkgdesc="PKGBUILD for the powersave program."
-url="http://github.com/daoo"
+url="http://github.com/daoo/dotfiles/powersave"
 arch=('x86_64' 'i686')
 depends=()
-makedepends=('gcc' 'make' 'xz')
+makedepends=('clang' 'make' 'xz')
 source=("powersave.tar.xz")
 
 build() {
