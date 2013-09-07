@@ -22,7 +22,7 @@ void file_write(const char* file, const char* str)
 {
   FILE* f = fopen(file, "w");
   if (f) {
-    fputs(str, stdout);
+    fputs(str, f);
     fclose(f);
   } else {
     ERROR_FILE("io error while writing file", file);

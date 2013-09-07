@@ -7,16 +7,20 @@
 
 (load-file "/usr/share/emacs/site-lisp/ProofGeneral/generic/proof-site.el")
 
+
+(load-file (let ((coding-system-for-read 'utf-8))
+             (shell-command-to-string "agda-mode locate")))
+
 (require 'evil)
 (evil-mode 1)
 
 (setq evil-find-skip-newlines t)
 (setq evil-move-cursor-back nil
-    evil-cross-lines t)
+      evil-cross-lines t)
 (setq evil-default-cursor #'cofi/evil-cursor)
 (setq evil-mode-line-format nil)
 (setq evil-leader/leader ","
-    evil-leader/in-all-states t)
+      evil-leader/in-all-states t)
 
 (define-key evil-normal-state-map [escape] 'keyboard-quit)
 (define-key evil-visual-state-map [escape] 'keyboard-quit)
