@@ -3,7 +3,8 @@
 
 #include <string>
 
-namespace power {
+namespace power
+{
   void opt(const std::string& file, const char* value);
   void check(const std::string& file);
 

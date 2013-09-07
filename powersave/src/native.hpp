@@ -1,7 +1,8 @@
 #ifndef NATIVE_HPP_VJBWQBOS
 #define NATIVE_HPP_VJBWQBOS
 
-namespace native {
+namespace native
+{
   void print_state();
   void save_power();
   void full_power();

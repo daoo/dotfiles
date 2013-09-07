@@ -1,8 +1,9 @@
 #include "power.hpp"
+
 #include "files.hpp"
 #include "functions.hpp"
+#include "io_exception.hpp"
 #include "logging.hpp"
-
 #include <cstdlib>
 #include <iostream>
 #include <sys/wait.h>
@@ -11,8 +12,10 @@
 using namespace files;
 using namespace std;
 
-namespace power {
-  void opt(const string& file, const char* value) {
+namespace power
+{
+  void opt(const string& file, const char* value)
+  {
     try {
       write(file, value);
     } catch (io_exception& ex) {
@@ -20,7 +23,8 @@ namespace power {
     }
   }
 
-  void check(const string& file) {
+  void check(const string& file)
+  {
     try {
       string str = read(file);
       cout << file << ": " << str << "\n";
@@ -29,14 +33,16 @@ namespace power {
     }
   }
 
-  void run(const string& cmd) {
+  void run(const string& cmd)
+  {
     int ecode = system(cmd.c_str());
     if (ecode != 0) {
       logging::error("failed running '" + cmd + "', exit code " + to_string(ecode));
     }
   }
 
-  int run2(const string& cmd, const string& param) {
+  int run2(const string& cmd, const string& param)
+  {
     pid_t pid = fork();
     if (pid < 0) {
       logging::error("fork failed");
@@ -51,21 +57,24 @@ namespace power {
     }
   }
 
-  void load(const string& module) {
+  void load(const string& module)
+  {
     int e = run2("modprobe", module);
     if (e != 0) {
       logging::error("loading module " + module + " failed, modprobe exited with " + to_string(e));
     }
   }
 
-  void unload(const string& module) {
+  void unload(const string& module)
+  {
     int e = run2("rmmod", module);
     if (e != 0) {
       logging::error("loading module " + module + " failed, modprobe exited with " + to_string(e));
     }
   }
 
-  void is_loaded(const string&) {
+  void is_loaded(const string&)
+  {
     logging::error("is_loaded is not implemented");
   }
 }

@@ -3,7 +3,8 @@
 
 #include <string>
 
-namespace logging {
+namespace logging
+{
   void error(const std::string& str);
 }
 

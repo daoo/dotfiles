@@ -5,7 +5,8 @@
 #include <string>
 
 namespace files {
-  class io_exception : public std::exception {
+  class io_exception : public std::exception
+  {
     public:
       io_exception(const std::string& file);
 

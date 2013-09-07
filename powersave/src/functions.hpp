@@ -4,7 +4,8 @@
 #include <sstream>
 
 template <typename T>
-std::string to_string(T v) {
+std::string to_string(T v)
+{
   std::stringstream ss;
   ss << v;
   return ss.str();
