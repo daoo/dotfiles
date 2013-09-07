@@ -8,13 +8,13 @@ void file_print(const char* file)
   FILE* f = fopen(file, "r");
   if (f) {
     char c = getc(f);
-    while (c != EOF) {
+    while (c != EOF && c != '\n') {
       putchar(c);
       c = getc(f);
     }
     fclose(f);
   } else {
-    ERROR_FILE("io error while writing file", file);
+    ERROR_FILE("io error while reading file", file);
   }
 }
 

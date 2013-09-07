@@ -2,9 +2,9 @@
 #define LOGGING_H_BEILFOH7
 
 #ifdef LOGGING
-#include <cstdio>
+#include <stdio.h>
 #define ERROR(s) fprintf(stderr, "[error] %s\n", (s))
-#define ERROR_FILE(s, f) fprintf(stderr, "[error] %s: %f\n", (s), (f))
+#define ERROR_FILE(s, f) fprintf(stderr, "[error] %s: %s\n", (s), (f))
 #define ERROR_PRINTF(...) fprintf(stderr, __VA_ARGS__)
 #else
 #define ERROR(s)
