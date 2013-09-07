@@ -1,20 +1,20 @@
 exe = powersave
 dir = build
 
-cxx    = clang++
-flags  = -std=c++11 -Isrc
+cxx    = clang
+flags  = -std=c99 -Isrc
 cflags = -Wall -Wextra -pedantic
 
-sources = $(wildcard src/*.cpp src/*.hpp)
-cfiles = $(wildcard src/*.cpp)
+sources = $(wildcard src/*.c src/*.h)
+cfiles = $(wildcard src/*.c)
 
 params = -o $(dir)/$(exe) $(flags) $(cflags)
 
 debug: builddir
-	$(cxx) -g -DDEBUG $(params) $(cfiles)
+	$(cxx) -g -DLOGGING -DDEBUG $(params) $(cfiles)
 
 release: builddir
-	$(cxx) -O4 -DNLOGGING -DNDEBUG -mtune=native -march=native $(params) $(cfiles)
+	$(cxx) -Os -s -DNDEBUG $(params) $(cfiles)
 
 pkgbuild:
 	rm -rf /tmp/powersave
