@@ -2,6 +2,8 @@
 
 if [[ -d "cabal-dev" ]]; then
   dbflag="-package-db=$(echo cabal-dev/packages-*.conf)"
+elif [[ -d ".cabal-sandbox" ]]; then
+  dbflag="-package-db=$(echo .cabal-sandbox/*-packages.conf.d)"
 else
   dbflag=""
 fi
