@@ -150,6 +150,8 @@ nnoremap <f10> :make lint<cr>
 " Quickfix
 nmap <script> <silent> <leader>wq :call ToggleQuickfixList()<cr>
 nmap <script> <silent> <leader>wl :call ToggleLocationList()<cr>
+nnoremap ,wn :cnext<cr>
+nnoremap ,wp :cprevious<cr>
 
 " Tabular and clean up
 nnoremap <leader>a- :Tabularize /-><cr>
