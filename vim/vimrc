@@ -91,6 +91,9 @@ augroup trailing
   au InsertLeave * :set listchars+=trail:⌴
 augroup END
 
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
 function! SwitchSourceHeader()
   let ext = expand("%:e")
   if (ext == "cpp")
@@ -142,9 +145,9 @@ noremap  <pageup>   <nop>
 " }}}
 " {{{ Key bindings
 " Make
-nnoremap <f5> :make run<cr>
-nnoremap <f8> :silent! :make! \| copen<cr>
-nnoremap <f9> :make ctags<cr>
+nnoremap <f5> :silent make! run<cr>
+nnoremap <f8> :silent make!<cr>
+nnoremap <f9> :silent make! tags<cr>
 nnoremap <f10> :make lint<cr>
 
 " Quickfix
