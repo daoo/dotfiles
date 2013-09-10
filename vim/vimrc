@@ -145,10 +145,10 @@ noremap  <pageup>   <nop>
 " }}}
 " {{{ Key bindings
 " Make
-nnoremap <f5> :silent make! run<cr>
-nnoremap <f8> :silent make!<cr>
-nnoremap <f9> :silent make! tags<cr>
-nnoremap <f10> :silent make! lint<cr>
+nnoremap <f5> :silent make! run \| redraw!<cr>
+nnoremap <f8> :silent make! \| redraw!<cr>
+nnoremap <f9> :silent make! tags \| redraw!<cr>
+nnoremap <f10> :silent make! lint \| redraw!<cr>
 
 " Quickfix
 nmap <script> <silent> <leader>wq :call ToggleQuickfixList()<cr>
