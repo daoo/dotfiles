@@ -1,5 +1,5 @@
+options = -file-line-error -halt-on-error
 outdir  = build
-options = -file-line-error -halt-on-error -output-directory $(outdir)
 
 sources = file.tex
 pdfs    = $(patsubst %.tex,$(outdir)/%.pdf, $(sources))
@@ -7,9 +7,9 @@ pdfs    = $(patsubst %.tex,$(outdir)/%.pdf, $(sources))
 all: $(pdfs)
 
 $(outdir)/%.pdf: %.tex
-	pdflatex $(options) $<
+	pdflatex $(options) -output-directory $(outdir) $<
 
 clean:
 	$(RM) $(outdir)/*
 
-.PHONY: clean all
+.PHONY: clean
