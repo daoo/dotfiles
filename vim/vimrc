@@ -163,7 +163,7 @@ nnoremap <leader>ab :Tabularize braces<cr>
 nnoremap <leader>ac :Tabularize commas<cr>
 nnoremap <leader>ae :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
 nnoremap <leader>aj wby0o<esc>pVr J
-nnoremap <leader>ap {jV}k:sort<cr>
+nnoremap <leader>ap Vapk:sort<cr>
 nnoremap <leader>as :%s/( /(/g<cr>:%s/ )/)/g<cr>
 
 " Yanking
