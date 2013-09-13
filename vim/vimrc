@@ -207,8 +207,6 @@ noremap <c-s> :w<cr>
 inoremap <c-s> <esc>:w<cr>a
 
 " Split/tabs navigation
-nnoremap <c-s-tab> :tabprevious<cr>
-nnoremap <c-tab> :tabnext<cr>
 nnoremap <c-h> <c-w>h
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
