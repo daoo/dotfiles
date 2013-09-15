@@ -9,7 +9,7 @@ URxvt.perl-ext:      selection,url-select,copy-pasta
 URxvt.perl-lib:      .urxvt/perl
 URxvt.underlineURLs: true
 
-URxvt.font:            xft:Dina:size=8
+URxvt.font:            xft:Dina:size=7
 URxvt.internalBorder:  0
 URxvt.scrollBar:       false
 URxvt.scrollBar_right: false
