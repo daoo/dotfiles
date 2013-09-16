@@ -10,7 +10,8 @@ void power_opt(const char* file, const char* value)
 
 void power_check(const char* file)
 {
-  printf("%s: ", file);
+  fputs(file, stdout);
+  fputs(": ", stdout);
   file_print(file);
   putchar('\n');
 }
