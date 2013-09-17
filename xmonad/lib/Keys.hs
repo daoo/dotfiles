@@ -8,6 +8,7 @@ import Prompt
 import XMonad
 import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.GridSelect
+import XMonad.Actions.Navigation2D
 import XMonad.Actions.NoBorders
 import XMonad.StackSet (hidden, shift, tag, view, greedyView)
 import XMonad.Util.Run
@@ -39,6 +40,13 @@ newKeyMaps = M.fromList $
   [ ((myModKey, xK_u), withFocused toggleBorder)
   , ((myModKey, xK_o), toggleWS)
   , ((myModKey, xK_r), goToSelected defaultGSConfig)
+
+  , ((myModKey, xK_h), windowGo L False)
+  , ((myModKey, xK_l), windowGo R False)
+  , ((myModKey, xK_j), windowGo D False)
+  , ((myModKey, xK_k), windowGo U False)
+  , ((myModKey, xK_plus), sendMessage Expand)
+  , ((myModKey, xK_minus), sendMessage Shrink)
 
   , ((myModKey .|. shiftMask, xK_g), removeEmptyWorkspace)
   , ((myModKey, xK_g), selectWorkspace myXPConfig)
