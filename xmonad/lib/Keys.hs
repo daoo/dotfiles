@@ -32,8 +32,8 @@ dvorakMaps :: KeyMask -> (WorkspaceId -> X ()) -> [((KeyMask, KeySym), X ())]
 dvorakMaps m f = zipWith (\k w -> ((m, k), f w)) workspaceKeys myWorkspaces
   where
     workspaceKeys = [ xK_ampersand, xK_bracketleft, xK_braceleft, xK_braceright
-                    , xK_parenleft, xK_equal, xK_asterisk, xK_parenright, xK_plus
-                    , xK_bracketright, xK_exclam ]
+                    , xK_parenleft, xK_equal, xK_asterisk, xK_parenright
+                    , xK_plus, xK_bracketright, xK_exclam ]
 
 newKeyMaps :: M.Map (KeyMask, KeySym) (X ())
 newKeyMaps = M.fromList $
