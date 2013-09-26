@@ -21,6 +21,8 @@ import XMonad.Util.Run
 myManageHook :: ManageHook
 myManageHook = composeAll
   [ className    =? "Skype"                --> doShift "im"
+  , className    =? "irc"                  --> doShift "im"
+  , className    =? "Pidgin"               --> doShift "im"
   , className    =? "Chromium"             --> doShift "web"
   , className    =? "Browser"              --> doShift "web"
   , className    =? "Firefox"              --> doShift "web"
@@ -29,9 +31,9 @@ myManageHook = composeAll
   , className    =? "Eclipse"              --> doShift "code2"
   , className    =? "Steam"                --> doShift "other"
   , className    =? "Wine"                 --> doShift "full"
-  , appName      =? "MPlayer"              --> doCenterFloat
   , className    =? "Dialog"               --> doCenterFloat
-  , wmName       =? "Options"              --> doCenterFloat
+  , title        =? "Options"              --> doCenterFloat
+  , title        =? "Simple Pathtracer"    --> doCenterFloat
   , wmWindowRole =? "Preferences"          --> doCenterFloat
   , wmWindowRole =? "GtkFileChooserDialog" --> doCenterFloat
   ]
@@ -47,9 +49,10 @@ myLayoutHook = onWorkspace "im" imLayout $ onWorkspace "full" fullLayout default
 
     ambiguity = Combine Difference Screen OnlyFloat
     tiled     = Tall 1 0.03 0.5
-    im        = withIM (1%7) skypeBuddyList (Grid ||| Full)
+    im        = withIM (1%7) (skypeBuddyList `Or` pidgin) (Grid ||| Full)
 
     skypeBuddyList = Title "daoo-- - Skype\8482"
+    pidgin         = ClassName "Pidgin" `And` Title "Buddy List"
 
 myLogHook :: Handle -> X ()
 myLogHook h = dynamicLogWithPP (myPP { ppOutput = hPutStrLn h })
