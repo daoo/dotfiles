@@ -33,7 +33,6 @@ myManageHook = composeAll
   , className    =? "Wine"                 --> doShift "full"
   , className    =? "Dialog"               --> doCenterFloat
   , title        =? "Options"              --> doCenterFloat
-  , title        =? "Simple Pathtracer"    --> doCenterFloat
   , wmWindowRole =? "Preferences"          --> doCenterFloat
   , wmWindowRole =? "GtkFileChooserDialog" --> doCenterFloat
   ]
