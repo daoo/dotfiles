@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Script for removing the currently playing song from your mpd queue and a selected m3u file.
-# Needs mpd and mpc
+# Script for removing the currently playing song from your mpd queue and a
+# selected m3u file. Needs mpd and mpc.
 
 mpd_dir="$HOME/.mpd"
 playlist_dir="$mpd_dir/playlists"
@@ -18,8 +18,8 @@ if [[ -z $song ]]; then
   exit 2 # No song playing
 fi
 
-# Ask for confirmation
-# xmessage or zenity could be used if you don't want to run this in a terminal:
+# Ask for confirmation. xmessage or zenity could be used if you don't want to
+# run this in a terminal:
 #xmessage -buttons 'Yes:1,No:0' "Really remove '$song'?"
 #zenity --no-wrap --question --text="Really remove '$song'?"
 
@@ -29,12 +29,12 @@ if [[ ($result != "y") && ($result != "Y") ]]; then
   exit 3 # Failed confirmation
 fi
 
-# Remove from playlist by turning on consume
-# But preserve consume status
-if [[ $(mpc status | grep consume | awk '{ print $10 }') = "on" ]]; then
+# Remove from playlist by turning on consume but preserve consume status.
+if [[ $(mpc status | awk '/consume/ { print $10 }') = "on" ]]; then
   consume_after=1
 else
-  # This order will make it default to off, in case mpc status does not return (on|off)
+  # This order will make it default to off, in case mpc status does not return
+  # (on|off)
   consume_after=0
   mpc -q --wait consume 1
 fi
@@ -53,7 +53,7 @@ for m3u in $playlist_dir/*.m3u; do
   cp "$m3u" "$m3u.bak"
 
   # Remove the song from the default playlist
-  # TODO: use sed instead
+  # TODO: avoid temporary file
   grep -v "$file" "$m3u" > "$m3u.temp"
   mv "$m3u.temp" "$m3u"
 done
