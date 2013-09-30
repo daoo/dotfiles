@@ -1,0 +1,7 @@
+[Unit]
+Description=WeeChat
+After=network.target network-online.target
+
+[Service]
+Environment=DISPLAY=:0 BROWSER=/usr/bin/firefox
+ExecStart=/usr/bin/urxvt -name irc -e "/usr/bin/weechat-curses"

@@ -3,11 +3,9 @@ Description=Dropbox
 After=local-fs.target network.target
 
 [Service]
+Environment=DISPLAY=:0 BROWSER=/usr/bin/firefox
 Type=simple
 ExecStart=/usr/bin/dropboxd
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=always
-
-[Install]
-WantedBy=main-stuff.target

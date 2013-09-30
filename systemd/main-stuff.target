@@ -1,3 +1,0 @@
-[Unit]
-Description=Target for startup programs
-Wants=main.target

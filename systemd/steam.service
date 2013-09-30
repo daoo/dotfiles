@@ -3,7 +3,5 @@ Description=Steam
 After=network.target
 
 [Service]
+Environment=DISPLAY=:1 BROWSER=/usr/bin/firefox
 ExecStart=/usr/bin/steam
-
-[Install]
-WantedBy=gaming-stuff.target

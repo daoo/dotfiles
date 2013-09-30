@@ -4,7 +4,5 @@ After=network.target pulseaudio.service
 Wants=pulseaudio.service
 
 [Service]
+Environment=DISPLAY=:0 BROWSER=/usr/bin/firefox
 ExecStart=/usr/bin/skype --disable-api
-
-[Install]
-WantedBy=main-stuff.target

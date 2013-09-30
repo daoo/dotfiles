@@ -6,6 +6,3 @@ After=sound.target network.target
 ExecStart=/usr/bin/mpd --no-daemon
 Restart=always
 RestartSec=2
-
-[Install]
-WantedBy=main-stuff.target

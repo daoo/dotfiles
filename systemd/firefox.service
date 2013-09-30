@@ -3,7 +3,5 @@ Description=Firefox
 After=network.target
 
 [Service]
+Environment=DISPLAY=:0
 ExecStart=/usr/bin/firefox
-
-[Install]
-WantedBy=main-stuff.target

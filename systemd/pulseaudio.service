@@ -8,6 +8,3 @@ BusName=org.pulseaudio.Server
 ExecStart=/usr/bin/pulseaudio
 Restart=always
 RestartSec=2
-
-[Install]
-WantedBy=main-stuff.target

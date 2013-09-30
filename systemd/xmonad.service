@@ -1,11 +1,8 @@
 [Unit]
 Description=Xmonad
-Before=main-stuff.target
 
 [Service]
+Environment=DISPLAY=:0
 ExecStart=/usr/bin/xmonad
 Restart=always
 RestartSec=10
-
-[Install]
-WantedBy=main.target

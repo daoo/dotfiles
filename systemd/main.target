@@ -1,6 +1,0 @@
-[Unit]
-Description=Main tty target
-Wants=xorg.target
-Wants=main-stuff.target
-Requires=dbus.socket
-AllowIsolate=true

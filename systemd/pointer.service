@@ -2,7 +2,5 @@
 Description=Set root pointer
 
 [Service]
+Environment=DISPLAY=:0
 ExecStart=/usr/bin/xsetroot -cursor_name left_ptr
-
-[Install]
-WantedBy=main-stuff.target

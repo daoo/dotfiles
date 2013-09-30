@@ -1,13 +1,10 @@
 [Unit]
 Description=Openbox
-Before=gaming-stuff.target
 After=xorg.target
 Requires=xorg.target
 
 [Service]
+Environment=DISPLAY=:1 BROWSER=/usr/bin/firefox
 ExecStart=/usr/bin/openbox
 Restart=always
 RestartSec=10
-
-[Install]
-WantedBy=gaming.target

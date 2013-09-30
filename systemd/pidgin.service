@@ -1,7 +1,7 @@
 [Unit]
-Description=GVim
+Description=Pidgin
+After=network.target
 
 [Service]
 Environment=DISPLAY=:0 BROWSER=/usr/bin/firefox
-ExecStart=/usr/bin/vim -gf
-Restart=always
+ExecStart=/usr/bin/pidgin

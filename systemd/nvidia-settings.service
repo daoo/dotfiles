@@ -2,8 +2,5 @@
 Description=Load nvidia settings
 
 [Service]
+Environment=DISPLAY=:0 BROWSER=/usr/bin/firefox
 ExecStart=/usr/bin/nvidia-settings --load-config-only
-
-[Install]
-WantedBy=main-stuff.target
-WantedBy=gaming-stuff.target
