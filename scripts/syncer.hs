@@ -1,6 +1,9 @@
 {-# LANGUAGE LambdaCase #-}
 module Main where
 
+-- TODO: Create directories
+-- TODO: Copy album art
+
 import Control.Applicative
 import Control.Monad
 import System.Directory
@@ -18,30 +21,46 @@ checkFile path = notWhenM (doesFileExist path) (fail $ path ++ " is not a file")
 checkDir :: FilePath -> IO ()
 checkDir path = notWhenM (doesDirectoryExist path) (fail $ path ++ " is not a directory")
 
-getDirectoryContents' :: FilePath -> IO [FilePath]
-getDirectoryContents' = fmap (filter (`notElem` [".", ".."])) . getDirectoryContents
-
+-- TODO: Improve performance
+-- Look into posix-paths, problem is number of file operations. In C with
+-- dirent we don't have to make another IO call for finding out if we're
+-- dealing with a directory or not.
 getRecursiveAbsolute :: FilePath -> IO [FilePath]
 getRecursiveAbsolute topdir = do
-  names <- getDirectoryContents' topdir
-  fmap concat $ forM names $ \name -> do
-    let path = topdir </> name
-    isDirectory <- doesDirectoryExist path
-    if isDirectory
-      then getRecursiveAbsolute path
-      else return [path]
+  names <- getDirectoryContents topdir
+  fmap concat $ forM names $ \case
+    ('.' : [])       -> return []
+    ('.' : '.' : []) -> return []
+    name             -> do
+      let path = topdir </> name
+      isdir <- doesDirectoryExist path
+      if isdir
+        then getRecursiveAbsolute path
+        else return [path]
 
 copy :: FilePath -> FilePath -> [FilePath] -> IO ()
 copy from to = go S.empty
   where
-    go dirs (x:xs) = copyFile (from </> x) (to </> x)
-      -- TODO: Create directories
-      -- TODO: Copy album art
+    go :: S.Set FilePath -> [FilePath] -> IO ()
+    go _    []           = return ()
+    go dirs (file:files) = do
+      dirs' <- if S.member dir dirs
+        then return dirs
+        else fnewdir >> return (S.insert dir dirs)
+      fcpy
+      go dirs' files
+      where
+        fnewdir = putStrLn dir
+        fcpy = putStrLn $ "cp \"" ++ (from </> file) ++ "\" \"" ++ (to </> file) ++ "\"" -- copyFile (from </> x) (to </> x)
 
--- Let A be playlist
--- Let B be files in target
--- Copy A \ B to target
--- Remove B \ A from B
+        dir = takeDirectory file
+
+        fromdir = from </> dir
+        todir   = to </> dir
+
+askIfRemove :: FilePath -> IO Bool
+askIfRemove file = do
+  putStr ("Remove " ++ file ++ " [y/N]? ") >> (== "y") `fmap` getLine
 
 main :: IO ()
 main = getArgs >>= \case
@@ -51,13 +70,12 @@ main = getArgs >>= \case
     checkDir out
     inplaylist <- lines <$> readFile playlist
     intarget   <- getRecursiveAbsolute out
-    let a = S.fromList $ map (makeRelative prefix) inplaylist
-        b = S.fromList $ map (makeRelative out) intarget
+    let a = S.fromList $ map (makeValid . makeRelative prefix) inplaylist
+        b = S.fromList $ map (makeValid . makeRelative out) intarget
         cpy = a S.\\ b
         del = b S.\\ a
-     in do
-      mapM_ (\f -> putStrLn $ "cp " ++ (prefix </> f) ++ " " ++ (out </> f)) (S.toList cpy)
-      mapM_ (\f -> putStrLn $ "rm " ++ (out </> f)) (S.toList del)
+     in copy prefix out (S.toList cpy)
+     >> (filterM askIfRemove (S.toList del) >>= print)
 
   ["-h"]     -> hPutStrLn stdout help
   ["--help"] -> hPutStrLn stdout help
