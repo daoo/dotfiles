@@ -21,6 +21,7 @@ launchPrompt c = inputPromptWithCompl c "Run" (mkComplFunFromList cmds) ?+ spawn
       , "gvim"
       , "keepassx"
       , "libreoffice"
+      , "linuxdcpp"
       , "lxappearance"
       , "minecraft"
       , "mirage"
