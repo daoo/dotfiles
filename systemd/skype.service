@@ -1,7 +1,6 @@
 [Unit]
 Description=Skype
 After=network.target pulseaudio.service
-Wants=pulseaudio.service
 
 [Service]
 Environment=DISPLAY=:0 BROWSER=/usr/bin/firefox
