@@ -1,86 +1,79 @@
-#!/usr/bin/env ruby
-# Episodes
-# By daoo
+#!/usr/bin/env runhaskell
+{-# LANGUAGE LambdaCase, OverloadedStrings #-}
+module Main (main) where
 
-require 'fileutils'
-require 'open3'
+import Data.List (sort)
+import System.Directory (getDirectoryContents, removeFile, doesFileExist)
+import System.Environment (getArgs)
+import System.IO (hPutStrLn, stderr)
+import System.Process (system)
+import qualified Data.ByteString.Char8 as B
 
-# TODO: custom command
-COMMAND    = "mplayer -really-quiet"
-STATE_FILE = "./.episodes-state"
+{-# INLINE ifM #-}
+ifM :: Monad m => m Bool -> m a -> m a -> m a
+ifM m a b = m >>= \case
+  True  -> a
+  False -> b
 
-def print_help()
-  puts "Y - remove and play next file (default)"
-  puts "n - keep and quit"
-  puts "q - remove and quit"
-  puts "? - display this help"
-end
+getDirectoryContents' :: FilePath -> IO [FilePath]
+getDirectoryContents' = fmap (filter f) . getDirectoryContents
+  where
+    f "."  = False
+    f ".." = False
+    f _    = True
 
-def init()
-  if File.exists?(STATE_FILE)
-    puts "Already initialized"
-    exit 1
-  else
-    puts "Initializing"
-    files = Dir.entries(Dir.pwd())
-    files.select! { |file| file != "." and file != ".." }
-    files.sort!
+help :: String
+help =
+  "init - initialize state file\n\
+  \remove - remove the state file\n\
+  \help - this help"
 
-    File.write(STATE_FILE, files.join("\n"))
+stateFile :: String
+stateFile = "./.episodes"
 
-    puts "Found #{files.length} file(s)"
-    exit 0
-  end
-end
+play :: FilePath -> IO ()
+play file = system ("mplayer -really-quiet " ++ file) >> return ()
 
-def uninit()
-  if File.exists?(STATE_FILE) then
-    puts "Okay"
-    File.delete(STATE_FILE)
-    exit 0
-  else
-    puts "Not initialized"
-    exit 1
-  end
-end
+type State = [B.ByteString]
 
-case ARGV[0]
-  when "init"
-    init()
-  when "remove"
-    uninit()
-  else
-    if File.exists?(STATE_FILE)
-      movie_files = File.readlines(STATE_FILE).map { |s| s.chomp }
+initState :: FilePath -> IO State
+initState = fmap (map B.pack . sort) . getDirectoryContents'
 
-      quit = false
-      while not quit and not movie_files.empty? do
-        file = movie_files.first()
-        puts file
+readState :: FilePath -> IO State
+readState = fmap B.lines . B.readFile
 
-        system("#{COMMAND} \"#{file}\"")
+writeState :: FilePath -> State -> IO ()
+writeState file = B.writeFile file . B.unlines
 
-        print "Remove file from state [Y,n,q,?]? "
-        inp = gets.chomp.downcase
+start :: IO State
+start = do
+  b <- doesFileExist stateFile
+  if b
+    then readState stateFile
+    else hPutStrLn stderr "No state file, please initialize first." >> return []
 
-        if inp == "y" or inp == "q" or inp.empty?
-          movie_files.shift()
-        end
+finish :: State -> IO ()
+finish [] = return ()
+finish s  = writeState stateFile s
 
-        if inp == "q" or inp == "n"
-          quit = true
-        end
-      end
+loop :: State -> IO State
+loop []           = return []
+loop state@(x:xs) = ifM askNoPlay (return state) $
+  play (B.unpack x) >> ifM askNoContinue (return state) (loop xs)
 
-      if movie_files.empty?
-        puts "No more episodes, removing state file"
-        File.delete(STATE_FILE)
-      else
-        puts "Writing state file"
-        File.write(STATE_FILE, movie_files.join("\n"))
-      end
-    else
-      puts "Directory need to be initialized."
-      puts "Run episodes init"
-    end
-end
+  where
+    askNoPlay = do
+      B.putStr $ "Play " `B.append` x `B.append` " [Y/n]? "
+      fmap (== "n") B.getLine
+
+    askNoContinue = do
+      B.putStr "Remove and continue [Y/n]? "
+      fmap (== "n") getLine
+
+main :: IO ()
+main = getArgs >>= \case
+  ["init"]   -> putStrLn "Initializing." >> initState stateFile >> return ()
+  ["remove"] -> putStrLn "Removing state file." >> removeFile stateFile
+  ["help"]   -> putStrLn help
+  []         -> start >>= loop >>= finish
+  _          -> hPutStrLn stderr help
