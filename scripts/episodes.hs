@@ -2,6 +2,7 @@
 {-# LANGUAGE LambdaCase, OverloadedStrings #-}
 module Main (main) where
 
+import Control.Monad
 import Data.List (sort)
 import System.Directory (getDirectoryContents, removeFile, doesFileExist)
 import System.Environment (getArgs)
@@ -32,7 +33,7 @@ stateFile :: String
 stateFile = "./.episodes"
 
 play :: FilePath -> IO ()
-play file = system ("mplayer -really-quiet " ++ file) >> return ()
+play = void . system . (++) "mplayer -really-quiet "
 
 type State = [B.ByteString]
 
@@ -72,7 +73,7 @@ loop state@(x:xs) = ifM askNoPlay (return state) $
 
 main :: IO ()
 main = getArgs >>= \case
-  ["init"]   -> putStrLn "Initializing." >> initState stateFile >> return ()
+  ["init"]   -> void (putStrLn "Initializing." >> initState stateFile)
   ["remove"] -> putStrLn "Removing state file." >> removeFile stateFile
   ["help"]   -> putStrLn help
   []         -> start >>= loop >>= finish

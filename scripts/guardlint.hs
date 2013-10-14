@@ -21,10 +21,10 @@ makeCPPGuardName d t = concat [makeGuardPrefix d, "_", t', "_HPP_"]
     t' = map toUpper t
 
 makeCGuardName :: FilePath -> String
-makeCGuardName d = concat [(makeGuardPrefix . takeDirectory) d, "_H_"]
+makeCGuardName d = (makeGuardPrefix . takeDirectory) d ++ "_H_"
 
 makeGuardPrefix :: FilePath -> String
-makeGuardPrefix = (map f) . dropTrailingPathSeparator
+makeGuardPrefix = map f . dropTrailingPathSeparator
   where
     f '/' = '_'
     f c   = toUpper c
@@ -34,5 +34,4 @@ makeGuard name = ( ["#ifndef " ++ name, "#define " ++ name]
                  , "#endif // " ++ name)
 
 main :: IO ()
-main = do
-  putStrLn "TODO"
+main = putStrLn "TODO"
