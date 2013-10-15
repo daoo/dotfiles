@@ -77,11 +77,9 @@ xinitrc:
 
 xmonad:
 	mkdir -p ${HOME}/.xmonad/
-	mkdir -p ${HOME}/.xmonad/lib
 	ln -fsn $(here)/xmonad/conkyrc ${HOME}/.xmonad/conkyrc
 	ln -fsn $(here)/xmonad/xmonad.hs ${HOME}/.xmonad/xmonad.hs
 	ln -fsn $(here)/xmonad/icons ${HOME}/.xmonad/icons
-	ln -fsn $(here)/xmonad/lib/*.hs ${HOME}/.xmonad/lib/
 
 zsh:
 	mkdir -p ${HOME}/.zsh
