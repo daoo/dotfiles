@@ -191,10 +191,10 @@ nnoremap <leader>du :diffupdate<cr>
 nnoremap <leader>do :diffoff!<cr>
 
 " Searching
-nmap <leader>M <Plug>(quickhl-reset)
-nmap <leader>m <Plug>(quickhl-toggle)
-vmap <leader>M <Plug>(quickhl-reset)
-vmap <leader>m <Plug>(quickhl-toggle)
+nmap <leader>m <Plug>(quickhl-manual-this)
+xmap <leader>m <Plug>(quickhl-manual-this)
+nmap <leader>M <Plug>(quickhl-manual-reset)
+xmap <leader>M <Plug>(quickhl-manual-reset)
 nnoremap <leader>fc :nohlsearch<cr>
 nnoremap <leader>fg :Ag '<cword>'<cr>
 nnoremap <leader>fl /<c-r>=expand("<cword>")<cr><cr>
