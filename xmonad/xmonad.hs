@@ -204,6 +204,7 @@ newKeyMaps = fromList $
 
   , ((myModKey, xK_x), safeSpawnProg "/usr/bin/firefox")
   , ((myModKey, xK_b), safeSpawnProg "/usr/bin/gvim")
+  , ((myModKey, xK_m), safeSpawnProg "/usr/bin/zathura")
   ]
 
   ++ dvorakMaps myModKey (windows . greedyView)
