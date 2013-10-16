@@ -9,4 +9,3 @@ for m3u in $playlist_dir/*.m3u; do
     sort -u "$m3u" -o "$m3u"
   fi
 done
-

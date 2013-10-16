@@ -57,6 +57,22 @@ def interact(editor, names)
   end
 end
 
+def rename(old_names, new_names)
+  for i in (0..new_names.length)
+    old = old_names[i]
+    new = new_names[i]
+
+    # Don't rename if we don't have to
+    if old != new
+      if not File.exists?(new)
+        FileUtils.mv(old, new)
+      else
+        $stderr.puts "File #{new} already exists, skipping."
+      end
+    end
+  end
+end
+
 def main(editor, dir, recursive)
   old_names = recursive ? files_recursive(dir) : files(dir)
   old_names.sort!
@@ -66,24 +82,12 @@ def main(editor, dir, recursive)
   if new_names.length != old_names.length
     $stderr.puts "Number of lines have changed, exiting."
     exit 1
-  else
-    for i in (0..new_names.length)
-      old = old_names[i]
-      new = new_names[i]
-
-      # Don't rename if we don't have to
-      if old != new
-        if not File.exists?(new)
-          FileUtils.mv(old, new)
-        else
-          $stderr.puts "File #{new} already exists, skipping."
-        end
-      end
-    end
   end
+
+  rename(old_names, new_names)
 end
 
-editor = ENV["EDITOR"] || "vim"
+editor    = ENV["EDITOR"] || "vim"
 recursive = ARGV.size > 0 and ARGV[0] == "-r"
 
 main(editor, ".", recursive)
