@@ -37,8 +37,8 @@ play = void . system . (++) "mplayer -really-quiet "
 
 type State = [B.ByteString]
 
-initState :: FilePath -> IO State
-initState = fmap (map B.pack . sort) . getDirectoryContents'
+initState :: FilePath -> IO ()
+initState file = ((map B.pack . sort) `fmap` getDirectoryContents' ".") >>= writeState file
 
 readState :: FilePath -> IO State
 readState = fmap B.lines . B.readFile
