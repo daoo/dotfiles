@@ -117,10 +117,13 @@ prompt_daoo_setup() {
   local dir="${l_paren}%{%B%F{magenta}%}%~%{%f%b%}${r_paren}"
   local host_info="${l_paren}%n${at_char}%m${r_paren}"
   local time="${l_bracket}%D${special_start}|${special_end}%*${r_bracket}"
+  local ranger="${RANGER_LEVEL:+r}"
 
   line1_a="${hyphen}${dir}${color_start}"
-  line1_b="${color_end}${time}${hyphen}${host_info}${color_start}-"
+  line1_b="${color_end}${l_paren}${ranger}${zsh_subshell}${r_paren}${hyphen}${time}${hyphen}${host_info}${color_start}-"
   line2="--${color_end}%F{white}> "
+
+  export zsh_subshell=z
 
   autoload add-zsh-hook
   add-zsh-hook precmd prompt_daoo_precmd
