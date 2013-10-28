@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-quvi dump -s best -e "mplayer %u" "$1"
