@@ -62,7 +62,6 @@ myManageHook = composeAll
   , className    =? "Browser"              --> doShift "web"
   , className    =? "Firefox"              --> doShift "web"
   , className    =? "luakit"               --> doShift "web"
-  , className    =? "Eclipse"              --> doShift "code2"
   , className    =? "Steam"                --> doShift "other"
   , className    =? "Wine"                 --> doShift "full"
   , className    =? "Dialog"               --> doCenterFloat
