@@ -1,7 +1,7 @@
 " daoo's .vimrc
 
 " {{{ Pathogen
-let mapleader=","
+let mapleader=" "
 set nocompatible
 execute pathogen#infect()
 syntax on
@@ -153,8 +153,8 @@ nnoremap <f10> :silent make! lint \| redraw!<cr>
 " Quickfix
 nmap <script> <silent> <leader>wq :call ToggleQuickfixList()<cr>
 nmap <script> <silent> <leader>wl :call ToggleLocationList()<cr>
-nnoremap ,wn :cnext<cr>
-nnoremap ,wp :cprevious<cr>
+nnoremap <leader>wn :cnext<cr>
+nnoremap <leader>wp :cprevious<cr>
 
 " Tabular and clean up
 nnoremap <leader>a- :Tabularize /->\<bar><-<cr>
