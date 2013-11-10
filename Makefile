@@ -1,7 +1,7 @@
 here := $(shell pwd)
 
-all:
-	@echo "Availible targets: emacs ghci git gtk haskeline haskell luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xinitrc xmonad zsh"
+help:
+	@echo "Select a target!"
 
 haskell: ${HOME}/bin/episodes ${HOME}/bin/git-fetch
 
