@@ -11,6 +11,9 @@ ${HOME}/bin/%: $(here)/scripts/%.hs
 emacs:
 	ln -fsn $(here)/emacs/emacs ${HOME}/.emacs
 
+gamingrc:
+	ln -fsn $(here)/gamingrc ${HOME}/.gamingrc
+
 ghci:
 	ln -fsn $(here)/ghci ${HOME}/.ghci
 
@@ -88,4 +91,4 @@ zsh:
 	ln -fsn $(here)/zsh/zshenv ${HOME}/.zshenv
 	ln -fsn $(here)/zsh/zshrc ${HOME}/.zshrc
 
-.PHONY: emacs ghci git gtk haskeline haskell luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xinitrc xmonad zsh
+.PHONY: emacs gamingrc ghci git gtk haskeline haskell luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xinitrc xmonad zsh

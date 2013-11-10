@@ -1,0 +1,6 @@
+#!/bin/sh
+
+/usr/bin/steam &
+/usr/bin/feh --bg-tile --no-fehbg "$(find $HOME/media/wallpapers | shuf -n 1)"
+
+/usr/bin/openbox
