@@ -1,6 +1,6 @@
 module Main (main) where
 
-import Data.Map (Map(..), fromList, insert, union)
+import Data.Map (Map, fromList, insert, union)
 import Data.Ratio
 import System.IO (Handle)
 import XMonad
@@ -11,7 +11,6 @@ import XMonad.Actions.NoBorders
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Grid
 import XMonad.Layout.IM
@@ -55,23 +54,24 @@ barToString bar = showString "-fn "  $ shows (barFont bar)
 -- {{{ Hooks
 myManageHook :: ManageHook
 myManageHook = composeAll
-  [ className    =? "Skype"                --> doShift "im"
-  , className    =? "irc"                  --> doShift "im"
-  , className    =? "Pidgin"               --> doShift "im"
-  , className    =? "Chromium"             --> doShift "web"
-  , className    =? "Browser"              --> doShift "web"
-  , className    =? "Firefox"              --> doShift "web"
-  , className    =? "luakit"               --> doShift "web"
-  , className    =? "Steam"                --> doShift "other"
-  , className    =? "Wine"                 --> doShift "full"
-  , className    =? "Dialog"               --> doCenterFloat
-  , title        =? "Options"              --> doCenterFloat
-  , wmWindowRole =? "Preferences"          --> doCenterFloat
-  , wmWindowRole =? "GtkFileChooserDialog" --> doCenterFloat
+  [ className =? "Skype"    --> doShift "im"
+  , className =? "irc"      --> doShift "im"
+  , className =? "Pidgin"   --> doShift "im"
+  , className =? "Chromium" --> doShift "web"
+  , className =? "Browser"  --> doShift "web"
+  , className =? "Firefox"  --> doShift "web"
+  , className =? "luakit"   --> doShift "web"
+  , className =? "Steam"    --> doShift "other"
+  , className =? "Wine"     --> doShift "full"
+
+  , className =? "Dialog"                  --> doFloat
+  , className =? "Gimp"                    --> doFloat
+  , title =? "Options"                     --> doFloat
+  , wmWindowRole =? "GtkFileChooserDialog" --> doFloat
+  , wmWindowRole =? "Preferences"          --> doFloat
   ]
   where
     wmWindowRole = stringProperty "WM_WINDOW_ROLE"
-    wmName       = stringProperty "WM_NAME"
 
 myLayoutHook = onWorkspace "im" imLayout $ onWorkspace "full" fullLayout defaultLayout
   where
