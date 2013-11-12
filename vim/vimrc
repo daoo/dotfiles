@@ -6,6 +6,7 @@ set nocompatible
 execute pathogen#infect()
 syntax on
 filetype plugin indent on
+call yankstack#setup()
 " }}}
 " {{{ Settings
 " moving around, searching and patterns
@@ -169,8 +170,6 @@ nnoremap <leader>as :%s/( /(/g<cr>:%s/ )/)/g<cr>
 
 " Yanking
 nnoremap <leader>ya :%y+<cr>
-nnoremap <leader>yp <Plug>yankstack_substitute_older_paste
-nnoremap <leader>yn <Plug>yankstack_substitute_newer_paste
 
 " Files
 nnoremap <f2> :NERDTreeToggle<cr>
@@ -222,6 +221,11 @@ vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
 vnoremap <c-x> y`]a = <c-r>=<c-r>"<cr><esc>
 " }}}
 " {{{ Addons
+let g:yankstack_map_keys = 0
+
+nmap <leader>yp <Plug>yankstack_substitute_older_paste
+nmap <leader>yn <Plug>yankstack_substitute_newer_paste
+
 let g:airline_right_sep=''
 let g:airline_left_sep=''
 
