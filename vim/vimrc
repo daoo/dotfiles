@@ -59,7 +59,7 @@ set nofoldenable
 
 " reading and writing files
 set autowrite
-set backup
+set nobackup
 set backupdir=$HOME/.vim/tmp//
 
 " the swap file
