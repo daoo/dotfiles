@@ -81,6 +81,9 @@ syntax on
 
 highlight OverLength ctermbg=red ctermfg=white guibg=#b84300
 match OverLength /\%81v.\+/
+
+syn match myTodo contained "\<\(TODO\|FIXME\)"
+hi def link myTodo Todo
 " }}}
 " {{{ Commands
 command! W %!sudo tee > /dev/null %
