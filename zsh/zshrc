@@ -40,7 +40,7 @@ export EDITOR="vim"
 export PAGER="less"
 
 export GREP_OPTIONS='--color=auto'
-export LESS="-FiXr"
+export LESS="-ir"
 
 # Less color
 export LESS_TERMCAP_mb=$'\E[01;31m'
