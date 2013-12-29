@@ -16,9 +16,6 @@
 #   y:        Copy (yank) selected URL and deactivate selection mode
 #   q/Escape: Deactivate URL selection mode
 
-# Options:
-#   URxvt.underlineURLs: If set to true, all URLs get underlined
-
 use strict;
 
 my $url_matcher = qr{(
@@ -26,21 +23,20 @@ my $url_matcher = qr{(
   [\w\-\@;\/?:&=%\$_.+!*\x27(),~#]+[\w\-\@;\/?&=%\$_+!*\x27()~]
 )}x;
 
-sub on_start {
+sub on_start
+{
   my ($self) = @_;
 
   # read resource settings
   @{$self->{browser}} = ($ENV{'BROWSER'});
 
-  if ($self->x_resource('underlineURLs') eq 'true') {
-    $self->enable(line_update => \&line_update);
-  }
+  $self->enable(line_update => \&line_update);
 
   ()
 }
 
-
-sub line_update {
+sub line_update
+{
   my ($self, $row) = @_;
 
   my $line = $self->line($row);
@@ -61,8 +57,8 @@ sub line_update {
   ()
 }
 
-
-sub on_user_command {
+sub on_user_command
+{
   my ($self, $cmd) = @_;
 
   if ($cmd eq 'url-select:select_next') {
@@ -75,7 +71,8 @@ sub on_user_command {
   ()
 }
 
-sub key_press {
+sub key_press
+{
   my ($self, $event, $keysym) = @_;
   my $char = chr($keysym);
 
@@ -97,7 +94,8 @@ sub key_press {
   return 1;
 }
 
-sub select_next {
+sub select_next
+{
   # $dir < 0: up, > 0: down
   my ($self, $dir) = @_;
   my $row = $self->{row};
@@ -106,7 +104,7 @@ sub select_next {
       ($dir > 0 && $self->{n} < $#{ $self->{found} })) {
     # another url on current line
     $self->{n} += $dir;
-    hilight($self);
+    highlight($self);
     return;
   }
 
@@ -129,7 +127,7 @@ sub select_next {
 
       $self->{row} = $row;
       $self->{n} = $dir < 0 ? $#{$self->{found}} : 0;
-      hilight($self);
+      highlight($self);
       return;
     }
   }
@@ -140,13 +138,14 @@ sub select_next {
 }
 
 
-sub hilight {
+sub highlight
+{
   my ($self) = @_;
 
   if ($self->{found}) {
     if ($self->{row} < $self->view_start() ||
         $self->{row} >= $self->view_start() + $self->nrow) {
-# scroll selected url into visible area
+      # scroll selected url into visible area
       my $top = $self->{row} - ($self->nrow >> 1);
       $self->view_start($top < 0 ? $top : 0);
     }
@@ -158,8 +157,8 @@ sub hilight {
   ()
 }
 
-
-sub refresh {
+sub refresh
+{
   my ($self) = @_;
 
   if ($self->{found}) {
@@ -169,8 +168,8 @@ sub refresh {
   ()
 }
 
-
-sub status_area {
+sub status_area
+{
   my ($self) = @_;
 
   my $row = $self->{row} < 0 ?
@@ -204,12 +203,13 @@ sub status_area {
 }
 
 
-sub tt_write {
+sub tt_write
+{
   return 1;
 }
 
-
-sub activate {
+sub activate
+{
   my ($self) = @_;
 
   $self->{active} = 1;
@@ -231,8 +231,8 @@ sub activate {
   ()
 }
 
-
-sub deactivate {
+sub deactivate
+{
   my ($self) = @_;
 
   $self->disable("key_press", "refresh_begin", "refresh_end", "tt_write");
@@ -248,4 +248,3 @@ sub deactivate {
 
   ()
 }
-
