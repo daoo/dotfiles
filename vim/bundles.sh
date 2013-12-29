@@ -29,7 +29,7 @@ if [[ $1 = clone ]]; then
 elif [[ $1 = pull ]]; then
   for dir in ~/.vim/bundle/*; do
     echo $dir
-    git -C "$dir" pull
+    git -C "$dir" pull --ff-only
   done
 else
   echo "Usage: bundles.sh COMMAND
