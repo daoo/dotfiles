@@ -1,5 +1,5 @@
 [Unit]
-Description=Firefox
+Description=Firefox with profile %I and without remote
 After=network.target
 
 [Service]
