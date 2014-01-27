@@ -21,6 +21,6 @@ ghc \
   -dsuppress-type-applications \
   -dppr-cols270 \
   -dppr-case-as-let \
-  -ddump-simpl \
+  -ddump-${TYPE-simpl} \
   $@ \
   | vim "+setf haskell" -
