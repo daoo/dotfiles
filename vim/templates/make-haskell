@@ -1,28 +1,29 @@
+disable_all=--disable-library-profiling --disable-executable-profiling --disable-tests --disable-benchmarks
+
 build:
-	@cabal build --ghc-options="-H64m -rtsopts"
+	@cabal build --ghc-options="-Wall -O -rtsopts -fno-ignore-asserts"
 
 prof:
-	@cabal build --ghc-options="-rtsopts -prof -fprof-auto -H64m"
+	@cabal configure --enable-library-profiling --enable-executable-profiling
+	@cabal build --ghc-options="-Wall -rtsopts -prof -fprof-auto"
 
 release:
-	@cabal build --ghc-options="-fllvm -H64m -O2"
+	@cabal configure $(disable_all)
+	@cabal build --ghc-options="-Wall -O2 -fllvm -fignore-asserts -fforce-recomp"
 
 init:
 	@cabal sandbox init
-	@cabal install --only-dependencies --enable-tests --enable-benchmarks
-	@cabal configure --ghc-options="-Wall" --disable-tests --disable-benchmarks
+	@cabal install --only-dependencies --enable-library-profiling
+	@cabal configure $(disable_all)
 
 test:
-	@cabal configure --ghc-options="-Wall" --enable-tests
-	@cabal build
-	@cabal test
-	@cabal configure --ghc-options="-Wall" --disable-tests --disable-benchmarks
+	@cabal configure --enable-tests
+	@cabal build --ghc-options="-Wall -O -fno-ignore-asserts"
+	./dist/build/tests/tests
 
 clean:
 	@cabal clean --save-configure
-
-tags:
-	@cabal repl :ctags
+	@cabal configure $(disable_all)
 
 lint:
-	@hlint src tests
+	@hlint src
