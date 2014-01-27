@@ -100,6 +100,16 @@
   </dock>
   <keyboard>
     <chainQuitKey>C-g</chainQuitKey>
+    <keybind key="W-F1">
+      <action name="Execute">
+        <execute>setxkbmap dvpse</execute>
+      </action>
+    </keybind>
+    <keybind key="W-F2">
+      <action name="Execute">
+        <execute>setxkbmap usaswe</execute>
+      </action>
+    </keybind>
     <keybind key="C-A-Left">
       <action name="GoToDesktop">
         <to>left</to>
@@ -146,26 +156,6 @@
       <action name="SendToDesktop">
         <to>down</to>
         <wrap>no</wrap>
-      </action>
-    </keybind>
-    <keybind key="W-F1">
-      <action name="GoToDesktop">
-        <to>1</to>
-      </action>
-    </keybind>
-    <keybind key="W-F2">
-      <action name="GoToDesktop">
-        <to>2</to>
-      </action>
-    </keybind>
-    <keybind key="W-F3">
-      <action name="GoToDesktop">
-        <to>3</to>
-      </action>
-    </keybind>
-    <keybind key="W-F4">
-      <action name="GoToDesktop">
-        <to>4</to>
       </action>
     </keybind>
     <keybind key="W-d">
