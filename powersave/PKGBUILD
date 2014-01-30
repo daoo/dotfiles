@@ -1,7 +1,7 @@
 pkgname=powersave
 pkgver=2
 pkgrel=1
-pkgdesc="PKGBUILD for the powersave program."
+pkgdesc="Custom program for changing power save state."
 url="http://github.com/daoo/dotfiles/powersave"
 arch=('x86_64' 'i686')
 depends=()
