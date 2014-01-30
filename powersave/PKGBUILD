@@ -1,5 +1,5 @@
 pkgname=powersave
-pkgver=2
+pkgver=3
 pkgrel=1
 pkgdesc="Custom program for changing power save state."
 url="http://github.com/daoo/dotfiles/powersave"
