@@ -1,21 +1,16 @@
-exe = powersave
-dir = build
+sources := $(wildcard src/*.c src/*.h)
+cfiles  := $(wildcard src/*.c)
 
-flags = -std=c99 -Isrc
+CC     ?= clang
+CFLAGS ?= -Wall -Wextra -pedantic
 
-CC     = clang
-CFLAGS = -Wall -Wextra -pedantic
+debug:
+	mkdir -p build
+	$(CC) -g -DLOGGING -DDEBUG -std=c99 -Isrc -o build/powersave $(CFLAGS) $(cfiles)
 
-sources = $(wildcard src/*.c src/*.h)
-cfiles = $(wildcard src/*.c)
-
-params = -o $(dir)/$(exe) $(flags) $(cflags)
-
-debug: $(dir)
-	$(CC) -g -DLOGGING -DDEBUG $(params) $(cfiles)
-
-release: $(dir)
-	$(CC) -Os -s -DNDEBUG $(params) $(cfiles)
+release:
+	mkdir -p build
+	$(CC) -Os -DNDEBUG -std=c99 -Isrc -o build/powersave $(CFLAGS) $(cfiles)
 
 pkgbuild:
 	rm -rf /tmp/powersave
@@ -23,6 +18,3 @@ pkgbuild:
 	cp PKGBUILD /tmp/powersave
 	tar -c Makefile $(sources) | xz > /tmp/powersave/powersave.tar.xz
 	(cd /tmp/powersave; makepkg --skipinteg)
-
-$(dir):
-	mkdir -p $(dir)
