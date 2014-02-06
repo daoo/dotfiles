@@ -5,10 +5,8 @@ if [[ -f "$file" ]]; then
   base="$(basename "$file")"
   tmp="$(mktemp "/tmp/$base-XXXXXXXX")"
 
-  cp "$file" "$tmp"
-  strip -s "$tmp"
-  objdump -dCM intel "$tmp" > "$tmp.asm"
+  objdump -d -M intel -l -S "$file" | c++filt > "$tmp.asm"
   vim "$tmp.asm"
 
-  rm -f "$tmp" "$tmp.asm"
+  rm -f "$tmp.asm"
 fi
