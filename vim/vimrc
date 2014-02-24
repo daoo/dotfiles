@@ -36,6 +36,7 @@ set laststatus=2
 set noerrorbells
 set novisualbell
 set showcmd
+set vb
 set t_vb=
 
 " editing text

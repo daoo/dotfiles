@@ -1,3 +1,5 @@
 set guifont=Dina\ 7
 set guioptions=
 set mouse=
+set vb
+set t_vb=
