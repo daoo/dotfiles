@@ -1,6 +1,5 @@
 [core]
-  editor   = vim
-  autocrlf = input
+  editor = vim
 [alias]
   aa = add -A
   ap = add --patch
