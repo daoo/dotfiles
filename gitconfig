@@ -1,11 +1,6 @@
 [core]
   editor   = vim
   autocrlf = input
-[color]
-  branch      = auto
-  diff        = auto
-  interactive = auto
-  status      = auto
 [alias]
   aa = add -A
   ap = add --patch
