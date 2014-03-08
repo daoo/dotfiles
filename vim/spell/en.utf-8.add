@@ -1,5 +1,11 @@
 Abelian
+BRDF
+BSDF
+BTDF
+Lambertian
 Memoization
+Microfacet
+Microfacets
 Oom
 Sudoku
 arity
@@ -8,7 +14,9 @@ kdtree
 memoization
 memoize
 memoized
+microsurface
 monoid
 pseudocode
 pseudopolynomial
+semiring
 semirings
