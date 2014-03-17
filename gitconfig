@@ -24,4 +24,4 @@
   ll = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --numstat
   lll = log -u
 [push]
-  default = current
+  default = simple
