@@ -65,7 +65,6 @@ myManageHook = composeAll
   , className =? "Wine"     --> doShift "full"
 
   , className =? "Dialog"                  --> doFloat
-  , className =? "Gimp"                    --> doFloat
   , title =? "Options"                     --> doFloat
   , wmWindowRole =? "GtkFileChooserDialog" --> doFloat
   , wmWindowRole =? "Preferences"          --> doFloat
