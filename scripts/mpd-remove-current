@@ -54,7 +54,7 @@ for m3u in $playlist_dir/*.m3u; do
 
   # Remove the song from the default playlist
   # TODO: avoid temporary file
-  grep -v "$file" "$m3u" > "$m3u.temp"
+  grep -F -v "$file" "$m3u" > "$m3u.temp"
   mv "$m3u.temp" "$m3u"
 done
 
