@@ -9,6 +9,7 @@ if [[ $1 = clone ]]; then
   git clone https://github.com/daoo/Mustang2.git "$bundle_dir/mustang2"
   git clone https://github.com/daoo/Wombat.git "$bundle_dir/wombat"
   git clone https://github.com/godlygeek/tabular.git "$bundle_dir/tabular"
+  git clone https://github.com/honza/vim-snippets.git "$bundle_dir/vim-snippets"
   git clone https://github.com/kien/ctrlp.vim.git "$bundle_dir/ctrlp"
   git clone https://github.com/maxbrunsfeld/vim-yankstack.git "$bundle_dir/yankstack"
   git clone https://github.com/mileszs/ack.vim.git "$bundle_dir/ack"
