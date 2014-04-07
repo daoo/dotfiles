@@ -80,9 +80,6 @@ runtime ftplugin/man.vim
 colorscheme mustang
 syntax on
 
-highlight OverLength ctermbg=red ctermfg=white guibg=#b84300
-match OverLength /\%81v.\+/
-
 syn match myTodo contained "\<\(TODO\|FIXME\)"
 hi def link myTodo Todo
 " }}}
@@ -98,6 +95,17 @@ augroup END
 
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
+
+function! LongLineHLToggle()
+  if exists('w:long_line_match')
+    silent! call matchdelete(w:long_line_match)
+    unlet w:long_line_match
+  elseif &textwidth > 0
+    let w:long_line_match = matchadd('ErrorMsg', '\%>'.&tw.'v.\+', -1)
+  else
+    let w:long_line_match = matchadd('ErrorMsg', '\%>80v.\+', -1)
+  endif
+endfunction
 
 function! SwitchSourceHeader()
   let ext = expand("%:e")
@@ -219,6 +227,7 @@ nnoremap <c-l> <c-w>l
 " Misc
 inoremap <c-space> <c-x><c-o>
 nnoremap <f4> :GundoToggle<cr>
+nnoremap <leader>t :call LongLineHLToggle()<cr>
 nnoremap <leader>h :call SwitchSourceHeader()<cr>
 nnoremap K kJ
 vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
