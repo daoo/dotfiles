@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-mount --read-write -o noatime "$1" "$2"
+mount --read-write -o gid=users,fmask=113,dmask=002 "$1" "$2"
