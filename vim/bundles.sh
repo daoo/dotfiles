@@ -29,6 +29,7 @@ if [[ $1 = clone ]]; then
   git clone https://github.com/vim-scripts/coq-syntax.git "$bundle_dir/coq"
   git clone https://github.com/vim-scripts/happy.vim.git "$bundle_dir/happy"
   git clone https://github.com/vim-scripts/matlab.vim.git "$bundle_dir/matlab"
+  git clone https://github.com/wolfy87/vim-enmasse.git "$bundle_dir/enmasse"
 elif [[ $1 = pull ]]; then
   for bundle in $bundle_dir/*; do
     echo "$bundle"
