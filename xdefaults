@@ -2,10 +2,8 @@ URxvt.buffered:  true
 URxvt.saveLines: 10000
 URxvt.iso14755:  false
 
-URxvt.keysym.M-g: perl:copy-pasta:copy
-URxvt.keysym.M-h: perl:copy-pasta:paste
 URxvt.keysym.M-u: perl:url-select:select_next
-URxvt.perl-ext:   selection,url-select,copy-pasta
+URxvt.perl-ext:   default,url-select
 URxvt.perl-lib:   .urxvt/perl
 
 URxvt.font:            xft:Dina:size=7
