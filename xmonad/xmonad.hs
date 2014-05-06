@@ -199,6 +199,9 @@ newKeyMaps = fromList $
   , ((myModKey, xK_i), scratchpadSpawnActionTerminal "/usr/bin/urxvt")
   , ((myModKey, xK_Return), safeSpawnProg "/usr/bin/urxvt")
 
+  , ((myModKey, xK_F1), safeSpawn "/usr/bin/setxkbmap" ["dvpse"])
+  , ((myModKey, xK_F2), safeSpawn "/usr/bin/setxkbmap" ["usaswe"])
+
   , ((myModKey, xK_x), safeSpawnProg "/usr/bin/firefox")
   , ((myModKey, xK_b), safeSpawnProg "/usr/bin/gvim")
   , ((myModKey, xK_m), safeSpawnProg "/usr/bin/zathura")
