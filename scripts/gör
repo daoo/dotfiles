@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+case $1 in
+  hela) make all ;;
+  ren) make clean ;;
+  rent) make clean ;;
+  bygg) make build ;;
+  ludd) make lint  ;;
+  fördelning) make dist ;;
+  släpp) make release ;;
+  prov) make test ;;
+  *) echo "förstår inte hur man gör $1" ;;
+esac
