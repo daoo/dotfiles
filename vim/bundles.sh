@@ -6,6 +6,7 @@ bundle_dir="$vim_dir/bundle"
 if [[ $1 = clone ]]; then
   mkdir -p $bundle_dir
   git clone https://github.com/bling/vim-airline.git "$bundle_dir/airline"
+  git clone https://github.com/danro/rename.vim.git "$bundle_dir/rename"
   git clone https://github.com/daoo/Mustang2.git "$bundle_dir/mustang2"
   git clone https://github.com/daoo/Wombat.git "$bundle_dir/wombat"
   git clone https://github.com/godlygeek/tabular.git "$bundle_dir/tabular"
