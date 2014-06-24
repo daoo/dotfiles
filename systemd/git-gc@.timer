@@ -1,0 +1,5 @@
+[Unit]
+Description=Run git gc periodically
+
+[Timer]
+OnCalendar=Tue,Wed,Thu,Fri
