@@ -21,6 +21,7 @@ Sudoku
 WordPress
 arity
 equipotential
+filesystem
 kdtree
 memoization
 memoize
@@ -31,3 +32,5 @@ pseudocode
 pseudopolynomial
 semiring
 semirings
+timestamp
+toolchain
