@@ -3,7 +3,7 @@ module Main (main) where
 import Data.Map (Map, fromList, insert, union)
 import Data.Ratio
 import System.IO (Handle)
-import XMonad
+import XMonad hiding (Color)
 import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.GridSelect
 import XMonad.Actions.Navigation2D
@@ -24,32 +24,28 @@ import XMonad.Util.Run
 import XMonad.Util.Scratchpad
 
 -- {{{ Bar
-data BarAlign = AlignLeft | AlignCenter | AlignRight
+newtype BarAlign = BarAlign { mkBarAlign :: Char }
 
-showBarAlign :: BarAlign -> String
-showBarAlign AlignCenter = "c"
-showBarAlign AlignLeft   = "l"
-showBarAlign AlignRight  = "r"
+barAlignLeft, barAlignCenter, barAlignRight :: BarAlign
+barAlignLeft   = BarAlign 'l'
+barAlignCenter = BarAlign 'c'
+barAlignRight  = BarAlign 'r'
 
-data Bar = Bar
-  { barAlign :: BarAlign
-  , barBg :: String
-  , barFg :: String
-  , barFont :: String
-  , barHeight :: Int
-  , barWidth :: Int
-  , barX :: Int, barY :: Int
-  }
+{-# INLINE barToString #-}
+barToString :: BarAlign -> Color -> Color -> String -> (Int, Int) -> (Int, Int) -> String
+barToString align bg fg font (w, h) (x, y) =
+  showString "-ta "  $ showChar (mkBarAlign align) $
+  showString " -fn " $ showString font $
+  showString " -fg " $ showString (mkColor fg) $
+  showString " -bg " $ showString (mkColor bg) $
+  showString " -w "  $ shows w $
+  showString " -h "  $ shows h $
+  showString " -x "  $ shows x $
+  showString " -y "  $ show y
 
-barToString :: Bar -> String
-barToString bar = showString "-fn "  $ shows (barFont bar)
-                $ showString " -fg " $ shows (barFg bar)
-                $ showString " -bg " $ shows (barBg bar)
-                $ showString " -x "  $ shows (barX bar)
-                $ showString " -y "  $ shows (barY bar)
-                $ showString " -w "  $ shows (barWidth bar)
-                $ showString " -h "  $ shows (barHeight bar)
-                $ showString " -ta " $ showBarAlign (barAlign bar)
+{-# INLINE defaultBar #-}
+defaultBar :: (Int, Int) -> (Int, Int) -> String
+defaultBar = barToString barAlignCenter panelBg panelFg panelFont
 -- }}}
 -- {{{ Hooks
 myManageHook :: ManageHook
@@ -89,26 +85,28 @@ myLogHook :: Handle -> X ()
 myLogHook h = dynamicLogWithPP (myPP { ppOutput = hPutStrLn h })
 -- }}}
 -- {{{ Colors and fonts
-winBorderFocused, winBorderNormal :: String
-winBorderFocused = "#6dff27"
+newtype Color = Color { mkColor :: String }
+
+winBorderFocused, winBorderNormal :: Color
+winBorderFocused = Color "#6dff27"
 winBorderNormal  = panelBg
 
 focusBg, focusFg, occupiedBg, occupiedFg, panelBg, panelFg, titleBg, titleFg,
-  urgentBg, urgentFg, viewsBg, viewsFg, visibleBg, visibleFg :: String
+  urgentBg, urgentFg, viewsBg, viewsFg, visibleBg, visibleFg :: Color
 focusBg    = panelBg
-focusFg    = "#729fcf"
+focusFg    = Color "#729fcf"
 occupiedBg = panelBg
-occupiedFg = "#b8b8b8"
-panelBg    = "#2e3436"
-panelFg    = "#b8b8b8"
+occupiedFg = Color "#b8b8b8"
+panelBg    = Color "#2e3436"
+panelFg    = Color "#b8b8b8"
 titleBg    = panelBg
-titleFg    = "#d3d7cf"
+titleFg    = Color "#d3d7cf"
 urgentBg   = panelBg
-urgentFg   = "#ef2929"
+urgentFg   = Color "#ef2929"
 viewsBg    = panelBg
-viewsFg    = "#757575"
+viewsFg    = Color "#757575"
 visibleBg  = panelBg
-visibleFg  = "#ad7fa8"
+visibleFg  = Color "#ad7fa8"
 
 panelFont :: String
 panelFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
@@ -119,9 +117,9 @@ myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void"]
 
 myXPConfig :: XPConfig
 myXPConfig = defaultXPConfig
-  { bgColor           = panelBg
-  , bgHLight          = focusFg
-  , fgColor           = panelFg
+  { bgColor           = mkColor panelBg
+  , bgHLight          = mkColor focusFg
+  , fgColor           = mkColor panelFg
   , font              = panelFont
   , position          = Bottom
   , promptBorderWidth = 0
@@ -132,30 +130,18 @@ myXPConfig = defaultXPConfig
 
 myPP :: PP
 myPP = defaultPP
-  { ppCurrent         = dzenColor focusFg focusBg
-  , ppHidden          = dzenColor occupiedFg occupiedBg . noNSP
-  , ppHiddenNoWindows = dzenColor viewsFg viewsBg . noNSP
+  { ppCurrent         = dzenColor (mkColor focusFg)    (mkColor focusBg)
+  , ppHidden          = dzenColor (mkColor occupiedFg) (mkColor occupiedBg) . noNSP
+  , ppHiddenNoWindows = dzenColor (mkColor viewsFg)    (mkColor viewsBg)    . noNSP
   , ppSep             = " | "
-  , ppTitle           = dzenColor titleFg titleBg
-  , ppUrgent          = dzenColor urgentFg urgentBg . dzenStrip
-  , ppVisible         = dzenColor visibleFg visibleBg
+  , ppTitle           = dzenColor (mkColor titleFg)   (mkColor titleBg)
+  , ppUrgent          = dzenColor (mkColor urgentFg)  (mkColor urgentBg)    . dzenStrip
+  , ppVisible         = dzenColor (mkColor visibleFg) (mkColor visibleBg)
   , ppWsSep           = " "
   }
   where
     noNSP "NSP" = ""
     noNSP w     = w
-
-defaultBar :: Bar
-defaultBar = Bar
-  { barAlign  = AlignCenter
-  , barBg     = panelBg
-  , barFg     = panelFg
-  , barFont   = panelFont
-  , barHeight = 13
-  , barWidth  = 0
-  , barX      = 0
-  , barY      = 0
-  }
 -- }}}
 -- {{{ Keys
 myModKey :: KeyMask
@@ -253,22 +239,23 @@ main = do
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { borderWidth        = 1
     , focusFollowsMouse  = False
-    , focusedBorderColor = winBorderFocused
+    , focusedBorderColor = mkColor winBorderFocused
     , handleEventHook    = fullscreenEventHook
     , keys               = union newKeyMaps . keys defaultConfig
     , layoutHook         = myLayoutHook
     , logHook            = myLogHook d
     , manageHook         = myManageHook <+> manageDocks <+> scratchpadManageHookDefault
     , modMask            = myModKey
-    , normalBorderColor  = winBorderNormal
+    , normalBorderColor  = mkColor winBorderNormal
     , terminal           = "/usr/bin/urxvt"
     , workspaces         = myWorkspaces
     }
 
   where
-    conkyCmd = "conky -c ~/.xmonad/conkyrc 2> /dev/null | dzen2 -p " ++ barToString right
-    dzenCmd  = "dzen2 -p " ++ barToString left
+    conkyCmd = "conky -c ~/.xmonad/conkyrc 2> /dev/null | dzen2 -p " ++ right
+    dzenCmd  = "dzen2 -p " ++ left
 
-    (left, right) = (defaultBar, defaultBar)
+    left  = defaultBar (1000, 13) (0,    1067)
+    right = defaultBar (920,  13) (1000, 1067)
 
 -- vim: set foldmethod=marker:
