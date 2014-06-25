@@ -32,8 +32,8 @@ barAlignCenter = BarAlign 'c'
 barAlignRight  = BarAlign 'r'
 
 {-# INLINE barToString #-}
-barToString :: BarAlign -> Color -> Color -> String -> (Int, Int) -> (Int, Int) -> String
-barToString align bg fg font (w, h) (x, y) =
+barToString :: Color -> Color -> String -> BarAlign -> (Int, Int) -> (Int, Int) -> String
+barToString bg fg font align (w, h) (x, y) =
   showString "-ta "  $ showChar (mkBarAlign align) $
   showString " -fn " $ showString font $
   showString " -fg " $ showString (mkColor fg) $
@@ -44,8 +44,8 @@ barToString align bg fg font (w, h) (x, y) =
   showString " -y "  $ show y
 
 {-# INLINE defaultBar #-}
-defaultBar :: (Int, Int) -> (Int, Int) -> String
-defaultBar = barToString barAlignCenter panelBg panelFg panelFont
+defaultBar :: BarAlign -> (Int, Int) -> (Int, Int) -> String
+defaultBar = barToString panelBg panelFg panelFont
 -- }}}
 -- {{{ Hooks
 myManageHook :: ManageHook
@@ -255,7 +255,7 @@ main = do
     conkyCmd = "conky -c ~/.xmonad/conkyrc 2> /dev/null | dzen2 -p " ++ right
     dzenCmd  = "dzen2 -p " ++ left
 
-    left  = defaultBar (1000, 13) (0,    1067)
-    right = defaultBar (920,  13) (1000, 1067)
+    left  = defaultBar barAlignLeft  (1000, 13) (0,    1067)
+    right = defaultBar barAlignRight (920,  13) (1000, 1067)
 
 -- vim: set foldmethod=marker:
