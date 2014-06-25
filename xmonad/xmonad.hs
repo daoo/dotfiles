@@ -35,9 +35,9 @@ barAlignRight  = BarAlign 'r'
 barToString :: Color -> Color -> String -> BarAlign -> (Int, Int) -> (Int, Int) -> String
 barToString bg fg font align (w, h) (x, y) =
   showString "-ta "  $ showChar (mkBarAlign align) $
-  showString " -fn " $ showString font $
-  showString " -fg " $ showString (mkColor fg) $
-  showString " -bg " $ showString (mkColor bg) $
+  showString " -fn " $ shows font $
+  showString " -fg " $ shows (mkColor fg) $
+  showString " -bg " $ shows (mkColor bg) $
   showString " -w "  $ shows w $
   showString " -h "  $ shows h $
   showString " -x "  $ shows x $
