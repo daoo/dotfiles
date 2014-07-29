@@ -36,6 +36,13 @@ elif [[ $1 = pull ]]; then
     echo "$bundle"
     git -C "$bundle" pull --ff-only
   done
+elif [[ $1 = helptags ]]; then
+  for bundle in $bundle_dir/*; do
+    if [[ -d $bundle/doc ]]; then
+      echo $bundle
+      vim -u NONE -c "helptags $bundle/doc" -c q
+    fi
+  done
 elif [[ $1 = pathogen ]]; then
   echo "Downloading pathogen..."
   mkdir -p $vim_dir/autoload
@@ -46,6 +53,7 @@ else
 
 Commands:
   pathogen install pathogen to $vim_dir/autoload
+  helptags generate help files for $bundle_dir
   clone    clone repos to $bundle_dir
   pull     update repos in $bundle_dir"
 fi
