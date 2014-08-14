@@ -2,6 +2,7 @@
 
 vim_dir=${VIMFILES-${HOME}/.vim}
 bundle_dir="$vim_dir/bundle"
+autoload_dir="$vim_dir/autoload"
 
 if [[ $1 = clone ]]; then
   mkdir -p $bundle_dir
@@ -44,15 +45,16 @@ elif [[ $1 = helptags ]]; then
     fi
   done
 elif [[ $1 = pathogen ]]; then
-  echo "Downloading pathogen..."
-  mkdir -p $vim_dir/autoload
-  curl -Sso "$vim_dir/autoload/pathogen.vim" \
-    https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+  target="$autoload_dir/pathogen.vim"
+  url="https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim"
+  echo "Downloading pathogen to $target..."
+  mkdir -p "$autoload_dir"
+  curl -Sso "$target" "$url"
 else
   echo "Usage: bundles.sh COMMAND
 
 Commands:
-  pathogen install pathogen to $vim_dir/autoload
+  pathogen install pathogen to $autoload_dir
   helptags generate help files for $bundle_dir
   clone    clone repos to $bundle_dir
   pull     update repos in $bundle_dir"
