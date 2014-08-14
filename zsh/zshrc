@@ -98,32 +98,29 @@ setopt prompt_subst
 
 prompt_daoo_setup() {
   local colors && set -A colors cyan magenta blue yellow green grey
-  local i=$((1 + $(echo -n $HOST | cksum | cut -d ' ' -f 1) % ${#colors}))
-  local prompt_color=$fg[$colors[$i]]
+  local i=$((1 + $(echo -n $(hostname -f) | cksum | cut -d ' ' -f 1) % ${#colors}))
 
-  local color_start="%{%F${prompt_color}%}"
-  local color_end="%{%f%}"
+  local color_prompt="%{${fg_no_bold[$colors[$i]]}%}"
+  local color_black="%{${fg_bold[black]}%}"
+  local color_magenta="%{${fg_bold[magenta]}%}"
+  local color_end="%{${reset_color}%}"
 
-  local special_start="%{%B%F{black}%}"
-  local special_end="%{%b%}"
+  local l_bracket="${color_black}[${color_end}"
+  local r_bracket="${color_black}]${color_end}"
+  local l_paren="${color_black}(${color_end}"
+  local r_paren="${color_black})${color_end}"
+  local at_char="${color_black}@${color_end}"
+  local pipe="${color_black}|${color_end}"
+  local hyphen="${color_prompt}-${color_end}"
 
-  local l_bracket="${special_start}[${special_end}"
-  local r_bracket="${special_start}]${special_end}"
-  local l_paren="$special_start($special_end"
-  local r_paren="$special_start)$special_end"
-  local at_char="$special_start@$special_end"
-  local hyphen="${color_start}-${color_end}"
-
-  local dir="${l_paren}%{%B%F{magenta}%}%~%{%f%b%}${r_paren}"
+  local dir="${l_paren}${color_magenta}%~${color_end}${r_paren}"
   local host_info="${l_paren}%n${at_char}%m${r_paren}"
-  local time="${l_bracket}%D${special_start}|${special_end}%*${r_bracket}"
-  local ranger="${RANGER_LEVEL:+r}"
+  local time="${l_bracket}%D${pipe}%*${r_bracket}"
+  local env="${l_paren}${SSH_CONNECTION:+s}${RANGER_LEVEL:+r}${r_paren}"
 
-  line1_a="${hyphen}${dir}${color_start}"
-  line1_b="${color_end}${l_paren}${ranger}${zsh_subshell}${r_paren}${hyphen}${time}${hyphen}${host_info}${color_start}-"
-  line2="--${color_end}%F{white}> "
-
-  export zsh_subshell=z
+  line1_a="${hyphen}${dir}${color_prompt}"
+  line1_b="${color_end}${env}${hyphen}${time}${hyphen}${host_info}${color_prompt}-"
+  line2="--${color_end}> "
 
   autoload add-zsh-hook
   add-zsh-hook precmd prompt_daoo_precmd
@@ -140,7 +137,7 @@ prompt_daoo_precmd() {
   local fill_width=$(($COLUMNS - $line1_a_width - $line1_b_width))
   local fill="${(l:$fill_width::-:)}"
 
-  PS1="${line1_a}${fill}${line1_b}${line2}%b%f"
+  PS1="${line1_a}${fill}${line1_b}${line2}"
 }
 
 prompt_daoo_setup
