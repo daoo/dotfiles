@@ -124,8 +124,6 @@ myXPConfig = defaultXPConfig
   , position          = Bottom
   , promptBorderWidth = 0
 
-  , alwaysHighlight = True
-
   -- Make Ctrl-C in prompt stop input
   , promptKeymap = insert (controlMask, xK_c) quit (promptKeymap defaultXPConfig)
   }
