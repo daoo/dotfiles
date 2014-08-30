@@ -86,6 +86,9 @@ nvim:
 xdefaults:
 	ln -fsn $(here)/xdefaults ${HOME}/.Xdefaults
 
+xbmcrc:
+	ln -fsn $(here)/xbmcrc ${HOME}/.xbmcrc
+
 xinitrc:
 	ln -fsn $(here)/xinitrc ${HOME}/.xinitrc
 
@@ -102,4 +105,4 @@ zsh:
 	ln -fsn $(here)/zsh/zshenv ${HOME}/.zshenv
 	ln -fsn $(here)/zsh/zshrc ${HOME}/.zshrc
 
-.PHONY: emacs gamingrc ghci git gtk haskeline haskell luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xinitrc xmonad zsh
+.PHONY: emacs gamingrc ghci git gtk haskeline haskell luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xbmcrc xinitrc xmonad zsh
