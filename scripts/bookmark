@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+path="$PWD"
+
+if [[ -n "$1" ]]; then
+  name="$1"
+else
+  name="$(basename "$path")"
+fi
+
+echo "$HOME/bookmarks/$name -> $path"
+ln -fsn "$path" "$HOME/bookmarks/$name"
