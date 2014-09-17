@@ -36,7 +36,7 @@ setopt notify
 unsetopt bg_nice
 unsetopt check_jobs
 
-export EDITOR="vim"
+export EDITOR="nvim"
 export PAGER="less"
 
 export GREP_OPTIONS='--color=auto'
