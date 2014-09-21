@@ -76,11 +76,10 @@ nvim:
 	mkdir -p ${HOME}/.nvim
 	mkdir -p ${HOME}/.nvim/tmp
 	mkdir -p ${HOME}/.nvim/spell
-	ln -fsn $(here)/vim/after ${HOME}/.vim/after
-	ln -fsn $(here)/vim/ftdetect ${HOME}/.vim/ftdetect
-	ln -fsn $(here)/vim/ftplugin ${HOME}/.vim/ftplugin
-	ln -fsn $(here)/vim/gvimrc ${HOME}/.gvimrc
-	ln -fsn $(here)/vim/spell/*.add ${HOME}/.vim/spell/
+	ln -fsn $(here)/vim/after ${HOME}/.nvim/after
+	ln -fsn $(here)/vim/ftdetect ${HOME}/.nvim/ftdetect
+	ln -fsn $(here)/vim/ftplugin ${HOME}/.nvim/ftplugin
+	ln -fsn $(here)/vim/spell/*.add ${HOME}/.nvim/spell/
 	ln -fsn $(here)/vim/vimrc ${HOME}/.nvimrc
 
 xdefaults:
