@@ -54,7 +54,7 @@ set listchars=tab:▸\ ,extends:❯,precedes:❮
 set mouse=
 set showcmd
 set nowrap
-set number
+set nonumber
 set relativenumber
 set scrolloff=1
 set sidescrolloff=5
@@ -82,6 +82,12 @@ syn match myTodo contained "\<\(TODO\|FIXME\)"
 hi def link myTodo Todo
 " }}}
 " {{{ Commands
+augroup togglenumbers
+  auto!
+  auto BufWinEnter,WinEnter * setlocal relativenumber
+  auto WinLeave * setlocal norelativenumber
+augroup END
+
 augroup toggletrailing
   autocmd!
   autocmd InsertEnter * setlocal listchars-=trail:⌴
