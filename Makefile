@@ -101,7 +101,6 @@ zsh:
 	mkdir -p ${HOME}/.zsh
 	ln -fsn $(here)/zsh/fpath ${HOME}/.zsh/fpath
 	ln -fsn $(here)/zsh/zprofile ${HOME}/.zprofile
-	ln -fsn $(here)/zsh/zshenv ${HOME}/.zshenv
 	ln -fsn $(here)/zsh/zshrc ${HOME}/.zshrc
 
 .PHONY: emacs gamingrc ghci git gtk haskeline haskell luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xbmcrc xinitrc xmonad zsh
