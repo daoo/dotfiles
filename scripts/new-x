@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-DISPLAY=:1.0 xinit "/usr/bin/openbox-session" -- :1
