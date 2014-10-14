@@ -57,9 +57,6 @@ systemd:
 tmux:
 	ln -fsn $(here)/tmux.conf ${HOME}/.tmux.conf
 
-urxvt:
-	ln -fsn $(here)/urxvt ${HOME}/.urxvt
-
 vim:
 	mkdir -p ${HOME}/.vim
 	mkdir -p ${HOME}/.vim/tmp
@@ -103,4 +100,4 @@ zsh:
 	ln -fsn $(here)/zsh/zprofile ${HOME}/.zprofile
 	ln -fsn $(here)/zsh/zshrc ${HOME}/.zshrc
 
-.PHONY: emacs gamingrc ghci git gtk haskeline haskell luakit rtorrent scripts sublime systemd tmux urxvt vim xresources xbmcrc xinitrc xmonad zsh
+.PHONY: emacs gamingrc ghci git gtk haskeline haskell luakit rtorrent scripts sublime systemd tmux vim xresources xbmcrc xinitrc xmonad zsh

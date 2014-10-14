@@ -4,7 +4,6 @@ URxvt.iso14755:  false
 
 URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.perl-ext:   default,url-select
-URxvt.perl-lib:   .urxvt/perl
 
 URxvt.font:            *-dina-medium-r-normal-*-10-*-*-*-*-*-*-*
 URxvt.internalBorder:  0
