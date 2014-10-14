@@ -6,7 +6,7 @@ URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.perl-ext:   default,url-select
 URxvt.perl-lib:   .urxvt/perl
 
-URxvt.font:            xft:Dina:size=7
+URxvt.font:            *-dina-medium-r-normal-*-10-*-*-*-*-*-*-*
 URxvt.internalBorder:  0
 URxvt.scrollBar:       false
 URxvt.scrollBar_right: false
