@@ -82,8 +82,8 @@ nvim:
 	ln -fsn $(here)/vim/spell/*.add ${HOME}/.nvim/spell/
 	ln -fsn $(here)/vim/vimrc ${HOME}/.nvimrc
 
-xdefaults:
-	ln -fsn $(here)/xdefaults ${HOME}/.Xdefaults
+xresources:
+	ln -fsn $(here)/xresources ${HOME}/.Xresources
 
 xbmcrc:
 	ln -fsn $(here)/xbmcrc ${HOME}/.xbmcrc
@@ -103,4 +103,4 @@ zsh:
 	ln -fsn $(here)/zsh/zprofile ${HOME}/.zprofile
 	ln -fsn $(here)/zsh/zshrc ${HOME}/.zshrc
 
-.PHONY: emacs gamingrc ghci git gtk haskeline haskell luakit rtorrent scripts sublime systemd tmux urxvt vim xdefaults xbmcrc xinitrc xmonad zsh
+.PHONY: emacs gamingrc ghci git gtk haskeline haskell luakit rtorrent scripts sublime systemd tmux urxvt vim xresources xbmcrc xinitrc xmonad zsh
