@@ -3,7 +3,7 @@
 url="ftp://goes.gsfc.nasa.gov/pub/goescolor/goeseast/overview2/color_lrg/latestfull.jpg"
 file="/tmp/nasa-image-latest-full.jpg"
 
-curl "$url" -o "$file"
+curl -s "$url" -o "$file"
 
 # Remove text from image
 convert "$file" \
