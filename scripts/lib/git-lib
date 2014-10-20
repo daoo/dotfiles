@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-function has_changes() {
-  # Uses pwd
-  test -n "$(git status --porcelain)"
-}
