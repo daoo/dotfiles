@@ -21,4 +21,5 @@ ghc \
   -dppr-case-as-let \
   -ddump-${TYPE-simpl} \
   $@ \
+  | sed -e '/^\(\$fShow\|\$w\$cshows\)/,/^$/d' \
   | vim "+setf haskell" -
