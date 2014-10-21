@@ -50,15 +50,16 @@ defaultBar = barToString panelBg panelFg panelFont
 -- {{{ Hooks
 myManageHook :: ManageHook
 myManageHook = composeAll
-  [ className =? "Skype"    --> doShift "im"
-  , className =? "irc"      --> doShift "im"
-  , className =? "Pidgin"   --> doShift "im"
-  , className =? "Chromium" --> doShift "web"
-  , className =? "Browser"  --> doShift "web"
-  , className =? "Firefox"  --> doShift "web"
-  , className =? "luakit"   --> doShift "web"
-  , className =? "Steam"    --> doShift "other"
-  , className =? "Wine"     --> doShift "full"
+  [ className =? "Skype"       --> doShift "im"
+  , className =? "irc"         --> doShift "im"
+  , className =? "Pidgin"      --> doShift "im"
+  , className =? "Chromium"    --> doShift "web"
+  , className =? "Browser"     --> doShift "web"
+  , className =? "Firefox"     --> doShift "web"
+  , className =? "luakit"      --> doShift "web"
+  , className =? "Thunderbird" --> doShift "mail"
+  , className =? "Steam"       --> doShift "other"
+  , className =? "Wine"        --> doShift "full"
 
   , className =? "Dialog"                  --> doFloat
   , title =? "Options"                     --> doFloat
@@ -113,7 +114,7 @@ panelFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 -- }}}
 -- {{{ Config
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void"]
+myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "mail"]
 
 myXPConfig :: XPConfig
 myXPConfig = defaultXPConfig
