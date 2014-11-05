@@ -1,7 +1,9 @@
+{-# LANGUAGE BangPatterns #-}
 module Main (main) where
 
-import Data.Map (Map, fromList, insert, union)
+import Data.Map (Map, fromList, insert)
 import Data.Ratio
+import System.Exit
 import System.IO (Handle)
 import XMonad hiding (Color)
 import XMonad.Actions.DynamicWorkspaces
@@ -19,9 +21,9 @@ import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.Reflect
 import XMonad.Prompt
 import XMonad.Prompt.Input
-import XMonad.StackSet (greedyView, view, hidden, tag, shift)
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad
+import qualified XMonad.StackSet as W
 
 -- {{{ Bar
 newtype BarAlign = BarAlign { mkBarAlign :: Char }
@@ -33,9 +35,9 @@ barAlignRight  = BarAlign 'r'
 
 {-# INLINE barToString #-}
 barToString :: Color -> Color -> String -> BarAlign -> (Int, Int) -> (Int, Int) -> String
-barToString bg fg font align (w, h) (x, y) =
+barToString bg fg fnt align (w, h) (x, y) =
   showString "-ta "  $ showChar (mkBarAlign align) $
-  showString " -fn " $ shows font $
+  showString " -fn " $ shows fnt $
   showString " -fg " $ shows (mkColor fg) $
   showString " -bg " $ shows (mkColor bg) $
   showString " -w "  $ shows w $
@@ -113,6 +115,9 @@ panelFont :: String
 panelFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 -- }}}
 -- {{{ Config
+myTerminal :: String
+myTerminal = "/usr/bin/urxvt"
+
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "mail"]
 
@@ -165,39 +170,54 @@ dvorakMaps m f = zipWith (\k w -> ((m, k), f w)) workspaceKeys myWorkspaces
                     , xK_parenleft, xK_equal, xK_asterisk, xK_parenright
                     , xK_plus, xK_bracketright, xK_exclam ]
 
-newKeyMaps :: Map (KeyMask, KeySym) (X ())
-newKeyMaps = fromList $
-  [ ((myModKey, xK_u), withFocused toggleBorder)
-  , ((myModKey, xK_o), toggleWS)
-  , ((myModKey, xK_r), goToSelected defaultGSConfig)
+myKeyMaps :: XConfig Layout -> Map (KeyMask, KeySym) (X ())
+myKeyMaps !conf = fromList $
+  [ ((myModKey              , xK_r     ), goToSelected defaultGSConfig)
+  , ((myModKey              , xK_o     ), toggleWS                    )
+  , ((myModKey              , xK_n     ), refresh                     )
 
-  , ((myModKey, xK_h), windowGo L False)
-  , ((myModKey, xK_l), windowGo R False)
-  , ((myModKey, xK_j), windowGo D False)
-  , ((myModKey, xK_k), windowGo U False)
-  , ((myModKey, xK_plus), sendMessage Expand)
-  , ((myModKey, xK_minus), sendMessage Shrink)
+  , ((myModKey              , xK_u     ), withFocused toggleBorder)
+  , ((myModKey .|. shiftMask, xK_c     ), kill                    )
 
-  , ((myModKey .|. shiftMask, xK_g), removeEmptyWorkspace)
-  , ((myModKey, xK_g), selectWorkspace myXPConfig)
-  , ((myModKey, xK_c), withWorkspace myXPConfig (windows . shift))
+  , ((myModKey              , xK_space ), sendMessage NextLayout     )
+  , ((myModKey .|. shiftMask, xK_space ), setLayout $ layoutHook conf)
 
-  , ((myModKey, xK_p), launchPrompt myXPConfig)
-  , ((myModKey, xK_i), scratchpadSpawnActionTerminal "/usr/bin/urxvt")
-  , ((myModKey, xK_Return), safeSpawnProg "/usr/bin/urxvt")
+  , ((myModKey              , xK_Return), windows W.swapMaster)
+  , ((myModKey .|. shiftMask, xK_j     ), windows W.swapDown  )
+  , ((myModKey .|. shiftMask, xK_k     ), windows W.swapUp    )
 
-  , ((myModKey, xK_F1), safeSpawn "/usr/bin/setxkbmap" ["dvpse"])
-  , ((myModKey, xK_F2), safeSpawn "/usr/bin/setxkbmap" ["usaswe"])
+  , ((myModKey              , xK_h     ), windowGo L False)
+  , ((myModKey              , xK_l     ), windowGo R False)
+  , ((myModKey              , xK_j     ), windowGo D False)
+  , ((myModKey              , xK_k     ), windowGo U False)
 
-  , ((myModKey, xK_x), safeSpawnProg "/usr/bin/firefox")
-  , ((myModKey, xK_b), safeSpawnProg "/usr/bin/gvim")
-  , ((myModKey, xK_m), safeSpawnProg "/usr/bin/zathura")
+  , ((myModKey .|. shiftMask, xK_l     ), sendMessage Expand)
+  , ((myModKey .|. shiftMask, xK_h     ), sendMessage Shrink)
+
+  , ((myModKey .|. shiftMask, xK_g     ), removeEmptyWorkspace                        )
+  , ((myModKey              , xK_g     ), selectWorkspace myXPConfig                  )
+  , ((myModKey              , xK_c     ), withWorkspace myXPConfig (windows . W.shift))
+
+  , ((myModKey              , xK_p     ), launchPrompt myXPConfig                 )
+  , ((myModKey              , xK_i     ), scratchpadSpawnActionTerminal myTerminal)
+  , ((myModKey              , xK_Return), safeSpawnProg myTerminal                )
+
+  , ((myModKey .|. shiftMask, xK_q     ), io exitSuccess                                )
+  , ((myModKey              , xK_q     ), spawn "xmonad --recompile && xmonad --restart")
+
+  , ((myModKey              , xK_F1    ), safeSpawn "/usr/bin/setxkbmap" ["dvpse"] )
+  , ((myModKey              , xK_F2    ), safeSpawn "/usr/bin/setxkbmap" ["usaswe"])
+
+  , ((myModKey              , xK_x     ), safeSpawnProg "/usr/bin/firefox")
+  , ((myModKey              , xK_b     ), safeSpawnProg "/usr/bin/gvim"   )
+  , ((myModKey              , xK_m     ), safeSpawnProg "/usr/bin/zathura")
   ]
 
-  ++ dvorakMaps myModKey (windows . greedyView)
-  ++ dvorakMaps (myModKey .|. shiftMask) (windows . shift)
+  ++ dvorakMaps myModKey (windows . W.greedyView)
+  ++ dvorakMaps (myModKey .|. shiftMask) (windows . W.shift)
   where
-    toggleWS = windows $ view =<< tag . head . filter ((/= "NSP") . tag) . hidden
+    toggleWS     = windows $ W.view =<< W.tag . head . hiddenNonNSP
+    hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 -- }}}
 -- {{{ Prompt
 launchPrompt :: XPConfig -> X ()
@@ -242,13 +262,13 @@ main = do
     , focusFollowsMouse  = False
     , focusedBorderColor = mkColor winBorderFocused
     , handleEventHook    = fullscreenEventHook
-    , keys               = union newKeyMaps . keys defaultConfig
+    , keys               = myKeyMaps
     , layoutHook         = myLayoutHook
     , logHook            = myLogHook d
     , manageHook         = myManageHook <+> manageDocks <+> scratchpadManageHookDefault
     , modMask            = myModKey
     , normalBorderColor  = mkColor winBorderNormal
-    , terminal           = "/usr/bin/urxvt"
+    , terminal           = myTerminal
     , workspaces         = myWorkspaces
     }
 
