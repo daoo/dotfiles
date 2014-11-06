@@ -1,14 +1,32 @@
 #!/usr/bin/env bash
 
+set -eu
+
 function check()
 {
-  read -r content < "$1"
-  printf "%s: %s\n" "$1" "$content"
+  if read -r content 2>/dev/null < "$1"; then
+    printf "%s: %s\n" "$1" "$content"
+  fi
 }
 
 # Misc
+check "/sys/class/backlight/intel_backlight/actual_brightness"
 check "/proc/sys/kernel/nmi_watchdog"
 check "/sys/module/pcie_aspm/parameters/policy"
+
+# Sound
+check "/sys/module/snd_hda_intel/parameters/power_save"
+check "/sys/module/snd_hda_intel/parameters/power_save_controller"
+
+# CPU
+check "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
+check "/sys/devices/system/cpu/cpu1/cpufreq/scaling_governor"
+check "/sys/devices/system/cpu/cpu2/cpufreq/scaling_governor"
+check "/sys/devices/system/cpu/cpu3/cpufreq/scaling_governor"
+check "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors"
+check "/sys/devices/system/cpu/cpu1/cpufreq/scaling_available_governors"
+check "/sys/devices/system/cpu/cpu2/cpufreq/scaling_available_governors"
+check "/sys/devices/system/cpu/cpu3/cpufreq/scaling_available_governors"
 
 # Disks
 check "/proc/sys/vm/laptop_mode"
@@ -16,3 +34,11 @@ check "/proc/sys/vm/dirty_ratio"
 check "/proc/sys/vm/dirty_background_ratio"
 check "/proc/sys/vm/dirty_expire_centisecs"
 check "/proc/sys/vm/dirty_writeback_centisecs"
+
+# SATA
+check "/sys/class/scsi_host/host0/link_power_management_policy"
+check "/sys/class/scsi_host/host1/link_power_management_policy"
+check "/sys/class/scsi_host/host2/link_power_management_policy"
+check "/sys/class/scsi_host/host3/link_power_management_policy"
+check "/sys/class/scsi_host/host4/link_power_management_policy"
+check "/sys/class/scsi_host/host5/link_power_management_policy"
