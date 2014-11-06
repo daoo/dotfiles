@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+function check()
+{
+  printf "%s: %s\n" "$1" "$(head -n1 "$1")"
+}
+
+# Misc
+check "/proc/sys/kernel/nmi_watchdog"
+check "/sys/module/pcie_aspm/parameters/policy"
+
+# Disks
+check "/proc/sys/vm/laptop_mode"
+check "/proc/sys/vm/dirty_ratio"
+check "/proc/sys/vm/dirty_background_ratio"
+check "/proc/sys/vm/dirty_expire_centisecs"
+check "/proc/sys/vm/dirty_writeback_centisecs"
