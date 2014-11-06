@@ -1,7 +1,7 @@
 [core]
   editor = vim
 [alias]
-  aa = add -A
+  a  = add
   ap = add --patch
   df = diff
   dc = diff --cached
@@ -10,15 +10,19 @@
   cia = commit --amend
   co = checkout
 
+  r  = rebase
+  ri = rebase -i
+  rc = rebase --continue
+
   ff = merge --ff-only origin/master
   pom = push origin master
 
-  s = stash
-  sa = stash apply
   sl = stash list
+  sa = stash apply
   sp = stash pop
-  ss = stash save
+  sd = stash drop
   sc = stash clear
+  ss = stash save
 
   l = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --date=relative
   ll = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --numstat
