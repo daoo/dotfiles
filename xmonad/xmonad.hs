@@ -182,17 +182,23 @@ myKeyMaps !conf = fromList $
   , ((myModKey              , xK_space ), sendMessage NextLayout     )
   , ((myModKey .|. shiftMask, xK_space ), setLayout $ layoutHook conf)
 
-  , ((myModKey              , xK_Return), windows W.swapMaster)
-  , ((myModKey .|. shiftMask, xK_j     ), windows W.swapDown  )
-  , ((myModKey .|. shiftMask, xK_k     ), windows W.swapUp    )
+  , ((myModKey              , xK_Tab   ), windows W.focusDown)
+  , ((myModKey .|. shiftMask, xK_Tab   ), windows W.focusUp  )
 
-  , ((myModKey              , xK_h     ), windowGo L False)
-  , ((myModKey              , xK_l     ), windowGo R False)
-  , ((myModKey              , xK_j     ), windowGo D False)
-  , ((myModKey              , xK_k     ), windowGo U False)
+  , ((myModKey              , xK_m     ), windows W.focusMaster)
+  , ((myModKey .|. shiftMask, xK_m     ), windows W.swapMaster )
 
-  , ((myModKey .|. shiftMask, xK_l     ), sendMessage Expand)
-  , ((myModKey .|. shiftMask, xK_h     ), sendMessage Shrink)
+  , ((myModKey              , xK_h     ), windowGo L False  )
+  , ((myModKey              , xK_l     ), windowGo R False  )
+  , ((myModKey              , xK_j     ), windowGo D False  )
+  , ((myModKey              , xK_k     ), windowGo U False  )
+  , ((myModKey .|. shiftMask, xK_h     ), windowSwap L False)
+  , ((myModKey .|. shiftMask, xK_l     ), windowSwap R False)
+  , ((myModKey .|. shiftMask, xK_j     ), windowSwap D False)
+  , ((myModKey .|. shiftMask, xK_k     ), windowSwap U False)
+
+  , ((myModKey              , xK_at    ), sendMessage Expand)
+  , ((myModKey              , xK_minus ), sendMessage Shrink)
 
   , ((myModKey .|. shiftMask, xK_g     ), removeEmptyWorkspace                        )
   , ((myModKey              , xK_g     ), selectWorkspace myXPConfig                  )
