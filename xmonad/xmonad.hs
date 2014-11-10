@@ -176,6 +176,7 @@ myKeyMaps !conf = fromList $
   , ((myModKey              , xK_o     ), toggleWS)
   , ((myModKey              , xK_n     ), refresh)
 
+  , ((myModKey              , xK_t     ), withFocused $ windows . W.sink)
   , ((myModKey              , xK_u     ), withFocused toggleBorder)
   , ((myModKey .|. shiftMask, xK_c     ), kill)
 
