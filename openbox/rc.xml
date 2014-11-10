@@ -22,7 +22,7 @@
     <animateIconify>yes</animateIconify>
     <keepBorder>yes</keepBorder>
     <name>Clearlooks</name>
-    <titleLayout>NL</titleLayout>
+    <titleLayout>NLIMC</titleLayout>
     <font place="ActiveWindow">
       <name>sans</name>
       <size>8</size>
