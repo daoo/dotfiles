@@ -173,15 +173,16 @@ nnoremap <leader>wp :cprevious<cr>
 
 " Tabular and clean up
 nnoremap <leader>ae :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
-nnoremap <leader>aj wby0o<esc>pVr J
 nnoremap <leader>ap Vapk:sort<cr>
-nnoremap <leader>as :%s/( /(/g<cr>:%s/ )/)/g<cr>
+vmap <leader>ap :sort<cr>
 nmap <leader>ad <plug>(EasyAlign)
 nmap <leader>al <plug>(LiveEasyAlign)
 vmap <enter> <plug>(EasyAlign)
 
 " Yanking
 nnoremap <leader>ya :%y+<cr>
+nmap <leader>yp <Plug>yankstack_substitute_older_paste
+nmap <leader>yn <Plug>yankstack_substitute_newer_paste
 
 " Files
 nnoremap <f2> :NERDTreeToggle<cr>
@@ -235,9 +236,6 @@ vnoremap <c-x> y`]a = <c-r>=<c-r>"<cr><esc>
 " }}}
 " {{{ Addons
 let g:yankstack_map_keys = 0
-
-nmap <leader>yp <Plug>yankstack_substitute_older_paste
-nmap <leader>yn <Plug>yankstack_substitute_newer_paste
 
 let g:airline_right_sep=''
 let g:airline_left_sep=''
