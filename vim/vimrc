@@ -172,15 +172,13 @@ nnoremap <leader>wn :cnext<cr>
 nnoremap <leader>wp :cprevious<cr>
 
 " Tabular and clean up
-nnoremap <leader>a- :Tabularize /->\<bar><-<cr>
-nnoremap <leader>aa :Tabularize assignment<cr>
-nnoremap <leader>ab :Tabularize braces<cr>
-nnoremap <leader>ac :Tabularize commas<cr>
 nnoremap <leader>ae :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
-nnoremap <leader>ai :Tabularize /
 nnoremap <leader>aj wby0o<esc>pVr J
 nnoremap <leader>ap Vapk:sort<cr>
 nnoremap <leader>as :%s/( /(/g<cr>:%s/ )/)/g<cr>
+nmap <leader>ad <plug>(EasyAlign)
+nmap <leader>al <plug>(LiveEasyAlign)
+vmap <enter> <plug>(EasyAlign)
 
 " Yanking
 nnoremap <leader>ya :%y+<cr>
