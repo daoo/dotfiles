@@ -173,25 +173,25 @@ dvorakMaps m f = zipWith (\k w -> ((m, k), f w)) workspaceKeys myWorkspaces
 myKeyMaps :: XConfig Layout -> Map (KeyMask, KeySym) (X ())
 myKeyMaps !conf = fromList $
   [ ((myModKey              , xK_r     ), goToSelected defaultGSConfig)
-  , ((myModKey              , xK_o     ), toggleWS                    )
-  , ((myModKey              , xK_n     ), refresh                     )
+  , ((myModKey              , xK_o     ), toggleWS)
+  , ((myModKey              , xK_n     ), refresh)
 
   , ((myModKey              , xK_u     ), withFocused toggleBorder)
-  , ((myModKey .|. shiftMask, xK_c     ), kill                    )
+  , ((myModKey .|. shiftMask, xK_c     ), kill)
 
-  , ((myModKey              , xK_space ), sendMessage NextLayout     )
+  , ((myModKey              , xK_space ), sendMessage NextLayout)
   , ((myModKey .|. shiftMask, xK_space ), setLayout $ layoutHook conf)
 
   , ((myModKey              , xK_Tab   ), windows W.focusDown)
-  , ((myModKey .|. shiftMask, xK_Tab   ), windows W.focusUp  )
+  , ((myModKey .|. shiftMask, xK_Tab   ), windows W.focusUp)
 
   , ((myModKey              , xK_m     ), windows W.focusMaster)
-  , ((myModKey .|. shiftMask, xK_m     ), windows W.swapMaster )
+  , ((myModKey .|. shiftMask, xK_m     ), windows W.swapMaster)
 
-  , ((myModKey              , xK_h     ), windowGo L False  )
-  , ((myModKey              , xK_l     ), windowGo R False  )
-  , ((myModKey              , xK_j     ), windowGo D False  )
-  , ((myModKey              , xK_k     ), windowGo U False  )
+  , ((myModKey              , xK_h     ), windowGo L False)
+  , ((myModKey              , xK_l     ), windowGo R False)
+  , ((myModKey              , xK_j     ), windowGo D False)
+  , ((myModKey              , xK_k     ), windowGo U False)
   , ((myModKey .|. shiftMask, xK_h     ), windowSwap L False)
   , ((myModKey .|. shiftMask, xK_l     ), windowSwap R False)
   , ((myModKey .|. shiftMask, xK_j     ), windowSwap D False)
@@ -200,18 +200,18 @@ myKeyMaps !conf = fromList $
   , ((myModKey              , xK_at    ), sendMessage Expand)
   , ((myModKey              , xK_minus ), sendMessage Shrink)
 
-  , ((myModKey .|. shiftMask, xK_g     ), removeEmptyWorkspace                        )
-  , ((myModKey              , xK_g     ), selectWorkspace myXPConfig                  )
+  , ((myModKey .|. shiftMask, xK_g     ), removeEmptyWorkspace)
+  , ((myModKey              , xK_g     ), selectWorkspace myXPConfig)
   , ((myModKey              , xK_c     ), withWorkspace myXPConfig (windows . W.shift))
 
-  , ((myModKey              , xK_p     ), launchPrompt myXPConfig                 )
+  , ((myModKey              , xK_p     ), launchPrompt myXPConfig)
   , ((myModKey              , xK_i     ), scratchpadSpawnActionTerminal myTerminal)
-  , ((myModKey              , xK_Return), safeSpawnProg myTerminal                )
+  , ((myModKey              , xK_Return), safeSpawnProg myTerminal)
 
-  , ((myModKey .|. shiftMask, xK_q     ), io exitSuccess                                )
+  , ((myModKey .|. shiftMask, xK_q     ), io exitSuccess)
   , ((myModKey              , xK_q     ), spawn "xmonad --recompile && xmonad --restart")
 
-  , ((myModKey              , xK_F1    ), safeSpawn "/usr/bin/setxkbmap" ["dvpse"] )
+  , ((myModKey              , xK_F1    ), safeSpawn "/usr/bin/setxkbmap" ["dvpse"])
   , ((myModKey              , xK_F2    ), safeSpawn "/usr/bin/setxkbmap" ["usaswe"])
   ]
 
