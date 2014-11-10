@@ -1,1 +1,0 @@
-feh --no-fehbg --bg-tile $(find "$HOME/media/wallpapers" -type f | shuf -n 1) &

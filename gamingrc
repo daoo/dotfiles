@@ -9,8 +9,10 @@ fi
 
 export BROWSER="/usr/bin/firefox"
 
-/usr/bin/feh --bg-tile --no-fehbg "$(/usr/bin/find $HOME/media/wallpapers -type f | /usr/bin/shuf -n 1)"
+xrdb -merge "$HOME/.Xresources"
+
 /usr/bin/xsetroot -cursor_name left_ptr &
+/usr/bin/pcmanfm --desktop --set-wallpaper="$(/usr/bin/find $HOME/media/wallpapers -type f | /usr/bin/shuf -n 1)" --wallpaper-mode=center &
 /usr/bin/steam &
 
 /usr/bin/openbox
