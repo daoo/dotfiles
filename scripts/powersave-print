@@ -2,7 +2,8 @@
 
 function check()
 {
-  printf "%s: %s\n" "$1" "$(head -n1 "$1")"
+  read content < "$1"
+  printf "%s: %s\n" "$1" "$content"
 }
 
 # Misc
