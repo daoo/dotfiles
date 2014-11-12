@@ -227,17 +227,12 @@ launchPrompt :: XPConfig -> X ()
 launchPrompt c = inputPromptWithCompl c "Run" (mkComplFunFromList cmds) ?+ spawn
   where
     cmds =
-      [ "SpiderOak"
-      , "audacity"
+      [ "audacity"
       , "blender"
-      , "calibre"
       , "coqide"
-      , "darktable"
-      , "eclipse"
       , "emacs"
       , "firefox"
       , "gimp"
-      , "gvim"
       , "keepassx"
       , "libreoffice"
       , "linuxdcpp"
@@ -248,6 +243,7 @@ launchPrompt c = inputPromptWithCompl c "Run" (mkComplFunFromList cmds) ?+ spawn
       , "pcmanfm"
       , "pidgin"
       , "skype"
+      , "thunderbird"
       , "tuxguitar"
       , "urxvt"
       , "wirkeshark"
