@@ -198,6 +198,13 @@ myKeyMaps !conf = fromList $
   , ((myModKey .|. shiftMask, xK_j     ), windowSwap D False)
   , ((myModKey .|. shiftMask, xK_k     ), windowSwap U False)
 
+  , ((myModKey              , xK_w     ), screenWorkspace 0 >>= flip whenJust (windows . W.view))
+  , ((myModKey              , xK_e     ), screenWorkspace 1 >>= flip whenJust (windows . W.view))
+  , ((myModKey              , xK_r     ), screenWorkspace 2 >>= flip whenJust (windows . W.view))
+  , ((myModKey .|. shiftMask, xK_w     ), screenWorkspace 0 >>= flip whenJust (windows . W.shift))
+  , ((myModKey .|. shiftMask, xK_e     ), screenWorkspace 1 >>= flip whenJust (windows . W.shift))
+  , ((myModKey .|. shiftMask, xK_r     ), screenWorkspace 2 >>= flip whenJust (windows . W.shift))
+
   , ((myModKey              , xK_at    ), sendMessage Expand)
   , ((myModKey              , xK_minus ), sendMessage Shrink)
 
