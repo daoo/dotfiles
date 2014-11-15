@@ -2,4 +2,5 @@
 Description=LXDE policykit authenticator
 
 [Service]
+Environment=DISPLAY=:0
 ExecStart=/usr/bin/lxpolxit
