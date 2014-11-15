@@ -1,36 +1,31 @@
 [core]
   editor = vim
 [alias]
-  a  = add
-  ap = add --patch
-  df = diff
-  dc = diff --cached
-  st = status -sb
-  ci = commit
+  a   = add
+  ap  = add --patch
+  ci  = commit
   cia = commit --amend
-  co = checkout
-
+  co  = checkout
+  dc  = diff --cached
+  df  = diff
+  ff  = merge --ff-only origin/master
+  l   = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --date=relative
+  ll  = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --numstat
+  lll = log -u
   p   = push
   pf  = push -f
   pom = push origin master
-
-  r  = rebase
-  ri = rebase -i
-  rc = rebase --continue
-  rs = rebase --skip
-  ra = rebase --abort
-
-  ff = merge --ff-only origin/master
-
-  sl = stash list
-  sa = stash apply
-  sp = stash pop
-  sd = stash drop
-  sc = stash clear
-  ss = stash save
-
-  l = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --date=relative
-  ll = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --numstat
-  lll = log -u
+  r   = rebase
+  ra  = rebase --abort
+  rc  = rebase --continue
+  ri  = rebase -i
+  rs  = rebase --skip
+  sa  = stash apply
+  sc  = stash clear
+  sd  = stash drop
+  sl  = stash list
+  sp  = stash pop
+  ss  = stash save
+  st  = status -sb
 [push]
   default = simple
