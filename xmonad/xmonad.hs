@@ -169,8 +169,8 @@ dvorakMaps m f = zipWith (\k w -> ((m, k), f w)) workspaceKeys myWorkspaces
                     , xK_parenleft, xK_equal, xK_asterisk, xK_parenright
                     , xK_plus, xK_bracketright, xK_exclam ]
 
-myKeyMaps :: XConfig Layout -> Map (KeyMask, KeySym) (X ())
-myKeyMaps !conf = fromList $
+myKeyMaps :: Map (KeyMask, KeySym) (X ())
+myKeyMaps = fromList $
   -- Launching and killing programs
   [ ((myModKey .|. shiftMask, xK_c     ), kill)
   , ((myModKey              , xK_p     ), launchPrompt myXPConfig)
@@ -182,7 +182,7 @@ myKeyMaps !conf = fromList $
   , ((myModKey              , xK_at    ), sendMessage Expand)
   , ((myModKey              , xK_minus ), sendMessage Shrink)
   , ((myModKey              , xK_space ), sendMessage NextLayout)
-  , ((myModKey .|. shiftMask, xK_space ), setLayout $ layoutHook conf)
+  , ((myModKey .|. shiftMask, xK_space ), setLayout (Layout myLayoutHook))
 
   -- Tiling
   , ((myModKey              , xK_t     ), withFocused $ windows . W.sink)
@@ -271,7 +271,7 @@ main = do
     , focusFollowsMouse  = False
     , focusedBorderColor = mkColor winBorderFocused
     , handleEventHook    = fullscreenEventHook
-    , keys               = myKeyMaps
+    , keys               = const myKeyMaps
     , layoutHook         = myLayoutHook
     , logHook            = myLogHook d
     , manageHook         = myManageHook <+> manageDocks <+> scratchpadManageHookDefault
