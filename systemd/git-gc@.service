@@ -1,5 +1,0 @@
-[Unit]
-Description=GC git repo %f
-
-[Service]
-ExecStart=/usr/bin/git -C %f gc --aggressive

@@ -1,6 +1,5 @@
 [Unit]
 Description=Opera
-After=network.target
 
 [Service]
 Environment=DISPLAY=:0

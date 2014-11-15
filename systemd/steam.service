@@ -1,7 +1,6 @@
 [Unit]
 Description=Steam
-After=network.target
 
 [Service]
-Environment=DISPLAY=:1 BROWSER=/usr/bin/firefox
+Environment=DISPLAY=:1
 ExecStart=/usr/bin/steam

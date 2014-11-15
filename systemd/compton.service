@@ -4,4 +4,3 @@ Description=Compton compositor
 [Service]
 Environment=DISPLAY=:0
 ExecStart=/usr/bin/compton
-Restart=always

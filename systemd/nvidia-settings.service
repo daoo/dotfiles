@@ -2,5 +2,5 @@
 Description=Load nvidia settings
 
 [Service]
-Environment=DISPLAY=:0 BROWSER=/usr/bin/firefox
+Environment=DISPLAY=:0
 ExecStart=/usr/bin/nvidia-settings --load-config-only

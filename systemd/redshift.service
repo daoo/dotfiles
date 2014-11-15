@@ -4,4 +4,3 @@ Description=Redshift
 [Service]
 Environment=DISPLAY=:0
 ExecStart=/usr/bin/redshift -m randr -l 57.7117:11.9148 -t 6000K:4700K &
-Restart=always
