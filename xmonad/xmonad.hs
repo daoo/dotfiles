@@ -162,13 +162,6 @@ xf86Email          = 0x1008ff19
 xf86Favorites      = 0x1008ff30
 xf86TouchpadToggle = 0x1008ffa9
 
-dvorakMaps :: KeyMask -> (WorkspaceId -> X ()) -> [((KeyMask, KeySym), X ())]
-dvorakMaps m f = zipWith (\k w -> ((m, k), f w)) workspaceKeys myWorkspaces
-  where
-    workspaceKeys = [ xK_ampersand, xK_bracketleft, xK_braceleft, xK_braceright
-                    , xK_parenleft, xK_equal, xK_asterisk, xK_parenright
-                    , xK_plus, xK_bracketright, xK_exclam ]
-
 myKeyMaps :: Map (KeyMask, KeySym) (X ())
 myKeyMaps = fromList $
   -- Launching and killing programs
@@ -217,6 +210,26 @@ myKeyMaps = fromList $
   , ((myModKey              , xK_g     ), selectWorkspace myXPConfig)
   , ((myModKey              , xK_c     ), withWorkspace myXPConfig (windows . W.shift))
 
+  -- Workspace keys
+  , ((myModKey              , xK_ampersand   ) , windows (W.greedyView (myWorkspaces !! 0)))
+  , ((myModKey              , xK_bracketleft ) , windows (W.greedyView (myWorkspaces !! 1)))
+  , ((myModKey              , xK_braceleft   ) , windows (W.greedyView (myWorkspaces !! 2)))
+  , ((myModKey              , xK_braceright  ) , windows (W.greedyView (myWorkspaces !! 3)))
+  , ((myModKey              , xK_parenleft   ) , windows (W.greedyView (myWorkspaces !! 4)))
+  , ((myModKey              , xK_equal       ) , windows (W.greedyView (myWorkspaces !! 5)))
+  , ((myModKey              , xK_asterisk    ) , windows (W.greedyView (myWorkspaces !! 6)))
+  , ((myModKey              , xK_parenright  ) , windows (W.greedyView (myWorkspaces !! 7)))
+  , ((myModKey              , xK_plus        ) , windows (W.greedyView (myWorkspaces !! 8)))
+  , ((myModKey .|. shiftMask, xK_ampersand   ) , windows (W.shift (myWorkspaces !! 0)))
+  , ((myModKey .|. shiftMask, xK_bracketleft ) , windows (W.shift (myWorkspaces !! 1)))
+  , ((myModKey .|. shiftMask, xK_braceleft   ) , windows (W.shift (myWorkspaces !! 2)))
+  , ((myModKey .|. shiftMask, xK_braceright  ) , windows (W.shift (myWorkspaces !! 3)))
+  , ((myModKey .|. shiftMask, xK_parenleft   ) , windows (W.shift (myWorkspaces !! 4)))
+  , ((myModKey .|. shiftMask, xK_equal       ) , windows (W.shift (myWorkspaces !! 5)))
+  , ((myModKey .|. shiftMask, xK_asterisk    ) , windows (W.shift (myWorkspaces !! 6)))
+  , ((myModKey .|. shiftMask, xK_parenright  ) , windows (W.shift (myWorkspaces !! 7)))
+  , ((myModKey .|. shiftMask, xK_plus        ) , windows (W.shift (myWorkspaces !! 8)))
+
   -- Restarting and stopping xmonad
   , ((myModKey .|. shiftMask, xK_q     ), io exitSuccess)
   , ((myModKey              , xK_q     ), spawn "xmonad --recompile && xmonad --restart")
@@ -225,9 +238,6 @@ myKeyMaps = fromList $
   , ((myModKey              , xK_F1    ), safeSpawn "/usr/bin/setxkbmap" ["dvpse"])
   , ((myModKey              , xK_F2    ), safeSpawn "/usr/bin/setxkbmap" ["usaswe"])
   ]
-
-  ++ dvorakMaps myModKey (windows . W.greedyView)
-  ++ dvorakMaps (myModKey .|. shiftMask) (windows . W.shift)
   where
     toggleWS     = windows $ W.view =<< W.tag . head . hiddenNonNSP
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
