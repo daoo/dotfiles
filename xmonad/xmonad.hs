@@ -7,7 +7,6 @@ import System.Exit
 import System.IO (Handle)
 import XMonad hiding (Color)
 import XMonad.Actions.DynamicWorkspaces
-import XMonad.Actions.GridSelect
 import XMonad.Actions.Navigation2D
 import XMonad.Actions.NoBorders
 import XMonad.Hooks.DynamicLog
@@ -172,20 +171,26 @@ dvorakMaps m f = zipWith (\k w -> ((m, k), f w)) workspaceKeys myWorkspaces
 
 myKeyMaps :: XConfig Layout -> Map (KeyMask, KeySym) (X ())
 myKeyMaps !conf = fromList $
-  [ ((myModKey              , xK_r     ), goToSelected defaultGSConfig)
-  , ((myModKey              , xK_o     ), toggleWS)
+  -- Launching and killing programs
+  [ ((myModKey .|. shiftMask, xK_c     ), kill)
+  , ((myModKey              , xK_p     ), launchPrompt myXPConfig)
+  , ((myModKey              , xK_i     ), scratchpadSpawnActionTerminal myTerminal)
+  , ((myModKey              , xK_Return), safeSpawnProg myTerminal)
+
+  -- Layout
   , ((myModKey              , xK_n     ), refresh)
-
-  , ((myModKey              , xK_t     ), withFocused $ windows . W.sink)
-  , ((myModKey              , xK_u     ), withFocused toggleBorder)
-  , ((myModKey .|. shiftMask, xK_c     ), kill)
-
+  , ((myModKey              , xK_at    ), sendMessage Expand)
+  , ((myModKey              , xK_minus ), sendMessage Shrink)
   , ((myModKey              , xK_space ), sendMessage NextLayout)
   , ((myModKey .|. shiftMask, xK_space ), setLayout $ layoutHook conf)
 
+  -- Tiling
+  , ((myModKey              , xK_t     ), withFocused $ windows . W.sink)
+  , ((myModKey              , xK_u     ), withFocused toggleBorder)
+
+  -- Focus and swapping
   , ((myModKey              , xK_Tab   ), windows W.focusDown)
   , ((myModKey .|. shiftMask, xK_Tab   ), windows W.focusUp)
-
   , ((myModKey              , xK_m     ), windows W.focusMaster)
   , ((myModKey .|. shiftMask, xK_m     ), windows W.swapMaster)
 
@@ -198,6 +203,7 @@ myKeyMaps !conf = fromList $
   , ((myModKey .|. shiftMask, xK_j     ), windowSwap D False)
   , ((myModKey .|. shiftMask, xK_k     ), windowSwap U False)
 
+  -- Multiple screens
   , ((myModKey              , xK_w     ), screenWorkspace 0 >>= flip whenJust (windows . W.view))
   , ((myModKey              , xK_e     ), screenWorkspace 1 >>= flip whenJust (windows . W.view))
   , ((myModKey              , xK_r     ), screenWorkspace 2 >>= flip whenJust (windows . W.view))
@@ -205,20 +211,17 @@ myKeyMaps !conf = fromList $
   , ((myModKey .|. shiftMask, xK_e     ), screenWorkspace 1 >>= flip whenJust (windows . W.shift))
   , ((myModKey .|. shiftMask, xK_r     ), screenWorkspace 2 >>= flip whenJust (windows . W.shift))
 
-  , ((myModKey              , xK_at    ), sendMessage Expand)
-  , ((myModKey              , xK_minus ), sendMessage Shrink)
-
+  -- Handling workspaces
+  , ((myModKey              , xK_o     ), toggleWS)
   , ((myModKey .|. shiftMask, xK_g     ), removeEmptyWorkspace)
   , ((myModKey              , xK_g     ), selectWorkspace myXPConfig)
   , ((myModKey              , xK_c     ), withWorkspace myXPConfig (windows . W.shift))
 
-  , ((myModKey              , xK_p     ), launchPrompt myXPConfig)
-  , ((myModKey              , xK_i     ), scratchpadSpawnActionTerminal myTerminal)
-  , ((myModKey              , xK_Return), safeSpawnProg myTerminal)
-
+  -- Restarting and stopping xmonad
   , ((myModKey .|. shiftMask, xK_q     ), io exitSuccess)
   , ((myModKey              , xK_q     ), spawn "xmonad --recompile && xmonad --restart")
 
+  -- Setting keyboard layout
   , ((myModKey              , xK_F1    ), safeSpawn "/usr/bin/setxkbmap" ["dvpse"])
   , ((myModKey              , xK_F2    ), safeSpawn "/usr/bin/setxkbmap" ["usaswe"])
   ]
