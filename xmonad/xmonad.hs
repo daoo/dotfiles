@@ -1,4 +1,3 @@
-{-# LANGUAGE BangPatterns #-}
 module Main (main) where
 
 import Data.Map (Map, fromList, insert)
@@ -163,7 +162,7 @@ xf86Favorites      = 0x1008ff30
 xf86TouchpadToggle = 0x1008ffa9
 
 myKeyMaps :: Map (KeyMask, KeySym) (X ())
-myKeyMaps = fromList $
+myKeyMaps = fromList
   -- Launching and killing programs
   [ ((myModKey .|. shiftMask, xK_c     ), kill)
   , ((myModKey              , xK_p     ), launchPrompt myXPConfig)
