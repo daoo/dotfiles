@@ -10,12 +10,17 @@
   cia = commit --amend
   co = checkout
 
+  p   = push
+  pf  = push -f
+  pom = push origin master
+
   r  = rebase
   ri = rebase -i
   rc = rebase --continue
+  rs = rebase --skip
+  ra = rebase --abort
 
   ff = merge --ff-only origin/master
-  pom = push origin master
 
   sl = stash list
   sa = stash apply
