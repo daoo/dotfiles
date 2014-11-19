@@ -12,10 +12,9 @@ else
   exit 1
 fi
 
-shift 1
-
 while inotifywait -q $opts "$path" > /dev/null; do
-  $@
+  echo $2
+  echo $2 | $SHELL
   echo
   sleep 1
 done
