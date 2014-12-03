@@ -39,7 +39,6 @@ unsetopt check_jobs
 export EDITOR="nvim"
 export PAGER="less"
 
-export GREP_OPTIONS='--color=auto'
 export LESS="-ir"
 
 # Less color
@@ -58,6 +57,7 @@ stty -ixon
 # Give some commands fancy colors
 alias ls='ls -hF --si --color=auto --group-directories-first'
 alias tree='tree -C'
+alias grep='grep --color=auto'
 
 # Some for ls
 alias l='ls'
