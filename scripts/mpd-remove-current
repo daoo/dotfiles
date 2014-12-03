@@ -3,19 +3,23 @@
 # Script for removing the currently playing song from your mpd queue and a
 # selected m3u file. Needs mpd and mpc.
 
+function printerr() { printf "$@" 1>&2; }
+
 mpd_dir="$HOME/.mpd"
 playlist_dir="$mpd_dir/playlists"
 
 if [[ ! -f "$mpd_dir/pid" ]]; then
-  exit 1 # mpd not running
+  printerr "MPD not running, exiting."
+  exit 1
 fi
 
 # Get current song
 song=$(mpc -q current)
 file=$(mpc -q -f '%file%' current)
 
-if [[ -z $song ]]; then
-  exit 2 # No song playing
+if [[ -z "$song" ]]; then
+  printerr "No song playing, exiting."
+  exit 2
 fi
 
 # Ask for confirmation. xmessage or zenity could be used if you don't want to
@@ -25,39 +29,36 @@ fi
 
 echo -n "Really remove '$song' [y/N]? "
 read result
-if [[ ($result != "y") && ($result != "Y") ]]; then
-  exit 3 # Failed confirmation
+if [[ $result != "y" && $result != "Y" ]]; then
+  exit 0
 fi
 
-# Remove from playlist by turning on consume but preserve consume status.
-if [[ $(mpc status | awk '/consume/ { print $10 }') = "on" ]]; then
-  consume_after=1
-else
-  # This order will make it default to off, in case mpc status does not return
-  # (on|off)
-  consume_after=0
-  mpc -q --wait consume 1
+# Remove from playlist by turning on consume and playing the next song.
+consume=$(mpc | awk '/consume/ { print $10 }')
+
+if [[ !($consume == "on" || $consume == "off") ]]; then
+  printerr "Invalid consume status '$consume', exiting."
+  exit 3
 fi
 
-# This will remove the song from the playlist
+if [[ $consume == "off" ]]; then
+  mpc -q consume on
+fi
+
 mpc -q --wait next
 
 # Restore consume status
-if [[ $consume_after -eq 0 ]]; then
-  mpc -q consume "$consume_after"
+if [[ $consume == "off" ]]; then
+  mpc -q consume off
 fi
 
-# Remove from playlists in playlist dir
 for m3u in $playlist_dir/*.m3u; do
-  # Make a backup of the M3U
   cp "$m3u" "$m3u.bak"
 
-  # Remove the song from the default playlist
   # TODO: avoid temporary file
   grep -F -v "$file" "$m3u" > "$m3u.temp"
   mv "$m3u.temp" "$m3u"
 done
 
-# Greate Success!
 echo "Removed '$song'"
 exit 0
