@@ -1,5 +1,6 @@
 module Main (main) where
 
+import BinarySpacePartition
 import Data.Map (Map, fromList, insert)
 import Data.Ratio ((%))
 import System.Exit (exitSuccess)
@@ -21,6 +22,7 @@ import XMonad.Prompt
 import XMonad.Prompt.Input
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad
+import XMonad.Util.Types
 import qualified XMonad.StackSet as W
 
 -- {{{ Bar
@@ -71,12 +73,11 @@ myManageHook = composeAll
 
 myLayoutHook = onWorkspace "im" imLayout $ onWorkspace "full" fullLayout defaultLayout
   where
-    defaultLayout = avoidStruts $ lessBorders ambiguity $ tiled ||| Mirror tiled ||| Full
+    defaultLayout = avoidStruts $ lessBorders ambiguity $ emptyBSP ||| Full
     imLayout      = avoidStruts $ lessBorders ambiguity $ reflectHoriz im
-    fullLayout    = noBorders $ Full ||| tiled ||| Mirror tiled
+    fullLayout    = noBorders $ Full ||| emptyBSP
 
     ambiguity = Combine Difference Screen OnlyFloat
-    tiled     = Tall 1 0.03 0.5
     im        = withIM (1%7) (skypeBuddyList `Or` pidgin) (Grid ||| Full)
 
     skypeBuddyList = Title "daoo-- - Skype\8482"
@@ -180,6 +181,17 @@ myKeyMaps = fromList
   , ((myModKey              , xK_t     ), withFocused $ windows . W.sink)
   , ((myModKey              , xK_u     ), withFocused toggleBorder)
 
+  , ((myModKey .|. altMask, xK_l), sendMessage $ ExpandTowards R)
+  , ((myModKey .|. altMask, xK_h), sendMessage $ ExpandTowards L)
+  , ((myModKey .|. altMask, xK_j), sendMessage $ ExpandTowards D)
+  , ((myModKey .|. altMask, xK_k), sendMessage $ ExpandTowards U)
+  , ((myModKey .|. altMask .|. ctrlMask, xK_l), sendMessage $ ShrinkFrom R)
+  , ((myModKey .|. altMask .|. ctrlMask, xK_h), sendMessage $ ShrinkFrom L)
+  , ((myModKey .|. altMask .|. ctrlMask, xK_j), sendMessage $ ShrinkFrom D)
+  , ((myModKey .|. altMask .|. ctrlMask, xK_k), sendMessage $ ShrinkFrom U)
+  , ((myModKey, xK_r), sendMessage Rotate)
+  , ((myModKey, xK_s), sendMessage Swap)
+
   -- Focus and swapping
   , ((myModKey              , xK_Tab   ), windows W.focusDown)
   , ((myModKey .|. shiftMask, xK_Tab   ), windows W.focusUp)
@@ -198,10 +210,8 @@ myKeyMaps = fromList
   -- Multiple screens
   , ((myModKey              , xK_w     ), screenWorkspace 0 >>= flip whenJust (windows . W.view))
   , ((myModKey              , xK_e     ), screenWorkspace 1 >>= flip whenJust (windows . W.view))
-  , ((myModKey              , xK_r     ), screenWorkspace 2 >>= flip whenJust (windows . W.view))
   , ((myModKey .|. shiftMask, xK_w     ), screenWorkspace 0 >>= flip whenJust (windows . W.shift))
   , ((myModKey .|. shiftMask, xK_e     ), screenWorkspace 1 >>= flip whenJust (windows . W.shift))
-  , ((myModKey .|. shiftMask, xK_r     ), screenWorkspace 2 >>= flip whenJust (windows . W.shift))
 
   -- Handling workspaces
   , ((myModKey              , xK_o     ), toggleWS)
@@ -240,6 +250,9 @@ myKeyMaps = fromList
   where
     toggleWS     = windows $ W.view =<< W.tag . head . hiddenNonNSP
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
+
+    altMask = mod1Mask
+    ctrlMask = controlMask
 -- }}}
 -- {{{ Prompt
 launchPrompt :: XPConfig -> X ()
