@@ -1,8 +1,8 @@
 module Main (main) where
 
 import Data.Map (Map, fromList, insert)
-import Data.Ratio
-import System.Exit
+import Data.Ratio ((%))
+import System.Exit (exitSuccess)
 import System.IO (Handle)
 import XMonad hiding (Color)
 import XMonad.Actions.DynamicWorkspaces
