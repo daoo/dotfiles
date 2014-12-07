@@ -175,8 +175,6 @@ nnoremap <leader>wp :cprevious<cr>
 nnoremap <leader>ae :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
 nnoremap <leader>ap Vapk:sort<cr>
 vmap <leader>ap :sort<cr>
-nmap <return>   <plug>(EasyAlign)
-nmap <s-return> <plug>(LiveEasyAlign)
 vmap <enter>    <plug>(EasyAlign)
 vmap <s-return> <plug>(LiveEasyAlign)
 
