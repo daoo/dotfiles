@@ -8,7 +8,7 @@ elif [[ -f "$1" ]]; then
   opts="-e close_write"
 else
   echo "Could not find file or directory \"$1\""
-  echo "Usage: watch-files PATH COMMAND [ARGS]"
+  echo "Usage: watch-files PATH COMMAND"
   exit 1
 fi
 
