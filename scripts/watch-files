@@ -2,19 +2,19 @@
 
 if [[ -d "$1" ]]; then
   path="$1"
-  opts="-r -e close_write,moved_to,create,delete"
+  opts=("-r" "-e" "close_write,moved_to,create,delete")
 elif [[ -f "$1" ]]; then
   path="$(dirname "$1")"
-  opts="-e close_write"
+  opts=("-e" "close_write")
 else
   echo "Could not find file or directory \"$1\""
   echo "Usage: watch-files PATH COMMAND"
   exit 1
 fi
 
-while inotifywait -q $opts "$path" > /dev/null; do
-  echo $2
-  echo $2 | $SHELL
+while inotifywait -q "${opts[@]}" "$path" > /dev/null; do
+  echo "$2"
+  echo "$2" | $SHELL
   echo
   sleep 1
 done

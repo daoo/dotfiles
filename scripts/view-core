@@ -19,7 +19,7 @@ ghc \
   -dsuppress-type-applications \
   -dppr-cols270 \
   -dppr-case-as-let \
-  -ddump-${TYPE-simpl} \
-  $@ \
+  "-ddump-${TYPE-simpl}" \
+  "$@" \
   | sed -e '/^\(\$fShow\|\$w\$cshows\)/,/^$/d' \
   | vim "+setf haskell" -

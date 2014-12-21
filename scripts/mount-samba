@@ -18,5 +18,5 @@ echo "Mounting $device at $dir..."
 echo "Logging in as $workgroup\\$user"
 
 mount -t cifs \
-  -o user="$user",workgroup="$workgroup",rw,uid=daniel,gid=users \
+  -o "user=$user,workgroup=$workgroup,rw,uid=daniel,gid=users" \
   "$device" "$dir"

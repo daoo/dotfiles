@@ -48,7 +48,7 @@ if [[ -a "$file" ]]; then
 
     new_checksum="$(md5sum_dir "$working_dir")"
 
-    if [[ $old_checksum = $new_checksum ]]; then
+    if [[ "$old_checksum" = "$new_checksum" ]]; then
       echo "No changes, not repacking."
     else
       echo "Repacking..."

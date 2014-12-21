@@ -3,7 +3,7 @@
 # Script for removing the currently playing song from your mpd queue and a
 # selected m3u file. Needs mpd and mpc.
 
-function printerr() { printf "$@" 1>&2; }
+function printerr() { printf "%s" "$@" 1>&2; }
 
 mpd_dir="$HOME/.mpd"
 playlist_dir="$mpd_dir/playlists"
@@ -36,7 +36,7 @@ fi
 # Remove from playlist by turning on consume and playing the next song.
 consume=$(mpc | awk '/consume/ { print $10 }')
 
-if [[ !($consume == "on" || $consume == "off") ]]; then
+if [[ ! ($consume == "on" || $consume == "off") ]]; then
   printerr "Invalid consume status '$consume', exiting."
   exit 3
 fi

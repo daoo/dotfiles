@@ -23,7 +23,7 @@ case $script_type in
   up)
     for optionname in ${!foreign_option_*} ; do
       option="${!optionname}"
-      echo $option
+      echo "$option"
       part1=$(echo "$option" | cut -d " " -f 1)
       if [ "$part1" == "dhcp-option" ]; then
         part2=$(echo "$option" | cut -d " " -f 2)

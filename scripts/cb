@@ -14,13 +14,13 @@ if [[ $USER == "root" ]]; then
   echo "Must be regular user (not root) to copy a file to the clipboard."
 fi
 
-if [[ -z $* ]]; then
+if [[ -z "$@" ]]; then
   data="$(< /dev/stdin)"
 else
   input="$*"
 
   if [[ -e "$input" ]]; then
-    data="$(< $input)"
+    data="$(< "$input")"
   else
     data="$input"
   fi
@@ -34,7 +34,7 @@ if [[ -z $data ]]; then
 else
   echo -n "$data" | xclip -selection c
   if (( ${#data} > 80 )); then
-    output="$(echo $data | cut -c1-80)"
+    output="$(echo "$data" | cut -c1-80)"
   else
     output="$data"
   fi
