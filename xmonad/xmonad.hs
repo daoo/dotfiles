@@ -59,7 +59,7 @@ myManageHook = composeAll
   , className =? "Browser"     --> doShift "web"
   , className =? "Firefox"     --> doShift "web"
   , className =? "luakit"      --> doShift "web"
-  , className =? "Thunderbird" --> doShift "mail"
+  , className =? "claws-mail"  --> doShift "mail"
   , className =? "Steam"       --> doShift "other"
   , className =? "Wine"        --> doShift "full"
 
@@ -261,6 +261,7 @@ launchPrompt c = inputPromptWithCompl c "Run" (mkComplFunFromList cmds) ?+ spawn
     cmds =
       [ "audacity"
       , "blender"
+      , "claws-mail"
       , "coqide"
       , "emacs"
       , "firefox"
@@ -275,7 +276,6 @@ launchPrompt c = inputPromptWithCompl c "Run" (mkComplFunFromList cmds) ?+ spawn
       , "pcmanfm"
       , "pidgin"
       , "skype"
-      , "thunderbird"
       , "tuxguitar"
       , "urxvt"
       , "wirkeshark"
