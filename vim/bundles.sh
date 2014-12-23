@@ -1,11 +1,22 @@
 #!/usr/bin/env bash
 
-vim_dir=${VIMFILES-${HOME}/.vim}
+vim=${VIM-nvim}
+vim_dir=${VIMFILES-${HOME}/.nvim}
 bundle_dir="$vim_dir/bundle"
 autoload_dir="$vim_dir/autoload"
 
+gitpull() {
+  git -C "$1" pull --ff-only
+}
+
+function helptags() {
+  if [[ -d "$1/doc" ]]; then
+    $vim -u NONE -c "helptags $1/doc" -c q
+  fi
+}
+
 if [[ $1 = clone ]]; then
-  mkdir -p $bundle_dir
+  mkdir -p "$bundle_dir"
   git clone https://github.com/bling/vim-airline.git "$bundle_dir/airline"
   git clone https://github.com/ctrlpvim/ctrlp.vim.git "$bundle_dir/ctrlp"
   git clone https://github.com/danro/rename.vim.git "$bundle_dir/rename"
@@ -36,14 +47,13 @@ if [[ $1 = clone ]]; then
 elif [[ $1 = pull ]]; then
   for bundle in $bundle_dir/*; do
     echo "$bundle"
-    git -C "$bundle" pull --ff-only
+    gitpull "$bundle"
+    helptags "$bundle"
   done
 elif [[ $1 = helptags ]]; then
   for bundle in $bundle_dir/*; do
-    if [[ -d $bundle/doc ]]; then
-      echo $bundle
-      vim -u NONE -c "helptags $bundle/doc" -c q
-    fi
+    echo "$bundle"
+    helptags "$bundle"
   done
 elif [[ $1 = pathogen ]]; then
   target="$autoload_dir/pathogen.vim"
