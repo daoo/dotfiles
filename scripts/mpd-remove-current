@@ -34,9 +34,10 @@ if [[ $result != "y" && $result != "Y" ]]; then
 fi
 
 # Remove from playlist by turning on consume and playing the next song.
-consume=$(mpc | awk '/consume/ { print $10 }')
+consume="$(mpc | grep consume | cut -b 66-68)"
 
-if [[ ! ($consume == "on" || $consume == "off") ]]; then
+# Note extra space in "on ", is included in mpc output
+if [[ ! ($consume == "on " || $consume == "off") ]]; then
   printerr "Invalid consume status '$consume', exiting."
   exit 3
 fi
