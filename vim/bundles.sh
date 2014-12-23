@@ -7,12 +7,12 @@ autoload_dir="$vim_dir/autoload"
 if [[ $1 = clone ]]; then
   mkdir -p $bundle_dir
   git clone https://github.com/bling/vim-airline.git "$bundle_dir/airline"
+  git clone https://github.com/ctrlpvim/ctrlp.vim.git "$bundle_dir/ctrlp"
   git clone https://github.com/danro/rename.vim.git "$bundle_dir/rename"
   git clone https://github.com/daoo/Mustang2.git "$bundle_dir/mustang2"
   git clone https://github.com/daoo/Wombat.git "$bundle_dir/wombat"
   #git clone https://github.com/honza/vim-snippets.git "$bundle_dir/vim-snippets"
   git clone https://github.com/junegunn/vim-easy-align "$bundle_dir/easy-align"
-  git clone https://github.com/ctrlpvim/ctrlp.vim.git "$bundle_dir/ctrlp"
   git clone https://github.com/maxbrunsfeld/vim-yankstack.git "$bundle_dir/yankstack"
   git clone https://github.com/mileszs/ack.vim.git "$bundle_dir/ack"
   git clone https://github.com/milkypostman/vim-togglelist.git "$bundle_dir/togglelist"
