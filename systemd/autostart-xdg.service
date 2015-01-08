@@ -1,0 +1,6 @@
+[Unit]
+Description=Autostart XDG
+
+[Service]
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/dex --autostart
