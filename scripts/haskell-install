@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+
+cabal update
+
+optdir="${HOME}/opt/haskell"
+
+if [[ -z "$1" ]]; then
+  echo "Usage: install.sh PACKAGE"
+  exit 1
+fi
+
+pkg="$1"
+
+config="${optdir}/${pkg}.sandbox.config"
+dir="${optdir}/${pkg}"
+
+if [[ ! -d "$dir" ]]; then
+  cabal --sandbox-config-file="$config" sandbox init --sandbox="$dir"
+fi
+
+cabal --sandbox-config-file="$config" install "$pkg"
