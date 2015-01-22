@@ -244,8 +244,8 @@ myKeyMaps = fromList
   , ((myModKey              , xK_q     ), spawn "xmonad --recompile && xmonad --restart")
 
   -- Setting keyboard layout
-  , ((myModKey              , xK_F1    ), safeSpawn "/usr/bin/setxkbmap" ["dvpse"])
-  , ((myModKey              , xK_F2    ), safeSpawn "/usr/bin/setxkbmap" ["usaswe"])
+  , ((myModKey              , xK_F1    ), keymap "dvpse")
+  , ((myModKey              , xK_F2    ), keymap "usaswe")
   ]
   where
     toggleWS     = windows $ W.view =<< W.tag . head . hiddenNonNSP
@@ -253,6 +253,10 @@ myKeyMaps = fromList
 
     altMask = mod1Mask
     ctrlMask = controlMask
+
+    keymap name = do
+      safeSpawn "/usr/bin/setxkbmap" [name]
+      safeSpawn "/usr/bin/notify-send" [name, "Changed keymap to " ++ name]
 -- }}}
 -- {{{ Prompt
 launchPrompt :: XPConfig -> X ()
