@@ -198,26 +198,26 @@ myKeyMaps = fromList
   , ((myModKey,               xK_m),   windows W.focusMaster)
   , ((myModKey .|. shiftMask, xK_m),   windows W.swapMaster)
 
-  , ((myModKey              , xK_h), windowGo L False)
-  , ((myModKey              , xK_l), windowGo R False)
-  , ((myModKey              , xK_j), windowGo D False)
-  , ((myModKey              , xK_k), windowGo U False)
+  , ((myModKey,               xK_h), windowGo L False)
+  , ((myModKey,               xK_l), windowGo R False)
+  , ((myModKey,               xK_j), windowGo D False)
+  , ((myModKey,               xK_k), windowGo U False)
   , ((myModKey .|. shiftMask, xK_h), windowSwap L False)
   , ((myModKey .|. shiftMask, xK_l), windowSwap R False)
   , ((myModKey .|. shiftMask, xK_j), windowSwap D False)
   , ((myModKey .|. shiftMask, xK_k), windowSwap U False)
 
   -- Multiple screens
-  , ((myModKey              , xK_w), screenWorkspace 0 >>= flip whenJust (windows . W.view))
-  , ((myModKey              , xK_e), screenWorkspace 1 >>= flip whenJust (windows . W.view))
+  , ((myModKey,               xK_w), screenWorkspace 0 >>= flip whenJust (windows . W.view))
+  , ((myModKey,               xK_e), screenWorkspace 1 >>= flip whenJust (windows . W.view))
   , ((myModKey .|. shiftMask, xK_w), screenWorkspace 0 >>= flip whenJust (windows . W.shift))
   , ((myModKey .|. shiftMask, xK_e), screenWorkspace 1 >>= flip whenJust (windows . W.shift))
 
   -- Handling workspaces
-  , ((myModKey              , xK_o), toggleWS)
+  , ((myModKey,               xK_o), toggleWS)
   , ((myModKey .|. shiftMask, xK_g), removeEmptyWorkspace)
-  , ((myModKey              , xK_g), selectWorkspace myXPConfig)
-  , ((myModKey              , xK_c), withWorkspace myXPConfig (windows . W.shift))
+  , ((myModKey,               xK_g), selectWorkspace myXPConfig)
+  , ((myModKey,               xK_c), withWorkspace myXPConfig (windows . W.shift))
 
   -- Workspace keys
   , ((myModKey,               xK_ampersand),   windows (W.greedyView (myWorkspaces !! 0)))
@@ -241,7 +241,7 @@ myKeyMaps = fromList
 
   -- Restarting and stopping xmonad
   , ((myModKey .|. shiftMask, xK_q), io exitSuccess)
-  , ((myModKey              , xK_q), restart)
+  , ((myModKey,               xK_q), restart)
 
   -- Setting keyboard layout
   , ((myModKey, xK_F1), keymap "dvpse")
