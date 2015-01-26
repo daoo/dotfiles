@@ -23,13 +23,14 @@ module BinarySpacePartition (
                                           , Direction2D(..)
                                           ) where
 
+import Control.Monad
+import Data.List ((\\))
+import Data.Maybe
 import XMonad
-import qualified XMonad.StackSet as W
 import XMonad.Util.Stack hiding (Zipper)
 import XMonad.Util.Types
 import qualified Data.Map as M
-import Data.List ((\\))
-import Control.Monad
+import qualified XMonad.StackSet as W
 
 -- $usage
 -- You can use this module with the following in your @~\/.xmonad\/xmonad.hs@:
@@ -210,11 +211,11 @@ isAllTheWay D (_, LeftCrumb s _:_)
   | axis s == Horizontal = False
 isAllTheWay U (_, RightCrumb s _:_)
   | axis s == Horizontal = False
-isAllTheWay dir z = maybe False id $ goUp z >>= Just . isAllTheWay dir
+isAllTheWay dir z = fromMaybe False $ goUp z >>= Just . isAllTheWay dir
 
 expandTreeTowards :: Direction2D -> Zipper Split -> Maybe (Zipper Split)
 expandTreeTowards _ z@(_, []) = Just z
-expandTreeTowards dir z 
+expandTreeTowards dir z
   | isAllTheWay dir z = shrinkTreeFrom (oppositeDirection dir) z
 expandTreeTowards R (t, LeftCrumb s r:cs)
   | axis s == Vertical = Just (t, LeftCrumb (increaseRatio s resizeDiff) r:cs)
@@ -239,7 +240,7 @@ shrinkTreeFrom U z@(_, RightCrumb s _:_)
 shrinkTreeFrom dir z = goUp z >>= shrinkTreeFrom dir
 
 -- Direction2D refers to which direction the divider should move.
-autoSizeTree :: Direction2D -> Zipper Split -> Maybe (Zipper Split)                          
+autoSizeTree :: Direction2D -> Zipper Split -> Maybe (Zipper Split)
 autoSizeTree _ z@(_, []) = Just z
 autoSizeTree d z =
     Just z >>= getSplit (toAxis d) >>= resizeTree d
@@ -247,28 +248,28 @@ autoSizeTree d z =
 -- resizing once found the correct split. YOU MUST FIND THE RIGHT SPLIT FIRST.
 resizeTree :: Direction2D -> Zipper Split -> Maybe (Zipper Split)
 resizeTree _ z@(_, []) = Just z
-resizeTree R z@(_, LeftCrumb _ _:_) =  
+resizeTree R z@(_, LeftCrumb _ _:_) =
   Just z >>= expandTreeTowards R
-resizeTree L z@(_, LeftCrumb _ _:_) = 
+resizeTree L z@(_, LeftCrumb _ _:_) =
   Just z >>= shrinkTreeFrom    R
-resizeTree U z@(_, LeftCrumb _ _:_) = 
+resizeTree U z@(_, LeftCrumb _ _:_) =
   Just z >>= shrinkTreeFrom    D
-resizeTree D z@(_, LeftCrumb _ _:_) = 
+resizeTree D z@(_, LeftCrumb _ _:_) =
   Just z >>= expandTreeTowards D
-resizeTree R z@(_, RightCrumb _ _:_) = 
+resizeTree R z@(_, RightCrumb _ _:_) =
   Just z >>= shrinkTreeFrom    L
-resizeTree L z@(_, RightCrumb _ _:_) = 
+resizeTree L z@(_, RightCrumb _ _:_) =
   Just z >>= expandTreeTowards L
-resizeTree U z@(_, RightCrumb _ _:_) = 
+resizeTree U z@(_, RightCrumb _ _:_) =
   Just z >>= expandTreeTowards U
-resizeTree D z@(_, RightCrumb _ _:_) = 
+resizeTree D z@(_, RightCrumb _ _:_) =
   Just z >>= shrinkTreeFrom    U
 
 getSplit :: Axis -> Zipper Split -> Maybe (Zipper Split)
 getSplit _ (_, []) = Nothing
 getSplit d z =
  do let fs = findSplit d z
-    if fs == Nothing 
+    if isNothing fs
       then findClosest d z
       else fs
 
@@ -278,13 +279,13 @@ findClosest d z@(_, LeftCrumb s _:_)
   | axis s == d = Just z
 findClosest d z@(_, RightCrumb s _:_)
   | axis s == d = Just z
-findClosest d z = goUp z >>= findClosest d 
+findClosest d z = goUp z >>= findClosest d
 
 findSplit :: Axis -> Zipper Split -> Maybe (Zipper Split)
 findSplit _ (_, []) = Nothing
 findSplit d z@(_, LeftCrumb s _:_)
   | axis s == d = Just z
-findSplit d z = goUp z >>= findSplit d 
+findSplit d z = goUp z >>= findSplit d
 
 top :: Zipper a -> Zipper a
 top z = case goUp z of
@@ -360,10 +361,10 @@ shrinkNthFrom _ (BinarySpacePartition Nothing) _ = emptyBSP
 shrinkNthFrom _ b@(BinarySpacePartition (Just Leaf)) _ = b
 shrinkNthFrom dir b n = doToNth (shrinkTreeFrom dir) b n
 
-autoSizeNth :: Direction2D -> BinarySpacePartition a -> Int -> BinarySpacePartition a                    
+autoSizeNth :: Direction2D -> BinarySpacePartition a -> Int -> BinarySpacePartition a
 autoSizeNth _ (BinarySpacePartition Nothing) _ = emptyBSP
 autoSizeNth _ b@(BinarySpacePartition (Just Leaf)) _ = b
-autoSizeNth dir b n = doToNth (autoSizeTree dir) b n 
+autoSizeNth dir b n = doToNth (autoSizeTree dir) b n
 
 instance LayoutClass BinarySpacePartition a where
   doLayout b r s = return (zip ws rs, layout b) where
