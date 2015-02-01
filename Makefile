@@ -12,7 +12,7 @@ emacs:
 	ln -fsn $(here)/emacs/emacs ${HOME}/.emacs
 
 gamingrc:
-	ln -fsn $(here)/gamingrc ${HOME}/.gamingrc
+	ln -fsn $(here)/xorg/gamingrc ${HOME}/.gamingrc
 
 ghci:
 	ln -fsn $(here)/ghci ${HOME}/.ghci
@@ -80,13 +80,13 @@ nvim:
 	ln -fsn $(here)/vim/vimrc ${HOME}/.nvimrc
 
 xresources:
-	ln -fsn $(here)/xresources ${HOME}/.Xresources
+	ln -fsn $(here)/xorg/xresources ${HOME}/.Xresources
 
-xbmcrc:
-	ln -fsn $(here)/xbmcrc ${HOME}/.xbmcrc
+filmrc:
+	ln -fsn $(here)/xorg/filmrc ${HOME}/.filmrc
 
 xinitrc:
-	ln -fsn $(here)/xinitrc ${HOME}/.xinitrc
+	ln -fsn $(here)/xorg/xinitrc ${HOME}/.xinitrc
 
 xmonad:
 	mkdir -p ${HOME}/.xmonad/lib
