@@ -11,8 +11,9 @@ export BROWSER="/usr/bin/firefox"
 
 xrdb -merge "$HOME/.Xresources"
 
-/usr/bin/xsetroot -cursor_name left_ptr &
+/usr/bin/xsetroot -cursor_name left_ptr
+/usr/bin/dex --autostart
 /usr/bin/pcmanfm --desktop --set-wallpaper="$(/usr/bin/find $HOME/media/wallpapers -type f | /usr/bin/shuf -n 1)" --wallpaper-mode=center &
 /usr/bin/steam &
 
-/usr/bin/openbox
+exec /usr/bin/openbox
