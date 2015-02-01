@@ -2,8 +2,8 @@
 <openbox_menu>
   <menu id="root-menu" label="OpenBox 3">
     <menu id="2" label="Editors">
-      <item label="gvim"> <action name="Execute">
-          <execute>gvim</execute>
+      <item label="gedit"> <action name="Execute">
+          <execute>gedit</execute>
       </action> </item>
     </menu>
     <menu id="3" label="Gaming">
