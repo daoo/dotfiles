@@ -5,8 +5,8 @@ if [[ -z "$DISPLAY" ]]; then
   exit 1
 fi
 
-if ! type xclip > /dev/null 2>&1; then
-  echo "You must have the 'xclip' program installed."
+if ! type xsel > /dev/null 2>&1; then
+  echo "You must have the 'xsel' program installed."
   exit 1
 fi
 
@@ -32,7 +32,7 @@ if [[ -z $data ]]; then
   echo "       echo <string or file> | cb"
   exit 1
 else
-  echo -n "$data" | xclip -selection c
+  echo -n "$data" | xsel -b -i c
   if (( ${#data} > 80 )); then
     output="$(echo "$data" | cut -c1-80)"
   else
