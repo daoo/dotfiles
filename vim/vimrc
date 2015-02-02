@@ -183,7 +183,7 @@ nmap <leader>yp <Plug>yankstack_substitute_older_paste
 nmap <leader>yn <Plug>yankstack_substitute_newer_paste
 
 " Files
-nnoremap <f2> :NERDTreeToggle<cr>
+nnoremap <silent> <f2> <Plug>FileBeagleOpenCurrentWorkingDir
 nnoremap <leader>es :mksession! ~/.session.vim<cr>
 nnoremap <leader>el :source ~/.session.vim<cr>
 nnoremap <leader>ef :e %<cr>
@@ -233,6 +233,8 @@ vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
 vnoremap <c-x> y`]a = <c-r>=<c-r>"<cr><esc>
 " }}}
 " {{{ Addons
+let g:filebeagle_suppress_keymaps = 1
+
 let g:yankstack_map_keys = 0
 
 let g:airline_right_sep=''
