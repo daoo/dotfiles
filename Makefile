@@ -38,6 +38,8 @@ openbox:
 	ln -fsn $(here)/openbox/autostart ${HOME}/.config/openbox/autostart
 	ln -fsn $(here)/openbox/rc.xml ${HOME}/.config/openbox/rc.xml
 	ln -fsn $(here)/openbox/menu.xml ${HOME}/.config/openbox/menu.xml
+	ln -fsn $(here)/openbox/obmenu-generator/config.pl ${HOME}/.config/obmenu-generator/config.pl
+	ln -fsn $(here)/openbox/obmenu-generator/schema.pl ${HOME}/.config/obmenu-generator/schema.pl
 
 rtorrent:
 	ln -fsn $(here)/rtorrent.rc ${HOME}/.rtorrent.rc
