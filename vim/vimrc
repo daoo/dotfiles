@@ -62,11 +62,11 @@ set nofoldenable
 " reading and writing files
 set autowrite
 set nobackup
-set backupdir=$HOME/.vim/tmp//
+set backupdir=/tmp
 
 " the swap file
-set directory=/tmp/vim//
 set noswapfile
+set directory=/tmp
 
 " command line editing
 set history=500
