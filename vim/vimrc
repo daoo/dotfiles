@@ -183,7 +183,7 @@ nmap <leader>yp <Plug>yankstack_substitute_older_paste
 nmap <leader>yn <Plug>yankstack_substitute_newer_paste
 
 " Files
-nnoremap <silent> <f2> <Plug>FileBeagleOpenCurrentWorkingDir
+nmap <silent> <f2> <Plug>FileBeagleOpenCurrentWorkingDir
 nnoremap <leader>es :mksession! ~/.session.vim<cr>
 nnoremap <leader>el :source ~/.session.vim<cr>
 nnoremap <leader>ef :e %<cr>
