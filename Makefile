@@ -103,4 +103,24 @@ zsh:
 	ln -fsn $(here)/zsh/zprofile ${HOME}/.zprofile
 	ln -fsn $(here)/zsh/zshrc ${HOME}/.zshrc
 
-.PHONY: emacs gamingrc ghci git gtk haskeline haskell luakit rtorrent scripts sublime systemd tmux vim xresources xbmcrc xinitrc xmonad zsh
+.PHONY: \
+	emacs \
+	filmrc \
+	gamingrc \
+	ghci \
+	git \
+	gtk \
+	haskeline \
+	haskell \
+	luakit \
+	openbox \
+	rtorrent \
+	scripts \
+	sublime \
+	systemd \
+	tmux \
+	vim \
+	xinitrc \
+	xmonad \
+	xresources \
+	zsh
