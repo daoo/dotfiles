@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 
+set -e
+
 if [[ -d ".cabal-sandbox" ]]; then
   dbflag="-package-db=$(echo .cabal-sandbox/*-packages.conf.d)"
 else
   dbflag=""
 fi
 
+tmpdir="$(mktemp -d)"
+tmpfile="$(mktemp -p "$tmpdir" core-XXX.hs)"
+
 ghc \
-  -o /tmp/Main \
-  -outputdir /tmp \
+  -o "$tmpdir/main" \
+  -outputdir "$tmpdir" \
   -isrc \
-  $dbflag \
+  "$dbflag" \
   -fforce-recomp \
   -dsuppress-coercions \
   -dsuppress-module-prefixes \
@@ -21,5 +26,10 @@ ghc \
   -dppr-case-as-let \
   "-ddump-${TYPE-simpl}" \
   "$@" \
-  | sed -e '/^\(\$fShow\|\$w\$cshows\)/,/^$/d' \
-  | vim "+setf haskell" -
+  > "$tmpfile"
+
+sed -i '/^\(\$fShow\|\$w\$cshows\)/,/^$/d' "$tmpfile"
+
+${EDITOR:-nvim} "$tmpfile"
+
+rm -rf "$tmpdir"
