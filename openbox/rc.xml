@@ -104,10 +104,16 @@
       <action name="Execute">
         <execute>setxkbmap dvpse</execute>
       </action>
+      <action name="Execute">
+        <execute>notify-send dvpse "Changed keymap to dvpse"</execute>
+      </action>
     </keybind>
     <keybind key="W-F2">
       <action name="Execute">
         <execute>setxkbmap usaswe</execute>
+      </action>
+      <action name="Execute">
+        <execute>notify-send usaswe "Changed keymap to usaswe"</execute>
       </action>
     </keybind>
     <keybind key="C-A-Left">
