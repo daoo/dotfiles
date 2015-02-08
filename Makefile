@@ -41,6 +41,12 @@ openbox:
 	ln -fsn $(here)/openbox/obmenu-generator/config.pl ${HOME}/.config/obmenu-generator/config.pl
 	ln -fsn $(here)/openbox/obmenu-generator/schema.pl ${HOME}/.config/obmenu-generator/schema.pl
 
+ranger:
+	mkdir -p ${HOME}/.config/ranger
+	ln -fsn $(here)/ranger/rc.conf ${HOME}/.config/ranger/rc.conf
+	ln -fsn $(here)/ranger/rifle.conf ${HOME}/.config/ranger/rifle.conf
+	ln -fsn $(here)/ranger/scope.sh ${HOME}/.config/ranger/scope.sh
+
 rtorrent:
 	ln -fsn $(here)/rtorrent.rc ${HOME}/.rtorrent.rc
 
@@ -114,6 +120,7 @@ zsh:
 	haskell \
 	luakit \
 	openbox \
+	ranger \
 	rtorrent \
 	scripts \
 	sublime \
