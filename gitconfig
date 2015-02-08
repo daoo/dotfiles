@@ -1,5 +1,3 @@
-[core]
-  editor = vim
 [alias]
   a   = add
   ap  = add --patch
