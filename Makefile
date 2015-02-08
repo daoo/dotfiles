@@ -81,6 +81,8 @@ nvim:
 	mkdir -p ${HOME}/.nvim
 	mkdir -p ${HOME}/.nvim/tmp
 	mkdir -p ${HOME}/.nvim/spell
+	ln -fsn $(here)/vim/UltiSnips ${HOME}/.nvim/UltiSnips
+	ln -fsn $(here)/vim/snippets ${HOME}/.nvim/snippets
 	ln -fsn $(here)/vim/after ${HOME}/.nvim/after
 	ln -fsn $(here)/vim/ftdetect ${HOME}/.nvim/ftdetect
 	ln -fsn $(here)/vim/ftplugin ${HOME}/.nvim/ftplugin
