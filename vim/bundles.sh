@@ -25,6 +25,7 @@ if [[ $1 = clone ]]; then
   git clone https://github.com/honza/vim-snippets.git "$bundle_dir/vim-snippets"
   git clone https://github.com/jeetsukumaran/vim-filebeagle.git "$bundle_dir/filebeagle"
   git clone https://github.com/junegunn/vim-easy-align "$bundle_dir/easy-align"
+  git clone https://github.com/junegunn/vim-peekaboo.git "$bundle_dir/peekaboo"
   git clone https://github.com/jvoorhis/coq.vim.git "$bundle_dir/coq"
   git clone https://github.com/maxbrunsfeld/vim-yankstack.git "$bundle_dir/yankstack"
   git clone https://github.com/mbbill/undotree.git "$bundle_dir/undotree"
