@@ -80,7 +80,7 @@ alias bell="echo -e '\a'"
 alias calc='noglob calc'
 alias c='cabal'
 alias g='git'
-alias y='yaourt'
+alias p='pacaur'
 alias ctl='systemctl'
 alias uctl='systemctl --user'
 # ]]]
