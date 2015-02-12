@@ -78,6 +78,7 @@ alias :w='echo you are not in vim anymore'
 # Other
 alias bell="echo -e '\a'"
 alias calc='noglob calc'
+alias c='cabal'
 alias g='git'
 alias y='yaourt'
 alias ctl='systemctl'
