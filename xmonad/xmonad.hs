@@ -82,33 +82,18 @@ myLayoutHook = onWorkspace "im" imLayout $ onWorkspace "full" fullLayout default
 
     skypeBuddyList = Title "daoo-- - Skype\8482"
     pidgin         = ClassName "Pidgin" `And` Title "Buddy List"
-
-myLogHook :: Handle -> X ()
-myLogHook h = dynamicLogWithPP (myPP { ppOutput = hPutStrLn h })
 -- }}}
 -- {{{ Colors and fonts
-newtype Color = Color { mkColor :: String }
+colorRed, colorGreen, colorBlue, colorPurple :: String
+colorRed    = "#ef2929"
+colorGreen  = "#6dff27"
+colorBlue   = "#729fcf"
+colorPurple = "#ad7fa8"
 
-winBorderFocused, winBorderNormal :: Color
-winBorderFocused = Color "#6dff27"
-winBorderNormal  = panelBg
-
-focusBg, focusFg, occupiedBg, occupiedFg, panelBg, panelFg, titleBg, titleFg,
-  urgentBg, urgentFg, viewsBg, viewsFg, visibleBg, visibleFg :: Color
-focusBg    = panelBg
-focusFg    = Color "#729fcf"
-occupiedBg = panelBg
-occupiedFg = Color "#b8b8b8"
-panelBg    = Color "#2e3436"
-panelFg    = Color "#b8b8b8"
-titleBg    = panelBg
-titleFg    = Color "#d3d7cf"
-urgentBg   = panelBg
-urgentFg   = Color "#ef2929"
-viewsBg    = panelBg
-viewsFg    = Color "#757575"
-visibleBg  = panelBg
-visibleFg  = Color "#ad7fa8"
+colorDarkGrey, colorLightGrey, colorGrey :: String
+colorDarkGrey  = "#2e3436"
+colorLightGrey = "#b8b8b8"
+colorGrey      = "#757575"
 
 panelFont :: String
 panelFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
@@ -122,9 +107,9 @@ myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "
 
 myXPConfig :: XPConfig
 myXPConfig = defaultXPConfig
-  { bgColor           = mkColor panelBg
-  , bgHLight          = mkColor focusFg
-  , fgColor           = mkColor panelFg
+  { bgColor           = colorDarkGrey
+  , bgHLight          = colorBlue
+  , fgColor           = colorLightGrey
   , font              = panelFont
   , position          = Bottom
   , promptBorderWidth = 0
@@ -133,16 +118,18 @@ myXPConfig = defaultXPConfig
   , promptKeymap = insert (controlMask, xK_c) quit (promptKeymap defaultXPConfig)
   }
 
-myPP :: PP
-myPP = defaultPP
-  { ppCurrent         = dzenColor (mkColor focusFg)    (mkColor focusBg)
-  , ppHidden          = dzenColor (mkColor occupiedFg) (mkColor occupiedBg) . noNSP
-  , ppHiddenNoWindows = dzenColor (mkColor viewsFg)    (mkColor viewsBg)    . noNSP
+myPP :: Handle -> PP
+myPP handle = defaultPP
+  { ppCurrent         = dzenColor colorBlue      colorDarkGrey
+  , ppHidden          = dzenColor colorLightGrey colorDarkGrey . noNSP
+  , ppHiddenNoWindows = dzenColor colorGrey      colorDarkGrey . noNSP
   , ppSep             = " | "
-  , ppTitle           = dzenColor (mkColor titleFg)   (mkColor titleBg)
-  , ppUrgent          = dzenColor (mkColor urgentFg)  (mkColor urgentBg)    . dzenStrip
-  , ppVisible         = dzenColor (mkColor visibleFg) (mkColor visibleBg)
+  , ppTitle           = dzenColor colorLightGrey colorDarkGrey
+  , ppUrgent          = dzenColor colorRed       colorDarkGrey
+  , ppVisible         = dzenColor colorPurple    colorDarkGrey
   , ppWsSep           = " "
+
+  , ppOutput = hPutStrLn handle
   }
   where
     noNSP "NSP" = ""
@@ -241,7 +228,7 @@ myKeyMaps = fromList
 
   -- Restarting and stopping xmonad
   , ((myModKey .|. shiftMask, xK_q), io exitSuccess)
-  , ((myModKey,               xK_q), restart)
+  , ((myModKey,               xK_q), reload)
 
   -- Setting keyboard layout
   , ((myModKey, xK_F1), keymap "dvpse")
@@ -254,13 +241,12 @@ myKeyMaps = fromList
     toggleWS     = windows $ W.view =<< W.tag . head . hiddenNonNSP
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 
-    restart = do
+    reload = do
       safeSpawn "/usr/bin/xmonad" ["--recompile"]
       safeSpawn "/usr/bin/xmonad" ["--restart"]
 
-    keymap name = do
+    keymap name =
       safeSpawn "/usr/bin/setxkbmap" [name]
-      safeSpawn "/usr/bin/notify-send" [name, "Changed keymap to " ++ name]
 -- }}}
 -- {{{ Prompt
 launchPrompt :: XPConfig -> X ()
@@ -299,14 +285,14 @@ main = do
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { borderWidth        = 1
     , focusFollowsMouse  = False
-    , focusedBorderColor = mkColor winBorderFocused
+    , focusedBorderColor = colorGreen
     , handleEventHook    = fullscreenEventHook
     , keys               = const myKeyMaps
     , layoutHook         = myLayoutHook
-    , logHook            = myLogHook d
+    , logHook            = dynamicLogWithPP (myPP d)
     , manageHook         = myManageHook <+> manageDocks <+> scratchpadManageHookDefault
     , modMask            = myModKey
-    , normalBorderColor  = mkColor winBorderNormal
+    , normalBorderColor  = colorDarkGrey
     , terminal           = myTerminal
     , workspaces         = myWorkspaces
     }
