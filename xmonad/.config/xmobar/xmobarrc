@@ -10,10 +10,11 @@ Config
 
   , sepChar = "%"
   , alignSep = "}{"
-  , template = "%StdinReader% }{ <icon=cpu.xbm/> %cpu% %multicoretemp% <icon=mem.xbm/> %memory% <icon=hdd.xbm/> %disku% %dynnetwork% | %kbd% | <icon=clock.xbm/> %date%"
+  , template = "%StdinReader% }{ %battery% <icon=cpu.xbm/> %cpu% %multicoretemp% <icon=mem.xbm/> %memory% <icon=hdd.xbm/> %disku% %wlan0wi% %dynnetwork% | %kbd% | <icon=clock.xbm/> %date%"
 
   , commands =
-      [ Run Cpu ["--template", "<total>%"] 50
+      [ Run Battery ["--template", "<acstatus>", "--", "-o", "<icon=battery.xbm/> <left>% <timeleft>", "-O", "<icon=ac.xbm/> <left>% <timeleft>", "-i", "<icon=ac.xbm/> <left>%"] 50
+      , Run Cpu ["--template", "<total>%"] 50
       , Run Date "%a %b %d %H:%M" "date" 50
       , Run DiskU [("/", "<usedp>%")] [] 50
       , Run DynNetwork ["--template", "<icon=net_up.xbm/><icon=net_down.xbm/> <tx> <rx>", "-S", "True"] 50
@@ -21,5 +22,6 @@ Config
       , Run Memory ["--template", "<usedratio>%"] 50
       , Run MultiCoreTemp ["-t", "<avg>C"] 50
       , Run StdinReader
+      , Run Wireless "wlan0" ["--template", "<icon=wifi.xbm/> <quality>% <essid>"] 50
       ]
   }
