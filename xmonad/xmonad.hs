@@ -22,33 +22,8 @@ import XMonad.Prompt
 import XMonad.Prompt.Input
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad
-import XMonad.Util.Types
 import qualified XMonad.StackSet as W
 
--- {{{ Bar
-newtype BarAlign = BarAlign { mkBarAlign :: Char }
-
-barAlignLeft, barAlignCenter, barAlignRight :: BarAlign
-barAlignLeft   = BarAlign 'l'
-barAlignCenter = BarAlign 'c'
-barAlignRight  = BarAlign 'r'
-
-{-# INLINE barToString #-}
-barToString :: Color -> Color -> String -> BarAlign -> (Int, Int) -> (Int, Int) -> String
-barToString bg fg fnt align (w, h) (x, y) =
-  showString "-ta "  $ showChar (mkBarAlign align) $
-  showString " -fn " $ shows fnt $
-  showString " -fg " $ shows (mkColor fg) $
-  showString " -bg " $ shows (mkColor bg) $
-  showString " -w "  $ shows w $
-  showString " -h "  $ shows h $
-  showString " -x "  $ shows x $
-  showString " -y "  $ show y
-
-{-# INLINE defaultBar #-}
-defaultBar :: BarAlign -> (Int, Int) -> (Int, Int) -> String
-defaultBar = barToString panelBg panelFg panelFont
--- }}}
 -- {{{ Hooks
 myManageHook :: ManageHook
 myManageHook = composeAll
@@ -120,13 +95,13 @@ myXPConfig = defaultXPConfig
 
 myPP :: Handle -> PP
 myPP handle = defaultPP
-  { ppCurrent         = dzenColor colorBlue      colorDarkGrey
-  , ppHidden          = dzenColor colorLightGrey colorDarkGrey . noNSP
-  , ppHiddenNoWindows = dzenColor colorGrey      colorDarkGrey . noNSP
+  { ppCurrent         = xmobarColor colorBlue      colorDarkGrey
+  , ppHidden          = xmobarColor colorLightGrey colorDarkGrey . noNSP
+  , ppHiddenNoWindows = xmobarColor colorGrey      colorDarkGrey . noNSP
   , ppSep             = " | "
-  , ppTitle           = dzenColor colorLightGrey colorDarkGrey
-  , ppUrgent          = dzenColor colorRed       colorDarkGrey
-  , ppVisible         = dzenColor colorPurple    colorDarkGrey
+  , ppTitle           = xmobarColor colorLightGrey colorDarkGrey
+  , ppUrgent          = xmobarColor colorRed       colorDarkGrey
+  , ppVisible         = xmobarColor colorPurple    colorDarkGrey
   , ppWsSep           = " "
 
   , ppOutput = hPutStrLn handle
@@ -279,8 +254,7 @@ launchPrompt c = inputPromptWithCompl c "Run" (mkComplFunFromList cmds) ?+ spawn
 
 main :: IO ()
 main = do
-  spawn conkyCmd
-  d <- spawnPipe dzenCmd
+  hxmobar <- spawnPipe "xmobar ~/.xmonad/xmobarrc"
 
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { borderWidth        = 1
@@ -289,19 +263,11 @@ main = do
     , handleEventHook    = fullscreenEventHook
     , keys               = const myKeyMaps
     , layoutHook         = myLayoutHook
-    , logHook            = dynamicLogWithPP (myPP d)
+    , logHook            = dynamicLogWithPP (myPP hxmobar)
     , manageHook         = myManageHook <+> manageDocks <+> scratchpadManageHookDefault
     , modMask            = myModKey
     , normalBorderColor  = colorDarkGrey
     , terminal           = myTerminal
     , workspaces         = myWorkspaces
     }
-
-  where
-    conkyCmd = "conky -c ~/.xmonad/conkyrc 2> /dev/null | dzen2 -p " ++ right
-    dzenCmd  = "dzen2 -p " ++ left
-
-    left  = defaultBar barAlignLeft  (1000, 13) (0,    1067)
-    right = defaultBar barAlignRight (920,  13) (1000, 1067)
-
 -- vim: set foldmethod=marker:

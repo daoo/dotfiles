@@ -100,7 +100,7 @@ xinitrc:
 
 xmonad:
 	mkdir -p ${HOME}/.xmonad/lib
-	ln -fsn $(here)/xmonad/conkyrc ${HOME}/.xmonad/conkyrc
+	ln -fsn $(here)/xmonad/xmobarrc ${HOME}/.xmonad/xmobarrc
 	ln -fsn $(here)/xmonad/xmonad.hs ${HOME}/.xmonad/xmonad.hs
 	ln -fsn $(here)/xmonad/icons ${HOME}/.xmonad/icons
 	ln -fsn $(here)/xmonad/lib/BinarySpacePartition.hs ${HOME}/.xmonad/lib/BinarySpacePartition.hs

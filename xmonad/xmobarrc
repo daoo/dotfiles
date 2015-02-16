@@ -1,0 +1,35 @@
+Config
+  { font        = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+  , bgColor     = "#2e3436"
+  , fgColor     = "#b8b8b8"
+  , position    = BottomSize L 100 13
+  , border      = NoBorder
+  , borderColor = "#b8b8b8"
+  , iconRoot    = "./.xmonad/icons/"
+
+  , sepChar  = "%"
+  , alignSep = "}{"
+  , template = "%StdinReader% }{ %disku% %dynnetwork% | %kbd% | <icon=clock.xbm/> %date%"
+
+  , lowerOnStart     = True
+  , hideOnStart      = False
+  , allDesktops      = True
+  , overrideRedirect = True
+  , pickBroadest     = False
+  , persistent       = True
+
+  , commands =
+
+      [ Run DynNetwork [ "--template" , "<icon=net_up.xbm/> <tx>kB/s <icon=net_down.xbm/> <rx>kB/s"
+                       ] 30
+
+      , Run DiskU [("/", "<icon=hdd.xbm/> <usedp>%")] [] 20
+
+      , Run Date "%a %b %d %H:%M" "date" 10
+
+      , Run Kbd []
+
+      , Run StdinReader
+      ]
+  }
+
