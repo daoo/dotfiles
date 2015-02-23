@@ -42,6 +42,7 @@ if [[ $1 = clone ]]; then
   git clone https://github.com/tpope/vim-markdown.git "$bundle_dir/markdown"
   git clone https://github.com/tpope/vim-repeat.git "$bundle_dir/repeat"
   git clone https://github.com/tpope/vim-surround.git "$bundle_dir/surround"
+  git clone https://github.com/tpope/vim-unimpaired.git "$bundle_dir/unimpaired"
   git clone https://github.com/vim-scripts/alex.vim.git "$bundle_dir/alex"
   git clone https://github.com/vim-scripts/happy.vim.git "$bundle_dir/happy"
   git clone https://github.com/vim-scripts/matlab.vim.git "$bundle_dir/matlab"

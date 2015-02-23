@@ -165,12 +165,6 @@ nnoremap <f9> :silent make! tags \| redraw!<cr>
 nnoremap <f10> :silent make! lint \| redraw!<cr>
 nnoremap <f11> :silent make! doc \| redraw!<cr>
 
-" Quickfix
-nmap <script> <silent> <leader>wq :call ToggleQuickfixList()<cr>
-nmap <script> <silent> <leader>wl :call ToggleLocationList()<cr>
-nnoremap <leader>wn :cnext<cr>
-nnoremap <leader>wp :cprevious<cr>
-
 " Alignment and clean up
 nnoremap <leader>ae :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
 nnoremap <leader>ap Vapk:sort<cr>
