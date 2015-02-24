@@ -15,6 +15,7 @@ set incsearch
 set smartcase
 
 " displaying text
+colorscheme mustang
 set fillchars=vert:│
 set lazyredraw
 set list
@@ -22,7 +23,8 @@ set listchars=tab:▸\ ,extends:❯,precedes:❮
 set nowrap
 set number
 set relativenumber
-set scrolloff=5
+set scrolloff=1
+set sidescrolloff=5
 
 " syntax, highlighting and spelling
 set hlsearch
@@ -42,11 +44,12 @@ set t_vb=
 
 " editing text
 set backspace=start,indent,eol
-set formatoptions=tcqro
+set formatoptions=tcroqnj
 set nojoinspaces
 set undolevels=500
 
 " tabs and indenting
+set autoindent
 set expandtab
 set shiftround
 set shiftwidth=2
@@ -61,6 +64,7 @@ set nofoldenable
 
 " reading and writing files
 set autowrite
+set autoread
 set nobackup
 set backupdir=/tmp
 
@@ -69,17 +73,18 @@ set noswapfile
 set directory=/tmp
 
 " command line editing
-set history=500
+set history=1000
 set wildmenu
 set wildmode=list:longest,full
 
 " multi-byte characters
 set encoding=utf-8
 
+" completion
+set complete-=i
+
 " other
-runtime ftplugin/man.vim
-colorscheme mustang
-syntax on
+set nrformats-=octal
 
 syn match myTodo contained "\<\(TODO\|FIXME\)"
 hi def link myTodo Todo
