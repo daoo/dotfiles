@@ -4,7 +4,6 @@
 let mapleader=" "
 set nocompatible
 execute pathogen#infect()
-syntax on
 filetype plugin indent on
 call yankstack#setup()
 " }}}
@@ -16,6 +15,7 @@ set smartcase
 
 " displaying text
 colorscheme mustang
+syntax on
 set fillchars=vert:│
 set lazyredraw
 set list
