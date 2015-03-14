@@ -26,5 +26,7 @@
   sp  = stash pop
   ss  = stash save
   st  = status -sb
+
+  pullall = "!f(){ git pull \"$@\" && git submodule update --init --recursive; }; f"
 [push]
   default = simple
