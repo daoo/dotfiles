@@ -11,7 +11,7 @@ fi
 tmpdir="$(mktemp -d)"
 tmpfile="$(mktemp -p "$tmpdir" core-XXX.hs)"
 
-ghc \
+${GHC:-ghc} \
   -o "$tmpdir/main" \
   -outputdir "$tmpdir" \
   -isrc \
