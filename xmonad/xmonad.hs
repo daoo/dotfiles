@@ -20,6 +20,7 @@ import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.Reflect
 import XMonad.Prompt
 import XMonad.Prompt.Input
+import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad
 import qualified XMonad.StackSet as W
@@ -96,8 +97,8 @@ myXPConfig = defaultXPConfig
 myPP :: Handle -> PP
 myPP handle = defaultPP
   { ppCurrent         = xmobarColor colorBlue      colorDarkGrey
-  , ppHidden          = xmobarColor colorLightGrey colorDarkGrey . noNSP
-  , ppHiddenNoWindows = xmobarColor colorGrey      colorDarkGrey . noNSP
+  , ppHidden          = xmobarColor colorLightGrey colorDarkGrey
+  , ppHiddenNoWindows = xmobarColor colorGrey      colorDarkGrey
   , ppSep             = " | "
   , ppTitle           = xmobarColor colorLightGrey colorDarkGrey
   , ppUrgent          = xmobarColor colorRed       colorDarkGrey
@@ -106,9 +107,6 @@ myPP handle = defaultPP
 
   , ppOutput = hPutStrLn handle
   }
-  where
-    noNSP "NSP" = ""
-    noNSP w     = w
 -- }}}
 -- {{{ Keys
 myModKey :: KeyMask
@@ -263,7 +261,7 @@ main = do
     , handleEventHook    = fullscreenEventHook
     , keys               = const myKeyMaps
     , layoutHook         = myLayoutHook
-    , logHook            = dynamicLogWithPP (myPP hxmobar)
+    , logHook            = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ myPP hxmobar
     , manageHook         = myManageHook <+> manageDocks <+> scratchpadManageHookDefault
     , modMask            = myModKey
     , normalBorderColor  = colorDarkGrey
