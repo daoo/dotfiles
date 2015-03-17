@@ -127,7 +127,7 @@ myKeyMaps = fromList
   -- Launching and killing programs
   [ ((myModKey .|. shiftMask, xK_c),      kill)
   , ((myModKey,               xK_p),      launchPrompt myXPConfig)
-  , ((myModKey,               xK_i),      scratchpadSpawnActionTerminal myTerminal)
+  , ((myModKey,               xK_i),      scratchpadSpawnActionCustom (myTerminal ++ " --name scratchpad"))
   , ((myModKey,               xK_Return), safeSpawnProg myTerminal)
 
   -- Layout
