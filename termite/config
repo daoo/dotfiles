@@ -1,0 +1,28 @@
+[options]
+font             = Dina 10
+audible_bell     = false
+visible_bell     = false
+urgent_on_bell   = true
+clickable_url    = true
+scrollback_lines = 10000
+search_wrap      = true
+
+[colors]
+background = #141414
+foreground = #d4d4d4
+color0     = #262729
+color1     = #ae2c00
+color2     = #668800
+color3     = #b88b10
+color4     = #204a87
+color5     = #85608b
+color6     = #5485a4
+color7     = #767779
+color8     = #555544
+color9     = #f55900
+color10    = #88aa22
+color11    = #ffc135
+color12    = #3465a4
+color13    = #ad7fa8
+color14    = #85a8c0
+color15    = #b6b8b9

@@ -62,6 +62,10 @@ systemd:
 	cp $(here)/systemd/*.service ${HOME}/.config/systemd/user/
 	cp $(here)/systemd/*.timer ${HOME}/.config/systemd/user/
 
+termite:
+	mkdir -p ${HOME}/.config/termite
+	ln -fsn $(here)/termite/config ${HOME}/.config/termite
+
 tmux:
 	ln -fsn $(here)/tmux.conf ${HOME}/.tmux.conf
 
@@ -127,6 +131,7 @@ zsh:
 	scripts \
 	sublime \
 	systemd \
+	termite \
 	tmux \
 	vim \
 	xinitrc \

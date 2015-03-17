@@ -75,7 +75,7 @@ panelFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 -- }}}
 -- {{{ Config
 myTerminal :: String
-myTerminal = "/usr/bin/urxvt"
+myTerminal = "/usr/bin/termite"
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "mail"]
@@ -245,6 +245,7 @@ launchPrompt c = inputPromptWithCompl c "Run" (mkComplFunFromList cmds) ?+ spawn
       , "pcmanfm"
       , "pidgin"
       , "skype"
+      , "termite"
       , "tuxguitar"
       , "urxvt"
       , "wirkeshark"
