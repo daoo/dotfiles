@@ -230,8 +230,7 @@ launchPrompt c = inputPromptWithCompl c "Run" (mkComplFunFromList cmds) ?+ spawn
     cmds =
       [ "audacity"
       , "blender"
-      , "claws-mail"
-      , "coqide"
+      , "chromium"
       , "emacs"
       , "firefox"
       , "gimp"
