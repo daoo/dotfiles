@@ -51,7 +51,6 @@ if [[ $1 = update ]]; then
   update https://github.com/maxbrunsfeld/vim-yankstack.git "$bundle_dir/yankstack"
   update https://github.com/mbbill/undotree.git "$bundle_dir/undotree"
   update https://github.com/mileszs/ack.vim.git "$bundle_dir/ack"
-  update https://github.com/milkypostman/vim-togglelist.git "$bundle_dir/togglelist"
   update https://github.com/octol/vim-cpp-enhanced-highlight.git "$bundle_dir/cpp-enhanced-highlight"
   update https://github.com/rking/ag.vim.git "$bundle_dir/ag"
   update https://github.com/sirver/ultisnips.git "$bundle_dir/ultisnips"
