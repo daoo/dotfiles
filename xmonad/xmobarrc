@@ -6,6 +6,7 @@ Config
   , border      = NoBorder
   , borderColor = "#b8b8b8"
   , iconRoot    = "./.xmonad/icons/"
+  , iconOffset  = 6
 
   , sepChar  = "%"
   , alignSep = "}{"
