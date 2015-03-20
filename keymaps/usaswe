@@ -4,6 +4,7 @@ xkb_symbols "usaswe" {
   name[Group1] = "USA - Swedish";
 
   include "us(basic)"
+  include "latin(basic)"
   include "level3(ralt_switch)"
   include "capslock(swapescape)"
 
