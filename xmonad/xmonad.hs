@@ -76,7 +76,7 @@ panelFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 -- }}}
 -- {{{ Config
 myTerminal :: String
-myTerminal = "/usr/bin/termite"
+myTerminal = "/usr/bin/urxvt"
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "mail"]
@@ -127,7 +127,7 @@ myKeyMaps = fromList
   -- Launching and killing programs
   [ ((myModKey .|. shiftMask, xK_c),      kill)
   , ((myModKey,               xK_p),      launchPrompt myXPConfig)
-  , ((myModKey,               xK_i),      scratchpadSpawnActionCustom (myTerminal ++ " --name scratchpad"))
+  , ((myModKey,               xK_i),      scratchpadSpawnActionTerminal myTerminal)
   , ((myModKey,               xK_Return), safeSpawnProg myTerminal)
 
   -- Layout
