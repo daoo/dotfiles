@@ -244,8 +244,8 @@ nnoremap N Nzz
 nnoremap n nzz
 
 " Saving
-noremap <c-s> :w<cr>
-inoremap <c-s> <esc>:w<cr>a
+noremap <c-s> :update<cr>
+inoremap <c-s> <c-o>:update<cr>
 
 " Split/tabs navigation
 nnoremap <c-h> <c-w>h
