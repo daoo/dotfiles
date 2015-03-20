@@ -263,6 +263,9 @@ vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
 vnoremap <c-x> y`]a = <c-r>=<c-r>"<cr><esc>
 " }}}
 " {{{ Addons
+let g:ycm_key_list_select_completion   = []
+let g:ycm_key_list_previous_completion = []
+
 let g:filebeagle_suppress_keymaps = 1
 
 let g:yankstack_map_keys = 0
