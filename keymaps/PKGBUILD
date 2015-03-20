@@ -8,7 +8,8 @@ depends=('programmers-dvorak')
 makedepends=()
 source=('dvpse' 'usaswe')
 md5sums=('c847aa73a1d53e4f4fee32042c9b9009'
-         'c325011680549492da1faad2e42ee5da')
+         'fad9c42f622dfd5a83b0f5da269d6e99')
+
 
 package()
 {
