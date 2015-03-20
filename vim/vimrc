@@ -1,10 +1,41 @@
 " daoo's .vimrc
 
-" {{{ Pathogen
-let mapleader=" "
-set nocompatible
-execute pathogen#infect()
-filetype plugin indent on
+" {{{ Plugins
+call plug#begin('~/.nvim/plugged')
+
+Plug 'bling/vim-airline'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'danro/rename.vim', { 'on': 'Rename' }
+Plug 'daoo/mustang2'
+Plug 'honza/vim-snippets'
+Plug 'jeetsukumaran/vim-filebeagle', { 'on': '<Plug>FileBeagleOpenCurrentBufferDir' }
+Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'junegunn/vim-peekaboo'
+Plug 'jvoorhis/coq.vim'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'maxbrunsfeld/vim-yankstack'
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+Plug 'mileszs/ack.vim', { 'on': 'Ack' }
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'rking/ag.vim', { 'on': 'Ag' }
+Plug 'sirver/ultisnips'
+Plug 't9md/vim-quickhl'
+Plug 'tikhomirov/vim-glsl'
+Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'valloric/youcompleteme', { 'do': './install.sh' }
+Plug 'vim-scripts/alex.vim'
+Plug 'vim-scripts/happy.vim'
+Plug 'vim-scripts/matlab.vim'
+Plug 'wellle/targets.vim'
+Plug 'wolfy87/vim-enmasse'
+
+call plug#end()
+
 call yankstack#setup()
 " }}}
 " {{{ Settings
@@ -86,6 +117,8 @@ set complete-=i
 " other
 set nrformats-=octal
 
+let mapleader=" "
+let maplocalleader=" "
 syn match myTodo contained "\<\(TODO\|FIXME\)"
 hi def link myTodo Todo
 " }}}
