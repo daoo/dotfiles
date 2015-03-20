@@ -216,8 +216,6 @@ nmap <leader>yn <Plug>yankstack_substitute_newer_paste
 
 " Files
 nmap <silent> <f2> <Plug>FileBeagleOpenCurrentBufferDir
-nnoremap <leader>es :mksession! ~/.session.vim<cr>
-nnoremap <leader>el :source ~/.session.vim<cr>
 nnoremap <leader>ef :e %<cr>
 nnoremap <leader>eve :vsplit $MYVIMRC<cr>
 nnoremap <leader>evs :source $MYVIMRC<cr>
