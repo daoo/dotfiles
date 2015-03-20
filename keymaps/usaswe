@@ -1,15 +1,13 @@
 default
 partial alphanumeric_keys
-xkb_symbols "euro" {
-    name[Group1]= "USA - Swedish";
+xkb_symbols "usaswe" {
+  name[Group1] = "USA - Swedish";
 
-    include "us(basic)"
-    include "level3(ralt_switch)"
-    include "capslock(escape)"
+  include "us(basic)"
+  include "level3(ralt_switch)"
+  include "capslock(swapescape)"
 
-    // Swedish alphabet
-    //           [ Unmodified  , Shift     , AltGr      , Shift + AltGr ]
-    key <AC11> { [ apostrophe  , quotedbl  , adiaeresis , Adiaeresis ] };
-    key <AC10> { [ semicolon   , colon     , odiaeresis , Odiaeresis ] };
-    key <AD11> { [ bracketleft , braceleft , aring      , Aring ]	};
+  key <AC11> { [ apostrophe,  quotedbl,  adiaeresis, Adiaeresis ] };
+  key <AC10> { [ semicolon,   colon,     odiaeresis, Odiaeresis ] };
+  key <AD11> { [ bracketleft, braceleft, aring,      Aring      ] };
 };
