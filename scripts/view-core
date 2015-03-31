@@ -2,6 +2,8 @@
 
 set -e
 
+# TODO: predictable temp dir
+
 if [[ -d ".cabal-sandbox" ]]; then
   dbflag="-package-db=$(echo .cabal-sandbox/*-packages.conf.d)"
 else
@@ -9,14 +11,12 @@ else
 fi
 
 tmpdir="$(mktemp -d)"
-tmpfile="$(mktemp -p "$tmpdir" core-XXX.hs)"
 
 ${GHC:-ghc} \
   -o "$tmpdir/main" \
   -outputdir "$tmpdir" \
   -isrc \
   "$dbflag" \
-  -fforce-recomp \
   -dsuppress-coercions \
   -dsuppress-module-prefixes \
   -dsuppress-uniques \
@@ -24,12 +24,10 @@ ${GHC:-ghc} \
   -dsuppress-type-applications \
   -dppr-cols270 \
   -dppr-case-as-let \
-  "-ddump-${TYPE-simpl}" \
-  "$@" \
-  > "$tmpfile"
+  -ddump-to-file \
+  -ddump-simpl \
+  "$@"
 
-sed -i '/^\(\$fShow\|\$w\$cshows\)/,/^$/d' "$tmpfile"
-
-${EDITOR:-nvim} "$tmpfile"
+${EDITOR:-nvim} "$tmpdir"
 
 rm -rf "$tmpdir"
