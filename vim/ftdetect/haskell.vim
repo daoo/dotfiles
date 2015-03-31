@@ -5,3 +5,4 @@ fun! s:DetectRunhaskell()
 endfun
 
 autocmd BufNewFile,BufRead * call s:DetectRunhaskell()
+autocmd BufNewFile,BufRead *.dump-simpl set filetype=haskell
