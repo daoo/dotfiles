@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 if [[ ! -f "$1" ]]; then
-  echo "Usage: mpd-m3u playlist.m3u"
+  echo "Usage: mpd-m3u playlist.m3u" 1>&2
+  exit 1
 else
   mpc -q clear
   mpc -q add < "$1"
