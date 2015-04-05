@@ -28,6 +28,6 @@ ${GHC:-ghc} \
   -ddump-simpl \
   "$@"
 
-${EDITOR:-nvim} "$tmpdir"
+( cd "$tmpdir"; ${EDITOR:-nvim} )
 
 rm -rf "$tmpdir"
