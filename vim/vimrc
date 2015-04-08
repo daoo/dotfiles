@@ -13,7 +13,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'jvoorhis/coq.vim'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'mileszs/ack.vim', { 'on': 'Ack' }
