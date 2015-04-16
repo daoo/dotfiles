@@ -52,7 +52,7 @@ set lazyredraw
 set list
 set listchars=tab:▸\ ,extends:❯,precedes:❮
 set nowrap
-set nonumber
+set number
 set relativenumber
 set scrolloff=1
 set sidescrolloff=5
