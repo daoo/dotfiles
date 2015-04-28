@@ -2,18 +2,22 @@
 
 set -e
 
-# TODO: predictable temp dir
+# TODO: Predictable temp dir
 
-if [[ -d ".cabal-sandbox" ]]; then
-  dbflag="-package-db=$(echo .cabal-sandbox/*-packages.conf.d)"
-else
-  dbflag=""
+# FIXME: Problem arise when there is more than one package-database. Which
+# happens when GHC is updated and the old database is kept.
+dbflag=""
+if dbdir="$(find .cabal-sandbox -type d -name '*-packages.conf.d' -print -quit 2>/dev/null)"; then
+  if [[ -n "$dbdir" ]]; then
+    dbflag="-package-db=$dbdir"
+  fi
 fi
 
 tmpdir="$(mktemp -d)"
+trap "rm -rf '$tmpdir'" EXIT
 
 ${GHC:-ghc} \
-  -o "$tmpdir/main" \
+  -o "$tmpdir/a.out" \
   -outputdir "$tmpdir" \
   -isrc \
   "$dbflag" \
@@ -29,5 +33,3 @@ ${GHC:-ghc} \
   "$@"
 
 ( cd "$tmpdir"; ${EDITOR:-nvim} )
-
-rm -rf "$tmpdir"
