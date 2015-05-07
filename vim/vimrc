@@ -160,7 +160,7 @@ endfunction
 function! SetSpell(lang)
   setlocal spell
   execute "setlocal spelllang=" . a:lang
-  execute "setlocal spellfile=" . "$HOME/.vim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
+  execute "setlocal spellfile=" . "$HOME/.nvim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
 endfunction
 " }}}
 " {{{ Disabled stupid keys and commands
