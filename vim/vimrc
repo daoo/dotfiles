@@ -3,6 +3,7 @@
 " {{{ Plugins
 call plug#begin('~/.nvim/plugged')
 
+Plug 'benekastah/neomake'
 Plug 'bling/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'danro/rename.vim', { 'on': 'Rename' }
@@ -194,11 +195,9 @@ noremap  <pageup>   <nop>
 " }}}
 " {{{ Key bindings
 " Make
-nnoremap <f5> :silent make! run \| redraw!<cr>
-nnoremap <f8> :silent make! \| redraw!<cr>
-nnoremap <f9> :silent make! tags \| redraw!<cr>
-nnoremap <f10> :silent make! lint \| redraw!<cr>
-nnoremap <f11> :silent make! doc \| redraw!<cr>
+nnoremap <f8> :Neomake!<cr>
+nnoremap <f10> :Neomake! lint<cr>
+nnoremap <f11> :Neomake! docs<cr>
 
 " Alignment and clean up
 nnoremap <leader>ae :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
@@ -260,6 +259,16 @@ vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
 vnoremap <c-x> y`]a = <c-r>=<c-r>"<cr><esc>
 " }}}
 " {{{ Addons
+let g:neomake_lint_maker = {
+    \ 'exe': 'make',
+    \ 'args': ['lint'],
+    \ }
+
+let g:neomake_docs_maker = {
+    \ 'exe': 'make',
+    \ 'args': ['docs'],
+    \ }
+
 let g:ycm_key_list_select_completion   = []
 let g:ycm_key_list_previous_completion = []
 
