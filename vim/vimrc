@@ -9,9 +9,9 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'danro/rename.vim', { 'on': 'Rename' }
 Plug 'daoo/mustang2'
 Plug 'honza/vim-snippets'
-Plug 'jeetsukumaran/vim-filebeagle', { 'on': '<Plug>FileBeagleOpenCurrentBufferDir' }
+Plug 'jeetsukumaran/vim-filebeagle', { 'on': '<plug>FileBeagleOpenCurrentBufferDir' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'junegunn/vim-easy-align', { 'on': ['<plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'jvoorhis/coq.vim'
 Plug 'maxbrunsfeld/vim-yankstack'
@@ -22,7 +22,7 @@ Plug 'rking/ag.vim', { 'on': 'Ag' }
 Plug 'sirver/ultisnips'
 Plug 't9md/vim-quickhl'
 Plug 'tikhomirov/vim-glsl'
-Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
+Plug 'tpope/vim-commentary', { 'on': '<plug>Commentary' }
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-repeat'
@@ -207,11 +207,11 @@ vmap <return> <plug>(EasyAlign)
 
 " Yanking
 nnoremap <leader>ya :%y+<cr>
-nmap <leader>yp <Plug>yankstack_substitute_older_paste
-nmap <leader>yn <Plug>yankstack_substitute_newer_paste
+nmap <leader>yp <plug>yankstack_substitute_older_paste
+nmap <leader>yn <plug>yankstack_substitute_newer_paste
 
 " Files
-nmap <silent> <f2> <Plug>FileBeagleOpenCurrentBufferDir
+nmap <silent> <f2> <plug>FileBeagleOpenCurrentBufferDir
 nnoremap <leader>ef :e %<cr>
 nnoremap <leader>eve :vsplit $MYVIMRC<cr>
 nnoremap <leader>evs :source $MYVIMRC<cr>
@@ -227,10 +227,10 @@ nnoremap <leader>du :diffupdate<cr>
 nnoremap <leader>do :diffoff!<cr>
 
 " Searching
-nmap <leader>m <Plug>(quickhl-manual-this)
-xmap <leader>m <Plug>(quickhl-manual-this)
-nmap <leader>M <Plug>(quickhl-manual-reset)
-xmap <leader>M <Plug>(quickhl-manual-reset)
+nmap <leader>m <plug>(quickhl-manual-this)
+xmap <leader>m <plug>(quickhl-manual-this)
+nmap <leader>M <plug>(quickhl-manual-reset)
+xmap <leader>M <plug>(quickhl-manual-reset)
 nnoremap <leader>fc :nohlsearch<cr>
 nnoremap <leader>fg :Ag '<cword>'<cr>
 nnoremap <leader>fl /<c-r>=expand("<cword>")<cr><cr>
