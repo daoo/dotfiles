@@ -2,6 +2,7 @@ Abelian
 BRDF
 BSDF
 BTDF
+GPU
 JavaScript
 Joomla
 LLVM
@@ -11,9 +12,11 @@ Memoization
 Microfacet
 Microfacets
 Oom
+Oom
 OpenGL
 PDM
 PHP
+PNG
 Polhem
 Regementsvägen
 SpaceClaim
