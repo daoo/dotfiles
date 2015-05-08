@@ -259,15 +259,8 @@ vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
 vnoremap <c-x> y`]a = <c-r>=<c-r>"<cr><esc>
 " }}}
 " {{{ Addons
-let g:neomake_lint_maker = {
-    \ 'exe': 'make',
-    \ 'args': ['lint'],
-    \ }
-
-let g:neomake_docs_maker = {
-    \ 'exe': 'make',
-    \ 'args': ['docs'],
-    \ }
+let g:neomake_lint_maker = { 'exe': 'make', 'args': ['lint'] }
+let g:neomake_docs_maker = { 'exe': 'make', 'args': ['docs'] }
 
 let g:ycm_key_list_select_completion   = []
 let g:ycm_key_list_previous_completion = []
