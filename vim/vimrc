@@ -202,6 +202,7 @@ nmap <silent> <f2> <plug>FileBeagleOpenCurrentBufferDir
 nnoremap <leader>ef :e %<cr>
 nnoremap <leader>eve :vsplit $MYVIMRC<cr>
 nnoremap <leader>evs :source $MYVIMRC<cr>
+nnoremap <c-o> :FZF<cr>
 
 " Spell
 nnoremap <leader>se :call SetSpell("en_us")<cr>
