@@ -217,11 +217,10 @@ myKeyMaps = fromList
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 
     reload = do
-      safeSpawn "/usr/bin/xmonad" ["--recompile"]
-      safeSpawn "/usr/bin/xmonad" ["--restart"]
+      safeSpawn "xmonad" ["--recompile"]
+      safeSpawn "xmonad" ["--restart"]
 
-    keymap name =
-      safeSpawn "/usr/bin/setxkbmap" [name]
+    keymap name = safeSpawn "setxkbmap" [name]
 
     lock = safeSpawn "i3lock-fancy" []
 -- }}}
@@ -256,7 +255,7 @@ launchPrompt c = inputPromptWithCompl c "Run" (mkComplFunFromList cmds) ?+ spawn
 
 main :: IO ()
 main = do
-  hxmobar <- spawnPipe "xmobar ~/.xmonad/xmobarrc"
+  hxmobar <- spawnPipe "xmobar .xmonad/xmobarrc"
 
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { borderWidth        = 1
