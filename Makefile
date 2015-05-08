@@ -26,6 +26,10 @@ gtk:
 haskeline:
 	ln -fsn $(here)/haskeline ${HOME}/.haskeline
 
+i3lock:
+	mkdir -p ${HOME}/.local/share/i3lock
+	ln -fsn $(here)/share/lock.png ${HOME}/.local/share/i3lock/lock.png
+
 luakit:
 	ln -fsn $(here)/luakit/ ${HOME}/.config/
 

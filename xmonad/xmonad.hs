@@ -203,6 +203,8 @@ myKeyMaps = fromList
   , ((myModKey .|. shiftMask, xK_q), io exitSuccess)
   , ((myModKey,               xK_q), reload)
 
+  , ((myModKey,               xK_b), lock)
+
   -- Setting keyboard layout
   , ((myModKey, xK_F1), keymap "dvpse")
   , ((myModKey, xK_F2), keymap "usaswe")
@@ -220,6 +222,8 @@ myKeyMaps = fromList
 
     keymap name =
       safeSpawn "/usr/bin/setxkbmap" [name]
+
+    lock = safeSpawn "i3lock-fancy" []
 -- }}}
 -- {{{ Prompt
 launchPrompt :: XPConfig -> X ()

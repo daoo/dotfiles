@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Dependencies:
+# imagemagick
+# i3lock-color-git
+# scrot
+
+image=/tmp/i3lock.png
+lock="$HOME/.local/share/i3lock/lock.png"
+
+scrot "$image"
+convert "$image" -scale 5% -scale 2000% - | composite -gravity center "$lock" - "$image"
+i3lock --textcolor=ffffff00 --insidecolor=ffffff1c --ringcolor=ffffff3e --linecolor=ffffff00 --keyhlcolor=00000080 --ringvercolor=00000000 --insidevercolor=0000001c --ringwrongcolor=00000055 --insidewrongcolor=0000001c  -i "$image"
+rm "$image"
