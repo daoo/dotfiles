@@ -79,7 +79,7 @@ myTerminal :: String
 myTerminal = "/usr/bin/st"
 
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "mail"]
+myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void"]
 
 myXPConfig :: XPConfig
 myXPConfig = defaultXPConfig
