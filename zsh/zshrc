@@ -49,6 +49,8 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 # Disable ctrl-q and ctrl-s
 stty -ixon
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # ]]]
 # [[[ Aliases
 # Give some commands fancy colors
