@@ -4,7 +4,6 @@
 [ -z "$PS1" ] && return
 
 # [[[ Config
-# Title
 case $TERM in
   screen*)
       precmd() { print -Pn "\033k%~\033\\" }
@@ -16,7 +15,6 @@ case $TERM in
     ;;
 esac
 
-# History
 HISTFILE=~/.zhistory
 HISTSIZE=10000
 SAVEHIST=10000
@@ -27,7 +25,6 @@ setopt inc_append_history
 setopt share_history
 
 # Misc zsh settings
-export FPATH="$HOME/.zsh/fpath:$FPATH"
 setopt auto_resume
 setopt long_list_jobs
 setopt nobeep
