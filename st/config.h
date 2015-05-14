@@ -1,4 +1,4 @@
-static char font[] = "Dina:pixelsize=12:antialias=false:autohint=false";
+static char font[] = "Dina:pixelsize=10:antialias=false:autohint=false";
 static int borderpx = 0;
 static char shell[] = "/usr/bin/zsh";
 
