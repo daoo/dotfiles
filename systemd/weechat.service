@@ -3,4 +3,4 @@ Description=WeeChat
 
 [Service]
 Environment=DISPLAY=:0
-ExecStart=/usr/bin/termite -name irc -e "/usr/bin/weechat-curses"
+ExecStart=/usr/bin/st -c irc -e "/usr/bin/weechat-curses"
