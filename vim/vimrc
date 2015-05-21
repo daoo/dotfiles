@@ -4,11 +4,11 @@
 call plug#begin('~/.nvim/plugged')
 
 Plug 'benekastah/neomake'
+Plug 'bling/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'danro/rename.vim', { 'on': 'Rename' }
 Plug 'daoo/mustang2'
 Plug 'honza/vim-snippets'
-Plug 'itchyny/lightline.vim'
 Plug 'jeetsukumaran/vim-filebeagle', { 'on': '<plug>FileBeagleOpenCurrentBufferDir' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/vim-easy-align', { 'on': ['<plug>(EasyAlign)', 'EasyAlign'] }
