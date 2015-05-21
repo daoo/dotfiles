@@ -7,9 +7,9 @@
   dc  = diff --cached
   df  = diff
   ff  = merge --ff-only origin/master
-  l   = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --date=relative
-  ll  = log --pretty=format:"%C(yellow)%h%C(blue)\\ [%cn]\\ %C(green)%ad%C(red)%d\\ %C(reset)%s" --decorate --numstat
-  lll = log -u
+  l   = log --oneline --graph --decorate --date=relative
+  ll  = log --oneline --graph --decorate --stat
+  lll = log --patch
   p   = push
   pf  = push -f
   pom = push origin master
