@@ -188,8 +188,8 @@ nnoremap <f11> :Neomake! docs<cr>
 
 " Alignment and clean up
 nnoremap <leader>ae :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
-nnoremap <leader>ap Vapk:sort<cr>
-vmap <leader>ap :sort<cr>
+nnoremap gsap Vapk:sort<cr>
+vmap gs :sort<cr>
 vmap <return> <plug>(EasyAlign)
 
 " Yanking
