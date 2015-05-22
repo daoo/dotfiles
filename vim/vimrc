@@ -149,6 +149,20 @@ function! SetSpell(lang)
   execute "setlocal spelllang=" . a:lang
   execute "setlocal spellfile=" . "$HOME/.nvim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
 endfunction
+
+function! WinMove(key)
+  let t:curwin = winnr()
+  exec "wincmd " . a:key
+  if t:curwin == winnr()
+    if a:key ==? 'j' || a:key ==? 'k'
+      wincmd s
+    else
+      wincmd v
+    endif
+    exec "wincmd " . a:key
+  endif
+endfunction
+
 " }}}
 " {{{ Disabled stupid keys and commands
 noremap Q <nop>
@@ -232,10 +246,10 @@ noremap <c-s> :update<cr>
 inoremap <c-s> <c-o>:update<cr>
 
 " Split/tabs navigation
-nnoremap <c-h> <c-w>h
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-l> <c-w>l
+nnoremap <c-h> :call WinMove('h')<cr>
+nnoremap <c-k> :call WinMove('k')<cr>
+nnoremap <c-l> :call WinMove('l')<cr>
+nnoremap <c-j> :call WinMove('j')<cr>
 
 " Misc
 inoremap <c-space> <c-x><c-o>
