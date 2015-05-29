@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+
+while true; do
+  lines=$(tput lines)
+  GIT_PAGER='cat' git log -n$((lines-2)) --oneline --graph --decorate --date=relative --all
+  inotifywait -qq .git/HEAD
+  sleep 1
+done
