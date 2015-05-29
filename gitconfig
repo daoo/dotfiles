@@ -29,5 +29,8 @@
   st  = status -sb
 
   pullall = "!f(){ git pull \"$@\" && git submodule update --init --recursive; }; f"
+
+  corb = "!f(){ git checkout \"$1\" && git rebase \"$2\"; }; f"
+
 [push]
   default = simple
