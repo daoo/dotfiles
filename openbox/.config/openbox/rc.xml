@@ -116,6 +116,21 @@
         <execute>notify-send usaswe "Changed keymap to usaswe"</execute>
       </action>
     </keybind>
+    <keybind key="XF86AudioMute">
+      <action name="Execute">
+        <execute>ponymix -N toggle</execute>
+      </action>
+    </keybind>
+    <keybind key="XF86AudioLowerVolume">
+      <action name="Execute">
+        <execute>ponymix -N decrease 5</execute>
+      </action>
+    </keybind>
+    <keybind key="XF86AudioRaiseVolume">
+      <action name="Execute">
+        <execute>ponymix -N increase 5</execute>
+      </action>
+    </keybind>
     <keybind key="C-A-Left">
       <action name="GoToDesktop">
         <to>left</to>
