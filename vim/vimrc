@@ -237,6 +237,10 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
+nnoremap <m-j> <c-w>s<c-w>j
+nnoremap <m-k> <c-w>s
+nnoremap <m-h> <c-w>v
+nnoremap <m-l> <c-w>v<c-w>l
 
 " Misc
 inoremap <c-space> <c-x><c-o>
