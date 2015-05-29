@@ -4,6 +4,7 @@
   ci  = commit
   cia = commit --amend
   co  = checkout
+  cp  = cherry-pick
   dc  = diff --cached
   df  = diff
   ff  = merge --ff-only origin/master
