@@ -125,13 +125,11 @@ command! W %!sudo tee > /dev/null %
 
 " Only shown when not in insert mode.
 augroup trailing
-  au!
-  au InsertEnter * :set listchars-=trail:⌴
-  au InsertLeave * :set listchars+=trail:⌴
+  autocmd!
+  autocmd InsertEnter * set listchars-=trail:⌴
+  autocmd InsertLeave * set listchars+=trail:⌴
 augroup END
 
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
 
 function! LongLineHLToggle()
   if exists('w:long_line_match')
