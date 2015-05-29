@@ -130,6 +130,11 @@ augroup trailing
   autocmd InsertLeave * set listchars+=trail:⌴
 augroup END
 
+augroup activewindow
+  autocmd!
+  autocmd WinEnter * set cursorcolumn | set cursorline
+  autocmd WinLeave * set nocursorcolumn | set nocursorline
+augroup END
 
 function! LongLineHLToggle()
   if exists('w:long_line_match')
