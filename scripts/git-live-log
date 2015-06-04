@@ -4,6 +4,7 @@ set -e
 
 while true; do
   lines=$(tput lines)
+  clear
   GIT_PAGER='cat' git log -n$((lines-2)) --oneline --graph --decorate --date=relative --all
   inotifywait -qq .git/HEAD
   sleep 1
