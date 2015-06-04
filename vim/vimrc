@@ -185,73 +185,67 @@ noremap  <pagedown> <nop>
 noremap  <pageup>   <nop>
 " }}}
 " {{{ Key bindings
-" Make
-nnoremap <f8> :Neomake!<cr>
+
+" Leader mappings
+nnoremap <leader>ae  :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
+vmap     <leader>as  <plug>(EasyAlign)
+vmap     <leader>al  <plug>(LiveEasyAlign)
+nnoremap <leader>do  :diffoff!<cr>
+nnoremap <leader>dt  :diffthis<cr>
+nnoremap <leader>du  :diffupdate<cr>
+nnoremap <leader>ef  :e %<cr>
+nnoremap <leader>eve :vsplit $MYVIMRC<cr>
+nnoremap <leader>evs :source $MYVIMRC<cr>
+nnoremap <leader>fc  :nohlsearch<cr>
+nnoremap <leader>fg  :Ag '<cword>'<cr>
+nnoremap <leader>fl  /<c-r>=expand("<cword>")<cr><cr>
+nnoremap <leader>fr  :%s@<c-r>=expand("<cword>")<cr>@
+vnoremap <leader>fr  y:%s@<c-r>"@
+nmap     <leader>M   <plug>(quickhl-manual-reset)
+vmap     <leader>M   <plug>(quickhl-manual-reset)
+nmap     <leader>m   <plug>(quickhl-manual-this)
+vmap     <leader>m   <plug>(quickhl-manual-this)
+nnoremap <leader>se  :call SetSpell("en_us")<cr>
+nnoremap <leader>so  :setlocal nospell<cr>
+nnoremap <leader>ss  :call SetSpell("sv")<cr>
+nnoremap <leader>t   :call LongLineHLToggle()<cr>
+vnoremap <leader>xc c<c-r>=<c-r>"<cr><esc>
+vnoremap <leader>xe y`]a = <c-r>=<c-r>"<cr><esc>
+nnoremap <leader>ya  :%y+<cr>
+nmap     <leader>yn  <plug>(yankstack_substitute_newer_paste)
+nmap     <leader>yp  <plug>(yankstack_substitute_older_paste)
+
+" F-keys
+nmap     <f2>  <plug>FileBeagleOpenCurrentBufferDir
+nnoremap <f8>  :Neomake!<cr>
 nnoremap <f10> :Neomake! lint<cr>
 nnoremap <f11> :Neomake! docs<cr>
 
-" Alignment and clean up
-nnoremap <leader>ae :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
-nnoremap gsap Vapk:sort<cr>
-vmap gs :sort<cr>
-vmap <return> <plug>(EasyAlign)
+" Window navigation
+nnoremap <c-h> <c-w>h
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-l> <c-w>l
+nnoremap <m-h> <c-w>v
+nnoremap <m-j> <c-w>s<c-w>j
+nnoremap <m-k> <c-w>s
+nnoremap <m-l> <c-w>v<c-w>l
 
-" Yanking
-nnoremap <leader>ya :%y+<cr>
-nmap <leader>yp <plug>yankstack_substitute_older_paste
-nmap <leader>yn <plug>yankstack_substitute_newer_paste
-
-" Files
-nmap <silent> <f2> <plug>FileBeagleOpenCurrentBufferDir
-nnoremap <leader>ef :e %<cr>
-nnoremap <leader>eve :vsplit $MYVIMRC<cr>
-nnoremap <leader>evs :source $MYVIMRC<cr>
+" File handling
+inoremap <c-s> <c-o>:update<cr>
+nnoremap <c-s> :update<cr>
 nnoremap <c-o> :FZF<cr>
 
-" Spell
-nnoremap <leader>se :call SetSpell("en_us")<cr>
-nnoremap <leader>ss :call SetSpell("sv")<cr>
-nnoremap <leader>so :setlocal nospell<cr>
-
-" Diff
-nnoremap <leader>dt :diffthis<cr>
-nnoremap <leader>du :diffupdate<cr>
-nnoremap <leader>do :diffoff!<cr>
-
-" Searching
-nmap <leader>m <plug>(quickhl-manual-this)
-xmap <leader>m <plug>(quickhl-manual-this)
-nmap <leader>M <plug>(quickhl-manual-reset)
-xmap <leader>M <plug>(quickhl-manual-reset)
-nnoremap <leader>fc :nohlsearch<cr>
-nnoremap <leader>fg :Ag '<cword>'<cr>
-nnoremap <leader>fl /<c-r>=expand("<cword>")<cr><cr>
-nnoremap <leader>fr :%s@<c-r>=expand("<cword>")<cr>@
-vnoremap <leader>fr y:%s@<c-r>"@
+" Center matches when searching
 nnoremap N Nzz
 nnoremap n nzz
 
-" Saving
-noremap <c-s> :update<cr>
-inoremap <c-s> <c-o>:update<cr>
-
-" Split/tabs navigation
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
-nnoremap <m-j> <c-w>s<c-w>j
-nnoremap <m-k> <c-w>s
-nnoremap <m-h> <c-w>v
-nnoremap <m-l> <c-w>v<c-w>l
-
-" Misc
-inoremap <c-space> <c-x><c-o>
-nnoremap <f4> :GundoToggle<cr>
-nnoremap <leader>t :call LongLineHLToggle()<cr>
+" Make K match behaviour of J
 nnoremap K kJ
-vnoremap <c-b> c<c-r>=<c-r>"<cr><esc>
-vnoremap <c-x> y`]a = <c-r>=<c-r>"<cr><esc>
+
+" Sorting
+vnoremap gs :sort<cr>
+nnoremap gsap Vapk:sort<cr>
 " }}}
 " {{{ Addons
 let g:neomake_lint_maker = { 'exe': 'make', 'args': ['lint'] }
