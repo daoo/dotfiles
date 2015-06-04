@@ -28,14 +28,11 @@ import qualified XMonad.StackSet as W
 -- {{{ Hooks
 myManageHook :: ManageHook
 myManageHook = composeAll
-  [ className =? "Skype"       --> doShift "im"
-  , className =? "irc"         --> doShift "im"
-  , className =? "Pidgin"      --> doShift "im"
+  [ className =? "irc"         --> doShift "im"
   , className =? "Chromium"    --> doShift "web"
   , className =? "Browser"     --> doShift "web"
   , className =? "Firefox"     --> doShift "web"
   , className =? "luakit"      --> doShift "web"
-  , className =? "claws-mail"  --> doShift "mail"
   , className =? "Steam"       --> doShift "other"
   , className =? "Wine"        --> doShift "full"
 
@@ -47,17 +44,12 @@ myManageHook = composeAll
   where
     wmWindowRole = stringProperty "WM_WINDOW_ROLE"
 
-myLayoutHook = onWorkspace "im" imLayout $ onWorkspace "full" fullLayout defaultLayout
+myLayoutHook = onWorkspace "full" fullLayout defaultLayout
   where
     defaultLayout = avoidStruts $ lessBorders ambiguity $ emptyBSP ||| Full
-    imLayout      = avoidStruts $ lessBorders ambiguity $ reflectHoriz im
     fullLayout    = noBorders $ Full ||| emptyBSP
 
     ambiguity = Combine Difference Screen OnlyFloat
-    im        = withIM (1%7) (skypeBuddyList `Or` pidgin) (Grid ||| Full)
-
-    skypeBuddyList = Title "daoo-- - Skype\8482"
-    pidgin         = ClassName "Pidgin" `And` Title "Buddy List"
 -- }}}
 -- {{{ Colors and fonts
 colorRed, colorGreen, colorBlue, colorPurple :: String
@@ -132,8 +124,6 @@ myKeyMaps = fromList
 
   -- Layout
   , ((myModKey,               xK_n),     refresh)
-  , ((myModKey,               xK_at),    sendMessage Expand)
-  , ((myModKey,               xK_minus), sendMessage Shrink)
   , ((myModKey,               xK_space), sendMessage NextLayout)
   , ((myModKey .|. shiftMask, xK_space), setLayout (Layout myLayoutHook))
 
@@ -203,7 +193,8 @@ myKeyMaps = fromList
   , ((myModKey .|. shiftMask, xK_q), io exitSuccess)
   , ((myModKey,               xK_q), reload)
 
-  , ((myModKey,               xK_b), lock)
+  -- Screen locker
+  , ((myModKey, xK_b), lock)
 
   -- Setting keyboard layout
   , ((myModKey, xK_F1), keymap "dvpse")
