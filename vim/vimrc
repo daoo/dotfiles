@@ -196,6 +196,8 @@ nnoremap <leader>du  :diffupdate<cr>
 nnoremap <leader>ef  :e %<cr>
 nnoremap <leader>eve :vsplit $MYVIMRC<cr>
 nnoremap <leader>evs :source $MYVIMRC<cr>
+nnoremap <leader>ecc :e %<.cc<cr>
+nnoremap <leader>eh  :e %<.h<cr>
 nnoremap <leader>fc  :nohlsearch<cr>
 nnoremap <leader>fg  :Ag '<cword>'<cr>
 nnoremap <leader>fl  /<c-r>=expand("<cword>")<cr><cr>
