@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [[ ! $# -gt 1 ]]; then
+  echo "Usage: watch-files COMMAND PATH [...]"
+  exit 1
+fi
+
+cmd="$1"
+shift
+paths=$@
+
+while true; do
+  echo "$(date '+%Y-%m-%d %H:%M:%S')> $cmd"
+  echo "$cmd" | $SHELL
+  inotifywait -qq -e modify -e attrib -e close_write -e move -e create -e delete $paths
+done
