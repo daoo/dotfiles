@@ -82,6 +82,7 @@ alias c='cabal'
 alias g='git'
 alias p='pacaur'
 alias ctl='systemctl'
+alias sctl='sudo systemctl'
 alias uctl='systemctl --user'
 # ]]]
 # [[[ Binds
