@@ -226,14 +226,18 @@ nnoremap <f10> :Neomake! lint<cr>
 nnoremap <f11> :Neomake! docs<cr>
 
 " Window navigation
-nnoremap <c-h> <c-w>h
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-l> <c-w>l
-nnoremap <m-h> <c-w>v
-nnoremap <m-j> <c-w>s<c-w>j
-nnoremap <m-k> <c-w>s
-nnoremap <m-l> <c-w>v<c-w>l
+nnoremap <c-left>  <c-w>5>
+nnoremap <c-down>  <c-w>5-
+nnoremap <c-up>    <c-w>5+
+nnoremap <c-right> <c-w>5<
+nnoremap <c-h>     <c-w>h
+nnoremap <c-j>     <c-w>j
+nnoremap <c-k>     <c-w>k
+nnoremap <c-l>     <c-w>l
+nnoremap <m-h>     <c-w>v
+nnoremap <m-j>     <c-w>s<c-w>j
+nnoremap <m-k>     <c-w>s
+nnoremap <m-l>     <c-w>v<c-w>l
 
 " File handling
 inoremap <c-s> <c-o>:update<cr>
