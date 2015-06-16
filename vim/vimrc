@@ -6,24 +6,25 @@ call plug#begin('~/.nvim/plugged')
 Plug 'benekastah/neomake'
 Plug 'bling/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'danro/rename.vim', { 'on': 'Rename' }
+Plug 'danro/rename.vim'
 Plug 'daoo/mustang2'
 Plug 'honza/vim-snippets'
-Plug 'jeetsukumaran/vim-filebeagle', { 'on': '<plug>FileBeagleOpenCurrentBufferDir' }
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-Plug 'junegunn/vim-easy-align', { 'on': ['<plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'jeetsukumaran/vim-filebeagle'
+Plug 'junegunn/fzf'
+Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-peekaboo'
 Plug 'jvoorhis/coq.vim'
-Plug 'lambdalisue/vim-gita'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'maxbrunsfeld/vim-yankstack'
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
-Plug 'mileszs/ack.vim', { 'on': 'Ack' }
+Plug 'mbbill/undotree'
+Plug 'mileszs/ack.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'rking/ag.vim', { 'on': 'Ag' }
+Plug 'rking/ag.vim'
 Plug 'sirver/ultisnips'
 Plug 't9md/vim-quickhl'
 Plug 'tikhomirov/vim-glsl'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
