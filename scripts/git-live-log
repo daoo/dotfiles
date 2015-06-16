@@ -5,7 +5,8 @@ set -e
 while true; do
   lines=$(tput lines)
   clear
-  GIT_PAGER='cat' git log -n$((lines-2)) --oneline --graph --decorate --date=relative --all
+  # Pager as cat, and then pipe through head. Using head as pager causes pipe
+  # error when head closes the pipe and git tries to continue writing.
+  GIT_PAGER="cat" git log --oneline --graph --decorate --all --color=always | head -n$((lines-1))
   inotifywait -qq .git/HEAD
-  sleep 1
 done
