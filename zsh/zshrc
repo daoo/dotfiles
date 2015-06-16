@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # Skip all this for non-interactive shells
-[ -z "$PS1" ] && return
+[[ ! $- =~ i ]] && return
 
 # [[[ Config
 case $TERM in
