@@ -12,7 +12,7 @@ static unsigned int tripleclicktimeout = 600;
 
 static bool allowaltscreen = true;
 
-static unsigned int xfps      = 60;
+static unsigned int xfps      = 120;
 static unsigned int actionfps = 30;
 
 static unsigned int blinktimeout = 800;
