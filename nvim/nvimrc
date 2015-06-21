@@ -1,5 +1,3 @@
-" daoo's .vimrc
-
 " {{{ Plugins
 call plug#begin('~/.nvim/plugged')
 
