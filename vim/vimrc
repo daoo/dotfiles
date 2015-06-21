@@ -43,7 +43,6 @@ call yankstack#setup()
 " {{{ Settings
 " moving around, searching and patterns
 set ignorecase
-set incsearch
 set smartcase
 
 " displaying text
@@ -60,7 +59,6 @@ set scrolloff=1
 set sidescrolloff=5
 
 " syntax, highlighting and spelling
-set hlsearch
 set cursorcolumn
 set cursorline
 
@@ -72,21 +70,16 @@ set laststatus=2
 set noerrorbells
 set novisualbell
 set showcmd
-set vb
-set t_vb=
 
 " editing text
-set backspace=start,indent,eol
-set formatoptions=tcroqnj
+set formatoptions+=ron
 set nojoinspaces
 set undolevels=500
 
 " tabs and indenting
-set autoindent
 set expandtab
 set shiftround
 set shiftwidth=2
-set smarttab
 set softtabstop=2
 
 " folding
@@ -97,7 +90,6 @@ set nofoldenable
 
 " reading and writing files
 set autowrite
-set autoread
 set nobackup
 set backupdir=/tmp
 
@@ -107,14 +99,6 @@ set directory=/tmp
 
 " command line editing
 set history=1000
-set wildmenu
-set wildmode=list:longest,full
-
-" completion
-set complete-=i
-
-" other
-set nrformats-=octal
 
 let mapleader=" "
 let maplocalleader=" "
