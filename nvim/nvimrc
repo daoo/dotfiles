@@ -4,7 +4,6 @@ call plug#begin('~/.nvim/plugged')
 Plug 'benekastah/neomake'
 Plug 'bling/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'danro/rename.vim'
 Plug 'daoo/mustang2'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf'
@@ -22,6 +21,7 @@ Plug 'sirver/ultisnips'
 Plug 't9md/vim-quickhl'
 Plug 'tikhomirov/vim-glsl'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-repeat'
@@ -104,8 +104,6 @@ syn match myTodo contained "\<\(TODO\|FIXME\)"
 hi def link myTodo Todo
 " }}}
 " {{{ Commands
-command! W %!sudo tee > /dev/null %
-
 " Only shown when not in insert mode.
 augroup trailing
   autocmd!
