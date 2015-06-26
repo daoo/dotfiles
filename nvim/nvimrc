@@ -7,10 +7,10 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'danro/rename.vim'
 Plug 'daoo/mustang2'
 Plug 'honza/vim-snippets'
-Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'junegunn/fzf'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-peekaboo'
+Plug 'justinmk/vim-dirvish'
 Plug 'jvoorhis/coq.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'maxbrunsfeld/vim-yankstack'
@@ -202,7 +202,7 @@ nmap     <leader>yn   <plug>(yankstack_substitute_newer_paste)
 nmap     <leader>yp   <plug>(yankstack_substitute_older_paste)
 
 " F-keys
-nmap     <f2>  <plug>FileBeagleOpenCurrentBufferDir
+nnoremap <f2>  :Dirvish %:p:h<cr>
 nnoremap <f8>  :Neomake!<cr>
 nnoremap <f10> :Neomake! lint<cr>
 nnoremap <f11> :Neomake! docs<cr>
