@@ -13,14 +13,11 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
-import XMonad.Layout.Grid
-import XMonad.Layout.IM
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
-import XMonad.Layout.Reflect
 import XMonad.Prompt
 import XMonad.Prompt.Input
-import XMonad.Util.NamedScratchpad
+import XMonad.Util.NamedScratchpad (namedScratchpadFilterOutWorkspacePP)
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad
 import qualified XMonad.StackSet as W
@@ -28,13 +25,13 @@ import qualified XMonad.StackSet as W
 -- {{{ Hooks
 myManageHook :: ManageHook
 myManageHook = composeAll
-  [ className =? "irc"         --> doShift "im"
-  , className =? "Chromium"    --> doShift "web"
-  , className =? "Browser"     --> doShift "web"
-  , className =? "Firefox"     --> doShift "web"
-  , className =? "luakit"      --> doShift "web"
-  , className =? "Steam"       --> doShift "other"
-  , className =? "Wine"        --> doShift "full"
+  [ className =? "irc"      --> doShift "im"
+  , className =? "Chromium" --> doShift "web"
+  , className =? "Browser"  --> doShift "web"
+  , className =? "Firefox"  --> doShift "web"
+  , className =? "luakit"   --> doShift "web"
+  , className =? "Steam"    --> doShift "other"
+  , className =? "Wine"     --> doShift "full"
 
   , className =? "Dialog"                  --> doFloat
   , title =? "Options"                     --> doFloat
@@ -128,7 +125,7 @@ myKeyMaps = fromList
   , ((myModKey .|. shiftMask, xK_space), setLayout (Layout myLayoutHook))
 
   -- Tiling
-  , ((myModKey, xK_t), withFocused $ windows . W.sink)
+  , ((myModKey, xK_t), withFocused (windows . W.sink))
   , ((myModKey, xK_u), withFocused toggleBorder)
 
   , ((myModKey .|. altMask,              xK_Right), sendMessage $ ExpandTowards R)
@@ -204,7 +201,7 @@ myKeyMaps = fromList
     altMask  = mod1Mask
     ctrlMask = controlMask
 
-    toggleWS     = windows $ W.view =<< W.tag . head . hiddenNonNSP
+    toggleWS     = windows (W.view =<< W.tag . head . hiddenNonNSP)
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 
     reload = do
@@ -256,7 +253,7 @@ main = do
     , handleEventHook    = fullscreenEventHook
     , keys               = const myKeyMaps
     , layoutHook         = myLayoutHook
-    , logHook            = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ myPP hxmobar
+    , logHook            = dynamicLogWithPP (namedScratchpadFilterOutWorkspacePP (myPP hxmobar))
     , manageHook         = myManageHook <+> manageDocks <+> scratchpadManageHookDefault
     , modMask            = myModKey
     , normalBorderColor  = colorDarkGrey
