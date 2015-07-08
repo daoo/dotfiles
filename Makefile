@@ -37,6 +37,18 @@ mpd:
 	mkdir -p ${HOME}/.mpd
 	cp $(here)/mpd.conf ${HOME}/.mpd/
 
+nvim:
+	mkdir -p ${HOME}/.nvim
+	mkdir -p ${HOME}/.nvim/tmp
+	mkdir -p ${HOME}/.nvim/spell
+	ln -fsn $(here)/nvim/UltiSnips ${HOME}/.nvim/UltiSnips
+	ln -fsn $(here)/nvim/snippets ${HOME}/.nvim/snippets
+	ln -fsn $(here)/nvim/after ${HOME}/.nvim/after
+	ln -fsn $(here)/nvim/ftdetect ${HOME}/.nvim/ftdetect
+	ln -fsn $(here)/nvim/ftplugin ${HOME}/.nvim/ftplugin
+	ln -fsn $(here)/nvim/spell/*.add ${HOME}/.nvim/spell/
+	ln -fsn $(here)/nvim/nvimrc ${HOME}/.nvimrc
+
 openbox:
 	mkdir -p ${HOME}/.config/openbox
 	ln -fsn $(here)/openbox/autostart ${HOME}/.config/openbox/autostart
@@ -72,18 +84,6 @@ termite:
 
 tmux:
 	ln -fsn $(here)/tmux.conf ${HOME}/.tmux.conf
-
-nvim:
-	mkdir -p ${HOME}/.nvim
-	mkdir -p ${HOME}/.nvim/tmp
-	mkdir -p ${HOME}/.nvim/spell
-	ln -fsn $(here)/nvim/UltiSnips ${HOME}/.nvim/UltiSnips
-	ln -fsn $(here)/nvim/snippets ${HOME}/.nvim/snippets
-	ln -fsn $(here)/nvim/after ${HOME}/.nvim/after
-	ln -fsn $(here)/nvim/ftdetect ${HOME}/.nvim/ftdetect
-	ln -fsn $(here)/nvim/ftplugin ${HOME}/.nvim/ftplugin
-	ln -fsn $(here)/nvim/spell/*.add ${HOME}/.nvim/spell/
-	ln -fsn $(here)/nvim/nvimrc ${HOME}/.nvimrc
 
 xresources:
 	ln -fsn $(here)/xorg/xresources ${HOME}/.Xresources
