@@ -1,6 +1,5 @@
 module Main (main) where
 
-import BinarySpacePartition
 import Data.Map (Map, fromList, insert)
 import Data.Ratio ((%))
 import System.Exit (exitSuccess)
@@ -41,12 +40,16 @@ myManageHook = composeAll
   where
     wmWindowRole = stringProperty "WM_WINDOW_ROLE"
 
-myLayoutHook = onWorkspace "full" fullLayout defaultLayout
+myLayoutHook = onWorkspace "full" lfull ldef
   where
-    defaultLayout = avoidStruts $ lessBorders ambiguity $ emptyBSP ||| Full
-    fullLayout    = noBorders $ Full ||| emptyBSP
+    lfull = noBorders (full ||| tall ||| long)
+    ldef  = avoidStruts (borders (tall ||| long ||| full))
 
-    ambiguity = Combine Difference Screen OnlyFloat
+    full = Full
+    tall = Tall 1 (3%100) (1%2)
+    long = Mirror tall
+
+    borders = lessBorders (Combine Difference Screen OnlyFloat)
 -- }}}
 -- {{{ Colors and fonts
 colorRed, colorGreen, colorBlue, colorPurple :: String
@@ -124,20 +127,15 @@ myKeyMaps = fromList
   , ((myModKey,               xK_space), sendMessage NextLayout)
   , ((myModKey .|. shiftMask, xK_space), setLayout (Layout myLayoutHook))
 
+  , ((myModKey, xK_comma),  sendMessage (IncMasterN (-1)))
+  , ((myModKey, xK_period), sendMessage (IncMasterN 1))
+
+  , ((myModKey, xK_at),        sendMessage Expand)
+  , ((myModKey, xK_backslash), sendMessage Shrink)
+
   -- Tiling
   , ((myModKey, xK_t), withFocused (windows . W.sink))
   , ((myModKey, xK_u), withFocused toggleBorder)
-
-  , ((myModKey .|. altMask,              xK_Right), sendMessage $ ExpandTowards R)
-  , ((myModKey .|. altMask,              xK_Left),  sendMessage $ ExpandTowards L)
-  , ((myModKey .|. altMask,              xK_Down),  sendMessage $ ExpandTowards D)
-  , ((myModKey .|. altMask,              xK_Up),    sendMessage $ ExpandTowards U)
-  , ((myModKey .|. altMask .|. ctrlMask, xK_Right), sendMessage $ ShrinkFrom R)
-  , ((myModKey .|. altMask .|. ctrlMask, xK_Left),  sendMessage $ ShrinkFrom L)
-  , ((myModKey .|. altMask .|. ctrlMask, xK_Down),  sendMessage $ ShrinkFrom D)
-  , ((myModKey .|. altMask .|. ctrlMask, xK_Up),    sendMessage $ ShrinkFrom U)
-  , ((myModKey,                          xK_r),     sendMessage Rotate)
-  , ((myModKey,                          xK_s),     sendMessage Swap)
 
   -- Focus and swapping
   , ((myModKey,               xK_Tab), windows W.focusDown)
@@ -198,9 +196,6 @@ myKeyMaps = fromList
   , ((myModKey, xK_F2), keymap "usaswe")
   ]
   where
-    altMask  = mod1Mask
-    ctrlMask = controlMask
-
     toggleWS     = windows (W.view =<< W.tag . head . hiddenNonNSP)
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 
