@@ -57,6 +57,11 @@ openbox:
 	ln -fsn $(here)/openbox/obmenu-generator/config.pl ${HOME}/.config/obmenu-generator/config.pl
 	ln -fsn $(here)/openbox/obmenu-generator/schema.pl ${HOME}/.config/obmenu-generator/schema.pl
 
+qutebrowser:
+	mkdir -p ${HOME}/.config/qutebrowser
+	ln -fsn $(here)/qutebrowser/keys.conf ${HOME}/.config/qutebrowser/keys.conf
+	ln -fsn $(here)/qutebrowser/qutebrowser.conf ${HOME}/.config/qutebrowser/qutebrowser.conf
+
 ranger:
 	mkdir -p ${HOME}/.config/ranger
 	ln -fsn $(here)/ranger/rc.conf ${HOME}/.config/ranger/rc.conf
@@ -119,6 +124,7 @@ zsh:
 	luakit \
 	nvim \
 	openbox \
+	qutebrowser \
 	ranger \
 	rtorrent \
 	scripts \
