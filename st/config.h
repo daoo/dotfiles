@@ -1,9 +1,13 @@
 static char font[] = "Dina:pixelsize=10:antialias=false:autohint=false";
 static int borderpx = 0;
 static char shell[] = "/usr/bin/zsh";
+static char *utmp = NULL;
+static char stty_args[] = "stty raw -echo -iexten echonl";
 
-float cwscale = 1.0;
-float chscale = 1.0;
+static char vtiden[] = "\033[?6c";
+
+static float cwscale = 1.0;
+static float chscale = 1.0;
 
 static char worddelimiters[] = " ";
 
@@ -12,11 +16,12 @@ static unsigned int tripleclicktimeout = 600;
 
 static bool allowaltscreen = true;
 
-static unsigned int xfps      = 120;
+static unsigned int xfps = 120;
 static unsigned int actionfps = 30;
 
 static unsigned int blinktimeout = 800;
 
+static unsigned int cursorthickness = 2;
 static int bellvolume = 0;
 
 static char termname[] = "st-256color";
@@ -64,16 +69,21 @@ static Mousekey mshortcuts[] = {
 
 static Shortcut shortcuts[] = {
   /* mask                 keysym          function        argument */
-  { MODKEY|ShiftMask,     XK_Prior,       xzoom,          {.i = +1} },
-  { MODKEY|ShiftMask,     XK_Next,        xzoom,          {.i = -1} },
+  { MODKEY|ShiftMask,     XK_Prior,       xzoom,          {.f = +1} },
+  { MODKEY|ShiftMask,     XK_Next,        xzoom,          {.f = -1} },
+  { MODKEY|ShiftMask,     XK_Home,        xzoomreset,     {.f =  0} },
   { ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
   { MODKEY|ShiftMask,     XK_Insert,      clippaste,      {.i =  0} },
+  { MODKEY|ShiftMask,     XK_C,           clipcopy,       {.i =  0} },
+  { MODKEY|ShiftMask,     XK_V,           clippaste,      {.i =  0} },
   { MODKEY,               XK_Num_Lock,    numlock,        {.i =  0} },
 };
 
 static KeySym mappedkeys[] = { -1 };
 
 static uint ignoremod = Mod2Mask|XK_SWITCH_MOD;
+
+static uint forceselmod = ShiftMask;
 
 static Key key[] = {
   /* keysym           mask            string      appkey appcursor crlf */
@@ -133,7 +143,6 @@ static Key key[] = {
   { XK_KP_7,          XK_ANY_MOD,     "\033Ow",       +2,    0,    0},
   { XK_KP_8,          XK_ANY_MOD,     "\033Ox",       +2,    0,    0},
   { XK_KP_9,          XK_ANY_MOD,     "\033Oy",       +2,    0,    0},
-  { XK_BackSpace,     XK_NO_MOD,      "\177",          0,    0,    0},
   { XK_Up,            ShiftMask,      "\033[1;2A",     0,    0,    0},
   { XK_Up,            ControlMask,    "\033[1;5A",     0,    0,    0},
   { XK_Up,            Mod1Mask,       "\033[1;3A",     0,    0,    0},
@@ -171,6 +180,7 @@ static Key key[] = {
   { XK_Delete,        ShiftMask,      "\033[3;2~",    +1,    0,    0},
   { XK_Delete,        XK_ANY_MOD,     "\033[P",       -1,    0,    0},
   { XK_Delete,        XK_ANY_MOD,     "\033[3~",      +1,    0,    0},
+  { XK_BackSpace,     XK_NO_MOD,      "\177",          0,    0,    0},
   { XK_Home,          ShiftMask,      "\033[2J",       0,   -1,    0},
   { XK_Home,          ShiftMask,      "\033[1;2H",     0,   +1,    0},
   { XK_Home,          XK_ANY_MOD,     "\033[H",        0,   -1,    0},
