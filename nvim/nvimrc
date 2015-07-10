@@ -233,12 +233,16 @@ nnoremap gsap Vapk:sort<cr>
 let g:neomake_lint_maker = { 'exe': 'make', 'args': ['lint'] }
 let g:neomake_docs_maker = { 'exe': 'make', 'args': ['docs'] }
 
+let g:gutentags_cache_dir    = '/tmp/gutentags'
+let g:gutentags_project_root = [ 'Makefile' ]
+
 let g:ycm_key_list_select_completion   = []
 let g:ycm_key_list_previous_completion = []
 
 let g:airline_right_sep = ''
 let g:airline_left_sep  = ''
 
+let g:ctrlp_root_markers      = [ 'Makefile' ]
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_switch_buffer     = 0
 
