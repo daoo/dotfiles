@@ -12,9 +12,7 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-dirvish'
 Plug 'jvoorhis/coq.vim'
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mbbill/undotree'
-Plug 'mileszs/ack.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'rking/ag.vim'
 Plug 'sirver/ultisnips'
@@ -35,8 +33,6 @@ Plug 'wellle/targets.vim'
 Plug 'wolfy87/vim-enmasse'
 
 call plug#end()
-
-call yankstack#setup()
 " }}}
 " {{{ Settings
 " moving around, searching and patterns
@@ -196,8 +192,6 @@ nnoremap <leader>t    :call LongLineHLToggle()<cr>
 vnoremap <leader>xc   c<c-r>=<c-r>"<cr><esc>
 vnoremap <leader>xe   y`]a = <c-r>=<c-r>"<cr><esc>
 nnoremap <leader>ya   :%y+<cr>
-nmap     <leader>yn   <plug>(yankstack_substitute_newer_paste)
-nmap     <leader>yp   <plug>(yankstack_substitute_older_paste)
 
 " F-keys
 nnoremap <f2>  :Dirvish %:p:h<cr>
@@ -241,10 +235,6 @@ let g:neomake_docs_maker = { 'exe': 'make', 'args': ['docs'] }
 
 let g:ycm_key_list_select_completion   = []
 let g:ycm_key_list_previous_completion = []
-
-let g:filebeagle_suppress_keymaps = 1
-
-let g:yankstack_map_keys = 0
 
 let g:airline_right_sep = ''
 let g:airline_left_sep  = ''
