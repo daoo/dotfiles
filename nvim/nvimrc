@@ -95,6 +95,7 @@ set directory=/tmp
 " command line editing
 set history=1000
 
+set mouse=
 let mapleader=" "
 let maplocalleader=" "
 syn match myTodo contained "\<\(TODO\|FIXME\)"
