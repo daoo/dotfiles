@@ -2,7 +2,4 @@
 Description=Dropbox
 
 [Service]
-ExecStart=/usr/bin/sh "%h/.dropbox-dist/dropboxd"
-
-[Install]
-WantedBy=default.target
+ExecStart=/usr/bin/env "%h/.dropbox-dist/dropboxd"

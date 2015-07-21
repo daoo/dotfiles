@@ -3,6 +3,3 @@ Description=twmnd
 
 [Service]
 ExecStart=/usr/bin/twmnd
-
-[Install]
-WantedBy=default.target
