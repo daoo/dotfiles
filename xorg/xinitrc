@@ -15,7 +15,6 @@ xrdb -merge "$HOME/.Xresources"
 
 /usr/bin/systemctl --user start \
   compton \
-  nvidia-settings \
   pointer \
   unclutter \
   wallpaper
