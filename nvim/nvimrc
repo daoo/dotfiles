@@ -5,6 +5,7 @@ Plug 'benekastah/neomake'
 Plug 'bling/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'daoo/mustang2'
+Plug 'haya14busa/incsearch.vim'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf'
 Plug 'junegunn/vim-easy-align'
@@ -196,6 +197,11 @@ nnoremap <leader>ss   :call SetSpell("sv")<cr>
 nnoremap <leader>t    :call LongLineHLToggle()<cr>
 vnoremap <leader>x    c<c-r>=<c-r>"<cr><esc>
 nnoremap <leader>ya   :%y+<cr>
+
+" Incsearch
+map /  <plug>(incsearch-forward)
+map ?  <plug>(incsearch-backward)
+map g/ <plug>(incsearch-stay)
 
 " F-keys
 nnoremap <f2>  :Dirvish %:p:h<cr>
