@@ -13,8 +13,8 @@ Plug 'justinmk/vim-dirvish'
 Plug 'jvoorhis/coq.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'mbbill/undotree'
+Plug 'mhinz/vim-grepper'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'rking/ag.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'sirver/ultisnips'
 Plug 't9md/vim-quickhl'
@@ -180,8 +180,10 @@ nnoremap <leader>ecc  :e %<.cc<cr>
 nnoremap <leader>ecpp :e %<.cpp<cr>
 nnoremap <leader>eh   :e %<.h<cr>
 nnoremap <leader>fc   :nohlsearch<cr>
-nnoremap <leader>fg   :Ag '<cword>'<cr>
-nnoremap <leader>fl   /<c-r>=expand("<cword>")<cr><cr>
+nmap     <leader>fg   <plug>(Grepper)
+xmap     <leader>fg   <plug>(Grepper)
+cmap     <leader>fg   <plug>(GrepperNext)
+nmap     <leader>fs   <plug>(GrepperMotion)
 nnoremap <leader>fr   :%s/<c-r>=expand("<cword>")<cr>/
 vnoremap <leader>fr   y:%s/<c-r>"/
 nmap     <leader>M    <plug>(quickhl-manual-reset)
