@@ -61,6 +61,9 @@ openbox:
 	ln -fsn $(here)/openbox/obmenu-generator/config.pl ${HOME}/.config/obmenu-generator/config.pl
 	ln -fsn $(here)/openbox/obmenu-generator/schema.pl ${HOME}/.config/obmenu-generator/schema.pl
 
+pcmanfm:
+	ln -fsn $(here)/pcmanfm/pcmanfm.conf ${HOME}/.config/pcmanfm/default/pcmanfm.conf
+
 qutebrowser:
 	mkdir -p ${HOME}/.config/qutebrowser
 	ln -fsn $(here)/qutebrowser/keys.conf ${HOME}/.config/qutebrowser/keys.conf
@@ -128,6 +131,7 @@ zsh:
 	mpd \
 	nvim \
 	openbox \
+	pcmanfm \
 	qutebrowser \
 	ranger \
 	rtorrent \
