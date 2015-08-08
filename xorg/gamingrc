@@ -7,13 +7,12 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
   unset f
 fi
 
-export BROWSER="/usr/bin/qutebrowser"
-
+feh --bg-tile --no-fehbg "$(find "$HOME/media/wallpapers" -type f | shuf -n 1)"
 xrdb -merge "$HOME/.Xresources"
+xsetroot -cursor_name left_ptr
 
-/usr/bin/xsetroot -cursor_name left_ptr
-/usr/bin/feh --bg-tile --no-fehbg "$(/usr/bin/find $HOME/media/wallpapers -type f | /usr/bin/shuf -n 1)"
-/usr/bin/compton &
-/usr/bin/steam &
+export BROWSER="qutebrowser"
+compton &
+steam &
 
-exec /usr/bin/openbox
+exec openbox

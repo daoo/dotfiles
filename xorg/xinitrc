@@ -7,16 +7,12 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
   unset f
 fi
 
-export BROWSER=/usr/bin/qutebrowser
-
+feh --bg-tile --no-fehbg "$(find "$HOME/media/wallpapers" -type f | shuf -n 1)"
 xrdb -merge "$HOME/.Xresources"
+xsetroot -cursor_name left_ptr
 
-/usr/bin/systemctl --user import-environment BROWSER
+export BROWSER="qutebrowser"
+systemctl --user import-environment BROWSER
+systemctl --user start compton unclutter
 
-/usr/bin/systemctl --user start \
-  compton \
-  pointer \
-  unclutter \
-  wallpaper
-
-exec /usr/bin/xmonad
+exec xmonad
