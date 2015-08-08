@@ -125,6 +125,7 @@ zsh:
 	haskell \
 	luakit \
 	mime \
+	mpd \
 	nvim \
 	openbox \
 	qutebrowser \
