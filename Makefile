@@ -33,6 +33,10 @@ i3lock:
 luakit:
 	ln -fsn $(here)/luakit/ ${HOME}/.config/
 
+mime:
+	cp $(here)/mime/mimeapps.list ${HOME}/.config/mimeapps.list
+	cp $(here)/mime/applications/* ${HOME}/.local/share/applications/
+
 mpd:
 	mkdir -p ${HOME}/.mpd
 	cp $(here)/mpd.conf ${HOME}/.mpd/
@@ -120,6 +124,7 @@ zsh:
 	haskeline \
 	haskell \
 	luakit \
+	mime \
 	nvim \
 	openbox \
 	qutebrowser \
