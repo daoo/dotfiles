@@ -28,6 +28,8 @@
   ss  = stash save
   st  = status -sb
 
+  edit = "!nvim `git ls-files -m --other --exclude-standard`"
+
   pullall = "!f(){ git pull \"$@\" && git submodule update --init --recursive; }; f"
 
   corb = "!f(){ git checkout \"$1\" && git rebase \"$2\"; }; f"
