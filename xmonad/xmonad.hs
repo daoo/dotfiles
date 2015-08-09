@@ -205,7 +205,7 @@ myKeyMaps = fromList
 
     keymap name = safeSpawn "setxkbmap" [name]
 
-    lock = safeSpawn "i3lock-fancy" []
+    lock = safeSpawn "i3lock-wallpaper" []
 -- }}}
 -- {{{ Prompt
 launchPrompt :: XPConfig -> X ()
