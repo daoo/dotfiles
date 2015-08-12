@@ -242,6 +242,27 @@ vnoremap gs :sort<cr>
 nnoremap gsap Vapk:sort<cr>
 " }}}
 " {{{ Addons
+let g:qs_enable = 0
+
+function! Quick_scope_selective(movement)
+    let needs_disabling = 0
+    if !g:qs_enable
+        QuickScopeToggle
+        redraw
+        let needs_disabling = 1
+    endif
+    let letter = nr2char(getchar())
+    if needs_disabling
+        QuickScopeToggle
+    endif
+    return a:movement . letter
+endfunction
+
+noremap <expr> <silent> f Quick_scope_selective('f')
+noremap <expr> <silent> F Quick_scope_selective('F')
+noremap <expr> <silent> t Quick_scope_selective('t')
+noremap <expr> <silent> T Quick_scope_selective('T')
+
 let g:neomake_lint_maker = { 'exe': 'make', 'args': ['lint'] }
 let g:neomake_docs_maker = { 'exe': 'make', 'args': ['docs'] }
 
