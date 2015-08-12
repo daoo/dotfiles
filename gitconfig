@@ -3,6 +3,7 @@
   ap  = add --patch
   ci  = commit
   cia = commit --amend
+  cif = commit --fixup
   co  = checkout
   cp  = cherry-pick
   dc  = diff --cached
