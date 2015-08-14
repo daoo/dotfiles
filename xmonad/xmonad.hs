@@ -24,15 +24,7 @@ import qualified XMonad.StackSet as W
 -- {{{ Hooks
 myManageHook :: ManageHook
 myManageHook = composeAll
-  [ className =? "irc"      --> doShift "im"
-  , className =? "Chromium" --> doShift "web"
-  , className =? "Browser"  --> doShift "web"
-  , className =? "Firefox"  --> doShift "web"
-  , className =? "luakit"   --> doShift "web"
-  , className =? "Steam"    --> doShift "other"
-  , className =? "Wine"     --> doShift "full"
-
-  , className =? "Dialog"                  --> doFloat
+  [ className =? "Dialog"                  --> doFloat
   , title =? "Options"                     --> doFloat
   , wmWindowRole =? "GtkFileChooserDialog" --> doFloat
   , wmWindowRole =? "Preferences"          --> doFloat
