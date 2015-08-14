@@ -110,7 +110,7 @@ myKeyMaps :: Map (KeyMask, KeySym) (X ())
 myKeyMaps = fromList
   -- Launching and killing programs
   [ ((myModKey .|. shiftMask, xK_c),      kill)
-  , ((myModKey,               xK_p),      launchPrompt myXPConfig)
+  , ((myModKey,               xK_p),      rofi ["-show", "run"])
   , ((myModKey,               xK_i),      scratchpadSpawnActionCustom "/usr/bin/st -c scratchpad")
   , ((myModKey,               xK_Return), safeSpawnProg myTerminal)
 
@@ -198,35 +198,8 @@ myKeyMaps = fromList
     keymap name = safeSpawn "setxkbmap" [name]
 
     lock = safeSpawn "i3lock-wallpaper" []
--- }}}
--- {{{ Prompt
-launchPrompt :: XPConfig -> X ()
-launchPrompt c = inputPromptWithCompl c "Run" (mkComplFunFromList cmds) ?+ spawn
-  where
-    cmds =
-      [ "audacity"
-      , "blender"
-      , "chromium"
-      , "emacs"
-      , "firefox"
-      , "gimp"
-      , "keepassx"
-      , "libreoffice"
-      , "lxappearance"
-      , "minecraft"
-      , "mirage"
-      , "opera"
-      , "pavucontrol"
-      , "pcmanfm"
-      , "pidgin"
-      , "qutebrowser"
-      , "skype"
-      , "st"
-      , "tuxguitar"
-      , "urxvt"
-      , "wirkeshark"
-      , "zathura"
-      ]
+
+    rofi args = safeSpawn "rofi" args
 -- }}}
 
 main :: IO ()
