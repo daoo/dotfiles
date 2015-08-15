@@ -199,7 +199,18 @@ myKeyMaps = fromList
 
     lock = safeSpawn "i3lock-wallpaper" []
 
-    rofi args = safeSpawn "rofi" args
+    rofi = safeSpawn "rofi"
+-- }}}
+-- {{{ Rofi Prompt
+rofiPrompt :: [String] -> X String
+rofiPrompt options = runProcessWithInput "rofi" ["-dmenu"] (unlines options)
+
+rofiPromptSafe :: [String] -> X (Maybe String)
+rofiPromptSafe options = fmap check (rofiPrompt options)
+  where
+    check res
+      | not (null res) && res `elem` options = Just res
+      | otherwise                            = Nothing
 -- }}}
 
 main :: IO ()
