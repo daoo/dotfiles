@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 our $CONFIG = {
-  "editor"              => "geany",
+  "editor"              => "gedit",
   "Linux::DesktopFiles" => {
                              desktop_files_paths     => ["/usr/share/applications"],
                              gtk_rc_filename         => "/home/daniel/.gtkrc-2.0",
