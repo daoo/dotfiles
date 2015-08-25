@@ -200,8 +200,7 @@ vnoremap <leader>x    c<c-r>=<c-r>"<cr><esc>
 nnoremap <leader>ya   :%y+<cr>
 
 " Incsearch
-map /  <plug>(incsearch-forward)
-map ?  <plug>(incsearch-backward)
+map g? <plug>(incsearch-backward)
 map g/ <plug>(incsearch-stay)
 
 " F-keys
