@@ -183,10 +183,9 @@ nnoremap <leader>ecc  :e %<.cc<cr>
 nnoremap <leader>ecpp :e %<.cpp<cr>
 nnoremap <leader>eh   :e %<.h<cr>
 nnoremap <leader>fc   :nohlsearch<cr>
-nmap     <leader>fg   <plug>(Grepper)
-xmap     <leader>fg   <plug>(Grepper)
-cmap     <leader>fg   <plug>(GrepperNext)
-nmap     <leader>fs   <plug>(GrepperMotion)
+nnoremap <leader>fg   :Grepper!<cr>
+xmap     <leader>fs   <plug>(GrepperOperator)
+nmap     <leader>fs   <plug>(GrepperOperator)
 nnoremap <leader>fr   :%s/<c-r>=expand("<cword>")<cr>/
 vnoremap <leader>fr   y:%s/<c-r>"/
 nmap     <leader>M    <plug>(quickhl-manual-reset)
