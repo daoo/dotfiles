@@ -1,6 +1,7 @@
 module Main (main) where
 
-import Data.Map (Map, fromList, insert)
+import Control.Monad (unless)
+import Data.Map (Map, fromList)
 import Data.Ratio ((%))
 import System.Exit (exitSuccess)
 import System.IO (Handle)
@@ -14,8 +15,6 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
-import XMonad.Prompt
-import XMonad.Prompt.Input
 import XMonad.Util.NamedScratchpad (namedScratchpadFilterOutWorkspacePP)
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad
@@ -54,9 +53,6 @@ colorDarkGrey, colorLightGrey, colorGrey :: String
 colorDarkGrey  = "#2e3436"
 colorLightGrey = "#b8b8b8"
 colorGrey      = "#757575"
-
-panelFont :: String
-panelFont = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 -- }}}
 -- {{{ Config
 myTerminal :: String
@@ -64,19 +60,6 @@ myTerminal = "/usr/bin/st"
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void"]
-
-myXPConfig :: XPConfig
-myXPConfig = defaultXPConfig
-  { bgColor           = colorDarkGrey
-  , bgHLight          = colorBlue
-  , fgColor           = colorLightGrey
-  , font              = panelFont
-  , position          = Bottom
-  , promptBorderWidth = 0
-
-  -- Make Ctrl-C in prompt stop input
-  , promptKeymap = insert (controlMask, xK_c) quit (promptKeymap defaultXPConfig)
-  }
 
 myPP :: Handle -> PP
 myPP handle = defaultPP
@@ -153,8 +136,8 @@ myKeyMaps = fromList
   -- Handling workspaces
   , ((myModKey,               xK_o), toggleWS)
   , ((myModKey .|. shiftMask, xK_g), removeEmptyWorkspace)
-  , ((myModKey,               xK_g), selectWorkspace myXPConfig)
-  , ((myModKey,               xK_c), withWorkspace myXPConfig (windows . W.shift))
+  , ((myModKey,               xK_g), listWorkspaces >>= rofiPrompt >>= windows . W.greedyView)
+  , ((myModKey,               xK_c), listWorkspaces >>= rofiPrompt >>= createShiftView)
 
   -- Workspace keys
   , ((myModKey,               xK_ampersand),   windows (W.greedyView (myWorkspaces !! 0)))
@@ -191,6 +174,15 @@ myKeyMaps = fromList
     toggleWS     = windows (W.view =<< W.tag . head . hiddenNonNSP)
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 
+    createShiftView w  = do
+      s <- gets windowset
+      unless (W.tagMember w s) (addHiddenWorkspace w)
+      windows (W.shift w)
+      windows (W.greedyView w)
+
+    listWorkspaces :: X [String]
+    listWorkspaces = gets (map W.tag . W.workspaces . windowset)
+
     reload = do
       safeSpawn "xmonad" ["--recompile"]
       safeSpawn "xmonad" ["--restart"]
@@ -200,17 +192,8 @@ myKeyMaps = fromList
     lock = safeSpawn "i3lock-wallpaper" []
 
     rofi = safeSpawn "rofi"
--- }}}
--- {{{ Rofi Prompt
-rofiPrompt :: [String] -> X String
-rofiPrompt options = runProcessWithInput "rofi" ["-dmenu"] (unlines options)
 
-rofiPromptSafe :: [String] -> X (Maybe String)
-rofiPromptSafe options = fmap check (rofiPrompt options)
-  where
-    check res
-      | not (null res) && res `elem` options = Just res
-      | otherwise                            = Nothing
+    rofiPrompt = fmap trim . runProcessWithInput "rofi" ["-dmenu"] . unlines
 -- }}}
 
 main :: IO ()
