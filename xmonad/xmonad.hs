@@ -131,8 +131,8 @@ myKeyMaps = fromList
   -- Handling workspaces
   , ((myModKey,               xK_o), toggleWS)
   , ((myModKey .|. shiftMask, xK_g), removeEmptyWorkspace)
-  , ((myModKey,               xK_g), listWorkspaces >>= rofiPrompt >>= windows . W.greedyView)
-  , ((myModKey,               xK_c), listWorkspaces >>= rofiPrompt >>= createShiftView)
+  , ((myModKey,               xK_g), listWorkspaces >>= rofiPrompt "view:"  >>= windows . W.greedyView)
+  , ((myModKey,               xK_c), listWorkspaces >>= rofiPrompt "shift:" >>= createShiftView)
 
   -- Workspace keys
   , ((myModKey,               xK_ampersand),   windows (W.greedyView (myWorkspaces !! 0)))
@@ -188,7 +188,8 @@ myKeyMaps = fromList
 
     rofi = safeSpawn "rofi"
 
-    rofiPrompt = fmap trim . runProcessWithInput "rofi" ["-dmenu"] . unlines
+    rofiPrompt prompt opts = fmap trim $
+      runProcessWithInput "rofi" ["-dmenu", "-p", prompt] (unlines opts)
 -- }}}
 
 main :: IO ()
