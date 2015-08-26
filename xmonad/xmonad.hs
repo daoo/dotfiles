@@ -191,23 +191,33 @@ myKeyMaps = fromList
     rofiPrompt prompt opts = fmap trim $
       runProcessWithInput "rofi" ["-dmenu", "-p", prompt] (unlines opts)
 -- }}}
+-- {{{ Mouse
+myMouseBindings :: Map (KeyMask, Button) (Window -> X ())
+myMouseBindings = fromList
+  [ ((myModKey, button1), \w -> focus w >> mouseMoveWindow w)
+  , ((myModKey, button3), \w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster)
+  ]
+-- }}}
 
 main :: IO ()
 main = do
   hxmobar <- spawnPipe "xmobar .xmonad/xmobarrc"
 
-  xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
+  xmonad $ withUrgencyHook NoUrgencyHook $ XConfig
     { borderWidth        = 1
-    , focusFollowsMouse  = False
-    , focusedBorderColor = colorGreen
-    , handleEventHook    = fullscreenEventHook
-    , keys               = const myKeyMaps
-    , layoutHook         = myLayoutHook
-    , logHook            = dynamicLogWithPP (namedScratchpadFilterOutWorkspacePP (myPP hxmobar))
-    , manageHook         = myManageHook <+> manageDocks <+> scratchpadManageHookDefault
-    , modMask            = myModKey
-    , normalBorderColor  = colorDarkGrey
-    , terminal           = myTerminal
     , workspaces         = myWorkspaces
+    , layoutHook         = myLayoutHook
+    , terminal           = myTerminal
+    , normalBorderColor  = colorDarkGrey
+    , focusedBorderColor = colorGreen
+    , modMask            = myModKey
+    , keys               = const myKeyMaps
+    , logHook            = dynamicLogWithPP (namedScratchpadFilterOutWorkspacePP (myPP hxmobar))
+    , startupHook        = return ()
+    , mouseBindings      = const myMouseBindings
+    , manageHook         = myManageHook <+> manageDocks <+> scratchpadManageHookDefault
+    , handleEventHook    = fullscreenEventHook
+    , focusFollowsMouse  = False
+    , clickJustFocuses   = False
     }
 -- vim: set foldmethod=marker:
