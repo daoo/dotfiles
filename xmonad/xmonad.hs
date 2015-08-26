@@ -22,14 +22,9 @@ import qualified XMonad.StackSet as W
 
 -- {{{ Hooks
 myManageHook :: ManageHook
-myManageHook = composeAll
-  [ className =? "Dialog"                  --> doFloat
-  , title =? "Options"                     --> doFloat
-  , wmWindowRole =? "GtkFileChooserDialog" --> doFloat
-  , wmWindowRole =? "Preferences"          --> doFloat
-  ]
+myManageHook = role =? "gimp-message-dialog" --> doFloat
   where
-    wmWindowRole = stringProperty "WM_WINDOW_ROLE"
+    role = stringProperty "WM_WINDOW_ROLE"
 
 myLayoutHook = onWorkspace "full" lfull ldef
   where
