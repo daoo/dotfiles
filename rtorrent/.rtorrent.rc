@@ -1,6 +1,6 @@
 # Directories
 directory = ~/downloads
-session   = ~/.rtorrent/session/
+session   = ~/.local/share/rtorrent/
 
 # Connections
 min_peers      = 50
