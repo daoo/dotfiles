@@ -17,9 +17,6 @@ ghci:
 git:
 	ln -fsn $(here)/gitconfig ${HOME}/.gitconfig
 
-gtk:
-	ln -fsn $(here)/gtkrc-2.0.mine ${HOME}/.gtkrc-2.0.mine
-
 haskeline:
 	ln -fsn $(here)/haskeline ${HOME}/.haskeline
 
@@ -123,7 +120,6 @@ zsh:
 	gamingrc \
 	ghci \
 	git \
-	gtk \
 	haskeline \
 	haskell \
 	luakit \
