@@ -164,6 +164,11 @@ myKeyMaps = fromList
   -- Setting keyboard layout
   , ((myModKey, xK_F1), keymap "dvpse")
   , ((myModKey, xK_F2), keymap "usaswe")
+
+  -- Music player control
+  , ((myModKey, xK_F5), playerctl "play-pause")
+  , ((myModKey, xK_F6), playerctl "previous")
+  , ((myModKey, xK_F7), playerctl "next")
   ]
   where
     toggleWS     = windows (W.view =<< W.tag . head . hiddenNonNSP)
@@ -186,6 +191,8 @@ myKeyMaps = fromList
     keymap name = safeSpawn "setxkbmap" [name]
 
     lock = safeSpawn "i3lock-wallpaper" []
+
+    playerctl cmd = safeSpawn "playerctl" [cmd]
 
     rofi = safeSpawn "rofi"
 
