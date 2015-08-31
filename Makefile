@@ -8,9 +8,6 @@ haskell: ${HOME}/bin/episodes ${HOME}/bin/git-fetch
 ${HOME}/bin/%: $(here)/scripts/%.hs
 	ghc -O2 -outputdir /tmp/ghc $< -o $@
 
-emacs:
-	ln -fsn $(here)/emacs/emacs ${HOME}/.emacs
-
 gamingrc:
 	ln -fsn $(here)/xorg/gamingrc ${HOME}/.gamingrc
 
@@ -122,7 +119,6 @@ zsh:
 	ln -fsn $(here)/zsh/zshrc ${HOME}/.zshrc
 
 .PHONY: \
-	emacs \
 	filmrc \
 	gamingrc \
 	ghci \
