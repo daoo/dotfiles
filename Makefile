@@ -24,9 +24,6 @@ i3lock:
 	mkdir -p ${HOME}/.local/share/i3lock
 	ln -fsn $(here)/share/lock.png ${HOME}/.local/share/i3lock/lock.png
 
-luakit:
-	ln -fsn $(here)/luakit/ ${HOME}/.config/
-
 mime:
 	cp $(here)/mime/mimeapps.list ${HOME}/.config/mimeapps.list
 	cp $(here)/mime/applications/* ${HOME}/.local/share/applications/
@@ -122,7 +119,6 @@ zsh:
 	git \
 	haskeline \
 	haskell \
-	luakit \
 	mime \
 	mpd \
 	nvim \
