@@ -169,6 +169,7 @@ myKeyMaps = fromList
     toggleWS     = windows (W.view =<< W.tag . head . hiddenNonNSP)
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 
+    createShiftView "" = return ()
     createShiftView w  = do
       s <- gets windowset
       unless (W.tagMember w s) (addHiddenWorkspace w)
