@@ -73,10 +73,6 @@ scripts:
 	mkdir -p ${HOME}/bin
 	ln -fsn $(here)/scripts ${HOME}/bin/
 
-sublime:
-	ln -fsn "$(here)/sublime/User/Default (Linux).sublime-keymap" "${HOME}/.config/sublime-text-2/Packages/User/Default (Linux).sublime-keymap"
-	ln -fsn "$(here)/sublime/User/Preferences.sublime-settings" "${HOME}/.config/sublime-text-2/Packages/User/Preferences.sublime-settings"
-
 systemd:
 	cp $(here)/systemd/*.service ${HOME}/.config/systemd/user/
 	cp $(here)/systemd/*.timer ${HOME}/.config/systemd/user/
@@ -128,7 +124,6 @@ zsh:
 	ranger \
 	rtorrent \
 	scripts \
-	sublime \
 	systemd \
 	termite \
 	tmux \
