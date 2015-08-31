@@ -10,7 +10,6 @@ Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-dirvish'
 Plug 'jvoorhis/coq.vim'
 Plug 'ludovicchabant/vim-gutentags'
@@ -214,6 +213,7 @@ nnoremap <leader>t    :call LongLineHLToggle()<cr>
 vnoremap <leader>x    c<c-r>=<c-r>"<cr><esc>
 nnoremap <leader>ya   :%y+<cr>
 nnoremap <leader>/    :Unite grep:.<cr>
+nnoremap <leader>p    :Unite register<cr>
 
 " Incsearch
 map g? <plug>(incsearch-backward)
