@@ -1,0 +1,5 @@
+set home-page=https://duckduckgo.com
+set hintkeys=aoeuidhtns
+set media-playback-allows-inline=false
+set download-path=~/downloads
+set editor-command=st -e nvim "%s"

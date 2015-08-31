@@ -103,6 +103,10 @@ xresources:
 filmrc:
 	ln -fsn $(here)/xorg/filmrc ${HOME}/.filmrc
 
+vimb:
+	mkdir -p ${HOME}/.config/vimb
+	ln -fsn $(here)/vimb/config ${HOME}/.config/vimb/config
+
 xinitrc:
 	ln -fsn $(here)/xorg/xinitrc ${HOME}/.xinitrc
 
@@ -140,6 +144,7 @@ zsh:
 	systemd \
 	termite \
 	tmux \
+	vimb \
 	xinitrc \
 	xmonad \
 	xresources \
