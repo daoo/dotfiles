@@ -6,7 +6,7 @@ my $editor = $CONFIG->{editor};
 
 our $SCHEMA = [
   {item => ['xdg-open .',       'File Manager', 'file-manager']},
-  {item => ['st',               'Terminal',     'terminal']},
+  {item => ['urxvt',            'Terminal',     'terminal']},
   {item => ['xdg-open http://', 'Web Browser',  'web-browser']},
   {item => ['gmrun',            'Run command',  'system-run']},
 

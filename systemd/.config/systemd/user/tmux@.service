@@ -3,4 +3,4 @@ Description=SSH with tmux to %I
 
 [Service]
 Environment=DISPLAY=:0
-ExecStart=/usr/bin/st -c irc -e /usr/bin/ssh %I -t LANG=en_US.UTF-8 tmux attach
+ExecStart=/usr/bin/urxvt -c irc -e /usr/bin/ssh %I -t LANG=en_US.UTF-8 tmux attach

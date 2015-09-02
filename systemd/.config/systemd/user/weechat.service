@@ -3,4 +3,4 @@ Description=WeeChat
 
 [Service]
 Environment=DISPLAY=:0
-ExecStart=/usr/bin/st -c irc -e "/usr/bin/weechat-curses"
+ExecStart=/usr/bin/urxvt -c irc -e "/usr/bin/weechat-curses"

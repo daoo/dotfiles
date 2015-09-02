@@ -51,7 +51,7 @@ colorGrey      = "#757575"
 -- }}}
 -- {{{ Config
 myTerminal :: String
-myTerminal = "/usr/bin/st"
+myTerminal = "/usr/bin/urxvt"
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void"]
@@ -89,7 +89,7 @@ myKeyMaps = fromList
   -- Launching and killing programs
   [ ((myModKey .|. shiftMask, xK_c),      kill)
   , ((myModKey,               xK_p),      rofi ["-show", "run"])
-  , ((myModKey,               xK_i),      scratchpadSpawnActionCustom "/usr/bin/st -c scratchpad")
+  , ((myModKey,               xK_i),      scratchpadSpawnActionCustom "/usr/bin/urxvt -c scratchpad")
   , ((myModKey,               xK_Return), safeSpawnProg myTerminal)
 
   -- Layout
