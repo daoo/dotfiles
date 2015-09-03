@@ -29,7 +29,6 @@ Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'unblevable/quick-scope'
 Plug 'valloric/youcompleteme', { 'do': './install.sh' }
 Plug 'vim-scripts/alex.vim'
 Plug 'vim-scripts/happy.vim'
@@ -136,19 +135,6 @@ function! SetSpell(lang)
   execute "setlocal spellfile=" . "$HOME/.nvim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
 endfunction
 
-function! QuickScopeSelective(movement)
-    let needs_disabling = 0
-    if !g:qs_enable
-        QuickScopeToggle
-        redraw
-        let needs_disabling = 1
-    endif
-    let letter = nr2char(getchar())
-    if needs_disabling
-        QuickScopeToggle
-    endif
-    return a:movement . letter
-endfunction
 " }}}
 " {{{ Disabled stupid keys and commands
 noremap Q <nop>
@@ -254,12 +240,6 @@ nnoremap K kJ
 " Sorting
 vnoremap gs :sort<cr>
 nnoremap gsap Vapk:sort<cr>
-
-" Quick-scope
-noremap <expr> <silent> f QuickScopeSelective('f')
-noremap <expr> <silent> F QuickScopeSelective('F')
-noremap <expr> <silent> t QuickScopeSelective('t')
-noremap <expr> <silent> T QuickScopeSelective('T')
 " }}}
 " {{{ Addons
 let g:qs_enable = 0
