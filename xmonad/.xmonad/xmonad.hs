@@ -89,7 +89,7 @@ myKeyMaps = fromList
   -- Launching and killing programs
   [ ((myModKey .|. shiftMask, xK_c),      kill)
   , ((myModKey,               xK_p),      rofi ["-show", "run"])
-  , ((myModKey,               xK_i),      scratchpadSpawnActionCustom "/usr/bin/urxvt -c scratchpad")
+  , ((myModKey,               xK_i),      scratchpadSpawnActionTerminal myTerminal)
   , ((myModKey,               xK_Return), safeSpawnProg myTerminal)
 
   -- Layout
