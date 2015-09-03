@@ -131,7 +131,7 @@ myKeyMaps = fromList
   -- Handling workspaces
   , ((myModKey,               xK_o), toggleWS)
   , ((myModKey .|. shiftMask, xK_g), removeEmptyWorkspace)
-  , ((myModKey,               xK_g), listWorkspaces >>= rofiPrompt "view:"  >>= windows . W.greedyView)
+  , ((myModKey,               xK_g), listWorkspaces >>= rofiPrompt "view:"  >>= createView)
   , ((myModKey,               xK_c), listWorkspaces >>= rofiPrompt "shift:" >>= createShiftView)
 
   -- Workspace keys
@@ -173,6 +173,12 @@ myKeyMaps = fromList
   where
     toggleWS     = windows (W.view =<< W.tag . head . hiddenNonNSP)
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
+
+    createView "" = return ()
+    createView w  = do
+      s <- gets windowset
+      unless (W.tagMember w s) (addHiddenWorkspace w)
+      windows (W.greedyView w)
 
     createShiftView "" = return ()
     createShiftView w  = do
