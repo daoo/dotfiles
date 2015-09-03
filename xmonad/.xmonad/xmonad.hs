@@ -190,9 +190,7 @@ myKeyMaps = fromList
     listWorkspaces :: X [String]
     listWorkspaces = gets (map W.tag . W.workspaces . windowset)
 
-    reload = do
-      safeSpawn "xmonad" ["--recompile"]
-      safeSpawn "xmonad" ["--restart"]
+    reload = spawn "xmonad --recompile && xmonad --restart"
 
     keymap name = safeSpawn "setxkbmap" [name]
 
