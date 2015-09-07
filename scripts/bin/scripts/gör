@@ -1,13 +1,38 @@
 #!/usr/bin/env bash
 
-case $1 in
-  hela) make all ;;
-  ren) make clean ;;
-  rent) make clean ;;
-  bygg) make build ;;
-  ludd) make lint  ;;
-  fördelning) make dist ;;
-  släpp) make release ;;
-  prov) make test ;;
-  *) echo "förstår inte hur man gör $1" ;;
-esac
+shopt -s extglob
+
+for arg in "$@"; do
+  case $arg in
+    allt|hela)
+      make all
+      ;;
+    ren?(t)|städ@(a|ning))
+      make clean
+      ;;
+    bygg?(e))
+      make build
+      ;;
+    ludd|avluddning)
+      make lint
+      ;;
+    felsök?(a|ning)|avlus@(a|ning))
+      make debug
+      ;;
+    fördelning|spridning)
+      make dist
+      ;;
+    släpp|frisättning)
+      make release
+      ;;
+    prov?(kör@(a|ning))|pröv@(a|ning)|kontroll)
+      make test
+      ;;
+    hjälp|bistånd)
+      make help
+      ;;
+    *)
+      echo "förstår inte hur man gör $arg"
+      ;;
+  esac
+done
