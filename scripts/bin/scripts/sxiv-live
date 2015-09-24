@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+file="$1"
+
+if [[ ! -f "$file" ]]; then
+  echo "Usage: $0 FILE" 1>2&
+  exit 1
+fi
+
+sxiv -z 800 "$file" &
+sxiv=$!
+on-file-event "xdotool search --name 'sxiv - $file' key r || exit 0" "$file" &
+refresher=$!
+
+wait $sxiv
+kill $refresher
