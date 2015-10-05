@@ -88,7 +88,7 @@ myKeyMaps :: Map (KeyMask, KeySym) (X ())
 myKeyMaps = fromList
   -- Launching and killing programs
   [ ((myModKey .|. shiftMask, xK_c),      kill)
-  , ((myModKey,               xK_p),      rofi ["-show", "run"])
+  , ((myModKey,               xK_p),      rofiRun >>= flip safeSpawn [])
   , ((myModKey,               xK_i),      scratchpadSpawnActionTerminal myTerminal)
   , ((myModKey,               xK_Return), safeSpawnProg myTerminal)
 
@@ -198,7 +198,7 @@ myKeyMaps = fromList
 
     playerctl cmd = safeSpawn "playerctl" [cmd]
 
-    rofi = safeSpawn "rofi"
+    rofiRun = runProcessWithInput "rofi" ["-show", "run", "-run-command", "echo -n {cmd}"] ""
 
     rofiPrompt prompt opts = fmap trim $
       runProcessWithInput "rofi" ["-dmenu", "-p", prompt] (unlines opts)
