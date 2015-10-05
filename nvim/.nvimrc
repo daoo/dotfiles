@@ -29,7 +29,7 @@ Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'valloric/youcompleteme', { 'do': './install.sh' }
+Plug 'valloric/youcompleteme', { 'do': 'python2 install.py --clang-completer' }
 Plug 'vim-scripts/alex.vim'
 Plug 'vim-scripts/happy.vim'
 Plug 'vim-scripts/matlab.vim'
