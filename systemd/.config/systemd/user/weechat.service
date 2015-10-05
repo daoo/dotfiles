@@ -1,6 +1,8 @@
 [Unit]
-Description=WeeChat
+Description=Weechat tmux session
 
 [Service]
-Environment=DISPLAY=:0
-ExecStart=/usr/bin/urxvt -c irc -e "/usr/bin/weechat-curses"
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/tmux new-session -d -s irc /usr/bin/weechat
+ExecSotp=/usr/bin/tmux kill-session -t irc
