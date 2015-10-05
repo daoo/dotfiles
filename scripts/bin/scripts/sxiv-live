@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 
+set -ue
+
 file="$1"
 
+shift
+opts="$@"
+
 if [[ ! -f "$file" ]]; then
-  echo "Usage: $0 FILE" 1>2&
+  echo "Usage: $0 FILE" 1>&2
   exit 1
 fi
 
-sxiv -z 800 "$file" &
-sxiv=$!
-on-file-event "xdotool search --name 'sxiv - $file' key r || exit 0" "$file" &
-refresher=$!
+sxiv $opts "$file" &
+pid_sxiv=$!
+echo "$file" | entr xdotool search --sync --name "sxiv - $file" key r &
+pid_entr=$!
 
-wait $sxiv
-kill $refresher
+wait $pid_sxiv
+kill $pid_entr
