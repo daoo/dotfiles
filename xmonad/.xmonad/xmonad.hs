@@ -200,7 +200,7 @@ myKeyMaps = fromList
 
     rofiRun = runProcessWithInput "rofi" ["-show", "run", "-run-command", "echo -n {cmd}"] ""
 
-    rofiPrompt prompt opts = fmap trim $
+    rofiPrompt prompt opts = trim <$>
       runProcessWithInput "rofi" ["-dmenu", "-p", prompt] (unlines opts)
 -- }}}
 -- {{{ Mouse
@@ -215,7 +215,7 @@ main :: IO ()
 main = do
   hxmobar <- spawnPipe "xmobar .xmonad/xmobarrc"
 
-  xmonad $ withUrgencyHook NoUrgencyHook $ XConfig
+  xmonad $ ewmh $ withUrgencyHook NoUrgencyHook XConfig
     { borderWidth        = 1
     , workspaces         = myWorkspaces
     , layoutHook         = myLayoutHook
