@@ -29,7 +29,7 @@ Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'valloric/youcompleteme', { 'do': 'python2 install.py --clang-completer' }
+Plug 'valloric/youcompleteme', { 'do': 'python2 install.py' }
 Plug 'vim-scripts/alex.vim'
 Plug 'vim-scripts/happy.vim'
 Plug 'vim-scripts/matlab.vim'
@@ -242,23 +242,24 @@ vnoremap gs :sort<cr>
 nnoremap gsap Vapk:sort<cr>
 " }}}
 " {{{ Addons
-let g:qs_enable = 0
-
 let g:neomake_lint_maker = { 'exe': 'make', 'args': ['lint'] }
 let g:neomake_docs_maker = { 'exe': 'make', 'args': ['docs'] }
 
-let g:gutentags_cache_dir    = '/tmp/gutentags'
-let g:gutentags_project_root = [ 'Makefile' ]
+let g:gutentags_cache_dir = '/tmp/gutentags'
+let g:gutentags_project_root = [ '.git', 'Makefile' ]
 
-let g:ycm_key_list_select_completion   = []
+let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_previous_completion = []
+let g:ycm_key_invoke_completion = ''
+
+let g:ycm_collect_identifiers_from_tags_files = 1
 
 let g:airline_right_sep = ''
-let g:airline_left_sep  = ''
+let g:airline_left_sep = ''
 
-let g:ctrlp_root_markers      = [ 'Makefile' ]
+let g:ctrlp_root_markers = [ '.git', 'Makefile' ]
 let g:ctrlp_working_path_mode = 0
-let g:ctrlp_switch_buffer     = 0
+let g:ctrlp_switch_buffer = 0
 
 let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(pdf|xcf|bmp|gif|png|jpg|swp|bak|pyc|class|o|hi|exe|dll|pdb|agdai|agda\~)$',
