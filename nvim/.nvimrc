@@ -228,7 +228,8 @@ nnoremap <m-l>     <c-w>v<c-w>l
 " File handling
 inoremap <c-s> <c-o>:update<cr>
 nnoremap <c-s> :update<cr>
-nnoremap <c-o> :FZF<cr>
+nnoremap <c-p> :FZF<cr>
+nnoremap <c-o> :CtrlP<cr>
 
 " Center matches when searching
 nnoremap N Nzz
@@ -257,6 +258,7 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 let g:airline_right_sep = ''
 let g:airline_left_sep = ''
 
+let g:ctrlp_map = ''
 let g:ctrlp_root_markers = [ '.git', 'Makefile' ]
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_switch_buffer = 0
