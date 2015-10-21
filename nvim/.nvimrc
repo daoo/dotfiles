@@ -65,8 +65,7 @@ set hidden
 set laststatus=2
 
 " message and info
-set noerrorbells
-set novisualbell
+set belloff=all
 set showcmd
 
 " editing text
