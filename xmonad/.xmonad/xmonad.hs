@@ -132,7 +132,7 @@ myKeyMaps = fromList
   , ((myModKey,               xK_o), toggleWS)
   , ((myModKey .|. shiftMask, xK_g), removeEmptyWorkspace)
   , ((myModKey,               xK_g), listWorkspaces >>= rofiPrompt "view:"  >>= createView)
-  , ((myModKey,               xK_c), listWorkspaces >>= rofiPrompt "shift:" >>= createShiftView)
+  , ((myModKey,               xK_c), listWorkspaces >>= rofiPrompt "shift:" >>= createShift)
 
   -- Workspace keys
   , ((myModKey,               xK_ampersand),   windows (W.greedyView (myWorkspaces !! 0)))
@@ -180,12 +180,11 @@ myKeyMaps = fromList
       unless (W.tagMember w s) (addHiddenWorkspace w)
       windows (W.greedyView w)
 
-    createShiftView "" = return ()
-    createShiftView w  = do
+    createShift "" = return ()
+    createShift w  = do
       s <- gets windowset
       unless (W.tagMember w s) (addHiddenWorkspace w)
       windows (W.shift w)
-      windows (W.greedyView w)
 
     listWorkspaces :: X [String]
     listWorkspaces = gets (map W.tag . W.workspaces . windowset)
