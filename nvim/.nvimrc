@@ -171,7 +171,7 @@ noremap  <pageup>   <nop>
 nnoremap <leader>ae   :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
 vmap     <leader>as   <plug>(EasyAlign)
 vmap     <leader>al   <plug>(LiveEasyAlign)
-nnoremap <leader>do   :diffoff!<cr>
+nnoremap <leader>do   :bufdo diffoff<cr>
 nnoremap <leader>dt   :diffthis<cr>
 nnoremap <leader>du   :diffupdate<cr>
 nnoremap <leader>ef   :e %<cr>
