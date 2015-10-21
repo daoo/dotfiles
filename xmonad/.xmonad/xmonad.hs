@@ -174,17 +174,14 @@ myKeyMaps = fromList
     toggleWS     = windows (W.view =<< W.tag . head . hiddenNonNSP)
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 
-    createView "" = return ()
-    createView w  = do
+    createAnd "" _ = return ()
+    createAnd w f = do
       s <- gets windowset
       unless (W.tagMember w s) (addHiddenWorkspace w)
-      windows (W.greedyView w)
+      windows (f w)
 
-    createShift "" = return ()
-    createShift w  = do
-      s <- gets windowset
-      unless (W.tagMember w s) (addHiddenWorkspace w)
-      windows (W.shift w)
+    createView = (`createAnd` W.greedyView)
+    createShift = (`createAnd` W.shift)
 
     listWorkspaces :: X [String]
     listWorkspaces = gets (map W.tag . W.workspaces . windowset)
