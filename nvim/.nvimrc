@@ -3,19 +3,18 @@ call plug#begin('~/.nvim/plugged')
 
 Plug 'benekastah/neomake'
 Plug 'bling/vim-airline'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'daoo/mustang2'
 Plug 'haya14busa/incsearch.vim'
 Plug 'honza/vim-snippets'
+Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'junegunn/fzf'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'justinmk/vim-dirvish'
-Plug 'jvoorhis/coq.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'mbbill/undotree'
 Plug 'mhinz/vim-grepper'
 Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'osyo-manga/unite-quickfix'
 Plug 'rust-lang/rust.vim'
 Plug 'shougo/unite.vim'
 Plug 'shougo/vimproc.vim', { 'do': 'make' }
@@ -29,6 +28,7 @@ Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'tsukkee/unite-tag'
 Plug 'valloric/youcompleteme', { 'do': 'python2 install.py' }
 Plug 'vim-scripts/alex.vim'
 Plug 'vim-scripts/happy.vim'
@@ -201,11 +201,11 @@ nnoremap <leader>/    :Unite grep:.<cr>
 nnoremap <leader>p    :Unite register<cr>
 
 " Incsearch
-map g? <plug>(incsearch-backward)
-map g/ <plug>(incsearch-stay)
+map ? <plug>(incsearch-backward)
+map / <plug>(incsearch-stay)
 
 " F-keys
-nnoremap <f2>  :Dirvish %:p:h<cr>
+nmap <silent> <f2> <plug>FileBeagleOpenCurrentWorkingDir
 nnoremap <f8>  :Neomake!<cr>
 nnoremap <f10> :Neomake! lint<cr>
 nnoremap <f11> :Neomake! docs<cr>
@@ -228,7 +228,6 @@ nnoremap <m-l>     <c-w>v<c-w>l
 inoremap <c-s> <c-o>:update<cr>
 nnoremap <c-s> :update<cr>
 nnoremap <c-p> :FZF<cr>
-nnoremap <c-o> :CtrlP<cr>
 
 " Center matches when searching
 nnoremap N Nzz
@@ -257,14 +256,6 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 let g:airline_right_sep = ''
 let g:airline_left_sep = ''
 
-let g:ctrlp_map = ''
-let g:ctrlp_root_markers = [ '.git', 'Makefile' ]
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_switch_buffer = 0
-
-let g:ctrlp_custom_ignore = {
-  \ 'file': '\v\.(pdf|xcf|bmp|gif|png|jpg|swp|bak|pyc|class|o|hi|exe|dll|pdb|agdai|agda\~)$',
-  \ 'dir': '\v(\.(git|hg|svn))|((src/.*)@<!(build|dist|cabal-dev))$'
-  \ }
+let g:filebeagle_suppress_keymaps = 1
 " }}}
 " vim: fdm=marker :
