@@ -1,6 +1,0 @@
-[Unit]
-Description=Firefox
-
-[Service]
-Environment=DISPLAY=:0
-ExecStart=/usr/bin/firefox

@@ -1,6 +1,0 @@
-[Unit]
-Description=Firefox with profile %I and without remote
-
-[Service]
-Environment=DISPLAY=:0
-ExecStart=/usr/bin/firefox -P %I -no-remote

@@ -1,5 +1,0 @@
-[Unit]
-Description=twmnd
-
-[Service]
-ExecStart=/usr/bin/twmnd

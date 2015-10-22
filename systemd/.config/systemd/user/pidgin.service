@@ -1,6 +1,0 @@
-[Unit]
-Description=Pidgin
-
-[Service]
-Environment=DISPLAY=:0
-ExecStart=/usr/bin/pidgin

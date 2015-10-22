@@ -1,6 +1,0 @@
-[Unit]
-Description=Skype
-
-[Service]
-Environment=DISPLAY=:0
-ExecStart=/usr/bin/skype --disable-api

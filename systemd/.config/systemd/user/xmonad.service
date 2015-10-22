@@ -1,6 +1,0 @@
-[Unit]
-Description=Xmonad
-
-[Service]
-Environment=DISPLAY=:0
-ExecStart=/usr/bin/xmonad
