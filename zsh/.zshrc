@@ -1,9 +1,19 @@
 #!/bin/zsh
 
-# Skip all this for non-interactive shells
 [[ ! $- =~ i ]] && return
 
 # [[[ Config
+if [[ -n "$SSH_CONNECTION" ]]; then
+  ZSH_NESTING="s$ZSH_NESTING"
+elif [[ -n "$RANGER_LEVEL" ]]; then
+  ZSH_NESTING="r$ZSH_NESTING"
+elif [[ -n "$ZSH_NEST" ]]; then
+  ZSH_NESTING="${ZSH_NEST}${ZSH_NESTING}"
+else
+  ZSH_NESTING="z$ZSH_NESTING"
+fi
+export ZSH_NESTING
+
 case $TERM in
   screen*)
       precmd() { print -Pn "\033k%~\033\\" }
@@ -15,17 +25,19 @@ case $TERM in
     ;;
 esac
 
-HISTFILE=~/.zhistory
-HISTSIZE=10000
-SAVEHIST=10000
+HISTFILE=$HOME/.zhistory
+HISTSIZE=50000
+SAVEHIST=100000
 setopt append_history
-setopt extended_history
-setopt hist_ignore_dups
-setopt inc_append_history
+setopt hist_find_no_dups
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt hist_no_store
+setopt hist_save_no_dups
+setopt hist_verify
 setopt share_history
 
 # Misc zsh settings
-setopt auto_resume
 setopt long_list_jobs
 setopt nobeep
 setopt nohup
@@ -54,31 +66,19 @@ autoload edit-command-line
 zle -N edit-command-line
 # ]]]
 # [[[ Aliases
-# Give some commands fancy colors
 alias ls='ls -hF --si --color=auto --group-directories-first'
 alias tree='tree -C'
 alias grep='grep --color=auto'
 
-# Some for ls
 alias l='ls'
 alias ll='ls -l'
 alias la='ls --almost-all'
 alias lla='ls -l --almost-all'
 
-# Up up and away
 alias '..'='cd ..'
-alias '...'='cd ../..'
-alias '....'='cd ../../..'
-alias '.....'='cd ../../../..'
 
-# Bazinga
-alias :q='echo you are not in vim anymore'
-alias :w='echo you are not in vim anymore'
-
-# Other
 alias bell="echo -ne '\a'"
 alias calc='noglob calc'
-alias c='cabal'
 alias g='git'
 alias p='pacaur'
 alias ctl='systemctl'
@@ -119,7 +119,7 @@ prompt_daoo_setup() {
   local dir="${l_paren}${color_magenta}%~${color_end}${r_paren}"
   local host_info="${l_paren}%n${at_char}%m${r_paren}"
   local time="${l_bracket}%D${pipe}%*${r_bracket}"
-  local env="${l_paren}${SSH_CONNECTION:+s}${RANGER_LEVEL:+r}${r_paren}"
+  local env="${l_paren}${ZSH_NESTING}${r_paren}"
 
   line1_a="${hyphen}${dir}${color_prompt}"
   line1_b="${color_end}${env}${hyphen}${time}${hyphen}${host_info}${color_prompt}-"
