@@ -1,5 +1,5 @@
 " {{{ Plugins
-call plug#begin('~/.nvim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'benekastah/neomake'
 Plug 'bling/vim-airline'
@@ -131,7 +131,7 @@ endfunction
 function! SetSpell(lang)
   setlocal spell
   execute "setlocal spelllang=" . a:lang
-  execute "setlocal spellfile=" . "$HOME/.nvim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
+  "execute "setlocal spellfile=" . "~/.config/nvim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
 endfunction
 
 " }}}
@@ -205,7 +205,7 @@ map ? <plug>(incsearch-backward)
 map / <plug>(incsearch-stay)
 
 " F-keys
-nmap <silent> <f2> <plug>FileBeagleOpenCurrentWorkingDir
+nmap <silent> <f2> <plug>FileBeagleOpenCurrentBufferDir
 nnoremap <f8>  :Neomake!<cr>
 nnoremap <f10> :Neomake! lint<cr>
 nnoremap <f11> :Neomake! docs<cr>
