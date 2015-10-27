@@ -41,22 +41,21 @@ gitLog revision1 revision2 = git
   , showString revision1 $ showString ".." revision2
   ]
 
-data PrinterMsg = StopPrinter | Print String
+data PrinterMsg = Fetched | Print String
 
-data ServerMsg = Fetched FilePath
+runPrinter :: [String] -> Chan PrinterMsg -> IO ()
+runPrinter [] chan = return ()
+runPrinter repos chan = readChan chan >>= \case
+  Print message -> putStr message >> runPrinter repos chan
+  Fetched -> runPrinter (tail repos) chan
 
-runPrinter :: Chan PrinterMsg -> IO ()
-runPrinter chan = readChan chan >>= \case
-  StopPrinter -> return ()
-  Print message -> putStr message >> runPrinter chan
-
-runWorker :: FilePath -> Chan ServerMsg -> Chan PrinterMsg -> IO ()
-runWorker repo server printer = do
+runWorker :: FilePath -> Chan PrinterMsg -> IO ()
+runWorker repo printer = do
   writeChan printer $ Print syncmsg
   gitFetch repo
   commits <- gitLog "master" "origin/master" repo
   writeChan printer $ Print (syncedmsg ++ logmsg commits)
-  writeChan server $ Fetched repo
+  writeChan printer Fetched
     where
       syncmsg :: String
       syncmsg =
@@ -78,16 +77,6 @@ runWorker repo server printer = do
         showString (indent "New commits:\n") $
         unlines (map (indent . indent) (lines commits))
 
-spawnWorkers :: Chan ServerMsg -> Chan PrinterMsg -> [String] -> IO ()
-spawnWorkers server printer = mapM_ spawn
-  where
-    spawn repo = forkIO $ runWorker repo server printer
-
-waitForWorkers :: Chan ServerMsg -> [String] -> IO ()
-waitForWorkers _ []    = return ()
-waitForWorkers s repos = readChan s >>=
-  \(Fetched repo) -> waitForWorkers s $ delete repo repos
-
 listGitRepos :: FilePath -> IO [String]
 listGitRepos path = unixFind [path, "-type", "d", "-name", ".git", "-prune"]
 
@@ -97,10 +86,8 @@ main = getArgs >>= \case
     repos <- listGitRepos path
     printer <- newChan
     server <- newChan
-    _ <- forkIO $ runPrinter printer
-    spawnWorkers server printer repos
-    waitForWorkers server repos
-    writeChan printer StopPrinter
+    mapM_ (\repo -> forkIO (runWorker repo printer)) repos
+    runPrinter repos printer
 
   _ -> do
     prog <- getProgName
