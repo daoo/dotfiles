@@ -6,8 +6,10 @@ BTDF
 DXT
 ETC
 GPU
+HDR
 JavaScript
 Joomla
+LDR
 LLVM
 Lambertian
 Maxiom
@@ -17,6 +19,8 @@ PDM
 PHP
 PNG
 Polhem
+RGB
+RGBA
 Regementsvägen
 SpaceClaim
 WordPress
@@ -24,7 +28,6 @@ arity
 equipotential
 filesystem
 kdtree
-memoization
 memoization
 memoize
 memoized
