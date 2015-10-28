@@ -6,76 +6,91 @@ import Control.Concurrent
 import Control.Monad
 import Data.List
 import System.Environment
-import System.Exit
-import System.FilePath
 import System.IO
 import System.Process
+import qualified Data.Map as M
 
 textPurple, textReset :: String
 textPurple = "\x1b[0;35m"
 textReset  = "\x1b[0m"
 
-indent :: String -> String
-indent xs = ' ' : ' ' : xs
-
 unixFind :: [String] -> IO [String]
 unixFind args = lines <$> readProcess "find" args mempty
 
 git :: [String] -> FilePath -> IO String
-git args path = readProcess "git" (showString "--git-dir=" path : args) []
-
-repoName :: FilePath -> String
-repoName ('.':'/':path) = repoName path
-repoName path = takeDirectory path
+git args path = readProcess "git" (showString "--git-dir=" path : args) mempty
 
 gitFetch :: FilePath -> IO ()
 gitFetch = void . git ["fetch", "--quiet"]
 
-gitFormat :: String
-gitFormat = "%C(yellow)%ar%Creset %C(blue)(%ae)%Creset %s"
+gitRemoteUrl :: FilePath -> IO String
+gitRemoteUrl = git ["config", "--get", "remote.origin.url"]
 
 gitLog :: String -> String -> FilePath -> IO String
-gitLog revision1 revision2 = git
+gitLog rev1 rev2 = git
   [ "log"
-  , showString "--format=format:" gitFormat
-  , showString revision1 $ showString ".." revision2
+  , showString "--format=format:" "%C(yellow)%ar%Creset %C(blue)(%ae)%Creset %s"
+  , showString rev1 $ showString ".." rev2
   ]
 
-data PrinterMsg = Fetched | Print String
+dropWhileInclusive :: (a -> Bool) -> [a] -> [a]
+dropWhileInclusive _ []     = []
+dropWhileInclusive f (a:as) = if f a then dropWhileInclusive f as else as
 
-runPrinter :: [String] -> Chan PrinterMsg -> IO ()
-runPrinter [] chan = return ()
-runPrinter repos chan = readChan chan >>= \case
-  Print message -> putStr message >> runPrinter repos chan
-  Fetched -> runPrinter (tail repos) chan
+urlHost :: String -> String
+urlHost url = case dropWhileInclusive (/='@') url of
+  []   -> takeWhile (/=':') url
+  url' -> takeWhile (/=':') url'
 
-runWorker :: FilePath -> Chan PrinterMsg -> IO ()
-runWorker repo printer = do
-  writeChan printer $ Print syncmsg
-  gitFetch repo
-  commits <- gitLog "master" "origin/master" repo
-  writeChan printer $ Print (syncedmsg ++ logmsg commits)
-  writeChan printer Fetched
-    where
-      syncmsg :: String
-      syncmsg =
-        showString textPurple $
-        showString "Fetching " $
-        showString (repoName repo) $
-        showString textReset "\n"
+indent :: String -> String
+indent = unlines . map ("    " ++) . lines
 
-      syncedmsg :: String
-      syncedmsg =
-        showString textPurple $
-        showString "Fetched " $
-        showString (repoName repo) $
-        showString textReset "\n"
+data PrinterMsg   = StopPrinter | Print FilePath
+data WorkerMsg    = StopWorker  | Fetch FilePath
+newtype ServerMsg = Fetched String
 
-      logmsg :: String -> String
-      logmsg []      = []
-      logmsg commits =
-        showString (indent "New commits:\n") $
-        unlines (map (indent . indent) (lines commits))
+runPrinter :: Chan PrinterMsg -> IO ()
+runPrinter chan = readChan chan >>= \case
+  StopPrinter -> return ()
+
+  Print repo -> do
+    putStrLn $ showString textPurple $ showString "Synced " $ showString repo textReset
+    gitLog "master" "origin/master" repo >>= \case
+      []  -> return ()
+      new -> putStrLn "  New commits:" >> putStrLn (indent new)
+
+    runPrinter chan
+
+runWorker :: Chan WorkerMsg -> Chan ServerMsg -> Chan PrinterMsg -> IO ()
+runWorker worker server printer = readChan worker >>= \case
+  StopWorker -> return ()
+
+  Fetch repo -> do
+    gitFetch repo
+    writeChan server $ Fetched repo
+    writeChan printer $ Print repo
+    runWorker worker server printer
+
+spawnWorkers :: Chan ServerMsg -> Chan PrinterMsg -> [String] -> IO [Chan WorkerMsg]
+spawnWorkers server printer = go M.empty
+  where
+    go m []           = return $ M.elems m
+    go m (repo:repos) = do
+      host <- urlHost `fmap` gitRemoteUrl repo
+      worker <- case M.lookup host m of
+        Nothing -> do
+          worker <- newChan
+          void . forkIO $ runWorker worker server printer
+          return worker
+        Just worker -> return worker
+
+      writeChan worker $ Fetch repo
+      go (M.insert host worker m) repos
+
+waitForWorkers :: Chan ServerMsg -> [String] -> IO ()
+waitForWorkers _ [] = return ()
+waitForWorkers server repos = readChan server >>=
+  \(Fetched repo) -> waitForWorkers server $ delete repo repos
 
 listGitRepos :: FilePath -> IO [String]
 listGitRepos path = unixFind [path, "-type", "d", "-name", ".git", "-prune"]
@@ -86,10 +101,12 @@ main = getArgs >>= \case
     repos <- listGitRepos path
     printer <- newChan
     server <- newChan
-    mapM_ (\repo -> forkIO (runWorker repo printer)) repos
-    runPrinter repos printer
+    void . forkIO $ runPrinter printer
+    workers <- spawnWorkers server printer repos
+    waitForWorkers server repos
+    forM_ workers (`writeChan` StopWorker)
+    writeChan printer StopPrinter
 
   _ -> do
     prog <- getProgName
     hPutStrLn stderr ("Usage: " ++ prog ++ " DIRECTORY")
-    exitFailure
