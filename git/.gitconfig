@@ -6,6 +6,8 @@
   cif = commit --fixup
   co  = checkout
   cp  = cherry-pick
+  cpa = cherry-pick --abort
+  cpc = cherry-pick --continue
   dc  = diff --cached
   df  = diff
   ff  = merge --ff-only origin/master
