@@ -1,2 +1,4 @@
-completionType: ListCompletion
 bind: ctrl-e : r return
+editMode: Vi
+completionType: ListCompletion
+historyDuplicates: IgnoreAll
