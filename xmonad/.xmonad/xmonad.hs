@@ -22,7 +22,9 @@ import qualified XMonad.StackSet as W
 
 -- {{{ Hooks
 myManageHook :: ManageHook
-myManageHook = role =? "gimp-message-dialog" --> doFloat
+myManageHook =
+  (role =? "gimp-message-dialog" --> doFloat) <+>
+  (className =? "spotify" --> doShift "music")
   where
     role = stringProperty "WM_WINDOW_ROLE"
 
@@ -54,7 +56,7 @@ myTerminal :: String
 myTerminal = "/usr/bin/urxvt"
 
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void"]
+myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "music"]
 
 myPP :: Handle -> PP
 myPP handle = defaultPP
