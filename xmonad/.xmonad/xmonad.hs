@@ -22,9 +22,7 @@ import qualified XMonad.StackSet as W
 
 -- {{{ Hooks
 myManageHook :: ManageHook
-myManageHook =
-  (role =? "gimp-message-dialog" --> doFloat) <+>
-  (className =? "spotify" --> doShift "music")
+myManageHook = role =? "gimp-message-dialog" --> doFloat
   where
     role = stringProperty "WM_WINDOW_ROLE"
 
