@@ -2,23 +2,23 @@ module Main (main) where
 
 import Control.Monad (unless)
 import Data.Map (Map, fromList)
-import Data.Monoid
+import Data.Monoid ((<>))
 import Data.Ratio ((%))
 import System.Exit (exitSuccess)
-import System.IO (Handle)
-import XMonad hiding (Color)
-import XMonad.Actions.DynamicWorkspaces
-import XMonad.Actions.Navigation2D
-import XMonad.Actions.NoBorders
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops
+import System.IO (Handle, hPutStrLn)
+import XMonad
+import XMonad.Actions.DynamicWorkspaces (addHiddenWorkspace, removeEmptyWorkspace)
+import XMonad.Actions.Navigation2D (windowGo, windowSwap, Direction2D(..))
+import XMonad.Actions.NoBorders (toggleBorder)
+import XMonad.Hooks.DynamicLog (PP(..), defaultPP, dynamicLogWithPP, xmobarColor, trim)
+import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks)
-import XMonad.Hooks.UrgencyHook
-import XMonad.Layout.NoBorders
+import XMonad.Hooks.UrgencyHook (NoUrgencyHook(NoUrgencyHook), withUrgencyHook)
+import XMonad.Layout.NoBorders (noBorders, lessBorders, Ambiguity(..), With(..))
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Util.NamedScratchpad (namedScratchpadFilterOutWorkspacePP)
-import XMonad.Util.Run
-import XMonad.Util.Scratchpad
+import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg, runProcessWithInput)
+import XMonad.Util.Scratchpad (scratchpadSpawnActionTerminal, scratchpadManageHookDefault)
 import qualified XMonad.StackSet as W
 
 -- {{{ Hooks
