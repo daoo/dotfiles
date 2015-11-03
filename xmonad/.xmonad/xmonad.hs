@@ -2,6 +2,7 @@ module Main (main) where
 
 import Control.Monad (unless)
 import Data.Map (Map, fromList)
+import Data.Monoid
 import Data.Ratio ((%))
 import System.Exit (exitSuccess)
 import System.IO (Handle)
@@ -11,7 +12,7 @@ import XMonad.Actions.Navigation2D
 import XMonad.Actions.NoBorders
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks)
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
@@ -223,8 +224,8 @@ main = do
     , logHook            = dynamicLogWithPP (namedScratchpadFilterOutWorkspacePP (myPP hxmobar))
     , startupHook        = return ()
     , mouseBindings      = const myMouseBindings
-    , manageHook         = myManageHook <+> manageDocks <+> scratchpadManageHookDefault
-    , handleEventHook    = fullscreenEventHook
+    , manageHook         = myManageHook <> scratchpadManageHookDefault <> manageDocks
+    , handleEventHook    = fullscreenEventHook <+> docksEventHook
     , focusFollowsMouse  = False
     , clickJustFocuses   = False
     }
