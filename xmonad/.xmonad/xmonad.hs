@@ -192,7 +192,7 @@ myKeyMaps = fromList
 
     keymap name = safeSpawn "setxkbmap" [name]
 
-    lock = safeSpawn "i3lock-wallpaper" []
+    lock = safeSpawn "slock" []
 
     playerctl cmd = safeSpawn "playerctl" [cmd]
 

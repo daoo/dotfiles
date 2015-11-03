@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-i3lock -i "$(awk -F \' '/feh/{print $2}' < "$HOME/.fehbg")"

@@ -24,7 +24,7 @@ our $SCHEMA = [
   {cat => ['settings',    'Settings',    'applications-accessories']},
   {cat => ['system',      'System',      'applications-system']},
 
-  {item => ['i3lock-fancy', 'Lock', 'lock']},
+  {item => ['slock', 'Lock', 'lock']},
 
   {exit => ['Exit', 'exit']},
 ]
