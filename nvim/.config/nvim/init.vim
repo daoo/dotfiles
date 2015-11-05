@@ -182,6 +182,7 @@ nnoremap <leader>evs  :source $MYVIMRC<cr>
 nnoremap <leader>ecc  :e %<.cc<cr>
 nnoremap <leader>ecpp :e %<.cpp<cr>
 nnoremap <leader>eh   :e %<.h<cr>
+nnoremap <leader>ehpp :e %<.hpp<cr>
 nnoremap <leader>fc   :nohlsearch<cr>
 nnoremap <leader>fg   :Grepper!<cr>
 xmap     <leader>fs   <plug>(GrepperOperator)
@@ -207,9 +208,7 @@ map / <plug>(incsearch-stay)
 
 " F-keys
 nmap <silent> <f2> <plug>FileBeagleOpenCurrentBufferDir
-nnoremap <f8>  :Neomake!<cr>
-nnoremap <f10> :Neomake! lint<cr>
-nnoremap <f11> :Neomake! docs<cr>
+nnoremap <f8> :Neomake!<cr>
 
 " Window navigation
 nnoremap <c-left>  <c-w>5>
@@ -242,9 +241,6 @@ vnoremap gs :sort<cr>
 nnoremap gsap Vapk:sort<cr>
 " }}}
 " {{{ Addons
-let g:neomake_lint_maker = { 'exe': 'make', 'args': ['lint'] }
-let g:neomake_docs_maker = { 'exe': 'make', 'args': ['docs'] }
-
 let g:gutentags_cache_dir = '/tmp/gutentags'
 let g:gutentags_project_root = [ '.git', 'Makefile' ]
 
