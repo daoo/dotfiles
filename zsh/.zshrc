@@ -210,6 +210,7 @@ zstyle ':completion:*:manuals' separate-sections true
 zstyle ':completion:*:manuals.(^1*)' insert-sections true
 # ]]]
 # [[[ FZF
+export FZF_DEFAULT_COMMAND='ag -g ""'
 
 # open file
 fo() {
