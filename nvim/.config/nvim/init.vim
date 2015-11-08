@@ -149,7 +149,7 @@ endfunction
 function! s:fzf_buffers()
   call fzf#run({
   \  'source':  reverse(<sid>buflist()),
-  \  'sink':    function('<sid>bufopen'),
+  \  'sink':    function('s:bufopen'),
   \  'options': '+m',
   \  'down':    len(<sid>buflist()) + 2
   \})
@@ -158,7 +158,7 @@ endfunction
 function! s:fzf_tags()
   call fzf#run({
   \  'source':  'grep -v ^!'.' <'.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')),
-  \  'sink':    function('<sid>tags_sink'),
+  \  'sink':    function('s:tags_sink'),
   \  'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
   \  'down':    '40%'
   \})
