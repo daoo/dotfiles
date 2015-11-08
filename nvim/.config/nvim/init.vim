@@ -16,7 +16,6 @@ Plug 'mbbill/undotree'
 Plug 'mhinz/vim-grepper'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'rust-lang/rust.vim'
-Plug 'shougo/vimproc.vim', { 'do': 'make' }
 Plug 'sirver/ultisnips'
 Plug 't9md/vim-quickhl'
 Plug 'tikhomirov/vim-glsl'
