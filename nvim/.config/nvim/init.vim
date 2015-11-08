@@ -15,9 +15,7 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'mbbill/undotree'
 Plug 'mhinz/vim-grepper'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'osyo-manga/unite-quickfix'
 Plug 'rust-lang/rust.vim'
-Plug 'shougo/unite.vim'
 Plug 'shougo/vimproc.vim', { 'do': 'make' }
 Plug 'sirver/ultisnips'
 Plug 't9md/vim-quickhl'
@@ -29,7 +27,6 @@ Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'tsukkee/unite-tag'
 Plug 'valloric/youcompleteme', { 'do': 'python2 install.py' }
 Plug 'vim-scripts/alex.vim'
 Plug 'vim-scripts/happy.vim'
@@ -199,8 +196,6 @@ nnoremap <leader>ss   :call SetSpell("sv")<cr>
 nnoremap <leader>t    :call LongLineHLToggle()<cr>
 vnoremap <leader>x    c<c-r>=<c-r>"<cr><esc>
 nnoremap <leader>ya   :%y+<cr>
-nnoremap <leader>/    :Unite grep:.<cr>
-nnoremap <leader>p    :Unite register<cr>
 
 " Incsearch
 map ? <plug>(incsearch-backward)
