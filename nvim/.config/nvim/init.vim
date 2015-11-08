@@ -115,7 +115,7 @@ augroup activewindow
   autocmd WinLeave * set nocursorcolumn | set nocursorline
 augroup END
 
-function! LongLineHLToggle()
+function! s:togglelongline()
   if exists('w:long_line_match')
     silent! call matchdelete(w:long_line_match)
     unlet w:long_line_match
@@ -124,12 +124,6 @@ function! LongLineHLToggle()
   else
     let w:long_line_match = matchadd('ErrorMsg', '\%>80v.\+', -1)
   endif
-endfunction
-
-function! SetSpell(lang)
-  setlocal spell
-  execute "setlocal spelllang=" . a:lang
-  "execute "setlocal spellfile=" . "~/.config/nvim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
 endfunction
 
 " }}}
@@ -190,10 +184,10 @@ nmap     <leader>M    <plug>(quickhl-manual-reset)
 vmap     <leader>M    <plug>(quickhl-manual-reset)
 nmap     <leader>m    <plug>(quickhl-manual-this)
 vmap     <leader>m    <plug>(quickhl-manual-this)
-nnoremap <leader>se   :call SetSpell("en_us")<cr>
+nnoremap <leader>se   :setlocal spell<cr>:setlocal spelllang=en_us<cr>
+nnoremap <leader>ss   :setlocal spell<cr>:setlocal spelllang=sv<cr>
 nnoremap <leader>so   :setlocal nospell<cr>
-nnoremap <leader>ss   :call SetSpell("sv")<cr>
-nnoremap <leader>t    :call LongLineHLToggle()<cr>
+nnoremap <leader>t    :call <sid>togglelongline()<cr>
 vnoremap <leader>x    c<c-r>=<c-r>"<cr><esc>
 nnoremap <leader>ya   :%y+<cr>
 
