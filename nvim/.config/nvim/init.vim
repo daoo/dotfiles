@@ -156,8 +156,13 @@ function! s:fzf_buffers()
 endfunction
 
 function! s:fzf_tags()
+  if len(tagfiles()) == 0
+    echom 'No tag files availible.'
+    return
+  endif
+
   call fzf#run({
-  \  'source':  'grep -v ^!'.' <'.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')),
+  \  'source':  'grep -v ^!'.' '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')),
   \  'sink':    function('s:tags_sink'),
   \  'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
   \  'down':    '40%'
