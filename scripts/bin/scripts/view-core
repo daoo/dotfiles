@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
 
 # TODO: Predictable temp dir
 
@@ -13,13 +13,18 @@ if dbdir="$(find .cabal-sandbox -type d -name '*-packages.conf.d' -print -quit 2
   fi
 fi
 
+srcdir=""
+if [[ -d src ]]; then
+  srcdir="-isrc"
+fi
+
 tmpdir="$(mktemp -d)"
-trap "rm -rf '$tmpdir'" EXIT
+trap "rm -rf '$tmpdir'" EXIT SIGINT SIGTERM
 
 ${GHC:-ghc} \
   -o "$tmpdir/a.out" \
   -outputdir "$tmpdir" \
-  -isrc \
+  "$srcdir" \
   "$dbflag" \
   -dsuppress-coercions \
   -dsuppress-module-prefixes \
@@ -32,4 +37,4 @@ ${GHC:-ghc} \
   -ddump-simpl \
   "$@"
 
-( cd "$tmpdir"; ${EDITOR:-nvim} )
+( cd "$tmpdir" && ${EDITOR:-nvim} )
