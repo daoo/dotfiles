@@ -277,7 +277,7 @@ nnoremap gsap Vapk:sort<cr>
 " }}}
 " {{{ Addons
 let g:gutentags_cache_dir = '/tmp/gutentags'
-let g:gutentags_project_root = [ '.git', 'Makefile' ]
+let g:gutentags_project_root = [ 'Build.hs', 'Makefile' ]
 
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_key_invoke_completion = ''
