@@ -3,6 +3,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'benekastah/neomake'
 Plug 'bling/vim-airline'
+Plug 'cohama/lexima.vim'
 Plug 'daoo/mustang2'
 Plug 'evidens/vim-twig'
 Plug 'haya14busa/incsearch.vim'
