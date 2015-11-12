@@ -1,16 +1,16 @@
-URxvt.buffered:  true
-URxvt.saveLines: 10000
-URxvt.iso14755:  false
-
 URxvt.keysym.M-u: perl:url-select:select_next
-URxvt.perl-ext:   default,url-select
+URxvt.perl-ext: default,url-select
+URxvt.url-select.launcher: xdg-open
 
-URxvt.font:            *-dina-medium-r-normal-*-10-*-*-*-*-*-*-*
-URxvt.internalBorder:  0
-URxvt.scrollBar:       false
-URxvt.scrollBar_right: false
-URxvt.urgentOnBell:    true
-URxvt.visualBell:      false
+URxvt.buffered: true
+URxvt.font: *-dina-medium-r-normal-*-10-*-*-*-*-*-*-*
+URxvt.internalBorder: 0
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+URxvt.saveLines: 0
+URxvt.scrollBar: false
+URxvt.urgentOnBell: true
+URxvt.visualBell: false
 
 URxvt.background: #141414
 URxvt.foreground: #d4d4d4
