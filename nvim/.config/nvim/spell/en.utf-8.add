@@ -1,5 +1,6 @@
 ASTC
 Abelian
+BISE
 BRDF
 BSDF
 BTDF
@@ -38,6 +39,7 @@ monoid
 partitionings
 pseudocode
 pseudopolynomial
+quintary
 semiring
 semirings
 sudoku
@@ -45,3 +47,6 @@ texel
 texels
 timestamp
 toolchain
+trinary
+trit
+trits
