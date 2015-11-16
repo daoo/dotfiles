@@ -191,7 +191,7 @@ nnoremap <leader>dt   :diffthis<cr>
 nnoremap <leader>du   :diffupdate<cr>
 nnoremap <leader>ef   :e %<cr>
 nnoremap <leader>eF   :e! %<cr>
-nnoremap <leader>eve  :vsplit $MYVIMRC<cr>
+nnoremap <leader>eve  :e $MYVIMRC<cr>
 nnoremap <leader>evs  :source $MYVIMRC<cr>
 nnoremap <leader>ecc  :e %<.cc<cr>
 nnoremap <leader>ecpp :e %<.cpp<cr>
