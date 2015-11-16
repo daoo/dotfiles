@@ -2,12 +2,12 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'benekastah/neomake'
-Plug 'bling/vim-airline'
 Plug 'cohama/lexima.vim'
 Plug 'daoo/mustang2'
 Plug 'evidens/vim-twig'
 Plug 'haya14busa/incsearch.vim'
 Plug 'honza/vim-snippets'
+Plug 'itchyny/lightline.vim'
 Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'junegunn/fzf'
 Plug 'junegunn/rainbow_parentheses.vim'
@@ -48,14 +48,15 @@ set noswapfile
 set belloff=all
 set cursorcolumn
 set cursorline
+set laststatus=2
 set list
 set listchars=tab:▸\ ,extends:❯,precedes:❮
 set mouse=
+set noshowcmd
 set nowrap
 set number
 set relativenumber
 set scrolloff=1
-set showcmd
 set sidescrolloff=5
 
 set foldlevel=0
@@ -265,9 +266,13 @@ let g:ycm_key_invoke_completion = ''
 let g:ycm_key_list_previous_completion = []
 let g:ycm_key_list_select_completion = []
 
-let g:airline_right_sep = ''
-let g:airline_left_sep = ''
-
 let g:filebeagle_suppress_keymaps = 1
+
+let g:lightline = {
+    \ 'active': {
+    \   'left': [ ['mode', 'paste'], ['readonly', 'filename', 'modified'] ],
+    \   'right': [ ['lineinfo'], ['percent'], ['filetype'] ]
+    \ }
+    \ }
 " }}}
 " vim: fdm=marker :
