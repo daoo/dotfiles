@@ -37,67 +37,45 @@ Plug 'wolfy87/vim-enmasse'
 call plug#end()
 " }}}
 " {{{ Settings
-" moving around, searching and patterns
-set ignorecase
-set smartcase
+set autowrite
+set hidden
 
-" displaying text
-colorscheme mustang
-syntax on
-set fillchars=vert:│
-set lazyredraw
+set backupdir=/tmp
+set directory=/tmp
+set nobackup
+set noswapfile
+
+set belloff=all
+set cursorcolumn
+set cursorline
 set list
 set listchars=tab:▸\ ,extends:❯,precedes:❮
+set mouse=
 set nowrap
 set number
 set relativenumber
 set scrolloff=1
+set showcmd
 set sidescrolloff=5
 
-" syntax, highlighting and spelling
-set cursorcolumn
-set cursorline
-
-" multiple windows
-set hidden
-set laststatus=2
-
-" message and info
-set belloff=all
-set showcmd
-
-" editing text
-set formatoptions+=ron
-set nojoinspaces
-set undolevels=500
-
-" tabs and indenting
-set expandtab
-set shiftround
-set shiftwidth=2
-set softtabstop=2
-
-" folding
 set foldlevel=0
 set foldmethod=indent
 set foldnestmax=10
 set nofoldenable
 
-" reading and writing files
-set autowrite
-set nobackup
-set backupdir=/tmp
+set ignorecase
+set smartcase
 
-" the swap file
-set noswapfile
-set directory=/tmp
+set expandtab
+set formatoptions+=ron
+set nojoinspaces
+set shiftround
+set shiftwidth=2
+set softtabstop=2
 
-" command line editing
-set history=1000
+colorscheme mustang
+syntax on
 
-set mouse=
-let mapleader=" "
-let maplocalleader=" "
 syn match myTodo contained "\<\(TODO\|FIXME\)"
 hi def link myTodo Todo
 " }}}
@@ -200,6 +178,8 @@ noremap  <pagedown> <nop>
 noremap  <pageup>   <nop>
 " }}}
 " {{{ Key bindings
+let mapleader=" "
+let maplocalleader=" "
 
 " Leader mappings
 nnoremap <leader>ae   :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
