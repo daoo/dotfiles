@@ -269,7 +269,7 @@ let g:filebeagle_suppress_keymaps = 1
 
 let g:lightline = {
     \ 'active': {
-    \   'left': [ ['mode', 'paste'], ['readonly', 'filename', 'modified'] ],
+    \   'left': [ ['mode', 'paste'], ['relativepath', 'readonly', 'modified'] ],
     \   'right': [ ['lineinfo'], ['percent'], ['filetype'] ]
     \ }
     \ }
