@@ -269,7 +269,7 @@ fkill() {
 
 # fh - repeat history
 fh() {
-  print -z $(fc -l 1 | fzf +s --tac | sed 's/ *[0-9]* *//')
+  print -z $(fc -ln 1 | sort -u | fzf)
 }
 # ]]]
 # [[[ Z
