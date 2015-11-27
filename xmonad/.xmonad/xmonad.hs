@@ -111,7 +111,7 @@ myKeyMaps = fromList
   , ((myModKey, xK_u), withFocused toggleBorder)
 
   -- Focus and swapping
-  , ((myModKey, xK_r), selectWindow)
+  , ((myModKey, xK_f), selectWindow)
 
   , ((myModKey,               xK_Tab), windows W.focusDown)
   , ((myModKey .|. shiftMask, xK_Tab), windows W.focusUp)
@@ -135,9 +135,9 @@ myKeyMaps = fromList
 
   -- Handling workspaces
   , ((myModKey,               xK_o), toggleWS)
-  , ((myModKey .|. shiftMask, xK_g), removeEmptyWorkspace)
-  , ((myModKey,               xK_g), listWorkspaces >>= rofiPrompt "view:"  >>= createView)
-  , ((myModKey,               xK_c), listWorkspaces >>= rofiPrompt "shift:" >>= createShift)
+  , ((myModKey .|. shiftMask, xK_r), removeEmptyWorkspace)
+  , ((myModKey,               xK_v), listWorkspaces >>= rofiPrompt "view:"  >>= createView)
+  , ((myModKey,               xK_s), listWorkspaces >>= rofiPrompt "shift:" >>= createShift)
 
   -- Workspace keys
   , ((myModKey,               xK_ampersand),   windows (W.greedyView (myWorkspaces !! 0)))
