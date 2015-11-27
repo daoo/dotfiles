@@ -10,6 +10,7 @@ import XMonad
 import XMonad.Actions.DynamicWorkspaces (addHiddenWorkspace, removeEmptyWorkspace)
 import XMonad.Actions.Navigation2D (windowGo, windowSwap, Direction2D(..))
 import XMonad.Actions.NoBorders (toggleBorder)
+import XMonad.Actions.WindowBringer (windowMap)
 import XMonad.Hooks.DynamicLog (PP(..), defaultPP, dynamicLogWithPP, xmobarColor, trim)
 import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks)
@@ -19,6 +20,7 @@ import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Util.NamedScratchpad (namedScratchpadFilterOutWorkspacePP)
 import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg, runProcessWithInput)
 import XMonad.Util.Scratchpad (scratchpadSpawnActionTerminal, scratchpadManageHookDefault)
+import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
 -- {{{ Hooks
@@ -89,7 +91,7 @@ myKeyMaps :: Map (KeyMask, KeySym) (X ())
 myKeyMaps = fromList
   -- Launching and killing programs
   [ ((myModKey .|. shiftMask, xK_c),      kill)
-  , ((myModKey,               xK_p),      rofiRun >>= flip safeSpawn [])
+  , ((myModKey,               xK_p),      rofiRun)
   , ((myModKey,               xK_i),      scratchpadSpawnActionTerminal myTerminal)
   , ((myModKey,               xK_Return), safeSpawnProg myTerminal)
 
@@ -109,6 +111,8 @@ myKeyMaps = fromList
   , ((myModKey, xK_u), withFocused toggleBorder)
 
   -- Focus and swapping
+  , ((myModKey, xK_r), selectWindow)
+
   , ((myModKey,               xK_Tab), windows W.focusDown)
   , ((myModKey .|. shiftMask, xK_Tab), windows W.focusUp)
   , ((myModKey,               xK_m),   windows W.focusMaster)
@@ -175,17 +179,18 @@ myKeyMaps = fromList
     toggleWS     = windows (W.view =<< W.tag . head . hiddenNonNSP)
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 
-    createAnd "" _ = return ()
-    createAnd w f = do
-      s <- gets windowset
-      unless (W.tagMember w s) (addHiddenWorkspace w)
-      windows (f w)
+    createAnd newtag f = unless (null newtag) $
+      addHiddenWorkspace newtag >> windows (f newtag)
 
     createView = (`createAnd` W.greedyView)
     createShift = (`createAnd` W.shift)
 
-    listWorkspaces :: X [String]
     listWorkspaces = gets (map W.tag . W.workspaces . windowset)
+
+    selectWindow = do
+      m <- windowMap
+      rofiPrompt "focus:" (M.keys m) >>= \k -> unless (null k) $
+        maybe (return ()) (windows . W.focusWindow) (M.lookup k m)
 
     reload = spawn "xmonad --recompile && xmonad --restart"
 
@@ -195,10 +200,19 @@ myKeyMaps = fromList
 
     playerctl cmd = safeSpawn "playerctl" [cmd]
 
-    rofiRun = runProcessWithInput "rofi" ["-show", "run", "-run-command", "echo -n {cmd}"] ""
+    rofiRun = rofi >>= flip safeSpawn []
+      where
+        rofi = runProcessWithInput
+          "rofi"
+          ["-show", "run", "-run-command", "echo -n {cmd}"]
+          ""
 
-    rofiPrompt prompt opts = trim <$>
-      runProcessWithInput "rofi" ["-dmenu", "-p", prompt] (unlines opts)
+    rofiPrompt prompt opts = trim <$> rofi
+      where
+        rofi = runProcessWithInput
+          "rofi"
+          ["-dmenu", "-p", prompt]
+          (unlines opts)
 -- }}}
 -- {{{ Mouse
 myMouseBindings :: Map (KeyMask, Button) (Window -> X ())
