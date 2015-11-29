@@ -3,7 +3,7 @@
 [[ ! $- =~ i ]] && return
 
 # [[[ Config
-if [[ -n "$SSH_CONNECTION" ]]; then
+if [[ -n "$SSH_CONNECTION" && ( ! "$ZSH_NESTING" =~ s ) ]]; then
   ZSH_NESTING="s$ZSH_NESTING"
 elif [[ -n "$RANGER_LEVEL" ]]; then
   ZSH_NESTING="r$ZSH_NESTING"
