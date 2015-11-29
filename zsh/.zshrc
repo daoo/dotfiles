@@ -16,12 +16,12 @@ export ZSH_NESTING
 
 case $TERM in
   screen*)
-      precmd() { print -Pn "\033k%~\033\\" }
-      preexec() { print -Pn "\033k$1\033\\" }
+      precmd() { print -Pn '\033k%~\033\\' }
+      preexec() { print -Pn '\033k$1\033\\' }
     ;;
   rxvt*)
-      precmd() { print -Pn "\e]2;%~ (%n@%m)\a" }
-      preexec() { print -Pn "\e]2;$1 (%n@%m)\a" }
+      precmd() { print -Pn '\e]2;%~ (%n@%m)\a' }
+      preexec() { print -Pn '\e]2;$1 (%n@%m)\a' }
     ;;
 esac
 
@@ -45,10 +45,10 @@ setopt notify
 unsetopt bg_nice
 unsetopt check_jobs
 
-export EDITOR="nvim"
-export PAGER="less"
+export EDITOR='nvim'
+export PAGER='less'
 
-export LESS="-ir"
+export LESS='-ir'
 
 # Less color
 export LESS_TERMCAP_mb=$'\E[01;31m'
