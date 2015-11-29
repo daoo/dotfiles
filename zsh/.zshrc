@@ -7,6 +7,8 @@ if [[ -n "$SSH_CONNECTION" && ( ! "$ZSH_NESTING" =~ s ) ]]; then
   ZSH_NESTING="s$ZSH_NESTING"
 elif [[ -n "$RANGER_LEVEL" ]]; then
   ZSH_NESTING="r$ZSH_NESTING"
+elif [[ -n "$TMUX" ]]; then
+  ZSH_NESTING="t$ZSH_NESTING"
 elif [[ -n "$ZSH_NEST" ]]; then
   ZSH_NESTING="${ZSH_NEST}${ZSH_NESTING}"
 else
