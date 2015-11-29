@@ -273,9 +273,7 @@ fh() {
 }
 # ]]]
 # [[[ Z
-if [[ -f "$HOME/.local/share/zsh/z/z.sh" ]]; then
-  source "$HOME/.local/share/zsh/z/z.sh"
-fi
+source "$HOME/.local/share/zsh/z/z.sh"
 # ]]]
 
 # vim: foldmarker=[[[,]]] fdm=marker :
