@@ -81,6 +81,7 @@ alias bell="echo -ne '\a'"
 alias calc='noglob calc'
 alias g='git'
 alias p='pacaur'
+alias pwf='pw copy "$(pw list | fzf)"'
 alias ctl='systemctl'
 alias sctl='sudo systemctl'
 alias uctl='systemctl --user'
