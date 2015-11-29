@@ -200,19 +200,11 @@ myKeyMaps = fromList
 
     playerctl cmd = safeSpawn "playerctl" [cmd]
 
-    rofiRun = rofi >>= flip safeSpawn []
-      where
-        rofi = runProcessWithInput
-          "rofi"
-          ["-show", "run", "-run-command", "echo -n {cmd}"]
-          ""
+    rofi = runProcessWithInput "rofi"
 
-    rofiPrompt prompt opts = trim <$> rofi
-      where
-        rofi = runProcessWithInput
-          "rofi"
-          ["-dmenu", "-p", prompt]
-          (unlines opts)
+    rofiRun = rofi ["-show", "run", "-run-command", "echo -n {cmd}"] "" >>= flip safeSpawn []
+
+    rofiPrompt prompt opts = trim <$> rofi ["-dmenu", "-p", prompt] (unlines opts)
 -- }}}
 -- {{{ Mouse
 myMouseBindings :: Map (KeyMask, Button) (Window -> X ())
