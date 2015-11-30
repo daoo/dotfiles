@@ -15,7 +15,7 @@ import XMonad.Hooks.DynamicLog (PP(..), defaultPP, dynamicLogWithPP, xmobarColor
 import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks)
 import XMonad.Hooks.UrgencyHook (NoUrgencyHook(NoUrgencyHook), withUrgencyHook)
-import XMonad.Layout.NoBorders (noBorders, lessBorders, Ambiguity(..), With(..))
+import XMonad.Layout.NoBorders (lessBorders, Ambiguity(..), With(..))
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Util.NamedScratchpad (namedScratchpadFilterOutWorkspacePP)
 import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg, runProcessWithInput)
@@ -31,14 +31,14 @@ myManageHook = role =? "gimp-message-dialog" --> doFloat
 
 myLayoutHook = onWorkspace "full" lfull ldef
   where
-    lfull = noBorders (full ||| tall ||| long)
-    ldef  = avoidStruts (borders (tall ||| long ||| full))
+    lfull = lessBorders borders (full ||| tall ||| wide)
+    ldef  = avoidStruts (lessBorders borders (tall ||| wide ||| full))
 
     full = Full
     tall = Tall 1 (3%100) (1%2)
-    long = Mirror tall
+    wide = Mirror tall
 
-    borders = lessBorders (Combine Difference Screen OnlyFloat)
+    borders = Combine Difference Screen OnlyFloat
 -- }}}
 -- {{{ Colors and fonts
 colorRed, colorGreen, colorBlue, colorPurple :: String
