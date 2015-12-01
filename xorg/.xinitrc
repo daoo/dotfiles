@@ -13,6 +13,6 @@ xsetroot -cursor_name left_ptr
 
 export BROWSER="qutebrowser"
 systemctl --user import-environment BROWSER
-systemctl --user start compton unclutter
+systemctl --user start unclutter
 
 exec xmonad
