@@ -18,7 +18,7 @@ if [[ -d src ]]; then
   srcdir="-isrc"
 fi
 
-tmpdir="$(mktemp -d)"
+tmpdir="$(mktemp --tmpdir=/tmp --directory view-core.XXXXXXX)"
 trap "rm -rf '$tmpdir'" EXIT SIGINT SIGTERM
 
 ${GHC:-ghc} \
