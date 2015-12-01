@@ -12,7 +12,9 @@ xrdb -merge "$HOME/.Xresources"
 xsetroot -cursor_name left_ptr
 
 export BROWSER="qutebrowser"
-systemctl --user import-environment BROWSER
+export TERMCMD="urxvt"
+systemctl --user import-environment PATH BROWSER TERMCMD
+
 systemctl --user start unclutter
 
 exec xmonad
