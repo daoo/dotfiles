@@ -2,6 +2,11 @@
 
 set -eu
 
+logrun() {
+  echo $@
+  $@
+}
+
 # TODO: Predictable temp dir
 
 # FIXME: Problem arise when there is more than one package-database. Which
@@ -21,7 +26,7 @@ fi
 tmpdir="$(mktemp --tmpdir=/tmp --directory view-core.XXXXXXX)"
 trap "rm -rf '$tmpdir'" EXIT SIGINT SIGTERM
 
-${GHC:-ghc} \
+logrun ${GHC:-ghc} \
   -o "$tmpdir/a.out" \
   -outputdir "$tmpdir" \
   "$srcdir" \
