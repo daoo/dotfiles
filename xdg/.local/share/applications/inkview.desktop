@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=inkview
-GenericName=Vector Graphics Viewer
-Categories=Graphics
-Exec=inkview %f
-MimeType=image/svg+xml;image/svg+xml-compressed;application/vnd.corel-draw;application/pdf;application/postscript;image/x-eps;application/illustrator;
-Terminal=false
-Icon=inkscape
