@@ -186,9 +186,6 @@ let maplocalleader=" "
 nnoremap <leader>ae   :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
 vmap     <leader>as   <plug>(EasyAlign)
 vmap     <leader>al   <plug>(LiveEasyAlign)
-nnoremap <leader>do   :bufdo diffoff<cr>
-nnoremap <leader>dt   :diffthis<cr>
-nnoremap <leader>du   :diffupdate<cr>
 nnoremap <leader>ef   :e %<cr>
 nnoremap <leader>eF   :e! %<cr>
 nnoremap <leader>eve  :e $MYVIMRC<cr>
@@ -197,7 +194,6 @@ nnoremap <leader>ecc  :e %<.cc<cr>
 nnoremap <leader>ecpp :e %<.cpp<cr>
 nnoremap <leader>eh   :e %<.h<cr>
 nnoremap <leader>ehpp :e %<.hpp<cr>
-nnoremap <leader>fc   :nohlsearch<cr>
 nnoremap <leader>fg   :Grepper!<cr>
 xmap     <leader>fs   <plug>(GrepperOperator)
 nmap     <leader>fs   <plug>(GrepperOperator)
@@ -207,9 +203,8 @@ nmap     <leader>M    <plug>(quickhl-manual-reset)
 vmap     <leader>M    <plug>(quickhl-manual-reset)
 nmap     <leader>m    <plug>(quickhl-manual-this)
 vmap     <leader>m    <plug>(quickhl-manual-this)
-nnoremap <leader>se   :setlocal spell<cr>:setlocal spelllang=en_us<cr>
-nnoremap <leader>ss   :setlocal spell<cr>:setlocal spelllang=sv<cr>
-nnoremap <leader>so   :setlocal nospell<cr>
+nnoremap <leader>se   :setlocal spelllang=en_us<cr>
+nnoremap <leader>ss   :setlocal spelllang=sv<cr>
 nnoremap <leader>t    :call <sid>togglelongline()<cr>
 vnoremap <leader>x    c<c-r>=<c-r>"<cr><esc>
 nnoremap <leader>ya   :%y+<cr>
