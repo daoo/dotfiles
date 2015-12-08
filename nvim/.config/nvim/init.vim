@@ -252,7 +252,7 @@ nnoremap K kJ
 vnoremap gs :sort<cr>
 nnoremap gsap Vapk:sort<cr>
 " }}}
-" {{{ Addons
+" {{{ Gutentags and YCM
 let g:gutentags_cache_dir = '/tmp/gutentags'
 let g:gutentags_project_root = [ 'Build.hs', 'Makefile' ]
 
@@ -260,13 +260,44 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_key_invoke_completion = ''
 let g:ycm_key_list_previous_completion = []
 let g:ycm_key_list_select_completion = []
-
+" }}}
+" {{{ FileBeagle
 let g:filebeagle_suppress_keymaps = 1
+" }}}
+" {{{ Lightline
+function! LightLineBufferInfo()
+  let tmp = []
+  if strlen(&filetype)
+    call add(tmp, &filetype)
+  endif
+  if &spell
+    call add(tmp, &spelllang)
+  endif
+  return join(tmp, " ")
+endfunction
+
+function! LightLineYCM()
+  let tmp = []
+  let errors = youcompleteme#GetErrorCount()
+  let warnings = youcompleteme#GetWarningCount()
+  if errors > 0
+    call add(tmp, "E: " . errors)
+  endif
+  if warnings > 0
+    call add(tmp,  "W: " . warnings)
+  endif
+  return join(tmp, " ")
+endfunction
 
 let g:lightline = {
     \ 'active': {
     \   'left': [ ['mode', 'paste'], ['relativepath', 'readonly', 'modified'] ],
-    \   'right': [ ['lineinfo'], ['percent'], ['filetype'] ]
+    \   'right': [ ['lineinfo'], ['bufferinfo'], ['ycm_errors', 'ycm_warnings'] ]
+    \ },
+    \ 'component': {
+    \   'lineinfo': '%l:%v %3p%%',
+    \   'bufferinfo': '%{LightLineBufferInfo()}',
+    \   'ycm': '%{LightLineYCM()}',
     \ }
     \ }
 " }}}
