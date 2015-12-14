@@ -11,6 +11,7 @@ Plug 'jamessan/vim-gnupg'
 Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'junegunn/fzf'
 Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'mbbill/undotree'
@@ -104,49 +105,6 @@ function! s:togglelongline()
     let w:long_line_match = matchadd('ErrorMsg', '\%>80v.\+', -1)
   endif
 endfunction
-
-function! s:buflist()
-  redir => ls
-  silent ls
-  redir END
-  return split(ls, '\n')
-endfunction
-
-function! s:bufopen(e)
-  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
-endfunction
-
-function! s:tags_sink(line)
-  let parts = split(a:line, '\t\zs')
-  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
-  execute 'silent e' parts[1][:-2]
-  let [magic, &magic] = [&magic, 0]
-  execute excmd
-  let &magic = magic
-endfunction
-
-function! s:fzf_buffers()
-  call fzf#run({
-  \  'source':  reverse(<sid>buflist()),
-  \  'sink':    function('s:bufopen'),
-  \  'options': '+m',
-  \  'down':    len(<sid>buflist()) + 2
-  \})
-endfunction
-
-function! s:fzf_tags()
-  if len(tagfiles()) == 0
-    echom 'No tag files availible.'
-    return
-  endif
-
-  call fzf#run({
-  \  'source':  'grep -v ^!'.' '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')),
-  \  'sink':    function('s:tags_sink'),
-  \  'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
-  \  'down':    '40%'
-  \})
-endfunction
 " }}}
 " {{{ Disabled stupid keys and commands
 noremap Q <nop>
@@ -238,8 +196,8 @@ nnoremap <c-s> :update<cr>
 " FZF
 nnoremap <silent> <c-p> :FZF<cr>
 nnoremap <silent> <leader>of :FZF<cr>
-nnoremap <silent> <leader>ob :call <sid>fzf_buffers()<cr>
-nnoremap <silent> <leader>ot :call <sid>fzf_tags()<cr>
+nnoremap <silent> <leader>ob :Buffers<cr>
+nnoremap <silent> <leader>ot :Tags<cr>
 
 " Center matches when searching
 nnoremap N Nzz
