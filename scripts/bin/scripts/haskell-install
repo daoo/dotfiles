@@ -1,8 +1,6 @@
 #!/usr/bin/bash
 
-cabal update
-
-optdir="${HOME}/opt/haskell"
+set -eu
 
 if [[ -z "$1" ]]; then
   echo "Usage: install.sh PACKAGE"
@@ -10,12 +8,21 @@ if [[ -z "$1" ]]; then
 fi
 
 pkg="$1"
-
+optdir="${HOME}/opt/haskell"
 config="${optdir}/${pkg}.sandbox.config"
 dir="${optdir}/${pkg}"
 
-if [[ ! -d "$dir" ]]; then
-  cabal --sandbox-config-file="$config" sandbox init --sandbox="$dir"
+if [[ -d "$dir" ]]; then
+  printf "Program already installed, rebuild [y/N]? "
+  read rebuild
+  if [[ "$rebuild" == "y" || "$rebuild" == "Y" ]]; then
+    rm "$config"
+    rm -rf "$dir"
+  else
+    exit 0
+  fi
 fi
 
+cabal update
+cabal --sandbox-config-file="$config" sandbox init --sandbox="$dir"
 cabal --sandbox-config-file="$config" install "$pkg"
