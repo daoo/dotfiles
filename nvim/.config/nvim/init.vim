@@ -2,6 +2,7 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'benekastah/neomake'
+Plug 'christoomey/vim-sort-motion'
 Plug 'daoo/mustang2'
 Plug 'evidens/vim-twig'
 Plug 'haya14busa/incsearch.vim'
@@ -204,10 +205,6 @@ nnoremap n nzz
 
 " Make K match behaviour of J
 nnoremap K kJ
-
-" Sorting
-vnoremap gs :sort<cr>
-nnoremap gsap Vapk:sort<cr>
 " }}}
 " {{{ Gutentags and YCM
 let g:gutentags_cache_dir = '/tmp/gutentags'
