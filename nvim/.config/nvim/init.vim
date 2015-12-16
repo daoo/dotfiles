@@ -50,6 +50,7 @@ set belloff=all
 set cursorcolumn
 set cursorline
 set laststatus=2
+set lazyredraw
 set list
 set listchars=tab:▸\ ,extends:❯,precedes:❮
 set mouse=
