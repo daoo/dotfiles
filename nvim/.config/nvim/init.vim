@@ -83,17 +83,16 @@ syn match myTodo contained "\<\(TODO\|FIXME\)"
 hi def link myTodo Todo
 " }}}
 " {{{ Commands
-" Only shown when not in insert mode.
-augroup trailing
+augroup toggletrailing
   autocmd!
-  autocmd InsertEnter * set listchars-=trail:⌴
-  autocmd InsertLeave * set listchars+=trail:⌴
+  autocmd InsertEnter * setlocal listchars-=trail:⌴
+  autocmd InsertLeave * setlocal listchars+=trail:⌴
 augroup END
 
-augroup activewindow
+augroup togglecursor
   autocmd!
-  autocmd WinEnter * set cursorcolumn | set cursorline
-  autocmd WinLeave * set nocursorcolumn | set nocursorline
+  autocmd BufWinEnter,WinEnter * setlocal cursorcolumn | setlocal cursorline
+  autocmd WinLeave * setlocal nocursorcolumn | setlocal nocursorline
 augroup END
 
 function! s:togglelongline()
