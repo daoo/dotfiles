@@ -196,7 +196,7 @@ myKeyMaps = fromList
 
     keymap name = safeSpawn "setxkbmap" [name]
 
-    lock = safeSpawn "slock" []
+    lock = safeSpawn "physlock" []
 
     playerctl cmd = safeSpawn "playerctl" [cmd]
 
