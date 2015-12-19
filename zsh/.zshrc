@@ -79,10 +79,12 @@ alias lla='ls -l --almost-all'
 
 alias '..'='cd ..'
 
-alias bell="echo -ne '\a'"
-alias calc='noglob calc'
+alias c='cabal'
 alias g='git'
 alias p='pacaur'
+
+alias bell="echo -ne '\a'"
+alias calc='noglob calc'
 alias pwc='pw copy "$(pw list | fzf)"'
 alias pws='pw show "$(pw list | fzf)"'
 alias ctl='systemctl'
