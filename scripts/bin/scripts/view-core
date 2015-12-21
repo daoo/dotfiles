@@ -3,7 +3,7 @@
 set -eu
 
 logrun() {
-  echo $@
+  echo "$@"
   $@
 }
 
@@ -26,7 +26,7 @@ fi
 tmpdir="$(mktemp --tmpdir=/tmp --directory view-core.XXXXXXX)"
 trap "rm -rf '$tmpdir'" EXIT SIGINT SIGTERM
 
-logrun ${GHC:-ghc} \
+logrun "${GHC:-ghc}" \
   -o "$tmpdir/a.out" \
   -outputdir "$tmpdir" \
   "$srcdir" \
