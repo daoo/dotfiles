@@ -190,8 +190,8 @@ nnoremap <m-k>     <c-w>s
 nnoremap <m-l>     <c-w>v<c-w>l
 
 " File handling
-inoremap <c-s> <c-o>:update<cr>
-nnoremap <c-s> :update<cr>
+inoremap <c-s> <c-o>:write<cr>
+nnoremap <c-s> :write<cr>
 
 " FZF
 nnoremap <silent> <c-p> :FZF<cr>
