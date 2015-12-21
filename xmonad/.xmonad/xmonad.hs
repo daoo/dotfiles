@@ -23,7 +23,6 @@ import XMonad.Util.Scratchpad (scratchpadSpawnActionTerminal, scratchpadManageHo
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
--- {{{ Hooks
 myManageHook :: ManageHook
 myManageHook = role =? "gimp-message-dialog" --> doFloat
   where
@@ -39,8 +38,7 @@ myLayoutHook = onWorkspace "full" lfull ldef
     wide = Mirror tall
 
     borders = Combine Difference Screen OnlyFloat
--- }}}
--- {{{ Colors and fonts
+
 colorRed, colorGreen, colorBlue, colorPurple :: String
 colorRed    = "#ef2929"
 colorGreen  = "#6dff27"
@@ -51,8 +49,7 @@ colorDarkGrey, colorLightGrey, colorGrey :: String
 colorDarkGrey  = "#2e3436"
 colorLightGrey = "#b8b8b8"
 colorGrey      = "#757575"
--- }}}
--- {{{ Config
+
 myTerminal :: String
 myTerminal = "/usr/bin/urxvt"
 
@@ -72,8 +69,7 @@ myPP handle = defaultPP
 
   , ppOutput = hPutStrLn handle
   }
--- }}}
--- {{{ Keys
+
 myModKey :: KeyMask
 myModKey = mod4Mask
 
@@ -205,20 +201,18 @@ myKeyMaps = fromList
     rofiRun = rofi ["-show", "run", "-run-command", "echo -n {cmd}"] "" >>= flip safeSpawn []
 
     rofiPrompt prompt opts = trim <$> rofi ["-dmenu", "-p", prompt] (unlines opts)
--- }}}
--- {{{ Mouse
+
 myMouseBindings :: Map (KeyMask, Button) (Window -> X ())
 myMouseBindings = fromList
   [ ((myModKey, button1), \w -> focus w >> mouseMoveWindow w)
   , ((myModKey, button3), \w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster)
   ]
--- }}}
 
 main :: IO ()
 main = do
   hxmobar <- spawnPipe "xmobar .xmonad/xmobarrc"
 
-  xmonad $ ewmh $ withUrgencyHook NoUrgencyHook XConfig
+  xmonad $ ewmh $ withUrgencyHook NoUrgencyHook def
     { borderWidth        = 1
     , workspaces         = myWorkspaces
     , layoutHook         = myLayoutHook
@@ -228,8 +222,6 @@ main = do
     , modMask            = myModKey
     , keys               = const myKeyMaps
     , logHook            = dynamicLogWithPP (namedScratchpadFilterOutWorkspacePP (myPP hxmobar))
-    , startupHook        = return ()
-    , mouseBindings      = const myMouseBindings
     , manageHook         = myManageHook <> scratchpadManageHookDefault <> manageDocks
     , handleEventHook    = fullscreenEventHook <+> docksEventHook
     , focusFollowsMouse  = False
