@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/zsh
 
 export PATH="$HOME/bin:$HOME/bin/scripts:$PATH"
 

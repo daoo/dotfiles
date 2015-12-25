@@ -1,6 +1,0 @@
-[Unit]
-Description=Randomize Wallpaper
-
-[Service]
-Environment=DISPLAY=:0
-ExecStart=/usr/bin/bash -c '/usr/bin/feh --bg-tile "$(find %h/media/wallpapers | shuf -n 1)"'
