@@ -12,11 +12,12 @@ read -r -d '' filter <<'EOF'
 /var/abs
 /var/cache
 /var/games
+/var/lib/mysql
 /var/lib/pacman
 /var/log
-/var/lib/mysql
 /var/lib/texmf
 /var/run
+/var/spool/cups
 /var/tmp
 EOF
 
