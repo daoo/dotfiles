@@ -5,7 +5,12 @@
 # writing.
 export GIT_PAGER="cat"
 
+# Use head to limit the number of lines such that the content isn't scrolled
+# out of view in the terminal.
+git_log="git log --oneline --graph --decorate --color=always"
+cmd="n=\$(tput lines); $git_log --max-count=\$((n-1)) $@ | head -n\$((n-2))"
+
 while true; do
-  find .git/HEAD .git/FETCH_HEAD .git/refs -type f | entr -dc bash -c 'lines=$(tput lines); git log --oneline --graph --decorate --all --color=always | head -n$((lines-1))'
+  find .git/index .git/HEAD .git/ORIG_HEAD .git/FETCH_HEAD .git/logs .git/refs -type f | entr -c bash -c "$cmd"
   sleep 1
 done
