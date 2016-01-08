@@ -15,21 +15,22 @@
   ll  = log --oneline --graph --decorate --stat
   lll = log --patch
   p   = push
-  pf  = push -f
+  pf  = push --force
   pom = push origin master
-  rb  = rebase
+  rb  = rebase --autostash
   rba = rebase --abort
   rbc = rebase --continue
-  rbi = rebase -i
+  rbi = rebase --interactive
   rbs = rebase --skip
   re  = reset
+  reh = reset --hard
   sa  = stash apply
   sc  = stash clear
   sd  = stash drop
   sl  = stash list
   sp  = stash pop
   ss  = stash save
-  st  = status -sb
+  st  = status --short --branch
 
   edit = "!nvim `git ls-files -m --other --exclude-standard`"
 
