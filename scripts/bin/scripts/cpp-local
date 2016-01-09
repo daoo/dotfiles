@@ -15,9 +15,9 @@ def print_file(dir, printed, path):
             else:
                 sys.stdout.write(line)
 
-assert len(sys.argv) == 3
-
-dir  = sys.argv[1]
-file = sys.argv[2]
-
-print_file(dir, set(), os.path.relpath(file, dir))
+if len(sys.argv) == 3:
+    dir  = sys.argv[1]
+    file = sys.argv[2]
+    print_file(dir, set(), os.path.relpath(file, dir))
+else:
+    sys.stderr.write("Usage: %s DIRECTORY FILE\n" % sys.argv[0])
