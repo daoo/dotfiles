@@ -1,9 +1,4 @@
-let hs_highlight_boolean    = 1
-let hs_highlight_debug      = 1
-let hs_highlight_delimiters = 1
-let hs_highlight_delimiters = 1
-let hs_highlight_types      = 1
-let hs_highlight_more_types = 1
+let g:haskell_enable_pattern_synonyms = 1
 
 setlocal makeprg=cabal\ build\ --ghc-options=\"-fno-code\ -Wall\"
 let &errorformat = join([
