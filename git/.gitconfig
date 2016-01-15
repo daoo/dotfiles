@@ -32,6 +32,7 @@
   ss  = stash save
   st  = status --short --branch
 
+  smur = submodule update --recursive
   edit = "!nvim `git ls-files -m --other --exclude-standard`"
   corb = "!git checkout \"$1\" && git rebase \"$2\""
 
