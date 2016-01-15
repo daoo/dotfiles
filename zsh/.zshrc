@@ -3,18 +3,16 @@
 [[ ! $- =~ i ]] && return
 
 # [[[ Config
-if [[ -n "$SSH_CONNECTION" && ( ! "$ZSH_NESTING" =~ s ) ]]; then
-  ZSH_NESTING="s$ZSH_NESTING"
-elif [[ -n "$RANGER_LEVEL" ]]; then
-  ZSH_NESTING="r$ZSH_NESTING"
-elif [[ -n "$TMUX" ]]; then
-  ZSH_NESTING="t$ZSH_NESTING"
-elif [[ -n "$ZSH_NEST" ]]; then
-  ZSH_NESTING="${ZSH_NEST}${ZSH_NESTING}"
-else
-  ZSH_NESTING="z$ZSH_NESTING"
+if [[ -n "$SSH_CONNECTION" && ! ( "$ZSH_NESTING" =~ "s" ) ]]; then
+  ZSH_NESTING="s${ZSH_NESTING}"
+elif [[ -n "$TMUX" && ! ( "$ZSH_NESTING" =~ "t" ) ]]; then
+  ZSH_NESTING="t${ZSH_NEST}"
+elif [[ -n "$RANGER_LEVEL" && "$OLD_RANGER_LEVEL" != "$RANGER_LEVEL" ]]; then
+  export OLD_RANGER_LEVEL="$RANGER_LEVEL"
+  ZSH_NESTING="r${ZSH_NESTING}"
 fi
-export ZSH_NESTING
+
+export ZSH_NESTING="${ZSH_NEST:-z}${ZSH_NESTING}"
 
 case $TERM in
   screen*)
