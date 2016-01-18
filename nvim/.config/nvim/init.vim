@@ -241,6 +241,10 @@ let g:lightline = {
     \   'left': [ ['mode', 'paste'], ['relativepath', 'readonly', 'modified'] ],
     \   'right': [ ['lineinfo'], ['bufferinfo'], ['ycm_errors', 'ycm_warnings'] ]
     \ },
+    \ 'inactive': {
+    \   'left': [ ['relativepath', 'readonly', 'modified'] ],
+    \   'right': [ ['lineinfo'], ['bufferinfo'], ['ycm_errors', 'ycm_warnings'] ]
+    \ },
     \ 'component': {
     \   'lineinfo': '%l:%v %3p%%',
     \   'bufferinfo': '%{LightLineBufferInfo()}',
