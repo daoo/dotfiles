@@ -68,7 +68,7 @@ autoload edit-command-line
 zle -N edit-command-line
 # ]]]
 # [[[ Aliases
-alias ls='ls -hF --si --color=auto --group-directories-first'
+alias ls='ls --human-readable --classify --si --color=auto --group-directories-first'
 alias tree='tree -C'
 alias grep='grep --color=auto'
 
