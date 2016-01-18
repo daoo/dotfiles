@@ -1,5 +1,5 @@
 [options]
-font             = Dina 10
+font             = Dina 8
 audible_bell     = false
 visible_bell     = false
 urgent_on_bell   = true
