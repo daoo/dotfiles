@@ -1,4 +1,4 @@
-pkgname=daoomaps
+pkgname=daoo-maps
 pkgver=1.1
 pkgrel=1
 pkgdesc="PKGBUILD for my custom keymaps."
@@ -8,8 +8,7 @@ depends=('programmers-dvorak')
 makedepends=()
 source=('dvpse' 'usaswe')
 md5sums=('c847aa73a1d53e4f4fee32042c9b9009'
-         'fad9c42f622dfd5a83b0f5da269d6e99')
-
+         'ec1df57041afc6d26b9cb2ce208715fb')
 
 package()
 {
