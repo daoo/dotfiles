@@ -188,7 +188,7 @@ nnoremap <c-s> :write<cr>
 
 " FZF
 nnoremap <silent> <c-p> :FZF<cr>
-nnoremap <silent> <leader>of :FZF<cr>
+nnoremap <silent> <leader>of :FZF %:p:h<cr>
 nnoremap <silent> <leader>ob :Buffers<cr>
 nnoremap <silent> <leader>ot :Tags<cr>
 
