@@ -199,10 +199,11 @@ nnoremap n nzz
 " Make K match behaviour of J
 nnoremap K kJ
 " }}}
-" {{{ Gutentags and YCM
+" {{{ Gutentags
 let g:gutentags_cache_dir = '/tmp/gutentags'
 let g:gutentags_project_root = [ 'Build.hs', 'Makefile' ]
-
+" }}}
+" {{{ YCM
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_key_invoke_completion = ''
 let g:ycm_key_list_previous_completion = []
@@ -223,32 +224,18 @@ function! LightLineBufferInfo()
   return join(tmp, " ")
 endfunction
 
-function! LightLineYCM()
-  let tmp = []
-  let errors = youcompleteme#GetErrorCount()
-  let warnings = youcompleteme#GetWarningCount()
-  if errors > 0
-    call add(tmp, "E: " . errors)
-  endif
-  if warnings > 0
-    call add(tmp,  "W: " . warnings)
-  endif
-  return join(tmp, " ")
-endfunction
-
 let g:lightline = {
     \ 'active': {
     \   'left': [ ['mode', 'paste'], ['relativepath', 'readonly', 'modified'] ],
-    \   'right': [ ['lineinfo'], ['bufferinfo'], ['ycm_errors', 'ycm_warnings'] ]
+    \   'right': [ ['lineinfo'], ['bufferinfo'] ]
     \ },
     \ 'inactive': {
     \   'left': [ ['relativepath', 'readonly', 'modified'] ],
-    \   'right': [ ['lineinfo'], ['bufferinfo'], ['ycm_errors', 'ycm_warnings'] ]
+    \   'right': [ ['lineinfo'], ['bufferinfo'] ]
     \ },
     \ 'component': {
     \   'lineinfo': '%l:%v %3p%%',
     \   'bufferinfo': '%{LightLineBufferInfo()}',
-    \   'ycm': '%{LightLineYCM()}',
     \ }
     \ }
 " }}}
