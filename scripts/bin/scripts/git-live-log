@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
-# Page with cat, and then pipe through head. Using head directly as pager
-# causes pipe error when head closes the pipe and git tries to continue
-# writing.
-export GIT_PAGER="cat"
+# We want the output to fit within the terminal window without scrolling it so
+# that the latest commit is shown at the top.
+# As git log may output more lines than commits we limit the output using head.
 
-# Use head to limit the number of lines such that the content isn't scrolled
-# out of view in the terminal.
-git_log="git log --oneline --graph --decorate --color=always"
+# TODO: Handle long lines with escape codes
+
+git_log="git --no-pager log --oneline --graph --decorate --color=always"
 cmd="n=\$(tput lines); $git_log --max-count=\$((n-1)) $@ | head -n\$((n-2))"
 
 while true; do
