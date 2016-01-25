@@ -11,9 +11,10 @@
   dc  = diff --cached
   df  = diff
   ff  = "!git merge --ff-only $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"
-  l   = log --oneline --graph --decorate --date=relative
-  ll  = log --oneline --graph --decorate --stat
-  lll = log --patch
+  l   = log --decorate --oneline
+  lg  = log --decorate --oneline --graph
+  ll  = log --decorate
+  lll = log --decorate --stat
   p   = push
   pf  = push --force
   pom = push origin master
