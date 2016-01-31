@@ -1,93 +1,78 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env python
 
-require 'fileutils'
-require 'pathname'
-require 'tempfile'
+import os
+import subprocess
+import sys
+import tempfile
 
-def files_recursive(dir)
-  if not File.directory?(dir)
-    raise "Error, #{dir} not a directory"
-  end
+def yield_paths(start_path, recursive=False):
+    for root, dirs, files in os.walk(start_path):
+        file_paths = [os.path.join(root, path) for path in files]
+        dir_paths = [os.path.join(root, path) for path in dirs]
+        for path in sorted(file_paths + dir_paths):
+            yield os.path.relpath(path, start_path)
 
-  lst       = []
-  unvisited = [Pathname.new(dir)]
-  while not unvisited.empty? do
-    path = unvisited.pop()
+        if not recursive:
+            dirs.clear()
 
-    begin
-      path.children.each do |child|
-        begin
-          if child.file?
-            lst << child.to_s
-          elsif child.directory?
-            lst << child.to_s + "/"
-            unvisited << child
-          end
-        rescue
-          $stderr.puts "Could not read #{child.to_s}, skipping."
-        end
-      end
-    rescue
-      $stderr.puts "Could not open #{path.to_s}, skipping."
-    end
-  end
+def interact(editor, old_paths):
+    fwrite = tempfile.NamedTemporaryFile(mode='w', delete=False)
+    path = fwrite.name
+    fwrite.write("\n".join(old_paths))
+    fwrite.close()
 
-  return lst
-end
+    subprocess.call([editor, path])
 
-def files(dir)
-  return Pathname(dir).children.map do |child|
-    if child.directory?
-      child.to_s + "/"
-    else
-      child.to_s
-    end
-  end
-end
+    fread = open(path, 'r')
+    new_paths = fread.read().splitlines()
+    fread.close()
 
-def interact(editor, names)
-  Tempfile.open('random') do |tf|
-    tf.puts(names)
-    tf.flush()
+    os.remove(path)
+    return new_paths
 
-    system(editor + " " + tf.path())
+def rename(old_names, new_names):
+    assert len(old_names) == len(new_names)
+    for old, new in zip(old_names, new_names):
+        # Don't rename if the name is unchanged
+        if old != new:
+            sys.stdout.write("Moving \"%s\" to \"%s\".\n" % (old, new))
+            if not os.path.exists(new):
+                os.rename(old, new)
+            else:
+                sys.stderr.write("Warning: file %s already exists.\n" % new)
 
-    tf.rewind
-    return tf.readlines.map { |line| line.chomp }
-  end
-end
+def main(editor, recursive, path):
+    old_names = list(yield_paths(path, recursive))
+    new_names = interact(editor, old_names)
 
-def rename(old_names, new_names)
-  for i in (0..new_names.length)
-    old = old_names[i]
-    new = new_names[i]
+    if len(new_names) == 0:
+        sys.stderr.write("Aborting rename due to empty input\n")
+        return 1
 
-    # Don't rename if we don't have to
-    if old != new
-      if not File.exists?(new)
-        FileUtils.mv(old, new)
-      else
-        $stderr.puts "File #{new} already exists, skipping."
-      end
-    end
-  end
-end
+    if len(new_names) != len(old_names):
+        sys.stderr.write("Error: number of lines have changed, exiting.\n")
+        return 1
 
-def main(editor, dir, recursive)
-  old_names = recursive ? files_recursive(dir) : files(dir)
-  old_names.sort!
+    rename(old_names, new_names)
 
-  new_names = interact(editor, old_names)
+def print_help(prog, file):
+    file.write("Usage: %s [-h|--help] [-r|--recursive] [PATH]\n" % prog)
 
-  if new_names.length != old_names.length
-    $stderr.puts "Number of lines have changed, exiting."
-    exit 1
-  end
+def parse_args(argv):
+    editor = os.getenv("EDITOR", default="vim")
+    recursive = False
+    path = os.getcwd()
 
-  rename(old_names, new_names)
-end
+    if len(argv) > 1:
+        for arg in argv[1:]:
+            if arg == "-r" or arg == "--recursive":
+                recursive = True
+            elif arg == "-h" or arg == "--help":
+                print_help(argv[0], sys.stdout)
+                sys.exit(0)
+            else:
+                path = os.path.abspath(arg)
 
-editor    = ENV["EDITOR"] || "vim"
-recursive = ARGV.size > 0 and ARGV[0] == "-r"
+    return (editor, recursive, path)
 
-main(editor, ".", recursive)
+sys.exit(main(*parse_args(sys.argv)))
