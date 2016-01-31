@@ -16,6 +16,9 @@ for arg in "$@"; do
     ludd|avluddning)
       make lint
       ;;
+    uppsättning|installation|monter@(a|ing))
+      make install
+      ;;
     felsök?(a|ning)|avlus@(a|ning))
       make debug
       ;;
