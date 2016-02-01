@@ -10,6 +10,6 @@ export GPG_TTY="$(tty)"
 gpg-connect-agent --quiet /bye &
 
 export BROWSER="qutebrowser"
-export TERMCMD="urxvt"
+export TERMCMD="termite"
 
 exec xmonad

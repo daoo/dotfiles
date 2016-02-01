@@ -19,7 +19,7 @@ import XMonad.Layout.NoBorders (lessBorders, Ambiguity(..), With(..))
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Util.NamedScratchpad (namedScratchpadFilterOutWorkspacePP)
 import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg, runProcessWithInput)
-import XMonad.Util.Scratchpad (scratchpadSpawnActionTerminal, scratchpadManageHookDefault)
+import XMonad.Util.Scratchpad (scratchpadSpawnActionCustom, scratchpadManageHookDefault)
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
@@ -51,7 +51,7 @@ colorLightGrey = "#b8b8b8"
 colorGrey      = "#757575"
 
 myTerminal :: String
-myTerminal = "/usr/bin/urxvt"
+myTerminal = "/usr/bin/termite"
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "music"]
@@ -88,7 +88,7 @@ myKeyMaps = fromList
   -- Launching and killing programs
   [ ((myModKey .|. shiftMask, xK_c),      kill)
   , ((myModKey,               xK_p),      rofiRun)
-  , ((myModKey,               xK_i),      scratchpadSpawnActionTerminal myTerminal)
+  , ((myModKey,               xK_i),      scratchpadSpawnActionCustom (myTerminal ++ " --name scratchpad"))
   , ((myModKey,               xK_Return), safeSpawnProg myTerminal)
 
   -- Layout
