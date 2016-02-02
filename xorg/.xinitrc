@@ -1,5 +1,8 @@
 #!/usr/bin/bash
 
+systemctl --user import-environment DISPLAY XAUTHORITY
+dbus-update-activation-environment DISPLAY XAUTHORITY
+
 feh --bg-tile "$(find "$HOME/media/wallpapers" -type f | shuf -n 1)" &
 xrdb -merge "$HOME/.Xresources" &
 xsetroot -cursor_name left_ptr &
