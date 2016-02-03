@@ -10,7 +10,7 @@ Config
 
   , sepChar  = "%"
   , alignSep = "}{"
-  , template = "%StdinReader% }{ %disku% %dynnetwork% | %kbd% | <icon=clock.xbm/> %date%"
+  , template = "%StdinReader% }{ <icon=cpu.xbm/> %cpu% <icon=mem.xbm/> %memory% <icon=hdd.xbm/> %disku% %dynnetwork% | %kbd% | <icon=clock.xbm/> %date%"
 
   , lowerOnStart     = True
   , hideOnStart      = False
@@ -21,12 +21,15 @@ Config
 
   , commands =
 
-      [ Run DynNetwork [ "--template" , "<icon=net_up.xbm/> <tx>kB/s <icon=net_down.xbm/> <rx>kB/s"
-                       ] 30
+      [ Run DynNetwork [ "--template" , "<icon=net_up.xbm/> <tx>kB/s <icon=net_down.xbm/> <rx>kB/s" ] 50
 
-      , Run DiskU [("/", "<icon=hdd.xbm/> <usedp>%")] [] 20
+      , Run Cpu [ "--template", "<total>%" ] 50
 
-      , Run Date "%a %b %d %H:%M" "date" 10
+      , Run Memory [ "--template", "<usedratio>%" ] 50
+
+      , Run DiskU [("/", "<usedp>%")] [] 50
+
+      , Run Date "%a %b %d %H:%M" "date" 50
 
       , Run Kbd []
 
