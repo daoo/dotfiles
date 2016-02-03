@@ -250,27 +250,6 @@ fdf() {
   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
 
-# git commit browser
-fshow() {
-  git log --graph --color=always \
-      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-      --bind "ctrl-m:execute:
-                (grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
-                {}
-FZF-EOF"
-}
-
-# git branch browser
-fbranch() {
-  local output branch
-  output="$(git branch --color=always | fzf --ansi)" && \
-    branch="${output#[* ] }" && \
-    [ -n "$branch" ] && \
-    git checkout "${branch}"
-}
-
 # fkill - kill process
 fkill() {
   pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
