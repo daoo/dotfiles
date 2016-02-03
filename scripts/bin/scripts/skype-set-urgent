@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-for id in $(xdotool search --class "Skype"); do
-  seturgent "$id"
-done
