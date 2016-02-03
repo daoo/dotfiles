@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+
+import subprocess
+import sys
+
+try:
+    output = subprocess.check_output(
+        "git branch --color=always -vv | fzf --ansi --expect=enter,ctrl-o",
+        shell=True)
+
+    [key, str] = output.splitlines()
+    branch = str[2:].split()[0].decode("UTF-8")
+
+    if key == b"enter":
+        sys.stdout.write(branch)
+        sys.stdout.write('\n')
+    elif key == b"ctrl-o":
+        subprocess.run(["git", "checkout", branch])
+except:
+    sys.exit(1)
