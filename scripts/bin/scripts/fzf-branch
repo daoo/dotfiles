@@ -12,8 +12,7 @@ try:
     branch = str[2:].split()[0].decode("UTF-8")
 
     if key == b"enter":
-        sys.stdout.write(branch)
-        sys.stdout.write('\n')
+        sys.stdout.write(branch + "\n")
     elif key == b"ctrl-o":
         subprocess.run(["git", "checkout", branch])
 except:
