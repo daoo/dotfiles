@@ -5,6 +5,7 @@ import subprocess
 import sys
 import tempfile
 
+
 def yield_paths(top_path, recursive=False):
     for root, dirs, files in os.walk(top_path):
         file_paths = [os.path.join(root, path) for path in files]
@@ -15,33 +16,39 @@ def yield_paths(top_path, recursive=False):
         if not recursive:
             dirs.clear()
 
+
 def path_for_user(root_path, path):
     assert os.path.isabs(root_path)
     assert os.path.isabs(path)
 
     return os.path.relpath(path, root_path)
 
+
 def path_from_user(root_path, path):
     assert os.path.isabs(root_path)
 
     return os.path.join(root_path, path)
+
 
 def interact(root_path, editor, old_paths):
     assert os.path.isabs(root_path)
 
     fwrite = tempfile.NamedTemporaryFile(mode='w', delete=False)
     tmp_path = fwrite.name
-    fwrite.write("\n".join([path_for_user(root_path, path) for path in old_paths]))
+    relative_old_paths = [path_for_user(root_path, path) for path in old_paths]
+    fwrite.write("\n".join(relative_old_paths))
     fwrite.close()
 
     subprocess.call([editor, tmp_path])
 
     fread = open(tmp_path, 'r')
-    new_paths = [path_from_user(root_path, path) for path in fread.read().splitlines()]
+    relative_new_paths = fread.read().splitlines()
+    new_paths = [path_from_user(root_path, path) for path in relative_new_paths]
     fread.close()
 
     os.remove(tmp_path)
     return new_paths
+
 
 def rename(root_path, old_names, new_names):
     assert len(old_names) == len(new_names)
@@ -50,11 +57,17 @@ def rename(root_path, old_names, new_names):
         assert os.path.isabs(new)
         # Don't rename if the name is unchanged
         if old != new:
-            sys.stdout.write("Moving \"%s\" to \"%s\".\n" % (path_for_user(root_path, old), path_for_user(root_path, new)))
+            sys.stdout.write(
+                str.format("Moving \"{}\" to \"{}\".\n",
+                           path_for_user(root_path, old),
+                           path_for_user(root_path, new)))
             if not os.path.exists(new):
                 os.rename(old, new)
             else:
-                sys.stderr.write("Warning: file %s already exists.\n" % path_for_user(root_path, new))
+                sys.stderr.write(
+                    str.format("Warning: file {} already exists.\n",
+                               path_for_user(root_path, new)))
+
 
 def main(editor, recursive, root_path):
     old_names = list(yield_paths(root_path, recursive))
@@ -70,8 +83,10 @@ def main(editor, recursive, root_path):
 
     rename(root_path, old_names, new_names)
 
+
 def print_help(prog, file):
     file.write("Usage: %s [-h|--help] [-r|--recursive] [PATH]\n" % prog)
+
 
 def parse_args(argv):
     editor = os.getenv("EDITOR", default="vim")
