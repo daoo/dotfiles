@@ -16,10 +16,10 @@ export ZSH_NESTING="${ZSH_NEST:-z}${ZSH_NESTING}"
 
 case $TERM in
   screen*)
-      precmd() { print -Pn '\033k%~\033\\' }
-      preexec() { print -Pn '\033k$1\033\\' }
+      precmd() { print -Pn '\ek%~\e\\' }
+      preexec() { print -Pn '\ek$1\e\\' }
     ;;
-  rxvt*)
+  *)
       precmd() { print -Pn '\e]2;%~ (%n@%m)\a' }
       preexec() { print -Pn '\e]2;$1 (%n@%m)\a' }
     ;;
