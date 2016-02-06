@@ -3,7 +3,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'benekastah/neomake'
 Plug 'christoomey/vim-sort-motion'
-Plug 'daoo/mustang2'
 Plug 'haya14busa/incsearch.vim'
 Plug 'honza/vim-snippets'
 Plug 'itchyny/lightline.vim'
@@ -15,6 +14,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'mbbill/undotree'
 Plug 'mhinz/vim-grepper'
+Plug 'morhetz/gruvbox'
 Plug 'sheerun/vim-polyglot'
 Plug 'sirver/ultisnips'
 Plug 't9md/vim-quickhl'
@@ -69,7 +69,10 @@ set shiftround
 set shiftwidth=2
 set softtabstop=2
 
-colorscheme mustang
+let g:gruvbox_contrast_dark='hard'
+set background=dark
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+colorscheme gruvbox
 syntax on
 
 syn match myTodo contained "\<\(TODO\|FIXME\)"

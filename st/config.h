@@ -1,4 +1,4 @@
-static char font[] = "Dina-10";
+static char font[] = "Inconsolata-14";
 static int borderpx = 0;
 static char shell[] = "/usr/bin/zsh";
 static char *utmp = NULL;
@@ -29,32 +29,27 @@ static char termname[] = "st-256color";
 static unsigned int tabspaces = 8;
 
 static const char *colorname[] = {
-  "#262729",
-  "#ae2c00",
-  "#668800",
-  "#b88b10",
-  "#204a87",
-  "#85608b",
-  "#5485a4",
-  "#767779",
-  "#555544",
-  "#f55900",
-  "#88aa22",
-  "#ffc135",
-  "#3465a4",
-  "#ad7fa8",
-  "#85a8c0",
-  "#b6b8b9",
-
-  [255] = 0,
-
-  "#141414",
-  "#d4d4d4",
+  "#1d2021",
+  "#cc241d",
+  "#98971a",
+  "#d79921",
+  "#458588",
+  "#b16286",
+  "#689d6a",
+  "#a89984",
+  "#928374",
+  "#fb4934",
+  "#b8bb26",
+  "#fabd2f",
+  "#83a598",
+  "#d3869b",
+  "#8ec07c",
+  "#ebdbb2",
 };
 
-static unsigned int defaultfg = 257;
-static unsigned int defaultbg = 256;
-static unsigned int defaultcs = 257;
+static unsigned int defaultfg = 15;
+static unsigned int defaultbg = 0;
+static unsigned int defaultcs = 15;
 
 static unsigned int defaultitalic = 11;
 static unsigned int defaultunderline = 7;
