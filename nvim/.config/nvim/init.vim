@@ -34,6 +34,7 @@ Plug 'wolfy87/vim-enmasse'
 call plug#end()
 " }}}
 " {{{ Settings
+set autoread
 set autowrite
 set hidden
 
