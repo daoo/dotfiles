@@ -1,6 +1,7 @@
 [alias]
   a   = add
   ap  = add --patch
+  bv  = branch --verbose
   ci  = commit
   cia = commit --amend
   cif = commit --fixup
