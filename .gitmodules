@@ -1,3 +1,0 @@
-[submodule "zsh/.local/share/zsh/z"]
-	path = zsh/.local/share/zsh/z
-	url = https://github.com/rupa/z.git

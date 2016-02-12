@@ -264,8 +264,5 @@ fh() {
   print -z $(fc -ln 1 | sort -u | fzf)
 }
 # ]]]
-# [[[ Z
-source "$HOME/.local/share/zsh/z/z.sh"
-# ]]]
 
 # vim: foldmarker=[[[,]]] fdm=marker :
