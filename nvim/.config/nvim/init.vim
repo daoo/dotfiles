@@ -77,7 +77,6 @@ let g:gruvbox_contrast_dark='hard'
 set background=dark
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 colorscheme gruvbox
-syntax on
 
 syn match myTodo contained "\<\(TODO\|FIXME\)"
 hi def link myTodo Todo
