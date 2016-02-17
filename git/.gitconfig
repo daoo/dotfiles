@@ -2,6 +2,7 @@
   a   = add
   ap  = add --patch
   bv  = branch --verbose
+  bmv = branch --move
   ci  = commit
   cia = commit --amend
   cif = commit --fixup
