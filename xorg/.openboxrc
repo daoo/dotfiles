@@ -5,6 +5,6 @@ xrdb -merge "$HOME/.Xresources"
 xsetroot -cursor_name left_ptr
 
 export BROWSER="qutebrowser"
-export TERMCMD="termite"
+export TERMCMD="st"
 
 exec openbox

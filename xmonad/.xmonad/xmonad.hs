@@ -51,7 +51,7 @@ colorLightGrey = "#b8b8b8"
 colorGrey      = "#757575"
 
 myTerminal :: String
-myTerminal = "/usr/bin/termite"
+myTerminal = "/usr/bin/st"
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "music"]
@@ -88,7 +88,7 @@ myKeyMaps = fromList
   -- Launching and killing programs
   [ ((myModKey .|. shiftMask, xK_c),      kill)
   , ((myModKey,               xK_p),      rofiRun)
-  , ((myModKey,               xK_i),      scratchpadSpawnActionCustom (myTerminal ++ " --name scratchpad"))
+  , ((myModKey,               xK_i),      scratchpadSpawnActionCustom (myTerminal ++ " -c scratchpad"))
   , ((myModKey,               xK_Return), safeSpawnProg myTerminal)
 
   -- Layout

@@ -2,7 +2,7 @@ set home-page=https://duckduckgo.com
 set hintkeys=aoeuidhtns
 set media-playback-allows-inline=false
 set download-path=~/downloads
-set editor-command=termite -e 'nvim "%s"'
+set editor-command=st -e nvim "%s"
 
 set completion-font=Dina 8
 set completion-bg-normal=#444444
