@@ -1,32 +1,33 @@
-static char font[] = "Inconsolata-14";
+static char font[] = "Inconsolata:pixelsize=16:antialias=true:autohint=false";
 static int borderpx = 0;
+
 static char shell[] = "/usr/bin/zsh";
 static char *utmp = NULL;
-static char stty_args[] = "stty raw -echo -iexten echonl";
+static char stty_args[] = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 
 static char vtiden[] = "\033[?6c";
 
 static float cwscale = 1.0;
 static float chscale = 1.0;
 
-static char worddelimiters[] = " ";
+static char worddelimiters[] = " `'\"()[]{}";
+static unsigned int tabspaces = 8;
 
 static unsigned int doubleclicktimeout = 300;
 static unsigned int tripleclicktimeout = 600;
 
-static bool allowaltscreen = true;
+static int allowaltscreen = 1;
 
 static unsigned int xfps = 120;
 static unsigned int actionfps = 30;
 
 static unsigned int blinktimeout = 800;
-
-static unsigned int cursorthickness = 2;
 static int bellvolume = 0;
 
-static char termname[] = "st-256color";
+static unsigned int cursorthickness = 2;
+static unsigned int cursorshape = 2;
 
-static unsigned int tabspaces = 8;
+static char termname[] = "st-256color";
 
 static const char *colorname[] = {
   "#1d2021",
