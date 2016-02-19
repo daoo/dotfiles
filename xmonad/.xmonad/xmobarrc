@@ -1,39 +1,34 @@
 Config
-  { font        = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
-  , bgColor     = "#2e3436"
-  , fgColor     = "#b8b8b8"
-  , position    = BottomSize L 100 13
-  , border      = NoBorder
+  { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+  , additionalFonts = []
+  , bgColor = "#2e3436"
+  , fgColor = "#b8b8b8"
+  , alpha = 255
+  , position = BottomSize L 100 13
+  , border = NoBorder
   , borderColor = "#b8b8b8"
-  , iconRoot    = "./.xmonad/icons/"
-  , textOffset  = 11
+  , iconRoot = ".xmonad/icons"
+  , textOffset = 11
+  , iconOffset = -1
 
-  , sepChar  = "%"
+  , lowerOnStart = True
+  , hideOnStart = False
+  , allDesktops = True
+  , overrideRedirect = True
+  , pickBroadest = False
+  , persistent = True
+
+  , sepChar = "%"
   , alignSep = "}{"
   , template = "%StdinReader% }{ <icon=cpu.xbm/> %cpu% <icon=mem.xbm/> %memory% <icon=hdd.xbm/> %disku% %dynnetwork% | %kbd% | <icon=clock.xbm/> %date%"
 
-  , lowerOnStart     = True
-  , hideOnStart      = False
-  , allDesktops      = True
-  , overrideRedirect = True
-  , pickBroadest     = False
-  , persistent       = True
-
   , commands =
-
-      [ Run DynNetwork [ "--template" , "<icon=net_up.xbm/> <tx>kB/s <icon=net_down.xbm/> <rx>kB/s" ] 50
-
-      , Run Cpu [ "--template", "<total>%" ] 50
-
-      , Run Memory [ "--template", "<usedratio>%" ] 50
-
-      , Run DiskU [("/", "<usedp>%")] [] 50
-
+      [ Run Cpu ["--template", "<total>%"] 50
       , Run Date "%a %b %d %H:%M" "date" 50
-
+      , Run DiskU [("/", "<usedp>%")] [] 50
+      , Run DynNetwork ["--template", "<icon=net_up.xbm/> <tx>kB/s <icon=net_down.xbm/> <rx>kB/s"] 50
       , Run Kbd []
-
+      , Run Memory ["--template", "<usedratio>%"] 50
       , Run StdinReader
       ]
   }
-
