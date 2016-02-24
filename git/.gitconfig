@@ -12,7 +12,7 @@
   cpc = cherry-pick --continue
   dc  = diff --cached
   df  = diff
-  ff  = "!git merge --ff-only $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"
+  ff  = merge --ff-only @{u}
   l   = log --decorate --oneline
   lg  = log --decorate --oneline --graph
   ll  = log --decorate
