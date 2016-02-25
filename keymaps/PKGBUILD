@@ -1,18 +1,17 @@
 pkgname=daoo-maps
-pkgver=1.1
+pkgver=2.0
 pkgrel=1
 pkgdesc="PKGBUILD for my custom keymaps."
 url="http://github.com/daoo"
 arch=('any')
-depends=('programmers-dvorak')
 makedepends=()
-source=('dvpse' 'usaswe')
-md5sums=('c847aa73a1d53e4f4fee32042c9b9009'
+source=('dvoormak' 'usaswe')
+md5sums=('f5ee2e17c2e9d5fabd474068c69709a1'
          'ec1df57041afc6d26b9cb2ce208715fb')
 
 package()
 {
-  install -Dm 755 "dvpse" "$pkgdir/usr/share/X11/xkb/symbols/dvpse"
+  install -Dm 755 "dvoormak" "$pkgdir/usr/share/X11/xkb/symbols/dvoormak"
   install -Dm 755 "usaswe" "$pkgdir/usr/share/X11/xkb/symbols/usaswe"
 }
 
