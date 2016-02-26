@@ -22,6 +22,7 @@ xkb_symbols "dvoormak" {
   key <AE09> { [ plus,         9       ] };
   key <AE10> { [ bracketright, 0       ] };
   key <AE11> { [ exclam,       percent ] };
+  key <AE12> { [ numbersign,   grave   ] };
 
   // upper row, left side
   key <AD01> { [ semicolon, colon   ] };
