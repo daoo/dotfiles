@@ -14,7 +14,7 @@ def yield_paths(top_path, recursive=False):
             yield os.path.abspath(path)
 
         if not recursive:
-            dirs.clear()
+            del dirs[:]
 
 
 def path_for_user(root_path, path):
