@@ -4,7 +4,7 @@ set -eu
 
 logrun() {
   echo "$@"
-  $@
+  "$@"
 }
 
 # TODO: Predictable temp dir

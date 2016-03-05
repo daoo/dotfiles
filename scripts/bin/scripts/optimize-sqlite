@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ ! -d "$1" ]]; then
-  echo "Usage: optimize-sqlite DIRECTORY" 1>2&
+  echo "Usage: optimize-sqlite DIRECTORY" 1>&2
   exit 1
 fi
 

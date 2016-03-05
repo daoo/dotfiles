@@ -14,7 +14,7 @@ dir="${optdir}/${pkg}"
 
 if [[ -d "$dir" ]]; then
   printf "Program already installed, rebuild [y/N]? "
-  read rebuild
+  read -r rebuild
   if [[ "$rebuild" == "y" || "$rebuild" == "Y" ]]; then
     rm "$config"
     rm -rf "$dir"

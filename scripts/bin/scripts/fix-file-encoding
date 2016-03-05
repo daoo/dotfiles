@@ -3,7 +3,7 @@
 # Recursively convert ISO-8859-1 to UTF-8.
 #
 
-find -type f -print0 | while read -d $'\0' path; do
+find -type f -print0 | while read -r -d $'\0' path; do
   enc="$(file --brief --mime-encoding "$path")"
   if [[ "$enc" == "iso-8859-1" ]]; then
     path_utf8="${path}.utf-8"
