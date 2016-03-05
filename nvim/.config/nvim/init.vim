@@ -160,7 +160,7 @@ nmap     <leader>M    <plug>(quickhl-manual-reset)
 vmap     <leader>M    <plug>(quickhl-manual-reset)
 nmap     <leader>m    <plug>(quickhl-manual-this)
 vmap     <leader>m    <plug>(quickhl-manual-this)
-nnoremap <leader>se   :setlocal spelllang=en_us<cr>
+nnoremap <leader>se   :setlocal spelllang=en<cr>
 nnoremap <leader>ss   :setlocal spelllang=sv<cr>
 nnoremap <leader>t    :call <sid>togglelongline()<cr>
 vnoremap <leader>x    c<c-r>=<c-r>"<cr><esc>
