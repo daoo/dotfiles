@@ -106,8 +106,6 @@ function! s:togglelongline()
 endfunction
 " }}}
 " {{{ Disabled stupid keys and commands
-noremap Q <nop>
-
 " Arrow keys
 inoremap <down>  <nop>
 inoremap <left>  <nop>
@@ -204,6 +202,8 @@ nnoremap n nzz
 
 " Make K match behaviour of J
 nnoremap K kJ
+
+nnoremap Q q:
 " }}}
 " {{{ Gutentags
 let g:gutentags_cache_dir = '/tmp/gutentags'
