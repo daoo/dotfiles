@@ -244,4 +244,9 @@ let g:lightline = {
 " {{{ Neomake
 let g:neomake_open_list = 1
 " }}}
+" {{{ Projects
+if filereadable('project.vim')
+  source project.vim
+endif
+" }}}
 " vim: fdm=marker :
