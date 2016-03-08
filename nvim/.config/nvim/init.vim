@@ -191,8 +191,12 @@ nnoremap <c-s> :write<cr>
 
 " FZF
 nnoremap <silent> <c-p> :FZF<cr>
-nnoremap <silent> <leader>of :FZF %:p:h<cr>
+nnoremap <silent> <leader>oa :Ag
 nnoremap <silent> <leader>ob :Buffers<cr>
+nnoremap <silent> <leader>oc :History:<cr>
+nnoremap <silent> <leader>of :FZF %:p:h<cr>
+nnoremap <silent> <leader>om :Marks<cr>
+nnoremap <silent> <leader>os :Snippets<cr>
 nnoremap <silent> <leader>ot :Tags<cr>
 
 " Center matches when searching
