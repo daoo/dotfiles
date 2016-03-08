@@ -211,7 +211,8 @@ let g:gutentags_project_root = [ 'Build.hs', 'Makefile' ]
 " }}}
 " {{{ YCM
 let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_key_invoke_completion = ''
+let g:ycm_key_detailed_diagnostics = ''
+let g:ycm_key_invoke_completion = '<C-Space>'
 let g:ycm_key_list_previous_completion = []
 let g:ycm_key_list_select_completion = []
 " }}}
