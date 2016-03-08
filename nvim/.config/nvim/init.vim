@@ -13,7 +13,6 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'kshenoy/vim-signature'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'mbbill/undotree'
 Plug 'mhinz/vim-grepper'
 Plug 'morhetz/gruvbox'
@@ -204,10 +203,6 @@ nnoremap n nzz
 nnoremap K kJ
 
 nnoremap Q q:
-" }}}
-" {{{ Gutentags
-let g:gutentags_cache_dir = '/tmp/gutentags'
-let g:gutentags_project_root = [ 'Build.hs', 'Makefile' ]
 " }}}
 " {{{ YCM
 let g:ycm_collect_identifiers_from_tags_files = 1
