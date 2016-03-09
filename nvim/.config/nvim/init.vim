@@ -26,7 +26,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'valloric/youcompleteme'
+Plug 'valloric/youcompleteme', { 'do': 'python2 install.py' }
 Plug 'wellle/targets.vim'
 Plug 'wolfy87/vim-enmasse'
 
