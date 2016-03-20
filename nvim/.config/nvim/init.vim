@@ -171,7 +171,7 @@ map / <plug>(incsearch-stay)
 " F-keys
 nmap <silent> <f2> <plug>FileBeagleOpenCurrentBufferDir
 nnoremap <f8> :Neomake<cr>
-nnoremap <c-f8> :Neomake!<cr>
+nnoremap <f9> :Neomake!<cr>
 
 " Window navigation
 nnoremap <c-left>  <c-w>5>
