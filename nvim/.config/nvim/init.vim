@@ -50,7 +50,7 @@ set lazyredraw
 set list
 set listchars=tab:▸\ ,extends:❯,precedes:❮
 set mouse=
-set noshowcmd
+set showcmd
 set nowrap
 set number
 set relativenumber
