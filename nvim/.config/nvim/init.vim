@@ -56,6 +56,7 @@ set number
 set relativenumber
 set scrolloff=1
 set sidescrolloff=5
+set shortmess+=F
 
 set foldlevel=0
 set foldmethod=indent
