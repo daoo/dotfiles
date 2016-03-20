@@ -102,10 +102,10 @@
     <chainQuitKey>C-g</chainQuitKey>
     <keybind key="W-F1">
       <action name="Execute">
-        <execute>setxkbmap dvpse</execute>
+        <execute>setxkbmap dvoormak</execute>
       </action>
       <action name="Execute">
-        <execute>notify-send dvpse "Changed keymap to dvpse"</execute>
+        <execute>notify-send dvoormak "Changed keymap to dvoormak"</execute>
       </action>
     </keybind>
     <keybind key="W-F2">
