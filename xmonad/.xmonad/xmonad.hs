@@ -86,92 +86,98 @@ xf86TouchpadToggle = 0x1008ffa9
 myKeyMaps :: Map (KeyMask, KeySym) (X ())
 myKeyMaps = fromList
   -- Launching and killing programs
-  [ ((myModKey .|. shiftMask, xK_c),      kill)
-  , ((myModKey,               xK_p),      rofiRun)
-  , ((myModKey,               xK_i),      scratchpadSpawnActionCustom (myTerminal ++ " -c scratchpad"))
-  , ((myModKey,               xK_Return), safeSpawnProg myTerminal)
+  [ xK_c      ! kill
+  , xK_p      # rofiRun
+  , xK_i      # scratchpadSpawnActionCustom (myTerminal ++ " -c scratchpad")
+  , xK_Return # safeSpawnProg myTerminal
 
   -- Layout
-  , ((myModKey,               xK_n),     refresh)
-  , ((myModKey,               xK_space), sendMessage NextLayout)
-  , ((myModKey .|. shiftMask, xK_space), setLayout (Layout myLayoutHook))
+  , xK_n     # refresh
+  , xK_space # sendMessage NextLayout
+  , xK_space ! setLayout (Layout myLayoutHook)
 
-  , ((myModKey, xK_comma),  sendMessage (IncMasterN (-1)))
-  , ((myModKey, xK_period), sendMessage (IncMasterN 1))
+  , xK_comma  # sendMessage (IncMasterN (-1))
+  , xK_period # sendMessage (IncMasterN 1)
 
-  , ((myModKey, xK_at),        sendMessage Expand)
-  , ((myModKey, xK_backslash), sendMessage Shrink)
+  , xK_at        # sendMessage Expand
+  , xK_backslash # sendMessage Shrink
 
   -- Tiling
-  , ((myModKey, xK_t), withFocused (windows . W.sink))
-  , ((myModKey, xK_u), withFocused toggleBorder)
+  , xK_t # withFocused (windows . W.sink)
+  , xK_u # withFocused toggleBorder
 
   -- Focus and swapping
-  , ((myModKey, xK_f), selectWindow)
+  , xK_f # selectWindow
 
-  , ((myModKey,               xK_Tab), windows W.focusDown)
-  , ((myModKey .|. shiftMask, xK_Tab), windows W.focusUp)
-  , ((myModKey,               xK_m),   windows W.focusMaster)
-  , ((myModKey .|. shiftMask, xK_m),   windows W.swapMaster)
+  , xK_Tab # windows W.focusDown
+  , xK_Tab ! windows W.focusUp
+  , xK_m   # windows W.focusMaster
+  , xK_m   ! windows W.swapMaster
 
-  , ((myModKey,               xK_h), windowGo L False)
-  , ((myModKey,               xK_l), windowGo R False)
-  , ((myModKey,               xK_j), windowGo D False)
-  , ((myModKey,               xK_k), windowGo U False)
-  , ((myModKey .|. shiftMask, xK_h), windowSwap L False)
-  , ((myModKey .|. shiftMask, xK_l), windowSwap R False)
-  , ((myModKey .|. shiftMask, xK_j), windowSwap D False)
-  , ((myModKey .|. shiftMask, xK_k), windowSwap U False)
+  , xK_h # windowGo L False
+  , xK_l # windowGo R False
+  , xK_j # windowGo D False
+  , xK_k # windowGo U False
+  , xK_h ! windowSwap L False
+  , xK_l ! windowSwap R False
+  , xK_j ! windowSwap D False
+  , xK_k ! windowSwap U False
 
   -- Multiple screens
-  , ((myModKey,               xK_w), screenWorkspace 0 >>= flip whenJust (windows . W.view))
-  , ((myModKey,               xK_e), screenWorkspace 1 >>= flip whenJust (windows . W.view))
-  , ((myModKey .|. shiftMask, xK_w), screenWorkspace 0 >>= flip whenJust (windows . W.shift))
-  , ((myModKey .|. shiftMask, xK_e), screenWorkspace 1 >>= flip whenJust (windows . W.shift))
+  , xK_w # screenWorkspace 0 >>= flip whenJust (windows . W.view)
+  , xK_e # screenWorkspace 1 >>= flip whenJust (windows . W.view)
+  , xK_w ! screenWorkspace 0 >>= flip whenJust (windows . W.shift)
+  , xK_e ! screenWorkspace 1 >>= flip whenJust (windows . W.shift)
 
   -- Handling workspaces
-  , ((myModKey,               xK_o), toggleWS)
-  , ((myModKey .|. shiftMask, xK_r), removeEmptyWorkspace)
-  , ((myModKey,               xK_v), listWorkspaces >>= rofiPrompt "view:"  >>= createView)
-  , ((myModKey,               xK_s), listWorkspaces >>= rofiPrompt "shift:" >>= createShift)
+  , xK_o # toggleWS
+  , xK_r ! removeEmptyWorkspace
+  , xK_v # listWorkspaces >>= rofiPrompt "view:"  >>= createView
+  , xK_s # listWorkspaces >>= rofiPrompt "shift:" >>= createShift
 
   -- Workspace keys
-  , ((myModKey,               xK_ampersand),   windows (W.greedyView (myWorkspaces !! 0)))
-  , ((myModKey,               xK_bracketleft), windows (W.greedyView (myWorkspaces !! 1)))
-  , ((myModKey,               xK_braceleft),   windows (W.greedyView (myWorkspaces !! 2)))
-  , ((myModKey,               xK_braceright),  windows (W.greedyView (myWorkspaces !! 3)))
-  , ((myModKey,               xK_parenleft),   windows (W.greedyView (myWorkspaces !! 4)))
-  , ((myModKey,               xK_equal),       windows (W.greedyView (myWorkspaces !! 5)))
-  , ((myModKey,               xK_asterisk),    windows (W.greedyView (myWorkspaces !! 6)))
-  , ((myModKey,               xK_parenright),  windows (W.greedyView (myWorkspaces !! 7)))
-  , ((myModKey,               xK_plus),        windows (W.greedyView (myWorkspaces !! 8)))
-  , ((myModKey .|. shiftMask, xK_ampersand),   windows (W.shift (myWorkspaces !! 0)))
-  , ((myModKey .|. shiftMask, xK_bracketleft), windows (W.shift (myWorkspaces !! 1)))
-  , ((myModKey .|. shiftMask, xK_braceleft),   windows (W.shift (myWorkspaces !! 2)))
-  , ((myModKey .|. shiftMask, xK_braceright),  windows (W.shift (myWorkspaces !! 3)))
-  , ((myModKey .|. shiftMask, xK_parenleft),   windows (W.shift (myWorkspaces !! 4)))
-  , ((myModKey .|. shiftMask, xK_equal),       windows (W.shift (myWorkspaces !! 5)))
-  , ((myModKey .|. shiftMask, xK_asterisk),    windows (W.shift (myWorkspaces !! 6)))
-  , ((myModKey .|. shiftMask, xK_parenright),  windows (W.shift (myWorkspaces !! 7)))
-  , ((myModKey .|. shiftMask, xK_plus),        windows (W.shift (myWorkspaces !! 8)))
+  , xK_ampersand   # windows (W.greedyView (myWorkspaces !! 0))
+  , xK_bracketleft # windows (W.greedyView (myWorkspaces !! 1))
+  , xK_braceleft   # windows (W.greedyView (myWorkspaces !! 2))
+  , xK_braceright  # windows (W.greedyView (myWorkspaces !! 3))
+  , xK_parenleft   # windows (W.greedyView (myWorkspaces !! 4))
+  , xK_equal       # windows (W.greedyView (myWorkspaces !! 5))
+  , xK_asterisk    # windows (W.greedyView (myWorkspaces !! 6))
+  , xK_parenright  # windows (W.greedyView (myWorkspaces !! 7))
+  , xK_plus        # windows (W.greedyView (myWorkspaces !! 8))
+  , xK_ampersand   ! windows (W.shift (myWorkspaces !! 0))
+  , xK_bracketleft ! windows (W.shift (myWorkspaces !! 1))
+  , xK_braceleft   ! windows (W.shift (myWorkspaces !! 2))
+  , xK_braceright  ! windows (W.shift (myWorkspaces !! 3))
+  , xK_parenleft   ! windows (W.shift (myWorkspaces !! 4))
+  , xK_equal       ! windows (W.shift (myWorkspaces !! 5))
+  , xK_asterisk    ! windows (W.shift (myWorkspaces !! 6))
+  , xK_parenright  ! windows (W.shift (myWorkspaces !! 7))
+  , xK_plus        ! windows (W.shift (myWorkspaces !! 8))
 
   -- Restarting and stopping xmonad
-  , ((myModKey .|. shiftMask, xK_q), io exitSuccess)
-  , ((myModKey,               xK_q), reload)
+  , xK_q # reload
+  , xK_q ! io exitSuccess
 
   -- Screen locker
-  , ((myModKey, xK_b), lock)
+  , xK_b # lock
 
   -- Setting keyboard layout
-  , ((myModKey, xK_F1), keymap "dvpse")
-  , ((myModKey, xK_F2), keymap "usaswe")
+  , xK_F1 # keymap "dvpse"
+  , xK_F2 # keymap "usaswe"
 
   -- Music player control
-  , ((myModKey, xK_F5), playerctl "play-pause")
-  , ((myModKey, xK_F6), playerctl "previous")
-  , ((myModKey, xK_F7), playerctl "next")
+  , xK_F5 # playerctl "play-pause"
+  , xK_F6 # playerctl "previous"
+  , xK_F7 # playerctl "next"
   ]
   where
+    key # action = ((myModKey, key), action)
+    key ! action = ((myModKey .|. shiftMask, key), action)
+
+    infixr 0 #
+    infixr 0 !
+
     toggleWS     = windows (W.view =<< W.tag . head . hiddenNonNSP)
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 
