@@ -36,8 +36,8 @@
   st  = status --short --branch
 
   smur = submodule update --recursive
-  edit = "!nvim `git ls-files -m --other --exclude-standard`"
-  cifa = "!sh -c 'git commit --fixup=\"$0\" && git commit --amend'"
+  edit = !bash -c '${EDITOR} $(git ls-files --modified --other --exclude-standard)'
+  cifa = !bash -c 'git commit --fixup=\"${0}\" && git commit --amend'
 
 [push]
   default = simple
