@@ -39,5 +39,11 @@
   edit = !bash -c '${EDITOR} $(git ls-files --modified --other --exclude-standard)'
   cifa = !bash -c 'git commit --fixup=\"${0}\" && git commit --amend'
 
+  oldest-ancestor = !bash -c 'diff --old-line-format='' --new-line-format='' <(git rev-list --first-parent "${1:-master}") <(git rev-list --first-parent "${2:-HEAD}") | head -1' -
+  rewrite-branch = !bash -c 'git rebase --interactive --autostash "$(git merge-base master HEAD)"'
+  short-log-branch = !bash -c 'git l "$(git merge-base master HEAD)"..HEAD'
+  log-branch = !bash -c 'git log $(git merge-base master HEAD)..'
+  diff-branch = !bash -c 'git diff $(git merge-base master HEAD) HEAD'
+
 [push]
   default = simple
