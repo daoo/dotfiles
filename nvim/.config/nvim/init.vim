@@ -27,7 +27,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'valloric/youcompleteme', { 'do': 'python2 install.py' }
 Plug 'wellle/targets.vim'
 Plug 'wolfy87/vim-enmasse'
 
@@ -221,13 +220,6 @@ nnoremap n nzz
 nnoremap K kJ
 
 nnoremap Q q:
-" }}}
-" {{{ YCM
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_key_detailed_diagnostics = ''
-let g:ycm_key_invoke_completion = '<C-Space>'
-let g:ycm_key_list_previous_completion = []
-let g:ycm_key_list_select_completion = []
 " }}}
 " {{{ FileBeagle
 let g:filebeagle_suppress_keymaps = 1
