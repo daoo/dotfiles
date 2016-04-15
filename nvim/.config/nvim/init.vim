@@ -6,7 +6,6 @@ Plug 'benekastah/neomake'
 Plug 'christoomey/vim-sort-motion'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
-Plug 'honza/vim-snippets'
 Plug 'itchyny/lightline.vim'
 Plug 'jamessan/vim-gnupg'
 Plug 'jeetsukumaran/vim-filebeagle'
@@ -19,7 +18,6 @@ Plug 'mhinz/vim-grepper'
 Plug 'morhetz/gruvbox'
 Plug 'romainl/vim-qf'
 Plug 'sheerun/vim-polyglot'
-Plug 'sirver/ultisnips'
 Plug 't9md/vim-quickhl'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
@@ -209,7 +207,6 @@ nnoremap <silent> <leader>ob :Buffers<cr>
 nnoremap <silent> <leader>oc :History:<cr>
 nnoremap <silent> <leader>of :FZF %:p:h<cr>
 nnoremap <silent> <leader>om :Marks<cr>
-nnoremap <silent> <leader>os :Snippets<cr>
 nnoremap <silent> <leader>ot :Tags<cr>
 
 " Center matches when searching
