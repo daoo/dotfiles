@@ -24,9 +24,13 @@ import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
 myManageHook :: ManageHook
-myManageHook = role =? "gimp-message-dialog" --> doFloat
+myManageHook =
+  (gimp <&&> not <$> gimpImageWindow --> doFloat) <>
   where
-    role = stringProperty "WM_WINDOW_ROLE"
+    gimp = className =? "Gimp"
+    gimpImageWindow = windowRole =? "gimp-image-window"
+
+    windowRole = stringProperty "WM_WINDOW_ROLE"
 
 myLayoutHook = onWorkspace "full" lfull ldef
   where
