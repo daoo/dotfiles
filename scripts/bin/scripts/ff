@@ -1,3 +1,14 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python
 
-exec find . -iname "$(printf "*%s*" "$@")" -and -type f
+import subprocess
+import sys
+
+def to_pattern(str):
+    return "*" + str + "*"
+
+if len(sys.argv) == 2:
+    subprocess.call(["find", ".", "-iname", to_pattern(sys.argv[1])])
+elif len(sys.argv) == 3:
+    subprocess.call(["find", sys.argv[2], "-iname", to_pattern(sys.argv[1])])
+else:
+    sys.stderr.write("Usage: %s PATTERN [PATH]\n" % sys.argv[0])
