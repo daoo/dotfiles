@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-export BROWSER="qutebrowser"
+export BROWSER="firefox"
 export TERMCMD="st"
 
 gpg-connect-agent --quiet /bye &
