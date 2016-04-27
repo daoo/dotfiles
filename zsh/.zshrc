@@ -51,6 +51,7 @@ export EDITOR='nvim'
 export PAGER='less'
 
 export LESS='-ir'
+export RANGER_LOAD_DEFAULT_RC=FALSE
 
 # Less color
 export LESS_TERMCAP_mb=$'\E[01;31m'
