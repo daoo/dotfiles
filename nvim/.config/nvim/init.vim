@@ -18,6 +18,9 @@ Plug 'mhinz/vim-grepper'
 Plug 'morhetz/gruvbox'
 Plug 'romainl/vim-qf'
 Plug 'sheerun/vim-polyglot'
+Plug 'shougo/deoplete.nvim'
+Plug 'shougo/neco-vim'
+Plug 'shougo/neoinclude.vim'
 Plug 't9md/vim-quickhl'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
@@ -251,6 +254,8 @@ let g:lightline = {
 " {{{ Neomake
 let g:neomake_open_list = 1
 " }}}
+" {{{ Deoplete
+let g:deoplete#enable_at_startup = 1
 " {{{ Projects
 if filereadable('project.vim')
   source project.vim
