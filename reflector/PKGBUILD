@@ -1,0 +1,19 @@
+pkgname=daoo-reflector
+pkgver=1.0
+pkgrel=1
+pkgdesc="Package for reflector systemd service and timer."
+url="http://github.com/daoo"
+arch=('any')
+depends=('reflector')
+makedepends=()
+source=('reflector.service' 'reflector.timer')
+md5sums=('11a2cd3785680601d7770faf38ac6b11'
+         '320021a63597c245866b1b12a5eb68b6')
+
+package()
+{
+  install -Dm 755 "reflector.service" "$pkgdir/usr/lib/systemd/system/reflector.service"
+  install -Dm 755 "reflector.timer" "$pkgdir/usr/lib/systemd/system/reflector.timer"
+}
+
+# vim:set ts=2 sw=2 et:
