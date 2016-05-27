@@ -26,9 +26,8 @@ case $TERM in
 esac
 
 HISTFILE=$HOME/.zhistory
-HISTSIZE=50000
+HISTSIZE=100000
 SAVEHIST=100000
-setopt append_history
 setopt hist_fcntl_lock
 setopt hist_find_no_dups
 setopt hist_ignore_all_dups
@@ -37,7 +36,7 @@ setopt hist_no_store
 setopt hist_reduce_blanks
 setopt hist_save_no_dups
 setopt hist_verify
-setopt share_history
+setopt inc_append_history
 
 # Misc zsh settings
 setopt long_list_jobs
