@@ -6,7 +6,7 @@ import sys
 
 def main(gitopts):
     git_command = ["git", "branch", "--color=always", "-vv"] + gitopts
-    fzf_command = ["fzf", "--ansi", "--expect=enter,ctrl-s,ctrl-d,ctrl-o"]
+    fzf_command = ["fzf", "--ansi", "--no-sort", "--expect=enter,ctrl-s,ctrl-d,ctrl-o"]
     git = subprocess.Popen(git_command, stdout=subprocess.PIPE)
     fzf = subprocess.run(fzf_command, stdin=git.stdout, stdout=subprocess.PIPE)
     git.wait()
