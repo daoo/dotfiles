@@ -35,7 +35,8 @@
   ss  = stash save
   st  = status --short --branch
 
-  smur = submodule update --recursive
+  sur = submodule update --recursive
+  far = fetch --all --recurse-submodules
   edit = !bash -c '${EDITOR} $(git ls-files --modified --other --exclude-standard)'
   cifa = !bash -c 'git commit --fixup=\"${0}\" && git commit --amend'
 
