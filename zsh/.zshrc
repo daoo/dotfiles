@@ -250,6 +250,12 @@ fdf() {
   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
 
+# cd using bookmarks
+fdb() {
+  local dir
+  dir=$(fzf < ${1:-~/.bookmarks}) && cd "$dir"
+}
+
 # fkill - kill process
 fkill() {
   pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
