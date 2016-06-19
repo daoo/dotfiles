@@ -166,7 +166,7 @@ myKeyMaps = fromList
   , xK_b # lock
 
   -- Setting keyboard layout
-  , xK_F1 # keymap "dvpse"
+  , xK_F1 # keymap "dvoormak"
   , xK_F2 # keymap "usaswe"
 
   -- Music player control
