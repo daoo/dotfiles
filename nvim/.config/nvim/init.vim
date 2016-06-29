@@ -4,7 +4,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'benekastah/neomake'
 Plug 'christoomey/vim-sort-motion'
-Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'itchyny/lightline.vim'
 Plug 'jamessan/vim-gnupg'
@@ -12,6 +11,7 @@ Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
+Plug 'justinmk/vim-sneak'
 Plug 'kshenoy/vim-signature'
 Plug 'mbbill/undotree'
 Plug 'mhinz/vim-grepper'
@@ -164,11 +164,6 @@ nnoremap <leader>ss   :setlocal spelllang=sv<cr>
 nnoremap <leader>t    :call <sid>togglelongline()<cr>
 vnoremap <leader>x    c<c-r>=<c-r>"<cr><esc>
 nnoremap <leader>ya   :%y+<cr>
-
-" Incsearch
-map / <plug>(incsearch-forward)
-map ? <plug>(incsearch-backward)
-map g/ <plug>(incsearch-stay)
 
 " Asterisk
 map *   <Plug>(asterisk-*)
