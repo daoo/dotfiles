@@ -60,7 +60,7 @@ myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "music"]
 
 myPP :: Handle -> PP
-myPP handle = defaultPP
+myPP handle = def
   { ppCurrent         = xmobarColor colorBlue      colorDarkGrey
   , ppHidden          = xmobarColor colorLightGrey colorDarkGrey
   , ppHiddenNoWindows = xmobarColor colorGrey      colorDarkGrey
