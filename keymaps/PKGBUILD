@@ -1,6 +1,6 @@
 pkgname=daoo-maps
 pkgver=2.1
-pkgrel=1
+pkgrel=2
 pkgdesc="PKGBUILD for my custom keymaps."
 url="http://github.com/daoo"
 arch=('any')
@@ -11,8 +11,8 @@ md5sums=('51c81912f1abf563db2faf3eff554677'
 
 package()
 {
-  install -Dm 755 "dvoormak" "$pkgdir/usr/share/X11/xkb/symbols/dvoormak"
-  install -Dm 755 "usaswe" "$pkgdir/usr/share/X11/xkb/symbols/usaswe"
+  install -Dm644 "dvoormak" "$pkgdir/usr/share/X11/xkb/symbols/dvoormak"
+  install -Dm644 "usaswe" "$pkgdir/usr/share/X11/xkb/symbols/usaswe"
 }
 
 # vim:set ts=2 sw=2 et:
