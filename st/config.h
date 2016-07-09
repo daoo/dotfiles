@@ -1,4 +1,4 @@
-static char font[] = "Inconsolata:pixelsize=16:antialias=true:autohint=false";
+static char font[] = "Inconsolata:pixelsize=16";
 static int borderpx = 0;
 
 static char shell[] = "/usr/bin/zsh";
