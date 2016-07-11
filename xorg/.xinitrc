@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
 export QT_STYLE_OVERRIDE="adwaita"
+export FT2_SUBPIXEL_HINTING=1
 
 systemctl --user import-environment DISPLAY XAUTHORITY
 dbus-update-activation-environment DISPLAY XAUTHORITY
