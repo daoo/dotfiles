@@ -57,7 +57,7 @@ myTerminal :: String
 myTerminal = "/usr/bin/st"
 
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "music"]
+myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "music", "NSP"]
 
 myPP :: Handle -> PP
 myPP handle = def
