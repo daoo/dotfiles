@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+
+import os
+import subprocess
+import sys
+import tempfile
+
+
+def git_branches(args):
+    command = ["git", "branch", "-v"] + args
+    output = subprocess.check_output(command)
+    raw_branches = output.decode("utf-8").splitlines()
+
+    current_branch = None
+    branches = {}
+    for string in raw_branches:
+        prefix = string[0:2]
+        name = string[2:string.find(" ", 2)]
+        comment = string[2+len(name):].strip()
+        if prefix == "* ":
+            current_branch = name
+        branches[name] = comment
+
+    return (current_branch, branches)
+
+
+def edit(string):
+    with tempfile.NamedTemporaryFile() as fobj:
+        fobj.write(string.encode("utf-8"))
+        fobj.flush()
+        subprocess.check_call([os.environ["EDITOR"], fobj.name])
+        fobj.seek(0)
+        return fobj.read().decode("utf-8")
+
+
+def format_output(current_branch, branches):
+    padding = max(len(branch) for branch in branches.keys())
+
+    def format_branch(branch, comment):
+        prefix = "*" if current_branch == branch else " "
+        return prefix + " " + branch.ljust(padding, " ") + " " + comment
+
+    branches_sorted = sorted(branches.items())
+    output = (format_branch(*branch) for branch in branches_sorted)
+    return "\n".join(output)
+
+
+def parse_command(string):
+    chunks = string.split()
+    if chunks[0] == "d":
+        return ["git", "branch", "--delete", chunks[1]]
+    elif chunks[0] == "D":
+        return ["git", "branch", "--force", "--delete", "{}".format(chunks[1])]
+    elif chunks[0] == "m":
+        return ["git", "branch", "--move", chunks[1], chunks[2]]
+    elif chunks[0] == "M":
+        return ["git", "branch", "--force", "--move", chunks[1], chunks[2]]
+    elif chunks[0] == "u":
+        return ["git", "branch", "--set-upstream-to=" + chunks[2], chunks[1]]
+    elif chunks[0] == "uu":
+        return ["git", "branch", "--unset-upstream", chunks[1]]
+    elif chunks[0] == "*":
+        return ["git", "checkout", chunks[1]]
+
+
+def execute(string, dry_run):
+    for line in string.splitlines():
+        command = parse_command(line)
+        if command:
+            print(" ".join(command))
+            if not dry_run:
+                subprocess.check_call(command)
+
+
+def main(args):
+    execute(edit(format_output(*git_branches(args))), dry_run=False)
+
+main(sys.argv[1:])
