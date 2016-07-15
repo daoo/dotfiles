@@ -11,17 +11,17 @@ def git_branches(args):
     output = subprocess.check_output(command)
     raw_branches = output.decode("utf-8").splitlines()
 
-    current_branch = None
+    current_name = None
     branches = {}
     for string in raw_branches:
         prefix = string[0:2]
         name = string[2:string.find(" ", 2)]
         comment = string[2+len(name):].strip()
         if prefix == "* ":
-            current_branch = name
+            current_name = name
         branches[name] = comment
 
-    return (current_branch, branches)
+    return (current_name, branches)
 
 
 def edit(string):
@@ -33,16 +33,15 @@ def edit(string):
         return fobj.read().decode("utf-8")
 
 
-def format_output(current_branch, branches):
-    padding = max(len(branch) for branch in branches.keys())
+def format_output(current_name, branches):
+    padding = max(map(len, branches.keys()))
 
-    def format_branch(branch, comment):
-        prefix = "*" if current_branch == branch else " "
-        return prefix + " " + branch.ljust(padding, " ") + " " + comment
+    def f(branch):
+        (name, comment) = branch
+        prefix = "*" if current_name == name else " "
+        return prefix + " " + name.ljust(padding, " ") + " " + comment
 
-    branches_sorted = sorted(branches.items())
-    output = (format_branch(*branch) for branch in branches_sorted)
-    return "\n".join(output)
+    return "\n".join(map(f, sorted(branches.items())))
 
 
 def parse_command(string):
@@ -62,6 +61,8 @@ def parse_command(string):
     elif chunks[0] == "*":
         return ["git", "checkout", chunks[1]]
 
+    return None
+
 
 def execute(string, dry_run):
     for line in string.splitlines():
@@ -69,7 +70,7 @@ def execute(string, dry_run):
         if command:
             print(" ".join(command))
             if not dry_run:
-                subprocess.check_call(command)
+                subprocess.call(command)
 
 
 def main(args):
