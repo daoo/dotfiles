@@ -1,7 +1,5 @@
 #!/usr/bin/bash
 
-export QT_STYLE_OVERRIDE="adwaita"
-
 feh --bg-tile --no-fehbg "$(find "$HOME/media/wallpapers" -type f | shuf -n 1)"
 xrdb -merge "$HOME/.Xresources"
 xsetroot -cursor_name left_ptr
