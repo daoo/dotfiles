@@ -1,0 +1,6 @@
+[Unit]
+Description=Selects a random wallpaper
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/random-wallpaper /usr/share/pixmaps/wallpapers /usr/local/wallpaper
