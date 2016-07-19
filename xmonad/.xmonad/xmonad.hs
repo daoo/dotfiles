@@ -219,6 +219,8 @@ myMouseBindings = fromList
 
 main :: IO ()
 main = do
+  safeSpawn "feh" ["--bg-tile", "/var/local/wallpaper"]
+  safeSpawnProg "unclutter"
   hxmobar <- spawnPipe "xmobar .xmonad/xmobarrc"
 
   xmonad $ ewmh $ withUrgencyHook NoUrgencyHook def
