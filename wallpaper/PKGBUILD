@@ -1,5 +1,5 @@
 pkgname=daoo-wallpaper
-pkgver=1.1
+pkgver=1.2
 pkgrel=1
 pkgdesc="Package for wallpaper randomization."
 url="http://github.com/daoo"
