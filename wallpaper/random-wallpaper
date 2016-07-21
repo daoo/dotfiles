@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -eu
+
 wallpaper_dir="$1"
 wallpaper_link="$2"
 wallpaper_file="$(find "$wallpaper_dir" -type f | shuf -n 1)"
