@@ -102,6 +102,7 @@ def main():
     parser.add_argument(
         "path",
         type=os.path.abspath,
+        nargs='?',
         default='.',
         help="directory to rename files in")
 
