@@ -30,6 +30,7 @@ scratchpad = NS.NS "kitty" "kitty --class=scratchpad" query hook
 myManageHook :: ManageHook
 myManageHook =
   (firefox --> doShift "2") <>
+  (steam --> doShift "6") <>
   (gimp <&&> not <$> gimpImageWindow --> doFloat) <>
   NS.namedScratchpadManageHook [scratchpad] <>
   manageDocks
@@ -37,6 +38,7 @@ myManageHook =
     firefox = className =? "Firefox"
     gimp = className =? "Gimp"
     gimpImageWindow = windowRole =? "gimp-image-window"
+    steam = className =? "Steam"
 
     windowRole = stringProperty "WM_WINDOW_ROLE"
 
