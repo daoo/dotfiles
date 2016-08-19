@@ -36,16 +36,38 @@ def edit(string):
 def format_output(current_name, branches):
     padding = max(map(len, branches.keys()))
 
+    documentation = """
+# git-branch-editor
+#
+# Commands:
+# d <branchname> = delete the branch
+# D <branchname> = force delete the branch
+# m <oldbranch> <newbranch> = rename the branch
+# M <oldbranch> <newbranch> = force rename the branch
+# u <upstream> <branchname> = set the branch's upstream
+# uu <branchname> = unset the branch's upstream
+# * <branchname> = checkout the branch
+#
+# Other lines are ignored.
+"""
+
     def f(branch):
         (name, comment) = branch
         prefix = "*" if current_name == name else " "
         return prefix + " " + name.ljust(padding, " ") + " " + comment
 
-    return "\n".join(map(f, sorted(branches.items())))
+    branches = "\n".join(map(f, sorted(branches.items())))
+    return branches + "\n" + documentation
 
 
 def parse_command(string):
+    if string.startswith("#"):
+        return None
+
     chunks = string.split()
+    if not chunks:
+        return None
+
     if chunks[0] == "d":
         return ["git", "branch", "--delete", chunks[1]]
     elif chunks[0] == "D":
