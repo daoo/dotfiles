@@ -45,6 +45,7 @@ bind generic oi :toggle id
 bind generic ot :toggle commit-title-overflow
 bind generic oF :toggle file-filter
 bind generic or :toggle commit-title-refs
+bind generic oG :toggle commit-title-graph
 
 bind generic @  none
 bind generic @j :/^@@
