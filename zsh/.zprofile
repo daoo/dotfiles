@@ -5,6 +5,8 @@
 # created when logging in via SSH or a TTY. To get the same environment in all
 # cases we treat ~/.profile as the canonical profile script and we source it
 # from ~/.zprofile.
-emulate sh
-source "$HOME/.profile"
-emulate zsh
+if [[ -f "$HOME/.profile" ]]; then
+  emulate sh
+  source "$HOME/.profile"
+  emulate zsh
+fi
