@@ -1,2 +1,0 @@
-# TODO: This is default in FreeType 2.7.0 and can then be removed
-FT2_SUBPIXEL_HINTING=2
