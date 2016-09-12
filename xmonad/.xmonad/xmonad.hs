@@ -24,8 +24,11 @@ import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
 myManageHook :: ManageHook
-myManageHook = gimp <&&> not <$> gimpImageWindow --> doFloat
+myManageHook =
+  (firefox --> doShift "web") <>
+  (gimp <&&> not <$> gimpImageWindow --> doFloat)
   where
+    firefox = className =? "Firefox"
     gimp = className =? "Gimp"
     gimpImageWindow = windowRole =? "gimp-image-window"
 
