@@ -36,7 +36,7 @@
   st  = status --short --branch
 
   sur = submodule update --recursive
-  edit = !bash -c '${EDITOR} $(git ls-files --modified --other --exclude-standard)'
+  edit = !bash -c '${EDITOR} $(git ls-files --modified --other --exclude-standard | uniq)'
   cifa = !bash -c 'git commit --fixup=\"${0}\" && git commit --amend'
 
   oldest-ancestor = !bash -c 'diff --old-line-format='' --new-line-format='' <(git rev-list --first-parent "${1:-master}") <(git rev-list --first-parent "${2:-HEAD}") | head -1' -
