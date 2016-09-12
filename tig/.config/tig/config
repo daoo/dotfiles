@@ -1,3 +1,5 @@
+set main-view = line-number:no,interval=5 id:no date:no author:no commit-title:yes,graph,refs,overflow=no
+
 bind generic h scroll-left
 bind generic j move-down
 bind generic k move-up
