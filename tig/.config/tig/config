@@ -34,7 +34,19 @@ bind generic vg view-grep
 bind generic vp view-pager
 bind generic vh view-help
 
-bind generic o  none
+bind generic o      none
+bind generic I      none
+bind generic i      none
+bind generic <Hash> none
+bind generic D      none
+bind generic A      none
+bind generic ~      none
+bind generic F      none
+bind generic W      none
+bind generic X      none
+bind generic $      none
+bind generic %      none
+
 bind generic oo :toggle sort-order
 bind generic os :toggle sort-field
 bind generic on :toggle line-number
