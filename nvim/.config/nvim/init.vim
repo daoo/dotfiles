@@ -13,8 +13,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'kshenoy/vim-signature'
 Plug 'mbbill/undotree'
-Plug 'mhinz/vim-grepper'
 Plug 'morhetz/gruvbox'
+Plug 'rking/ag.vim'
 Plug 'romainl/vim-qf'
 Plug 'sheerun/vim-polyglot'
 Plug 'shougo/deoplete.nvim'
@@ -149,9 +149,8 @@ nnoremap <leader>ecc  :e %<.cc<cr>
 nnoremap <leader>ecpp :e %<.cpp<cr>
 nnoremap <leader>eh   :e %<.h<cr>
 nnoremap <leader>ehpp :e %<.hpp<cr>
-nnoremap <leader>fg   :Grepper -open -noquickfix -nojump -noswitch<cr>
-xmap     <leader>fs   <plug>(GrepperOperator)
-nmap     <leader>fs   <plug>(GrepperOperator)
+nnoremap <leader>fg   :Ag<space>
+vnoremap <leader>fg   y:Ag "
 nnoremap <leader>fr   :%s/<c-r>=expand("<cword>")<cr>/
 vnoremap <leader>fr   y:%s/<c-r>"/
 nmap     <leader>M    <plug>(quickhl-manual-reset)
