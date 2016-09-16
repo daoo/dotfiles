@@ -7,17 +7,22 @@ import tempfile
 
 
 def git_branches(args):
-    command = ["git", "branch", "-v"] + args
+    def find_name_end(string):
+        index = string.find(" ", 2)
+        return index if index >= 0 else len(string)
+
+    command = ["git", "branch"] + args
     output = subprocess.check_output(command)
     raw_branches = output.decode("utf-8").splitlines()
 
     current_name = None
     branches = {}
     for string in raw_branches:
-        prefix = string[0:2]
-        name = string[2:string.find(" ", 2)]
-        comment = string[2+len(name):].strip()
-        if prefix == "* ":
+        prefix = string[0:2].strip()
+        name_end = find_name_end(string)
+        name = string[2:name_end]
+        comment = string[name_end:].strip()
+        if prefix == "*":
             current_name = name
         branches[name] = comment
 
