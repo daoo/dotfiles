@@ -19,6 +19,7 @@
   lll = log --decorate --stat
   p   = push
   pf  = push --force
+  pu  = push --set-upstream
   pom = push origin master
   rb  = rebase --autostash
   rba = rebase --abort
