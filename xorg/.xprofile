@@ -2,7 +2,3 @@
 
 export BROWSER="qutebrowser"
 export TERMCMD="st"
-
-export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
-export GPG_TTY="$(tty)"
-gpg-connect-agent --quiet /bye &
