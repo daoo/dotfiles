@@ -2,3 +2,5 @@
 
 export BROWSER="qutebrowser"
 export TERMCMD="st"
+
+gpg-connect-agent --quiet /bye &
