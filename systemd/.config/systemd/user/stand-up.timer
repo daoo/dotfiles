@@ -1,0 +1,10 @@
+[Unit]
+Description=Stand up occasionally
+
+[Timer]
+OnBootSec=1h
+OnUnitActiveSec=1h
+RandomizedDelaySec=10min
+
+[Install]
+WantedBy=timers.target
