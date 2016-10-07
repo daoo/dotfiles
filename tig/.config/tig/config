@@ -12,6 +12,7 @@ bind generic gk previous
 bind generic gp parent
 bind generic gP back
 bind generic gn view-next
+bind main    G  move-last-line
 bind generic G  move-last-line
 
 bind generic <C-f> move-page-down
