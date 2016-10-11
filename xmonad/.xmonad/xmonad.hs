@@ -17,16 +17,23 @@ import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks)
 import XMonad.Hooks.UrgencyHook (NoUrgencyHook(NoUrgencyHook), withUrgencyHook)
 import XMonad.Layout.NoBorders (lessBorders, Ambiguity(..), With(..))
 import XMonad.Layout.PerWorkspace (onWorkspace)
-import XMonad.Util.NamedScratchpad (namedScratchpadFilterOutWorkspacePP)
+import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg, runProcessWithInput)
-import XMonad.Util.Scratchpad (scratchpadSpawnActionCustom, scratchpadManageHookDefault)
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
+
+scratchpadSt :: NamedScratchpad
+scratchpadSt = NS "st" "st -c scratchpad" query action
+  where
+    query = className =? "scratchpad"
+    action = customFloating (W.RationalRect 0.25 0.375 0.5 0.25)
 
 myManageHook :: ManageHook
 myManageHook =
   (firefox --> doShift "web") <>
-  (gimp <&&> not <$> gimpImageWindow --> doFloat)
+  (gimp <&&> not <$> gimpImageWindow --> doFloat) <>
+  namedScratchpadManageHook [scratchpadSt] <>
+  manageDocks
   where
     firefox = className =? "Firefox"
     gimp = className =? "Gimp"
@@ -57,13 +64,13 @@ colorLightGrey = "#b8b8b8"
 colorGrey      = "#757575"
 
 myTerminal :: String
-myTerminal = "/usr/bin/st"
+myTerminal = "st"
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "music", "NSP"]
 
 myPP :: Handle -> PP
-myPP handle = def
+myPP handle = namedScratchpadFilterOutWorkspacePP def
   { ppCurrent         = xmobarColor colorBlue      colorDarkGrey
   , ppHidden          = xmobarColor colorLightGrey colorDarkGrey
   , ppHiddenNoWindows = xmobarColor colorGrey      colorDarkGrey
@@ -94,7 +101,7 @@ myKeyMaps = fromList
   -- Launching and killing programs
   [ xK_c      ! kill
   , xK_p      # rofiRun
-  , xK_i      # scratchpadSpawnActionCustom (myTerminal ++ " -c scratchpad")
+  , xK_i      # namedScratchpadAction [scratchpadSt] "st"
   , xK_Return # safeSpawnProg myTerminal
 
   -- Layout
@@ -136,7 +143,7 @@ myKeyMaps = fromList
   , xK_e ! screenWorkspace 1 >>= flip whenJust (windows . W.shift)
 
   -- Handling workspaces
-  , xK_o # toggleWS
+  , xK_o # toggleWorkspace
   , xK_r ! removeEmptyWorkspace
   , xK_v # listWorkspaces >>= rofiPrompt "view:"  >>= createView
   , xK_s # listWorkspaces >>= rofiPrompt "shift:" >>= createShift
@@ -184,7 +191,7 @@ myKeyMaps = fromList
     infixr 0 #
     infixr 0 !
 
-    toggleWS     = windows (W.view =<< W.tag . head . hiddenNonNSP)
+    toggleWorkspace = windows (W.view =<< W.tag . head . hiddenNonNSP)
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 
     createAnd newtag f = unless (null newtag) $
@@ -235,8 +242,8 @@ main = do
     , focusedBorderColor = colorGreen
     , modMask            = myModKey
     , keys               = const myKeyMaps
-    , logHook            = dynamicLogWithPP (namedScratchpadFilterOutWorkspacePP (myPP hxmobar))
-    , manageHook         = myManageHook <> scratchpadManageHookDefault <> manageDocks
+    , logHook            = dynamicLogWithPP (myPP hxmobar)
+    , manageHook         = myManageHook
     , handleEventHook    = fullscreenEventHook <+> docksEventHook
     , focusFollowsMouse  = False
     , clickJustFocuses   = False

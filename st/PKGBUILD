@@ -1,6 +1,6 @@
 pkgname=daoo-st
-pkgver=0.6
-pkgrel=3
+pkgver=0.7
+pkgrel=1
 pkgdesc='A simple virtual terminal emulator for X.'
 arch=('i686' 'x86_64')
 license=('MIT')
@@ -11,7 +11,7 @@ url="http://st.suckless.org"
 source=(http://dl.suckless.org/st/st-${pkgver}.tar.gz
         config.h
         config.mk)
-md5sums=('1a926f450b4eacb7e2f5ac5b8ffea7c8'
+md5sums=('29b2a599cf1511c8062ed8f025c84c63'
          'SKIP'
          'SKIP')
 
