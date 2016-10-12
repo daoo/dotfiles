@@ -199,6 +199,7 @@ nnoremap <c-s> :write<cr>
 
 " FZF
 nnoremap <silent> <c-p> :FZF<cr>
+nnoremap <silent> <c-o> :GitFiles<cr>
 nnoremap <silent> <leader>oa :Ag
 nnoremap <silent> <leader>ob :Buffers<cr>
 nnoremap <silent> <leader>oc :History:<cr>
