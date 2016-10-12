@@ -254,9 +254,4 @@ let g:neomake_open_list = 1
 " {{{ Deoplete
 let g:deoplete#enable_at_startup = 1
 " }}}
-" {{{ Projects
-if filereadable('project.vim')
-  source project.vim
-endif
-" }}}
 " vim: fdm=marker :
