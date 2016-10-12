@@ -2,8 +2,8 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'airblade/vim-gitgutter'
+Plug 'ap/vim-buftabline'
 Plug 'benekastah/neomake'
-Plug 'bling/vim-bufferline'
 Plug 'christoomey/vim-sort-motion'
 Plug 'haya14busa/vim-asterisk'
 Plug 'itchyny/lightline.vim'
