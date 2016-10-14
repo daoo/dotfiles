@@ -139,6 +139,7 @@ let mapleader=" "
 let maplocalleader=" "
 
 " Leader mappings
+nnoremap <leader>ac   :%!clang-format<cr>
 nnoremap <leader>ae   :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
 vmap     <leader>as   <plug>(EasyAlign)
 vmap     <leader>al   <plug>(LiveEasyAlign)
