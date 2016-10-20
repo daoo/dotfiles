@@ -47,19 +47,10 @@ unsetopt bg_nice
 unsetopt check_jobs
 
 export EDITOR='nvim'
-export PAGER='less'
+export PAGER='nvim -'
+export MANPAGER="bash -c \"nvim -c \\\"set ft=man\\\" </dev/tty <(col -bx)\""
 
-export LESS='-ir'
 export RANGER_LOAD_DEFAULT_RC=FALSE
-
-# Less color
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;31m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[00;47;30m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
 
 # Disable ctrl-q and ctrl-s
 stty -ixon

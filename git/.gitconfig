@@ -46,16 +46,27 @@
   log-branch = !bash -c 'git log $(git merge-base master HEAD)..'
   diff-branch = !bash -c 'git diff $(git merge-base master HEAD) HEAD'
 
+[color]
+  pager = false
+  ui = true
+
 [push]
   default = simple
 
 [diff]
+  tool = nvim -d
   compactionHeuristic = true
 
+[merge]
+  tool = nvim -d
+
+[difftool]
+  prompt = false
+
 [pager]
-  log = /usr/share/git/diff-highlight/diff-highlight | less
-  show = /usr/share/git/diff-highlight/diff-highlight | less
-  diff = /usr/share/git/diff-highlight/diff-highlight | less
+  log = nvim -R -
+  show = nvim -R -
+  diff = nvim -R -
 
 [interactive]
   diffFilter = /usr/share/git/diff-highlight/diff-highlight
