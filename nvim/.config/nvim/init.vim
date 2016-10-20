@@ -206,7 +206,7 @@ nnoremap <silent> <leader>ob :Buffers<cr>
 nnoremap <silent> <leader>oc :History:<cr>
 nnoremap <silent> <leader>of :FZF %:p:h<cr>
 nnoremap <silent> <leader>om :Marks<cr>
-nnoremap <silent> <leader>ot :Tags<cr>
+nnoremap <silent> <leader>ot :BTags<cr>
 
 " Center matches when searching
 nnoremap N Nzz
