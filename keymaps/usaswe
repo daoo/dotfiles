@@ -7,9 +7,10 @@ xkb_symbols "usaswe" {
   include "latin(basic)"
   include "level3(ralt_switch)"
   include "capslock(swapescape)"
-  include "compose(rctrl)"
 
   key <AC11> { [ apostrophe,  quotedbl,  adiaeresis, Adiaeresis ] };
   key <AC10> { [ semicolon,   colon,     odiaeresis, Odiaeresis ] };
   key <AD11> { [ bracketleft, braceleft, aring,      Aring      ] };
+
+  include "compose(rctrl)"
 };
