@@ -93,5 +93,5 @@ our $CONFIG = {
   "missing_icon"        => "gtk-missing-image",
   "name_keys"           => ["Name"],
   "terminal"            => "st",
-  "VERSION"             => 0.67,
+  "VERSION"             => 0.68,
 }
