@@ -6,8 +6,7 @@ url="http://github.com/daoo"
 arch=('any')
 makedepends=()
 source=('dvoormak' 'usaswe')
-md5sums=('bff274bf1c1c3825b8f9e0fd679564ad'
-         'ec1df57041afc6d26b9cb2ce208715fb')
+md5sums=('SKIP' 'SKIP')
 
 package()
 {
