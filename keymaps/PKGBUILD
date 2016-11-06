@@ -1,12 +1,12 @@
 pkgname=daoo-maps
-pkgver=3.0
+pkgver=4
 pkgrel=1
 pkgdesc="PKGBUILD for my custom keymaps."
 url="http://github.com/daoo"
 arch=('any')
 makedepends=()
 source=('dvoormak' 'usaswe')
-md5sums=('ac5a33280943af78acc7d91af4680007'
+md5sums=('bff274bf1c1c3825b8f9e0fd679564ad'
          'ec1df57041afc6d26b9cb2ce208715fb')
 
 package()

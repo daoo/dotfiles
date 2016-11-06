@@ -4,7 +4,6 @@ xkb_symbols "dvoormak" {
   include "us(dvorak)"
   include "level3(ralt_switch)"
   include "capslock(swapescape)"
-  include "compose(rctrl)"
 
   name[Group1] = "Dvoormak";
 
