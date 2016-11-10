@@ -170,6 +170,7 @@ vmap     <leader>m    <plug>(quickhl-manual-this)
 nnoremap <leader>se   :setlocal spelllang=en<cr>
 nnoremap <leader>ss   :setlocal spelllang=sv<cr>
 nnoremap <leader>t    :call <sid>togglelongline()<cr>
+nnoremap <leader>wc   :bp<bar>sp<bar>bn<bar>bd<cr>
 vnoremap <leader>x    c<c-r>=<c-r>"<cr><esc>
 nnoremap <leader>ya   :%y+<cr>
 
