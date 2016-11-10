@@ -7,38 +7,30 @@ xkb_symbols "dvoormak" {
 
   name[Group1] = "Dvoormak";
 
-  // symbols row, left side
-  key <TLDE> { [ dollar,      asciitilde ] };
-  key <AE01> { [ ampersand,   1          ] };
-  key <AE02> { [ bracketleft, 2          ] };
-  key <AE03> { [ braceleft,   3          ] };
-  key <AE04> { [ braceright,  4          ] };
-  key <AE05> { [ parenleft,   5          ] };
-  key <AE06> { [ equal,       6          ] };
+  key <TLDE> { [ dollar,       asciitilde ] };
+  key <AE01> { [ ampersand,    1          ] };
+  key <AE02> { [ bracketleft,  2          ] };
+  key <AE03> { [ braceleft,    3          ] };
+  key <AE04> { [ braceright,   4          ] };
+  key <AE05> { [ parenleft,    5          ] };
+  key <AE06> { [ equal,        6          ] };
+  key <AE07> { [ asterisk,     7          ] };
+  key <AE08> { [ parenright,   8          ] };
+  key <AE09> { [ plus,         9          ] };
+  key <AE10> { [ bracketright, 0          ] };
+  key <AE11> { [ exclam,       percent    ] };
+  key <AE12> { [ numbersign,   grave      ] };
 
-  // symbols row, right side
-  key <AE07> { [ asterisk,     7       ] };
-  key <AE08> { [ parenright,   8       ] };
-  key <AE09> { [ plus,         9       ] };
-  key <AE10> { [ bracketright, 0       ] };
-  key <AE11> { [ exclam,       percent ] };
-  key <AE12> { [ numbersign,   grave   ] };
-
-  // upper row, left side
   key <AD01> { [ semicolon, colon   ] };
   key <AD02> { [ comma,     less    ] };
   key <AD03> { [ period,    greater ] };
-
-  // upper row, right side
   key <AD11> { [ slash, question    ] };
   key <AD12> { [ at,    asciicircum ] };
 
-  // home row, left side
   key <AC01> { [ a, A, adiaeresis, Adiaeresis ] };
   key <AC02> { [ o, O, odiaeresis, Odiaeresis ] };
   key <AC03> { [ e, E, aring,      Aring      ] };
   key <AC04> { [ u, U, eacute,     Eacute     ] };
 
-  // lower row, left side
   key <AB01> { [ apostrophe, quotedbl ] };
 };
