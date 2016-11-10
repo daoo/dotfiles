@@ -8,6 +8,7 @@
   cif  = commit --fixup
   cifa = !bash -c 'git commit --fixup=\"${0}\" && git commit --amend'
   co   = checkout
+  cob  = checkout --branch
   cp   = cherry-pick
   cpa  = cherry-pick --abort
   cpc  = cherry-pick --continue
