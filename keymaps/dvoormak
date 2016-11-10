@@ -33,4 +33,7 @@ xkb_symbols "dvoormak" {
   key <AC04> { [ u, U, eacute,     Eacute     ] };
 
   key <AB01> { [ apostrophe, quotedbl ] };
+
+  // Make the ISO key another shift key
+  key <AB00> { [ Shift_L ] };
 };
