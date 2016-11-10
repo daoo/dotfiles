@@ -65,6 +65,7 @@ set nofoldenable
 
 set ignorecase
 set smartcase
+set inccommand=nosplit
 
 set expandtab
 set formatoptions+=ron
