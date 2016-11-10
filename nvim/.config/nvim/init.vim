@@ -158,6 +158,7 @@ nnoremap <leader>ecc  :e %<.cc<cr>
 nnoremap <leader>ecpp :e %<.cpp<cr>
 nnoremap <leader>eh   :e %<.h<cr>
 nnoremap <leader>ehpp :e %<.hpp<cr>
+nnoremap <leader>ei   :e %<.i<cr>
 nnoremap <leader>fg   :Ag<space>
 vnoremap <leader>fg   y:Ag "
 nnoremap <leader>fr   :%s/<c-r>=expand("<cword>")<cr>/
