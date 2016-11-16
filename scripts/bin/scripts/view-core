@@ -1,45 +1,41 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python
 
-set -eu
+import subprocess
+import os
+import sys
+import tempfile
 
-logrun() {
-  echo "$@"
-  "$@"
-}
+def list_sandboxes(root):
+    sandbox = os.path.join(root, '.cabal-sandbox')
+    if os.path.isdir(sandbox):
+        return [os.path.join(sandbox, name)
+                for name
+                in os.listdir(sandbox)
+                if name.endswith("-packages.conf.d")]
+    else:
+        return []
 
-# TODO: Predictable temp dir
+options = [
+    "-dsuppress-coercions",
+    "-dsuppress-module-prefixes",
+    "-dsuppress-uniques",
+    "-dsuppress-idinfo",
+    "-dsuppress-type-applications",
+    "-dppr-cols270",
+    "-dppr-case-as-let",
+    "-ddump-to-file",
+    "-ddump-simpl"
+]
 
-# FIXME: Problem arise when there is more than one package-database. Which
-# happens when GHC is updated and the old database is kept.
-dbflag=""
-if dbdir="$(find .cabal-sandbox -type d -name '*-packages.conf.d' -print -quit 2>/dev/null)"; then
-  if [[ -n "$dbdir" ]]; then
-    dbflag="-package-db=$dbdir"
-  fi
-fi
-
-srcdir=""
-if [[ -d src ]]; then
-  srcdir="-isrc"
-fi
-
-tmpdir="$(mktemp --tmpdir=/tmp --directory view-core.XXXXXXX)"
-trap "rm -rf '$tmpdir'" EXIT SIGINT SIGTERM
-
-logrun "${GHC:-ghc}" \
-  -o "$tmpdir/a.out" \
-  -outputdir "$tmpdir" \
-  "$srcdir" \
-  "$dbflag" \
-  -dsuppress-coercions \
-  -dsuppress-module-prefixes \
-  -dsuppress-uniques \
-  -dsuppress-idinfo \
-  -dsuppress-type-applications \
-  -dppr-cols270 \
-  -dppr-case-as-let \
-  -ddump-to-file \
-  -ddump-simpl \
-  "$@"
-
-( cd "$tmpdir" && ${EDITOR:-nvim} )
+ghc = os.environ.get("GHC", "ghc")
+db = list_sandboxes(os.path.abspath("."))
+with tempfile.TemporaryDirectory() as tmpdir:
+    output = ["-o", os.path.join(tmpdir, "a.out")]
+    outputdir = ["-outputdir", tmpdir]
+    srcdir = ["-isrc"] if os.path.isdir("src") else []
+    dbdir = ["-package-db=" + db[-1]] if db else []
+    command = [ghc] + output + outputdir + srcdir + dbdir + options + sys.argv[1:]
+    print(" ".join(command))
+    result = subprocess.call(command)
+    if result == 0:
+        subprocess.call(["nvim"], cwd=tmpdir)
