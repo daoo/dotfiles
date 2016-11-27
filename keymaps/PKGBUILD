@@ -1,5 +1,5 @@
 pkgname=daoo-maps
-pkgver=4
+pkgver=6
 pkgrel=1
 pkgdesc="PKGBUILD for my custom keymaps."
 url="http://github.com/daoo"

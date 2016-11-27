@@ -35,5 +35,5 @@ xkb_symbols "dvoormak" {
   key <AB01> { [ apostrophe, quotedbl ] };
 
   // Make the ISO key another shift key
-  key <AB00> { [ Shift_L ] };
+  key <LSGT> { [ Shift_L ] };
 };
