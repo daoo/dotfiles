@@ -92,28 +92,41 @@ bindkey '' edit-command-line
 # ]]]
 # [[[ Prompt
 autoload -U promptinit
-autoload -U colors && colors
-
 setopt prompt_subst
 
+typeset -AHg FX FG BG
+
+FX=(
+  reset     "%{[00m%}"
+  bold      "%{[01m%}" no-bold      "%{[22m%}"
+  italic    "%{[03m%}" no-italic    "%{[23m%}"
+  underline "%{[04m%}" no-underline "%{[24m%}"
+  blink     "%{[05m%}" no-blink     "%{[25m%}"
+  reverse   "%{[07m%}" no-reverse   "%{[27m%}"
+)
+
+for color in {000..255}; do
+  FG[$color]="%{[38;5;${color}m%}"
+  BG[$color]="%{[48;5;${color}m%}"
+done
+
 prompt_daoo_setup() {
-  local colors && set -A colors cyan magenta blue yellow green grey
-  local i=$((1 + $(echo -n $(hostname -f) | cksum | cut -d ' ' -f 1) % ${#colors}))
+  local i=$(($(hostname -f | cksum | cut -d ' ' -f 1) % 255))
 
-  local color_prompt="%{${fg_no_bold[$colors[$i]]}%}"
-  local color_black="%{${fg_bold[black]}%}"
-  local color_magenta="%{${fg_bold[magenta]}%}"
-  local color_end="%{${reset_color}%}"
+  local color_prompt="%{${FG[$i]}%}"
+  local color_separator="%{${FX[bold]}${FG[000]}%}"
+  local color_directory="%{${FX[bold]}${FG[005]}%}"
+  local color_end="%{${FX[reset]}%}"
 
-  local l_bracket="${color_black}[${color_end}"
-  local r_bracket="${color_black}]${color_end}"
-  local l_paren="${color_black}(${color_end}"
-  local r_paren="${color_black})${color_end}"
-  local at_char="${color_black}@${color_end}"
-  local pipe="${color_black}|${color_end}"
+  local l_bracket="${color_separator}[${color_end}"
+  local r_bracket="${color_separator}]${color_end}"
+  local l_paren="${color_separator}(${color_end}"
+  local r_paren="${color_separator})${color_end}"
+  local at_char="${color_separator}@${color_end}"
+  local pipe="${color_separator}|${color_end}"
   local hyphen="${color_prompt}-${color_end}"
 
-  local dir="${l_paren}${color_magenta}%~${color_end}${r_paren}"
+  local dir="${l_paren}${color_directory}%~${color_end}${r_paren}"
   local host_info="${l_paren}%n${at_char}%m${r_paren}"
   local time="${l_bracket}%D${pipe}%*${r_bracket}"
   local env="${l_paren}\$?${pipe}${ZSH_NESTING}${r_paren}"
