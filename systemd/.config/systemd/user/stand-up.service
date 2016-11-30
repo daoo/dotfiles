@@ -1,5 +1,0 @@
-[Unit]
-Description=Stand up notification
-
-[Service]
-ExecStart=/usr/bin/notify-send "Stand up!" --icon=up
