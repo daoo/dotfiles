@@ -1,8 +1,8 @@
 Config
   { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
   , additionalFonts = []
-  , bgColor = "#2e3436"
-  , fgColor = "#b8b8b8"
+  , bgColor = "#1d2021"
+  , fgColor = "#fbf1c7"
   , alpha = 255
   , position = BottomSize L 100 13
   , border = NoBorder

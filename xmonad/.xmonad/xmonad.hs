@@ -53,15 +53,15 @@ myLayoutHook = onWorkspace "full" lfull ldef
     borders = Combine Difference Screen OnlyFloat
 
 colorRed, colorGreen, colorBlue, colorPurple :: String
-colorRed    = "#ef2929"
-colorGreen  = "#6dff27"
-colorBlue   = "#729fcf"
-colorPurple = "#ad7fa8"
+colorRed    = "#fb4934"
+colorGreen  = "#b8bb26"
+colorBlue   = "#458588"
+colorPurple = "#b16286"
 
-colorDarkGrey, colorLightGrey, colorGrey :: String
-colorDarkGrey  = "#2e3436"
-colorLightGrey = "#b8b8b8"
-colorGrey      = "#757575"
+colorBackground, colorForeground, colorForegroundDark :: String
+colorBackground     = "#1d2021"
+colorForeground     = "#fbf1c7"
+colorForegroundDark = "#757575"
 
 myTerminal :: String
 myTerminal = "st"
@@ -71,13 +71,13 @@ myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "
 
 myPP :: Handle -> PP
 myPP handle = namedScratchpadFilterOutWorkspacePP def
-  { ppCurrent         = xmobarColor colorBlue      colorDarkGrey
-  , ppHidden          = xmobarColor colorLightGrey colorDarkGrey
-  , ppHiddenNoWindows = xmobarColor colorGrey      colorDarkGrey
+  { ppCurrent         = xmobarColor colorBlue           colorBackground
+  , ppHidden          = xmobarColor colorForeground     colorBackground
+  , ppHiddenNoWindows = xmobarColor colorForegroundDark colorBackground
   , ppSep             = " | "
-  , ppTitle           = xmobarColor colorLightGrey colorDarkGrey
-  , ppUrgent          = xmobarColor colorRed       colorDarkGrey
-  , ppVisible         = xmobarColor colorPurple    colorDarkGrey
+  , ppTitle           = xmobarColor colorForeground colorBackground
+  , ppUrgent          = xmobarColor colorRed        colorBackground
+  , ppVisible         = xmobarColor colorPurple     colorBackground
   , ppWsSep           = " "
 
   , ppOutput = hPutStrLn handle
@@ -238,7 +238,7 @@ main = do
     , workspaces         = myWorkspaces
     , layoutHook         = myLayoutHook
     , terminal           = myTerminal
-    , normalBorderColor  = colorDarkGrey
+    , normalBorderColor  = colorBackground
     , focusedBorderColor = colorGreen
     , modMask            = myModKey
     , keys               = const myKeyMaps
