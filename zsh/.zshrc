@@ -94,29 +94,13 @@ bindkey '' edit-command-line
 autoload -U promptinit
 setopt prompt_subst
 
-typeset -AHg FX FG BG
-
-FX=(
-  reset     "%{[00m%}"
-  bold      "%{[01m%}" no-bold      "%{[22m%}"
-  italic    "%{[03m%}" no-italic    "%{[23m%}"
-  underline "%{[04m%}" no-underline "%{[24m%}"
-  blink     "%{[05m%}" no-blink     "%{[25m%}"
-  reverse   "%{[07m%}" no-reverse   "%{[27m%}"
-)
-
-for color in {000..255}; do
-  FG[$color]="%{[38;5;${color}m%}"
-  BG[$color]="%{[48;5;${color}m%}"
-done
-
 prompt_daoo_setup() {
   local i=$(($(hostname -f | cksum | cut -d ' ' -f 1) % 255))
 
-  local color_prompt="%{${FG[$i]}%}"
-  local color_separator="%{${FX[bold]}${FG[000]}%}"
-  local color_directory="%{${FX[bold]}${FG[005]}%}"
-  local color_end="%{${FX[reset]}%}"
+  local color_prompt="%{[38;5;${i}m%}"
+  local color_separator="%{[01m[38;5;000m%}"
+  local color_directory="%{[01m[38;5;005m%}"
+  local color_end="%{[00m%}"
 
   local l_bracket="${color_separator}[${color_end}"
   local r_bracket="${color_separator}]${color_end}"
