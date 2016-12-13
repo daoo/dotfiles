@@ -68,6 +68,7 @@ myTerminal = "st"
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "music", "NSP"]
+myWorkspaces = ["im", "web", "code", "code2", "misc", "misc2", "full", "misc3", "music", "NSP"]
 
 myPP :: Handle -> PP
 myPP handle = namedScratchpadFilterOutWorkspacePP def
