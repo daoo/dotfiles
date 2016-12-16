@@ -49,7 +49,6 @@
 
 [diff]
   tool = nvim -d
-  compactionHeuristic = true
 
 [merge]
   tool = nvim -d
