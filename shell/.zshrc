@@ -113,7 +113,7 @@ prompt_daoo_setup() {
   local dir="${l_paren}${color_directory}%~${color_end}${r_paren}"
   local host_info="${l_paren}%n${at_char}%m${r_paren}"
   local time="${l_bracket}%D${pipe}%*${r_bracket}"
-  local env="${l_paren}\$?${pipe}${ZSH_NESTING}${r_paren}"
+  local env="${l_paren}%?${pipe}${ZSH_NESTING}${r_paren}"
 
   line1_a="${hyphen}${dir}${color_prompt}"
   line1_b="${color_end}${env}${hyphen}${time}${hyphen}${host_info}${color_prompt}-"
