@@ -19,7 +19,6 @@ import XMonad.Layout.NoBorders (lessBorders, Ambiguity(..), With(..))
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg, runProcessWithInput)
-import XMonad.Util.WorkspaceCompare (getSortByTag)
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
@@ -81,7 +80,6 @@ myPP handle = namedScratchpadFilterOutWorkspacePP def
   , ppLayout = wrapWS
   , ppSep = "|"
   , ppWsSep = ""
-  , ppSort = getSortByTag
   , ppOutput = hPutStrLn handle
   }
   where
