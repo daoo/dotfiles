@@ -1,22 +1,11 @@
 Config
-  { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
-  , additionalFonts = []
+  { font = "xft:Inconsolata:size=10"
   , bgColor = "#1d2021"
   , fgColor = "#fbf1c7"
   , alpha = 255
-  , position = BottomSize L 100 13
+  , position = Bottom
   , border = NoBorder
-  , borderColor = "#b8b8b8"
   , iconRoot = ".xmonad/icons"
-  , textOffset = 11
-  , iconOffset = -1
-
-  , lowerOnStart = True
-  , hideOnStart = False
-  , allDesktops = True
-  , overrideRedirect = True
-  , pickBroadest = False
-  , persistent = True
 
   , sepChar = "%"
   , alignSep = "}{"

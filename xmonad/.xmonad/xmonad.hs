@@ -11,7 +11,7 @@ import XMonad.Actions.DynamicWorkspaces (addHiddenWorkspace, removeEmptyWorkspac
 import XMonad.Actions.Navigation2D (windowGo, windowSwap, Direction2D(..))
 import XMonad.Actions.NoBorders (toggleBorder)
 import XMonad.Actions.WindowBringer (windowMap)
-import XMonad.Hooks.DynamicLog (PP(..), defaultPP, dynamicLogWithPP, xmobarColor, trim)
+import XMonad.Hooks.DynamicLog (PP(..), defaultPP, dynamicLogWithPP, xmobarColor, trim, wrap)
 import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks)
 import XMonad.Hooks.UrgencyHook (NoUrgencyHook(NoUrgencyHook), withUrgencyHook)
@@ -19,6 +19,7 @@ import XMonad.Layout.NoBorders (lessBorders, Ambiguity(..), With(..))
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg, runProcessWithInput)
+import XMonad.Util.WorkspaceCompare (getSortByTag)
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
@@ -30,7 +31,7 @@ scratchpadSt = NS "st" "st -c scratchpad" query action
 
 myManageHook :: ManageHook
 myManageHook =
-  (firefox --> doShift "web") <>
+  (firefox --> doShift "2") <>
   (gimp <&&> not <$> gimpImageWindow --> doFloat) <>
   namedScratchpadManageHook [scratchpadSt] <>
   manageDocks
@@ -53,7 +54,7 @@ myLayoutHook = onWorkspace "full" lfull ldef
     borders = Combine Difference Screen OnlyFloat
 
 colorRed, colorGreen, colorBlue, colorPurple :: String
-colorRed    = "#fb4934"
+colorRed    = "#cc241d"
 colorGreen  = "#b8bb26"
 colorBlue   = "#458588"
 colorPurple = "#b16286"
@@ -67,21 +68,24 @@ myTerminal :: String
 myTerminal = "st"
 
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["im", "web", "code", "code2", "term", "other", "full", "void", "music", "NSP"]
+myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "NSP"]
 
 myPP :: Handle -> PP
 myPP handle = namedScratchpadFilterOutWorkspacePP def
-  { ppCurrent         = xmobarColor colorBlue           colorBackground
-  , ppHidden          = xmobarColor colorForeground     colorBackground
-  , ppHiddenNoWindows = xmobarColor colorForegroundDark colorBackground
-  , ppSep             = " | "
-  , ppTitle           = xmobarColor colorForeground colorBackground
-  , ppUrgent          = xmobarColor colorRed        colorBackground
-  , ppVisible         = xmobarColor colorPurple     colorBackground
-  , ppWsSep           = " "
-
+  { ppCurrent = xmobarColor colorForeground colorBlue . wrapWS
+  , ppHiddenNoWindows = xmobarColor colorForegroundDark colorBackground . wrapWS
+  , ppUrgent = xmobarColor colorForeground colorRed . wrapWS
+  , ppVisible = xmobarColor colorForeground colorPurple . wrapWS
+  , ppHidden = wrapWS
+  , ppTitle = wrap " " ""
+  , ppLayout = wrapWS
+  , ppSep = "|"
+  , ppWsSep = ""
+  , ppSort = getSortByTag
   , ppOutput = hPutStrLn handle
   }
+  where
+    wrapWS = wrap " " " "
 
 myModKey :: KeyMask
 myModKey = mod4Mask
@@ -149,24 +153,26 @@ myKeyMaps = fromList
   , xK_s # listWorkspaces >>= rofiPrompt "shift:" >>= createShift
 
   -- Workspace keys
-  , xK_ampersand   # windows (W.greedyView (myWorkspaces !! 0))
-  , xK_bracketleft # windows (W.greedyView (myWorkspaces !! 1))
-  , xK_braceleft   # windows (W.greedyView (myWorkspaces !! 2))
-  , xK_braceright  # windows (W.greedyView (myWorkspaces !! 3))
-  , xK_parenleft   # windows (W.greedyView (myWorkspaces !! 4))
-  , xK_equal       # windows (W.greedyView (myWorkspaces !! 5))
-  , xK_asterisk    # windows (W.greedyView (myWorkspaces !! 6))
-  , xK_parenright  # windows (W.greedyView (myWorkspaces !! 7))
-  , xK_plus        # windows (W.greedyView (myWorkspaces !! 8))
-  , xK_ampersand   ! windows (W.shift (myWorkspaces !! 0))
-  , xK_bracketleft ! windows (W.shift (myWorkspaces !! 1))
-  , xK_braceleft   ! windows (W.shift (myWorkspaces !! 2))
-  , xK_braceright  ! windows (W.shift (myWorkspaces !! 3))
-  , xK_parenleft   ! windows (W.shift (myWorkspaces !! 4))
-  , xK_equal       ! windows (W.shift (myWorkspaces !! 5))
-  , xK_asterisk    ! windows (W.shift (myWorkspaces !! 6))
-  , xK_parenright  ! windows (W.shift (myWorkspaces !! 7))
-  , xK_plus        ! windows (W.shift (myWorkspaces !! 8))
+  , xK_ampersand    # windows (W.greedyView (myWorkspaces !! 0))
+  , xK_bracketleft  # windows (W.greedyView (myWorkspaces !! 1))
+  , xK_braceleft    # windows (W.greedyView (myWorkspaces !! 2))
+  , xK_braceright   # windows (W.greedyView (myWorkspaces !! 3))
+  , xK_parenleft    # windows (W.greedyView (myWorkspaces !! 4))
+  , xK_equal        # windows (W.greedyView (myWorkspaces !! 5))
+  , xK_asterisk     # windows (W.greedyView (myWorkspaces !! 6))
+  , xK_parenright   # windows (W.greedyView (myWorkspaces !! 7))
+  , xK_plus         # windows (W.greedyView (myWorkspaces !! 8))
+  , xK_bracketright # windows (W.greedyView (myWorkspaces !! 9))
+  , xK_ampersand    ! windows (W.shift (myWorkspaces !! 0))
+  , xK_bracketleft  ! windows (W.shift (myWorkspaces !! 1))
+  , xK_braceleft    ! windows (W.shift (myWorkspaces !! 2))
+  , xK_braceright   ! windows (W.shift (myWorkspaces !! 3))
+  , xK_parenleft    ! windows (W.shift (myWorkspaces !! 4))
+  , xK_equal        ! windows (W.shift (myWorkspaces !! 5))
+  , xK_asterisk     ! windows (W.shift (myWorkspaces !! 6))
+  , xK_parenright   ! windows (W.shift (myWorkspaces !! 7))
+  , xK_plus         ! windows (W.shift (myWorkspaces !! 8))
+  , xK_bracketright ! windows (W.shift (myWorkspaces !! 9))
 
   -- Restarting and stopping xmonad
   , xK_q # reload
