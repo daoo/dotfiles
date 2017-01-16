@@ -100,24 +100,24 @@ prompt_daoo_setup() {
   local color_prompt="%{[38;5;${i}m%}"
   local color_separator="%{[01m[38;5;000m%}"
   local color_directory="%{[01m[38;5;005m%}"
-  local color_end="%{[00m%}"
+  local color_white="%{[00m%}"
 
-  local l_bracket="${color_separator}[${color_end}"
-  local r_bracket="${color_separator}]${color_end}"
-  local l_paren="${color_separator}(${color_end}"
-  local r_paren="${color_separator})${color_end}"
-  local at_char="${color_separator}@${color_end}"
-  local pipe="${color_separator}|${color_end}"
-  local hyphen="${color_prompt}-${color_end}"
+  local l_bracket="${color_separator}["
+  local r_bracket="${color_separator}]"
+  local l_paren="${color_separator}("
+  local r_paren="${color_separator})"
+  local at_char="${color_separator}@"
+  local pipe="${color_separator}|"
+  local hyphen="${color_prompt}-"
 
-  local dir="${l_paren}${color_directory}%~${color_end}${r_paren}"
-  local host_info="${l_paren}%n${at_char}%m${r_paren}"
-  local time="${l_bracket}%D${pipe}%*${r_bracket}"
-  local env="${l_paren}%?${pipe}${ZSH_NESTING}${r_paren}"
+  local dir="${l_paren}${color_directory}%~${color_white}${r_paren}"
+  local host_info="${l_paren}${color_white}%n${at_char}${color_white}%m${r_paren}"
+  local time="${l_bracket}${color_white}%D${pipe}${color_white}%*${r_bracket}"
+  local env="${l_paren}${color_white}%?${pipe}${color_white}${ZSH_NESTING}${r_paren}"
 
   line1_a="${hyphen}${dir}${color_prompt}"
-  line1_b="${color_end}${env}${hyphen}${time}${hyphen}${host_info}${color_prompt}-"
-  line2="--${color_end}> "
+  line1_b="${env}${hyphen}${time}${hyphen}${host_info}${color_prompt}-"
+  line2="--${color_white}> "
 
   autoload add-zsh-hook
   add-zsh-hook precmd prompt_daoo_precmd
