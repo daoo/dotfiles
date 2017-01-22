@@ -11,13 +11,12 @@ import XMonad.Actions.DynamicWorkspaces (addHiddenWorkspace, removeEmptyWorkspac
 import XMonad.Actions.Navigation2D (windowGo, windowSwap, Direction2D(..))
 import XMonad.Actions.NoBorders (toggleBorder)
 import XMonad.Actions.WindowBringer (windowMap)
-import XMonad.Hooks.DynamicLog (PP(..), defaultPP, dynamicLogWithPP, xmobarColor, trim, wrap)
+import XMonad.Hooks.DynamicLog (PP(..), dynamicLogWithPP, xmobarColor, trim, wrap)
 import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
-import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks)
+import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(ToggleStruts))
 import XMonad.Hooks.UrgencyHook (NoUrgencyHook(NoUrgencyHook), withUrgencyHook)
 import XMonad.Layout.NoBorders (lessBorders, Ambiguity(..), With(..))
-import XMonad.Layout.PerWorkspace (onWorkspace)
-import XMonad.Util.NamedScratchpad
+import XMonad.Util.NamedScratchpad (NamedScratchpad(NS), customFloating, namedScratchpadAction, namedScratchpadFilterOutWorkspacePP, namedScratchpadManageHook)
 import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg, runProcessWithInput)
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
@@ -41,15 +40,9 @@ myManageHook =
 
     windowRole = stringProperty "WM_WINDOW_ROLE"
 
-myLayoutHook = onWorkspace "full" lfull ldef
+myLayoutHook = avoidStruts (lessBorders borders (tall ||| Mirror tall ||| Full))
   where
-    lfull = lessBorders borders (full ||| tall ||| wide)
-    ldef  = avoidStruts (lessBorders borders (tall ||| wide ||| full))
-
-    full = Full
     tall = Tall 1 (3%100) (1%2)
-    wide = Mirror tall
-
     borders = Combine Difference Screen OnlyFloat
 
 colorRed, colorGreen, colorBlue, colorPurple :: String
@@ -120,6 +113,7 @@ myKeyMaps = fromList
   -- Tiling
   , xK_t # withFocused (windows . W.sink)
   , xK_u # withFocused toggleBorder
+  , xK_x # sendMessage ToggleStruts
 
   -- Focus and swapping
   , xK_f # selectWindow
