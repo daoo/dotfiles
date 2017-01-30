@@ -28,6 +28,7 @@
   rba  = rebase --abort
   rbc  = rebase --continue
   rbi  = rebase --autostash --interactive
+  rbia = rebase --autostash --interactive --autosquash
   rbs  = rebase --skip
   re   = reset
   reh  = reset --hard
