@@ -12,6 +12,7 @@ Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
+Plug 'kana/vim-altr'
 Plug 'kshenoy/vim-signature'
 Plug 'machakann/vim-highlightedyank'
 Plug 'majutsushi/tagbar'
@@ -165,11 +166,8 @@ nnoremap <leader>ef   :e %<cr>
 nnoremap <leader>eF   :e! %<cr>
 nnoremap <leader>eve  :e $MYVIMRC<cr>
 nnoremap <leader>evs  :source $MYVIMRC<cr>
-nnoremap <leader>ecc  :e %<.cc<cr>
-nnoremap <leader>ecpp :e %<.cpp<cr>
-nnoremap <leader>eh   :e %<.h<cr>
-nnoremap <leader>ehpp :e %<.hpp<cr>
-nnoremap <leader>ei   :e %<.i<cr>
+nmap     <leader>en   <Plug>(altr-forward)
+nmap     <leader>eb   <Plug>(altr-backward)
 nnoremap <leader>fg   :Ag<space>
 vnoremap <leader>fg   y:Ag "
 nnoremap <leader>fr   :%s/<c-r>=expand("<cword>")<cr>/
