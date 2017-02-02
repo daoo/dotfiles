@@ -113,6 +113,14 @@ function! s:togglelongline()
     let w:long_line_match = matchadd('ErrorMsg', '\%>80v.\+', -1)
   endif
 endfunction
+
+function! s:clangformat(first, last)
+  let l:winview = winsaveview()
+  execute a:first . "," . a:last . "!clang-format"
+  call winrestview(l:winview)
+endfunction
+
+command! -range=% ClangFormat call <sid>clangformat(<line1>, <line2>)
 " }}}
 " {{{ Disabled stupid keys and commands
 " Arrow keys
@@ -147,7 +155,7 @@ let mapleader=" "
 let maplocalleader=" "
 
 " Leader mappings
-nnoremap <leader>ac   :%!clang-format<cr>
+nnoremap <leader>ac   :ClangFormat<cr>
 nnoremap <leader>ae   :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
 vmap     <leader>as   <plug>(EasyAlign)
 vmap     <leader>al   <plug>(LiveEasyAlign)
