@@ -69,17 +69,6 @@ def server_state(lines):
     return State(address, name, status, map, player_count, player_names)
 
 
-def parse_player_count(lines):
-    return int(lines[0].split(",")[5])
-
-
-def parse_player_names(lines):
-    if len(lines) <= 1:
-        return []
-
-    return [line.split(",")[0] for line in lines[1:]]
-
-
 def loop(server):
     count_file = os.path.join(os.environ["XDG_RUNTIME_DIR"], "quake-counter")
     with open(count_file, "w") as file:
