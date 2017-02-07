@@ -74,10 +74,9 @@ bind generic um status-merge
 bind generic ul stage-update-line
 bind generic us stage-split-chunk
 
-bind generic c  none
-bind generic cc !git commit
-bind generic ca !?@git commit --amend --no-edit
-
 bind generic <C-w><C-w> view-next
 
-bind generic cb !@sh -c "echo -n %(commit) | xsel --input --clipboard"
+bind generic c none
+
+bind generic ch !@sh -c "echo -n %(commit) | xsel --input --clipboard"
+bind generic cn !@sh -c "echo -n %(branch) | xsel --input --clipboard"
