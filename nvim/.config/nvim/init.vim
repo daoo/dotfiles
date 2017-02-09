@@ -25,6 +25,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'shougo/deoplete.nvim'
 Plug 'shougo/neco-vim'
 Plug 'shougo/neoinclude.vim'
+Plug 'shougo/neosnippet-snippets'
+Plug 'shougo/neosnippet.vim'
 Plug 't9md/vim-quickhl'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
@@ -269,5 +271,13 @@ let g:neomake_open_list = 1
 " }}}
 " {{{ Deoplete
 let g:deoplete#enable_at_startup = 1
+" }}}
+" {{{ Neosnippet
+let g:neosnippet#enable_snipmate_compatibility = 1
+let g:neosnippet#snippets_directory = '~/.config/nvim/snippets/'
+
+imap <tab> <plug>(neosnippet_expand_or_jump)
+smap <tab> <plug>(neosnippet_expand_or_jump)
+xmap <tab> <plug>(neosnippet_expand_target)
 " }}}
 " vim: fdm=marker :

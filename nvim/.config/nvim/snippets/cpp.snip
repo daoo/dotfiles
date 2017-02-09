@@ -1,0 +1,18 @@
+delete      once
+snippet     once
+options     head
+abbr        include-guard
+    #ifndef ${1:SYMBOL}
+        #define $1
+
+        ${0:TARGET}
+    #endif  // $1
+
+
+delete      namespace
+options     head
+snippet     namespace
+abbr        namespace {}
+    namespace ${1:#:name} {
+        ${0:TARGET}
+    }  // namespace $1
