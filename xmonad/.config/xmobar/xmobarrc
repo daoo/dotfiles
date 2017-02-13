@@ -5,7 +5,7 @@ Config
   , alpha = 255
   , position = Bottom
   , border = NoBorder
-  , iconRoot = ".xmonad/icons"
+  , iconRoot = ".config/xmobar/icons"
 
   , sepChar = "%"
   , alignSep = "}{"
