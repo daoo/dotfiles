@@ -246,4 +246,3 @@ main = do
     , focusFollowsMouse  = False
     , clickJustFocuses   = False
     }
--- vim: set foldmethod=marker:
