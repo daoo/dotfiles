@@ -18,7 +18,6 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'morhetz/gruvbox'
-Plug 'rking/ag.vim'
 Plug 'romainl/vim-qf'
 Plug 'sgeb/vim-diff-fold'
 Plug 'sheerun/vim-polyglot'
@@ -172,8 +171,8 @@ nnoremap <leader>eve  :e $MYVIMRC<cr>
 nnoremap <leader>evs  :source $MYVIMRC<cr>
 nmap     <leader>en   <Plug>(altr-forward)
 nmap     <leader>eb   <Plug>(altr-backward)
-nnoremap <leader>fg   :Ag<space>
-vnoremap <leader>fg   y:Ag "
+nnoremap <leader>fg   :grep<space>
+vnoremap <leader>fg   y:grep "
 nnoremap <leader>fr   :%s/<c-r>=expand("<cword>")<cr>/
 vnoremap <leader>fr   y:%s/<c-r>"/
 nmap     <leader>M    <plug>(quickhl-manual-reset)
