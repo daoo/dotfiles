@@ -6,25 +6,24 @@ import sys
 import tempfile
 
 
-def git_branches(args):
+def git_branches():
     def find_name_end(string):
         index = string.find(" ", 2)
         return index if index >= 0 else len(string)
 
-    command = ["git", "branch"] + args
+    command = ["git", "branch"]
     output = subprocess.check_output(command)
     raw_branches = output.decode("utf-8").splitlines()
 
     current_name = None
-    branches = {}
+    branches = []
     for string in raw_branches:
         prefix = string[0:2].strip()
         name_end = find_name_end(string)
-        name = string[2:name_end]
-        comment = string[name_end:].strip()
+        name = string[2:]
         if prefix == "*":
             current_name = name
-        branches[name] = comment
+        branches.append(name)
 
     return (current_name, branches)
 
@@ -38,69 +37,68 @@ def edit(string):
         return fobj.read().decode("utf-8")
 
 
-def format_output(current_name, branches):
-    padding = max(map(len, branches.keys()))
-
+def format_output(current, branches):
     documentation = """
 # git-branch-editor
 #
 # Commands:
-# d <branchname> = delete the branch
-# D <branchname> = force delete the branch
-# m <oldbranch> <newbranch> = rename the branch
-# M <oldbranch> <newbranch> = force rename the branch
-# u <upstream> <branchname> = set the branch's upstream
-# uu <branchname> = unset the branch's upstream
-# * <branchname> = checkout the branch
+# d = delete the branch
+# u <upstream> = set the branch's upstream
+# uu = unset the branch's upstream
+# * = checkout the branch
 #
-# Other lines are ignored.
+# Other lines are treated as branch renaming.
 """
 
     def f(branch):
-        (name, comment) = branch
-        prefix = "*" if current_name == name else " "
-        return prefix + " " + name.ljust(padding, " ") + " " + comment
+        if current == branch:
+            return "* " + branch
+        else:
+            return branch
 
-    branches = "\n".join(map(f, sorted(branches.items())))
+    branches = "\n".join(map(f, sorted(branches)))
     return branches + "\n" + documentation
 
 
-def parse_command(string):
-    if string.startswith("#"):
-        return None
-
+def parse_command(branch, string):
     chunks = string.split()
     if not chunks:
         return None
 
     if chunks[0] == "d":
-        return ["git", "branch", "--delete", chunks[1]]
-    elif chunks[0] == "D":
-        return ["git", "branch", "--force", "--delete", "{}".format(chunks[1])]
-    elif chunks[0] == "m":
-        return ["git", "branch", "--move", chunks[1], chunks[2]]
-    elif chunks[0] == "M":
-        return ["git", "branch", "--force", "--move", chunks[1], chunks[2]]
+        return ["git", "branch", "--delete", branch]
     elif chunks[0] == "u":
-        return ["git", "branch", "--set-upstream-to=" + chunks[2], chunks[1]]
+        return ["git", "branch", "--set-upstream-to=" + chunks[1], branch]
     elif chunks[0] == "uu":
-        return ["git", "branch", "--unset-upstream", chunks[1]]
+        return ["git", "branch", "--unset-upstream", branch]
     elif chunks[0] == "*":
-        return ["git", "checkout", chunks[1]]
+        return ["git", "checkout", branch]
+    elif branch != string:
+        return ["git", "branch", "--move", branch, string]
 
     return None
 
 
-def execute(string, dry_run):
-    for line in string.splitlines():
-        command = parse_command(line)
+def is_command(line):
+    stripped = line.strip()
+    return stripped and not stripped.startswith("#")
+
+
+def execute(old_branches, string, dry_run):
+    new_branches = list(filter(is_command, string.splitlines()))
+    if len(old_branches) != len(new_branches):
+        return False
+
+    for i in range(0, len(new_branches)):
+        command = parse_command(old_branches[i], new_branches[i])
         if command:
             print(" ".join(command))
             if not dry_run:
                 subprocess.call(command)
 
 
-def main(args):
-    execute(edit(format_output(*git_branches(args))), dry_run=False)
+def main():
+    (current, local) = git_branches()
+    execute(local, edit(format_output(current, local)), dry_run=False)
 
-main(sys.argv[1:])
+main()
