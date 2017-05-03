@@ -47,7 +47,6 @@ set directory=/tmp
 set nobackup
 set noswapfile
 
-set belloff=all
 set cursorcolumn
 set cursorline
 set laststatus=2
@@ -55,7 +54,6 @@ set lazyredraw
 set list
 set listchars=tab:▸\ ,extends:❯,precedes:❮
 set mouse=
-set showcmd
 set nowrap
 set nonumber
 set relativenumber
