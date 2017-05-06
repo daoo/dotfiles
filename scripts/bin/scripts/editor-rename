@@ -1,87 +1,75 @@
 #!/usr/bin/env python
 
 import argparse
+import itertools
 import os
 import subprocess
 import sys
 import tempfile
 
 
-def yield_paths(args):
-    for root, dirs, files in os.walk(args.path):
-        paths = []
-        if not args.no_files:
-            paths.extend([os.path.join(root, path) for path in files])
-        if not args.no_directories:
-            paths.extend([os.path.join(root, path) for path in dirs])
-
-        for path in sorted(paths):
-            yield os.path.abspath(path)
-
-        if not args.recursive:
-            del dirs[:]
+def concat(iterable):
+    return list(itertools.chain.from_iterable(iterable))
 
 
-def path_for_user(root_path, path):
-    assert os.path.isabs(root_path)
-    assert os.path.isabs(path)
-
-    return os.path.relpath(path, root_path)
-
-
-def path_from_user(root_path, path):
-    assert os.path.isabs(root_path)
-
-    return os.path.join(root_path, path)
+def recursive_list_dir(top, include_dirs, include_files):
+    for root, dirs, files in os.walk(top):
+        if include_files:
+            for path in files:
+                yield os.path.join(root, path)
+        if include_dirs:
+            for path in dirs:
+                yield os.path.join(root, path)
 
 
-def interact(args, old_paths):
-    assert os.path.isabs(args.path)
+def list_dir(top, include_dirs, include_files):
+    for entry in os.scandir(top):
+        if entry.is_file() and include_files:
+            yield os.path.join(top, entry.name)
 
+        if entry.is_dir() and include_dirs:
+            yield os.path.join(top, entry.name)
+
+
+def interact(editor, old_paths):
     fwrite = tempfile.NamedTemporaryFile(mode='w', delete=False)
     tmp_path = fwrite.name
-    relative_old_paths = [path_for_user(args.path, path) for path in old_paths]
-    fwrite.write("\n".join(relative_old_paths))
+    fwrite.write("\n".join(old_paths))
     fwrite.close()
 
-    subprocess.call([args.editor, tmp_path])
+    subprocess.call([editor, tmp_path])
 
     fread = open(tmp_path, 'r')
-    relative_new_paths = fread.read().splitlines()
-    new_paths = [path_from_user(args.path, path) for path in relative_new_paths]
+    new_paths = fread.read().splitlines()
     fread.close()
 
     os.remove(tmp_path)
     return new_paths
 
 
-def rename(args, old_names, new_names):
+def rename(old_names, new_names, parents):
     assert len(old_names) == len(new_names)
     for old, new in zip(old_names, new_names):
-        assert os.path.isabs(old)
-        assert os.path.isabs(new)
         # Don't rename if the name is unchanged
         if old == new:
             continue
 
-        sys.stdout.write(
-            str.format("Moving \"{}\" to \"{}\".\n",
-                        path_for_user(args.path, old),
-                        path_for_user(args.path, new)))
+        sys.stdout.write(str.format("Moving \"{}\" to \"{}\".\n", old, new))
         if not os.path.exists(new):
-            if args.parents:
+            if parents:
                 os.renames(old, new)
             else:
                 os.rename(old, new)
         else:
             sys.stderr.write(
-                str.format("Warning: file {} already exists.\n",
-                            path_for_user(args.path, new)))
+                str.format("Warning: file {} already exists.\n", new))
 
 
 def program(args):
-    old_names = list(yield_paths(args))
-    new_names = interact(args, old_names)
+    list_func = recursive_list_dir if args.recursive else list_dir
+
+    old_names = sorted(concat((list_func(path, args.directories, args.files) for path in args.paths)))
+    new_names = interact(args.editor, old_names)
 
     if len(new_names) == 0:
         sys.stderr.write("Aborting rename due to empty input.\n")
@@ -91,7 +79,7 @@ def program(args):
         sys.stderr.write("Error: number of lines have changed, exiting.\n")
         return 1
 
-    rename(args, old_names, new_names)
+    rename(old_names, new_names, args.parents)
 
 
 def main():
@@ -100,9 +88,8 @@ def main():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument(
-        "path",
-        type=os.path.abspath,
-        nargs='?',
+        "paths",
+        nargs='+',
         default='.',
         help="directory to rename files in")
 
@@ -110,24 +97,43 @@ def main():
         "-p", "--parents",
         action="store_true",
         help="make parent directories as needed")
-    parser.add_argument(
-        "-r", "--recursive",
-        action="store_true",
-        help="recurseivly rename in sub-directories")
-    parser.add_argument(
-        "-f", "--no-files",
-        action="store_true",
-        help="only rename files")
-    parser.add_argument(
-        "-d", "--no-directories",
-        action="store_true",
-        help="only rename directories")
+
     parser.add_argument(
         "-e", "--editor",
         action="store",
         help="the editor to use",
         default=os.environ["EDITOR"])
 
+    parser.add_argument(
+        "-r", "--recursive",
+        action="store_true",
+        help="recurseivly rename in sub-directories")
+
+    parser.add_argument(
+        "--files",
+        dest="files",
+        action="store_true",
+        help="rename files")
+    parser.add_argument(
+        "--no-files",
+        dest="files",
+        action="store_false",
+        help="do not rename files")
+    parser.set_defaults(files=True)
+
+    parser.add_argument(
+        "--directories",
+        dest="directories",
+        action="store_true",
+        help="rename directories")
+    parser.add_argument(
+        "--no-directories",
+        dest="directories",
+        action="store_false",
+        help="do not rename directories")
+    parser.set_defaults(directories=True)
+
     sys.exit(program(parser.parse_args()))
+
 
 main()
