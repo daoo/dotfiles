@@ -215,7 +215,7 @@ myKeyMaps = fromList
 
     rofi = runProcessWithInput "rofi"
 
-    rofiRun = rofi ["-show", "run", "-run-command", "echo -n {cmd}"] "" >>= flip safeSpawn []
+    rofiRun = rofi ["-show", "run", "-run-command", "echo -n {cmd}"] "" >>= safeSpawnProg
 
     rofiPrompt prompt opts = trim <$> rofi ["-dmenu", "-p", prompt] (unlines opts)
 
