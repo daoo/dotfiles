@@ -209,7 +209,7 @@ myKeyMaps = fromList
 
     keymap name = safeSpawn "setxkbmap" [name]
 
-    lock = safeSpawn "dm-tool" ["lock"]
+    lock = safeSpawnProg "physlock"
 
     playerctl cmd = safeSpawn "playerctl" [cmd]
 
@@ -227,7 +227,8 @@ myMouseBindings = fromList
 
 main :: IO ()
 main = do
-  safeSpawn "feh" ["--bg-tile", "/var/local/wallpaper"]
+  safeSpawn "feh" ["--bg-tile", "media/wallpaper"]
+  safeSpawn "xsetroot" ["-cursor_name", "left_ptr"]
   safeSpawnProg "unclutter"
   hxmobar <- spawnPipe "xmobar .config/xmobar/xmobarrc"
 
