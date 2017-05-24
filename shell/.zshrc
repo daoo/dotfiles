@@ -47,7 +47,7 @@ unsetopt bg_nice
 unsetopt check_jobs
 
 export EDITOR='nvim'
-export PAGER='nvim -'
+export PAGER="sed \"s/\e.{-}m//g\" | nvim -R -"
 export MANPAGER="bash -c \"nvim -c \\\"set ft=man\\\" </dev/tty <(col -bx)\""
 
 export RANGER_LOAD_DEFAULT_RC=FALSE
