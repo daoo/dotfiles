@@ -8,6 +8,18 @@ xkb_symbols "usaswe" {
   include "level3(ralt_switch)"
   include "compose(rctrl)"
 
+  key <TLDE> { [ dollar,       asciitilde ] };
+  key <AE01> { [ ampersand,    1          ] };
+  key <AE02> { [ bracketleft,  2          ] };
+  key <AE03> { [ braceleft,    3          ] };
+  key <AE04> { [ braceright,   4          ] };
+  key <AE05> { [ parenleft,    5          ] };
+  key <AE06> { [ equal,        6          ] };
+  key <AE07> { [ asterisk,     7          ] };
+  key <AE08> { [ parenright,   8          ] };
+  key <AE09> { [ plus,         9          ] };
+  key <AE10> { [ bracketright, 0          ] };
+
   key <AC01> { [ a, A, adiaeresis, Adiaeresis ] };
   key <AD03> { [ e, E, aring,      Aring      ] };
   key <AD09> { [ o, O, odiaeresis, Odiaeresis ] };
