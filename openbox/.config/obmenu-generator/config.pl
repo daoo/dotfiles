@@ -11,7 +11,7 @@
                             Name is from the last slash to the end. (filename.desktop)
                             Example: qr/^(?:gimp|xterm)\b/,    # skips 'gimp' and 'xterm'
 
-    | skip_entry          : Skip a destkop file if the value from a given key matches the regex.
+    | skip_entry          : Skip a desktop file if the value from a given key matches the regex.
                             Example: [
                                 {key => 'Name', re => qr/(?:about|terminal)/i},
                                 {key => 'Exec', re => qr/^xterm/},
@@ -52,7 +52,7 @@
 
 
 || KEYS
-    | name_keys           : Valid keys for the item names.
+    | name_keys           : Valid keys for application name.
                             Example: ['Name[fr]', 'GenericName[fr]', 'Name'],   # french menu
 
 
@@ -67,8 +67,8 @@
 
 || NOTES
     | Regular expressions:
-        * use qr/RE/ instead of 'RE'
-        * use qr/RE/i for case insensitive mode
+        * use qr/.../ instead of '...'
+        * use qr/.../i for case insensitive mode
 
 =cut
 
@@ -76,7 +76,7 @@ our $CONFIG = {
   "editor"              => "gedit",
   "Linux::DesktopFiles" => {
                              desktop_files_paths     => ["/usr/share/applications"],
-                             gtk_rc_filename         => "/home/daniel/.gtkrc-2.0",
+                             gtk_rc_filename         => "$ENV{HOME}/.gtkrc-2.0",
                              icon_dirs_first         => undef,
                              icon_dirs_last          => undef,
                              icon_dirs_second        => undef,
@@ -93,5 +93,5 @@ our $CONFIG = {
   "missing_icon"        => "gtk-missing-image",
   "name_keys"           => ["Name"],
   "terminal"            => "st",
-  "VERSION"             => 0.68,
+  "VERSION"             => 0.71,
 }
