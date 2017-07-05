@@ -13,3 +13,4 @@ if [[ -f "$HOME/.ansible_env" ]]; then
 fi
 
 [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ] && exec /usr/bin/xinit "$XDG_CONFIG_HOME/X11/xinitrc" -- :0 -nolisten tcp vt1
+[ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 2 ] && exec /usr/bin/xinit "$XDG_CONFIG_HOME/X11/gamingrc" -- :1 -nolisten tcp vt2
