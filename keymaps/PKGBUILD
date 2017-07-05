@@ -1,16 +1,17 @@
 pkgname=daoo-maps
-pkgver=6
+pkgver=7
 pkgrel=1
 pkgdesc="PKGBUILD for my custom keymaps."
 url="http://github.com/daoo"
 arch=('any')
 makedepends=()
-source=('dvoormak' 'usaswe')
-md5sums=('SKIP' 'SKIP')
+source=('dvoormak' 'ergodox' 'usaswe')
+md5sums=('SKIP' 'SKIP' 'SKIP')
 
 package()
 {
   install -Dm644 "dvoormak" "$pkgdir/usr/share/X11/xkb/symbols/dvoormak"
+  install -Dm644 "ergodox" "$pkgdir/usr/share/X11/xkb/symbols/ergodox"
   install -Dm644 "usaswe" "$pkgdir/usr/share/X11/xkb/symbols/usaswe"
 }
 

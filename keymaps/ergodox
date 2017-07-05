@@ -1,0 +1,14 @@
+default
+partial alphanumeric_keys
+xkb_symbols "usaswe" {
+  name[Group1] = "USA - Swedish";
+
+  include "us(basic)"
+  include "latin(basic)"
+  include "level3(ralt_switch)"
+  include "compose(rctrl)"
+
+  key <AC01> { [ a, A, adiaeresis, Adiaeresis ] };
+  key <AD03> { [ e, E, aring,      Aring      ] };
+  key <AD09> { [ o, O, odiaeresis, Odiaeresis ] };
+};
