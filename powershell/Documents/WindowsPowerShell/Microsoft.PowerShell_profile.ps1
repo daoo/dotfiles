@@ -27,8 +27,23 @@ function make-link ($target, $link) {
 
 function Prompt
 {
-    $mywd = (Get-Location).Path
-    $mywd = $mywd.Replace( $HOME, '~' )
-    Write-Host ($mywd + ">") -NoNewline -ForegroundColor Green
+    $width = (get-host).UI.RawUI.MaxWindowSize.Width
+    $dir = (get-location).Path.Replace($HOME, '~')
+    $hostinfo = $ENV:USERNAME + "@" + $ENV:COMPUTERNAME
+    $timedate = (get-date -uformat "%Y-%m-%d %H:%M:%S")
+
+    $left = "-(" + $dir + ")-"
+    $right = "-(" + $hostinfo + ")-[" + $timedate + "]-"
+    $fill = "-" * ($width - $left.length - $right.length)
+    Write-Host "-(" -NoNewline -ForegroundColor White
+    Write-Host $dir -NoNewline -ForegroundColor Magenta
+    Write-Host ")-" -NoNewline -ForegroundColor White
+    Write-Host $fill -NoNewline -ForegroundColor White
+    Write-Host '-(' -NoNewline -ForegroundColor White
+    Write-Host $hostinfo -NoNewline -ForegroundColor DarkBlue
+    Write-Host ')-[' -NoNewline -ForegroundColor White
+    Write-Host $timedate -NoNewline -ForegroundColor DarkBlue
+    Write-Host ']-' -NoNewline -ForegroundColor White
+    Write-Host "-->" -NoNewline -ForegroundColor White
     return " "
 }
