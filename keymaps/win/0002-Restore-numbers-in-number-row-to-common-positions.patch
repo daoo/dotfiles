@@ -1,0 +1,117 @@
+From 91621525ef322f51c3b3cfc1fdd635cfbfec6248 Mon Sep 17 00:00:00 2001
+From: Daniel Oom <oom.daniel@gmail.com>
+Date: Mon, 14 Aug 2017 14:34:39 +0200
+Subject: [PATCH 2/4] Restore numbers in number row to common positions
+
+---
+ kbddvp.c | 66 ++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
+
+diff --git a/kbddvp.c b/kbddvp.c
+index 699fed7..6268940 100644
+--- a/kbddvp.c
++++ b/kbddvp.c
+@@ -120,9 +120,9 @@ static LDATA MODIFIERS modifiers = {
+ static LDATA VK_TO_WCHARS2 normalAndShift[] = {
+         //                                      Normal          Shift
+         //----------------------------------------------------
+-        {       VK_OEM_4,       0,              '&',            '%'             },
+-        {       VK_'0',         CAPLOK,         '*',            '0',            },
+-        {       VK_'4',         CAPLOK,         '+',            '4',            },
++        {       VK_'1',         0,              '&',            '1'             },
++        {       VK_'7',         CAPLOK,         '*',            '7',            },
++        {       VK_'9',         CAPLOK,         '+',            '9',            },
+         //--------------------------------------------------------
+         {       VK_TAB,         0,              '\t',           '\t'            },
+         {       VK_'F',         CAPLOK,         'f',            'F'             },
+@@ -151,12 +151,12 @@ static LDATA VK_TO_WCHARS3 altGrOnly[] = {
+         //                                      Normal          Shift           AltGr
+         {       VK_OEM_3,       0,              '$',            '~',            WCH_DEAD        },
+         {       dead,           0,              WCH_NONE,       WCH_NONE,       '~'             },
+-        {       VK_'5',         CAPLOK,         '{',            '5',            0x00A2          },
+-        {       VK_'3',         CAPLOK,         '}',            '3',            0x00A5          },
+-        {       VK_'1',         CAPLOK,         '(',            '1',            0x20AC          },
+-        {       VK_'9',         CAPLOK,         '=',            '9',            0x00A3          },
+-        {       VK_'2',         CAPLOK,         ')',            '2',            0x00BD          },
+-        {       VK_'8',         CAPLOK,         '!',            '8',            0x00A1          },
++        {       VK_'3',         CAPLOK,         '{',            '3',            0x00A2          },
++        {       VK_'4',         CAPLOK,         '}',            '4',            0x00A5          },
++        {       VK_'5',         CAPLOK,         '(',            '5',            0x20AC          },
++        {       VK_'6',         CAPLOK,         '=',            '6',            0x00A3          },
++        {       VK_'8',         CAPLOK,         ')',            '8',            0x00BD          },
++        {       VK_OEM_4,       CAPLOK,         '!',            '%',            0x00A1          },
+         {       VK_OEM_8,       0,              '#',            '`',            WCH_DEAD        },
+         {       dead,           0,              WCH_NONE,       WCH_NONE,       '`'             },
+         //--------------------------------------------------------------------
+@@ -208,8 +208,8 @@ static LDATA VK_TO_WCHARS4 shiftAltGr[] = {
+ static LDATA VK_TO_WCHARS5 ctrlKeys[] = {
+         //                                      Normal  Shift   AltGr           S-AltGr         Ctrl
+         //--------------------------------------------------------------------------------
+-        {       VK_'7',         CAPLOK,         '[',    '7',    0x00A4,         WCH_NONE,       0x001B          },
+-        {       VK_'6',         CAPLOK,         ']',    '6',    WCH_NONE,       WCH_NONE,       0x001D          },
++        {       VK_'2',         CAPLOK,         '[',    '2',    0x00A4,         WCH_NONE,       0x001B          },
++        {       VK_'0',         CAPLOK,         ']',    '0',    WCH_NONE,       WCH_NONE,       0x001D          },
+         {       VK_OEM_5,       0,              '\\',   '|',    WCH_NONE,       WCH_NONE,       0x001C          },
+         {       VK_BACK,        0,              '\b',   '\b',   WCH_NONE,       WCH_NONE,       0x007F          },
+         {       VK_ESCAPE,      0,              escape, escape, WCH_NONE,       WCH_NONE,       escape          },
+@@ -299,17 +299,17 @@ static LDATA VK_TO_WCHAR_TABLE charTranslations[] = {
+ static LDATA USHORT scanCodesToVirtualKeys[] = {
+         /* 0x00 */ none,
+         /* 0x01 */ VK_ESCAPE,           
+-        /* 0x02 */ VK_OEM_4,
+-        /* 0x03 */ VK_'7',
+-        /* 0x04 */ VK_'5',
+-        /* 0x05 */ VK_'3',
+-        /* 0x06 */ VK_'1',
+-        /* 0x07 */ VK_'9',
+-        /* 0x08 */ VK_'0',
+-        /* 0x09 */ VK_'2',
+-        /* 0x0A */ VK_'4',
+-        /* 0x0B */ VK_'6',
+-        /* 0x0C */ VK_'8',
++        /* 0x02 */ VK_'1',
++        /* 0x03 */ VK_'2',
++        /* 0x04 */ VK_'3',
++        /* 0x05 */ VK_'4',
++        /* 0x06 */ VK_'5',
++        /* 0x07 */ VK_'6',
++        /* 0x08 */ VK_'7',
++        /* 0x09 */ VK_'8',
++        /* 0x0A */ VK_'9',
++        /* 0x0B */ VK_'0',
++        /* 0x0C */ VK_OEM_4,
+         /* 0x0D */ VK_OEM_8,
+         /* 0x0E */ VK_BACK,
+         /* 0x0F */ VK_TAB,
+@@ -949,17 +949,17 @@ static LDATA DEADKEY deadKeys[] = {
+ // this is essentially scanCodesToVirtualKeys with a description.
+ static LDATA VSC_LPWSTR keyNames[] = {
+         0x01    /* VK_ESCAPE            */,     L"Escape",
+-        0x02    /* VK_OEM_4             */,     L"Ampersand",
+-        0x03    /* VK_'7'               */,     L"Left Bracket",
+-        0x04    /* VK_'5'               */,     L"Left Brace",
+-        0x05    /* VK_'3'               */,     L"Right Brace",
+-        0x06    /* VK_'1'               */,     L"Left Parenthesis",
+-        0x07    /* VK_'9'               */,     L"Equal Sign",
+-        0x08    /* VK_'0'               */,     L"Asterisk",
+-        0x09    /* VK_'2'               */,     L"Right Parenthesis",
+-        0x0A    /* VK_'4'               */,     L"Plus",
+-        0x0B    /* VK_'6'               */,     L"Right Bracket",
+-        0x0C    /* VK_'8'               */,     L"Exclamation Point",
++        0x02    /* VK_'1'               */,     L"Ampersand",
++        0x03    /* VK_'2'               */,     L"Left Bracket",
++        0x04    /* VK_'3'               */,     L"Left Brace",
++        0x05    /* VK_'4'               */,     L"Right Brace",
++        0x06    /* VK_'5'               */,     L"Left Parenthesis",
++        0x07    /* VK_'6'               */,     L"Equal Sign",
++        0x08    /* VK_'7'               */,     L"Asterisk",
++        0x09    /* VK_'8'               */,     L"Right Parenthesis",
++        0x0A    /* VK_'9'               */,     L"Plus",
++        0x0B    /* VK_'0'               */,     L"Right Bracket",
++        0x0C    /* VK_OEM_4             */,     L"Exclamation Point",
+         0x0D    /* VK_OEM_8             */,     L"Hash",
+         0x0E    /* VK_BACK              */,     L"Backspace",
+         0x0F    /* VK_TAB               */,     L"Tab",
+-- 
+2.14.1.windows.1
+

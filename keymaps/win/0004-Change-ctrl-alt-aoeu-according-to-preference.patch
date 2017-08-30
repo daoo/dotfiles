@@ -1,0 +1,29 @@
+From cce2ea416e9beceb47e7e94d28004ba464da8f08 Mon Sep 17 00:00:00 2001
+From: Daniel Oom <oom.daniel@gmail.com>
+Date: Wed, 30 Aug 2017 14:42:14 +0200
+Subject: [PATCH 4/4] Change ctrl+alt+aoeu according to preference
+
+---
+ kbddvp.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/kbddvp.c b/kbddvp.c
+index 3af6827..bee1c99 100644
+--- a/kbddvp.c
++++ b/kbddvp.c
+@@ -191,9 +191,9 @@ static LDATA VK_TO_WCHARS4 shiftAltGr[] = {
+         {       VK_OEM_6,       0,                      '@',            '^',            WCH_DEAD,       WCH_DEAD        },
+         {       dead,           0,                      WCH_NONE,       WCH_NONE,       '^',            0x02C7          },
+         //---------------------------------------------------------------------------------------------------------------
+-        {       VK_'A',         CAPLOK | CAPLOKALTGR,   'a',            'A',            0x00E5,         0x00C5          },
+-        {       VK_'O',         CAPLOK | CAPLOKALTGR,   'o',            'O',            0x00F8,         0x00D8          },
+-        {       VK_'E',         CAPLOK | CAPLOKALTGR,   'e',            'E',            0x00E6,         0x00C6          },
++        {       VK_'A',         CAPLOK | CAPLOKALTGR,   'a',            'A',            0x00E4,         0x00C4          },
++        {       VK_'O',         CAPLOK | CAPLOKALTGR,   'o',            'O',            0x00F6,         0x00D6          },
++        {       VK_'E',         CAPLOK | CAPLOKALTGR,   'e',            'E',            0x00E5,         0x00C5          },
+         {       VK_'U',         CAPLOK | CAPLOKALTGR,   'u',            'U',            0x00E9,         0x00C9          },
+         {       VK_'D',         CAPLOK | CAPLOKALTGR,   'd',            'D',            0x00F0,         0x00D0          },
+         {       VK_'T',         CAPLOK | CAPLOKALTGR,   't',            'T',            0x00FE,         0x00DE          },
+-- 
+2.14.1.windows.1
+

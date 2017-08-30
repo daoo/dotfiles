@@ -1,0 +1,52 @@
+From 1f9d753a4d05d1158595fc4a26ccab49b2430fff Mon Sep 17 00:00:00 2001
+From: Daniel Oom <oom.daniel@gmail.com>
+Date: Mon, 14 Aug 2017 14:35:58 +0200
+Subject: [PATCH 3/4] Swap caps lock and escape
+
+---
+ kbddvp.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/kbddvp.c b/kbddvp.c
+index 6268940..3af6827 100644
+--- a/kbddvp.c
++++ b/kbddvp.c
+@@ -298,7 +298,7 @@ static LDATA VK_TO_WCHAR_TABLE charTranslations[] = {
+ // see <http://blogs.msdn.com/oldnewthing/archive/2008/02/11/7596539.aspx>
+ static LDATA USHORT scanCodesToVirtualKeys[] = {
+         /* 0x00 */ none,
+-        /* 0x01 */ VK_ESCAPE,           
++        /* 0x01 */ VK_CAPITAL,           
+         /* 0x02 */ VK_'1',
+         /* 0x03 */ VK_'2',
+         /* 0x04 */ VK_'3',
+@@ -355,7 +355,7 @@ static LDATA USHORT scanCodesToVirtualKeys[] = {
+         /* 0x37 */ VK_MULTIPLY,
+         /* 0x38 */ VK_LMENU,
+         /* 0x39 */ VK_SPACE,
+-        /* 0x3A */ VK_CAPITAL,
++        /* 0x3A */ VK_ESCAPE,
+         /* 0x3B */ VK_F1,
+         /* 0x3C */ VK_F2,
+         /* 0x3D */ VK_F3,
+@@ -948,7 +948,7 @@ static LDATA DEADKEY deadKeys[] = {
+ // not an array of a structure, but rather a plain array.
+ // this is essentially scanCodesToVirtualKeys with a description.
+ static LDATA VSC_LPWSTR keyNames[] = {
+-        0x01    /* VK_ESCAPE            */,     L"Escape",
++        0x01    /* VK_CAPITAL           */,     L"Caps lock",
+         0x02    /* VK_'1'               */,     L"Ampersand",
+         0x03    /* VK_'2'               */,     L"Left Bracket",
+         0x04    /* VK_'3'               */,     L"Left Brace",
+@@ -979,7 +979,7 @@ static LDATA VSC_LPWSTR keyNames[] = {
+         0x37    /* VK_MULTIPLY          */,     L"Numeric *",
+         0x38    /* VK_LMENU             */,     L"Alt",
+         0x39    /* VK_SPACE             */,     L"Space",
+-        0x3A    /* VK_CAPITAL           */,     L"Caps Lock",
++        0x3A    /* VK_ESCAPE            */,     L"Escape",
+         0x3B    /* VK_F1                */,     L"Function Key 1",
+         0x3C    /* VK_F2                */,     L"Function Key 2",
+         0x3D    /* VK_F3                */,     L"Function Key 3",
+-- 
+2.14.1.windows.1
+
