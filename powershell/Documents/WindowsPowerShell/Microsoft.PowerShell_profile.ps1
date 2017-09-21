@@ -6,7 +6,7 @@ Set-Alias g git
 Set-Alias find find.ps1
 # Someone else aliases ls to Get-ChildItem, override that.
 Remove-Item alias:ls
-function ls { ls.exe --color=yes $args }
+function ls { ls.exe --human-readable --group-directories-first --color=yes $args }
 Set-Alias l ls
 function ll { ls -l $args }
 function la { ls --almost-all $args }
