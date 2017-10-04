@@ -15,6 +15,8 @@ function lla { ls -l --almost-all $args }
 Remove-Item alias:curl
 # Remove alias for cat to Get-Content
 Remove-Item alias:cat
+# Remove alias for rm to Remove-Item
+Remove-Item alias:rm
 
 Set-PSReadlineKeyHandler -Chord Ctrl+P -Function PreviousHistory
 Set-PSReadlineKeyHandler -Chord Ctrl+N -Function NextHistory
