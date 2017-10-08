@@ -32,6 +32,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'vimwiki/vimwiki'
 Plug 'wellle/targets.vim'
 Plug 'wolfy87/vim-enmasse'
 
@@ -277,5 +278,9 @@ let g:neosnippet#snippets_directory = '~/.config/nvim/snippets/'
 imap <tab> <plug>(neosnippet_expand_or_jump)
 smap <tab> <plug>(neosnippet_expand_or_jump)
 xmap <tab> <plug>(neosnippet_expand_target)
+" }}}
+" {{{ VimWiki
+let g:vimwiki_list = [{'path': '~/wiki'}]
+let g:vimwiki_dir_link = 'index'
 " }}}
 " vim: fdm=marker :
