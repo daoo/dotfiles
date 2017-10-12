@@ -18,7 +18,7 @@
   ff   = merge --ff-only @{u}
   l    = !git --no-pager log --decorate --oneline --no-merges -n20
   lg   = !git --no-pager log --decorate --oneline --graph --all -n30
-  lb   = !git --no-pager log --decorate --oneline HEAD ^master ^origin/master
+  lb   = !git --no-pager log --no-decorate --oneline HEAD ^master ^origin/master
   ll   = log --decorate --patch
   p    = push
   pf   = push --force
