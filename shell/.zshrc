@@ -60,8 +60,6 @@ zle -N edit-command-line
 # ]]]
 # [[[ Aliases
 alias ls='ls --human-readable --classify --si --color=auto --group-directories-first'
-alias tree='tree -C'
-alias grep='grep --color=auto'
 
 alias l='ls'
 alias ll='ls -l'
@@ -70,7 +68,6 @@ alias lla='ls -l --almost-all'
 
 alias '..'='cd ..'
 
-alias c='cabal'
 alias g='git'
 alias p='pacaur'
 
