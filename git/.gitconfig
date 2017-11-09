@@ -17,7 +17,7 @@
   edit = !bash -c '${EDITOR} $(git ls-files --modified --other --exclude-standard | uniq)'
   ff   = merge --ff-only @{u}
   l    = !git --no-pager log --decorate --oneline --no-merges -n20
-  lg   = !git --no-pager log --decorate --oneline --graph --all -n15
+  lg   = !git --no-pager log --decorate --oneline --graph -n15
   lb   = !git --no-pager log --no-decorate --oneline ^master ^origin/master
   lbh  = !git --no-pager log --no-decorate --oneline ^master ^origin/master HEAD
   ll   = log --decorate --patch
