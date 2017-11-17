@@ -8,31 +8,28 @@
 
 || FILTERING
     | skip_filename_re    : Skip a .desktop file if its name matches the regex.
-                            Name is from the last slash to the end. (filename.desktop)
+                            Name is from the last slash to the end. (e.g.: name.desktop)
                             Example: qr/^(?:gimp|xterm)\b/,    # skips 'gimp' and 'xterm'
 
     | skip_entry          : Skip a desktop file if the value from a given key matches the regex.
                             Example: [
-                                {key => 'Name', re => qr/(?:about|terminal)/i},
-                                {key => 'Exec', re => qr/^xterm/},
+                                {key => 'Name',       re => qr/(?:about|terminal)/i},
+                                {key => 'Exec',       re => qr/^xterm/},
+                                {key => 'OnlyShowIn', re => qr/XFCE/},
                             ],
 
     | substitutions       : Substitute, by using a regex, in the values of the desktop files.
                             Example: [
-                                {key => 'Exec', re => qr/xterm/, value => 'sakura'},
-                                {key => 'Exec', re => qr/\\\\/,  value => '\\', global => 1},    # for wine apps
+                                {key => 'Exec', re => qr/xterm/, value => 'sakura', global => 1},
+                                {key => 'Name', re => qr/^GNU I\w+ M\w+ P\w+/, value => 'GIMP'},
                             ],
 
 || ICON SETTINGS
     | gtk_rc_filename     : Absolute path to the GTK configuration file.
     | missing_icon        : Use this icon for missing icons (default: gtk-missing-image)
     | icon_size           : Preferred size for icons. (default: 32)
-    | force_svg_icons     : Use only SVG icons. (default: 0)
-    | force_icon_size     : Use only icons at the preferred icon size, if possible. (default: 0)
-
-|| KEYS
-    | name_keys           : Valid keys for application name.
-                            Example: ['Name[fr]', 'GenericName[fr]', 'Name'],   # french menu
+    | generic_fallback    : Try to shorten icon name at '-' characters before looking at inherited themes. (default: 0)
+    | force_icon_size     : Always get the icon scaled to the requested size. (default: 0)
 
 || PATHS
     | desktop_files_paths   : Absolute paths which contain .desktop files.
@@ -52,7 +49,7 @@
 our $CONFIG = {
   "editor"              => "gedit",
   "force_icon_size"     => 0,
-  "force_svg_icons"     => 0,
+  "generic_fallback"    => 0,
   "gtk_rc_filename"     => "$ENV{HOME}/.gtkrc-2.0",
   "icon_size"           => 32,
   "Linux::DesktopFiles" => {
@@ -72,7 +69,6 @@ our $CONFIG = {
                              unknown_category_key    => "other",
                            },
   "missing_icon"        => "gtk-missing-image",
-  "name_keys"           => ["Name"],
   "terminal"            => "st",
-  "VERSION"             => "0.80",
+  "VERSION"             => 0.82,
 }
