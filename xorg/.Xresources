@@ -22,3 +22,5 @@ rofi.color-window: #1d2021, #a89984, #a89984
 rofi.color-normal: #1d2021, #ebdbb2, #282828, #504945, #fbf1c7
 rofi.color-active: #d79921, #1d2021, #d79921, #fabd2f, #1d2021
 rofi.color-urgent: #cc241d, #1d2021, #cc241d, #fb4934, #1d2021
+rofi.separator-style: none
+rofi.hide-scrollbar: true
