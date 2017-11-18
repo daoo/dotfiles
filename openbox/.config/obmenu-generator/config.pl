@@ -69,6 +69,6 @@ our $CONFIG = {
                              unknown_category_key    => "other",
                            },
   "missing_icon"        => "gtk-missing-image",
-  "terminal"            => "st",
+  "terminal"            => "alacritty",
   "VERSION"             => 0.82,
 }

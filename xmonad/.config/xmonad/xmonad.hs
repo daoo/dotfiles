@@ -21,8 +21,8 @@ import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg, runProcessWithInput
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
-scratchpadSt :: NamedScratchpad
-scratchpadSt = NS "st" "st -c scratchpad" query action
+scratchpadTerminal :: NamedScratchpad
+scratchpadTerminal = NS "alacritty" "alacritty -t scratchpad" query action
   where
     query = className =? "scratchpad"
     action = customFloating (W.RationalRect 0.25 0.375 0.5 0.25)
@@ -31,7 +31,7 @@ myManageHook :: ManageHook
 myManageHook =
   (firefox --> doShift "2") <>
   (gimp <&&> not <$> gimpImageWindow --> doFloat) <>
-  namedScratchpadManageHook [scratchpadSt] <>
+  namedScratchpadManageHook [scratchpadTerminal] <>
   manageDocks
   where
     firefox = className =? "Firefox"
@@ -57,7 +57,7 @@ colorForeground     = "#fbf1c7"
 colorForegroundDark = "#757575"
 
 myTerminal :: String
-myTerminal = "st"
+myTerminal = "alacritty"
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "NSP"]
@@ -96,7 +96,7 @@ myKeyMaps = fromList
   -- Launching and killing programs
   [ xK_c      ! kill
   , xK_p      # rofiRun
-  , xK_i      # namedScratchpadAction [scratchpadSt] "st"
+  , xK_i      # namedScratchpadAction [scratchpadTerminal] myTerminal
   , xK_Return # safeSpawnProg myTerminal
 
   -- Layout
