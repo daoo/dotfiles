@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Uses smartctl to display disk power state.
+
+device_is_in_regex='Device is in ([A-Z]+) mode'
+power_mode_regex='Power mode is:\s+([a-zA-Z ]+)'
+
+for disk in /dev/sd[a-z]; do
+    smart="$(sudo smartctl --info --nocheck=standby "$disk")"
+    if [[ "$smart" =~ 'Solid State Device' ]]; then
+      echo "${disk}: Solid State Device"
+    elif [[ "$smart" =~ $device_is_in_regex ]]; then
+      echo "${disk}: ${BASH_REMATCH[1]}"
+    elif [[ "$smart" =~ $power_mode_regex ]]; then
+      echo "${disk}: ${BASH_REMATCH[1]}"
+    else
+      echo "${disk}: UNKNOWN"
+    fi
+done
