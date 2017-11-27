@@ -1,22 +1,23 @@
 ﻿Set-PSReadlineOption -EditMode vi
 
-Set-Alias g git
+# Remove PowerShell aliases that conflicts with programs
+Remove-Item alias:ls
+Remove-Item alias:curl
+Remove-Item alias:cat
+Remove-Item alias:rm
+Remove-Item alias:r
+
 # C:\WINDOWS\system32\find.exe overrides scoop shim,
 # fix by explicitly aliasing.
 Set-Alias find find.ps1
-# Someone else aliases ls to Get-ChildItem, override that.
-Remove-Item alias:ls
+
 function ls { ls.exe --human-readable --group-directories-first --color=yes $args }
 Set-Alias l ls
 function ll { ls -l $args }
 function la { ls --almost-all $args }
 function lla { ls -l --almost-all $args }
-# Remove alias for curl to Invoke-WebRequest
-Remove-Item alias:curl
-# Remove alias for cat to Get-Content
-Remove-Item alias:cat
-# Remove alias for rm to Remove-Item
-Remove-Item alias:rm
+
+Set-Alias g git
 
 Set-PSReadlineKeyHandler -Chord Ctrl+P -Function PreviousHistory
 Set-PSReadlineKeyHandler -Chord Ctrl+N -Function NextHistory
