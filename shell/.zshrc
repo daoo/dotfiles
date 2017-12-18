@@ -92,9 +92,8 @@ autoload -U promptinit
 setopt prompt_subst
 
 prompt_daoo_setup() {
-  local i=$(($(hostname -f | cksum | cut -d ' ' -f 1) % 255))
-
-  local color_prompt="%{[38;5;${i}m%}"
+  # color is #ebdbb2 from gruvbox
+  local color_prompt="%{[38;2;235;219;178m%}"
   local color_separator="%{[01m[38;5;000m%}"
   local color_directory="%{[01m[38;5;005m%}"
   local color_white="%{[00m%}"
