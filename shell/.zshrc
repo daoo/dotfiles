@@ -3,17 +3,6 @@
 [[ ! $- =~ i ]] && return
 
 # [[[ Config
-if [[ -n "$SSH_CONNECTION" && ! ( "$ZSH_NESTING" =~ "s" ) ]]; then
-  ZSH_NESTING="s${ZSH_NESTING}"
-elif [[ -n "$TMUX" && ! ( "$ZSH_NESTING" =~ "t" ) ]]; then
-  ZSH_NESTING="t${ZSH_NEST}"
-elif [[ -n "$RANGER_LEVEL" && "$OLD_RANGER_LEVEL" != "$RANGER_LEVEL" ]]; then
-  export OLD_RANGER_LEVEL="$RANGER_LEVEL"
-  ZSH_NESTING="r${ZSH_NESTING}"
-fi
-
-export ZSH_NESTING="${ZSH_NEST:-z}${ZSH_NESTING}"
-
 case $TERM in
   screen*)
       precmd() { print -Pn '\ek%~\e\\' }
@@ -109,7 +98,7 @@ prompt_daoo_setup() {
   local dir="${l_paren}${color_directory}%~${color_white}${r_paren}"
   local host_info="${l_paren}${color_white}%n${at_char}${color_white}%m${r_paren}"
   local time="${l_bracket}${color_white}%D${pipe}${color_white}%*${r_bracket}"
-  local env="${l_paren}${color_white}%?${pipe}${color_white}${ZSH_NESTING}${r_paren}"
+  local env="${l_paren}${color_white}%?${pipe}${color_white}${SSH_CONNECTION+s}${TMUX+t}${RANGER_LEVEL+r}${r_paren}"
 
   line1_a="${hyphen}${dir}${color_prompt}"
   line1_b="${env}${hyphen}${time}${hyphen}${host_info}${color_prompt}-"
