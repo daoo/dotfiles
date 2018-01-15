@@ -24,6 +24,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'morhetz/gruvbox'
+Plug 'olical/vim-enmasse'
 Plug 'sgeb/vim-diff-fold'
 Plug 'sheerun/vim-polyglot'
 Plug 'shougo/deoplete.nvim'
@@ -40,7 +41,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vimwiki/vimwiki'
 Plug 'wellle/targets.vim'
-Plug 'wolfy87/vim-enmasse'
 
 call plug#end()
 " }}}
