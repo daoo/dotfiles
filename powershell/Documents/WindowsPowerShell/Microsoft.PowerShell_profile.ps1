@@ -1,11 +1,10 @@
 ﻿Set-PSReadlineOption -EditMode vi
 
 # Remove PowerShell aliases that conflicts with programs
-Remove-Item alias:ls
-Remove-Item alias:curl
-Remove-Item alias:cat
-Remove-Item alias:rm
-Remove-Item alias:r
+Remove-Alias ls
+Remove-Alias cat
+Remove-Alias rm
+Remove-Alias r
 
 # C:\WINDOWS\system32\find.exe overrides scoop shim,
 # fix by explicitly aliasing.
