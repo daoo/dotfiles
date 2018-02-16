@@ -16,22 +16,22 @@ import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(ToggleStruts))
 import XMonad.Hooks.UrgencyHook (NoUrgencyHook(NoUrgencyHook), withUrgencyHook)
 import XMonad.Layout.NoBorders (lessBorders, Ambiguity(..), With(..))
-import XMonad.Util.NamedScratchpad (NamedScratchpad(NS), customFloating, namedScratchpadAction, namedScratchpadFilterOutWorkspacePP, namedScratchpadManageHook)
 import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg, runProcessWithInput)
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
+import qualified XMonad.Util.NamedScratchpad as NS
 
-scratchpadTerminal :: NamedScratchpad
-scratchpadTerminal = NS "alacritty" "alacritty -t scratchpad" query action
+scratchpad :: NS.NamedScratchpad
+scratchpad = NS.NS "alacritty" "alacritty -t scratchpad" query hook
   where
     query = className =? "scratchpad"
-    action = customFloating (W.RationalRect 0.25 0.375 0.5 0.25)
+    hook = NS.customFloating (W.RationalRect 0.25 0.375 0.5 0.25)
 
 myManageHook :: ManageHook
 myManageHook =
   (firefox --> doShift "2") <>
   (gimp <&&> not <$> gimpImageWindow --> doFloat) <>
-  namedScratchpadManageHook [scratchpadTerminal] <>
+  NS.namedScratchpadManageHook [scratchpad] <>
   manageDocks
   where
     firefox = className =? "Firefox"
@@ -63,7 +63,7 @@ myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "NSP"]
 
 myPP :: Handle -> PP
-myPP handle = namedScratchpadFilterOutWorkspacePP def
+myPP handle = NS.namedScratchpadFilterOutWorkspacePP def
   { ppCurrent = xmobarColor colorForeground colorBlue . wrapWS
   , ppHiddenNoWindows = xmobarColor colorForegroundDark colorBackground . wrapWS
   , ppUrgent = xmobarColor colorForeground colorRed . wrapWS
@@ -96,8 +96,8 @@ myKeyMaps = fromList
   -- Launching and killing programs
   [ xK_c      ! kill
   , xK_p      # rofiRun
-  , xK_i      # namedScratchpadAction [scratchpadTerminal] myTerminal
-  , xK_Return # safeSpawnProg myTerminal
+  , xK_i      # NS.namedScratchpadAction [scratchpad] (NS.name scratchpad)
+  , xK_Return # safeSpawnProg "alacritty"
 
   -- Layout
   , xK_n     # refresh
@@ -236,7 +236,7 @@ main = do
     { borderWidth        = 1
     , workspaces         = myWorkspaces
     , layoutHook         = myLayoutHook
-    , terminal           = myTerminal
+    , terminal           = "alacritty"
     , normalBorderColor  = colorBackground
     , focusedBorderColor = colorGreen
     , modMask            = myModKey
