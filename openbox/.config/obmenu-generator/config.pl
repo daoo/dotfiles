@@ -18,16 +18,15 @@
                                 {key => 'OnlyShowIn', re => qr/XFCE/},
                             ],
 
-    | substitutions       : Substitute, by using a regex, in the values of the desktop files.
+    | substitutions       : Substitute, by using a regex, in the values from the desktop files.
                             Example: [
                                 {key => 'Exec', re => qr/xterm/, value => 'sakura', global => 1},
-                                {key => 'Name', re => qr/^GNU I\w+ M\w+ P\w+/, value => 'GIMP'},
                             ],
 
 || ICON SETTINGS
     | gtk_rc_filename     : Absolute path to the GTK configuration file.
     | missing_icon        : Use this icon for missing icons (default: gtk-missing-image)
-    | icon_size           : Preferred size for icons. (default: 32)
+    | icon_size           : Preferred size for icons. (default: 48)
     | generic_fallback    : Try to shorten icon name at '-' characters before looking at inherited themes. (default: 0)
     | force_icon_size     : Always get the icon scaled to the requested size. (default: 0)
 
@@ -68,7 +67,8 @@ our $CONFIG = {
                              terminalize             => 1,
                              unknown_category_key    => "other",
                            },
+  "locale_support"      => 1,
   "missing_icon"        => "gtk-missing-image",
   "terminal"            => "alacritty",
-  "VERSION"             => 0.82,
+  "VERSION"             => 0.84,
 }
