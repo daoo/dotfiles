@@ -191,53 +191,6 @@ zstyle ':completion:*:manuals.(^1*)' insert-sections true
 # [[[ FZF
 export FZF_DEFAULT_COMMAND='rg --files --hidden -g ""'
 
-# open file
-fo() {
-  local out file key
-  out=$(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e)
-  key=$(head -1 <<< "$out")
-  file=$(head -2 <<< "$out" | tail -1)
-  if [ -n "$file" ]; then
-    [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
-  fi
-}
-
-# cd into directory
-fd() {
-  local dir
-  dir=$(find ${1:-*} -path '*/\.*' -prune \
-    -o -type d -print 2> /dev/null | fzf +m) &&
-    cd "$dir"
-}
-
-# cd including hidden directories
-fda() {
-  local dir
-  dir=$(find ${1:-.} -type d 2> /dev/null | fzf +m) && cd "$dir"
-}
-
-# cd into the directory of the selected file
-fdf() {
-  local file
-  local dir
-  file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
-}
-
-# cd using bookmarks
-fdb() {
-  local dir
-  dir=$(fzf < ${1:-~/.bookmarks}) && cd "$dir"
-}
-
-# fkill - kill process
-fkill() {
-  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
-
-  if [ "x$pid" != "x" ]; then
-    kill -${1:-9} $pid
-  fi
-}
-
 # fh - repeat history
 fh() {
   print -z $(fc -ln 1 | sort -u | fzf)
