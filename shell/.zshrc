@@ -189,7 +189,7 @@ zstyle ':completion:*:manuals' separate-sections true
 zstyle ':completion:*:manuals.(^1*)' insert-sections true
 # ]]]
 # [[[ FZF
-export FZF_DEFAULT_COMMAND='rg --files --hidden -g ""'
+export FZF_DEFAULT_COMMAND='rg --files'
 
 # fh - repeat history
 fh() {
