@@ -1,5 +1,0 @@
-[Unit]
-Description=Garbage collect git repository in %I
-
-[Service]
-ExecStart=/usr/bin/git -C %I gc
