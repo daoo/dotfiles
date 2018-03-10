@@ -240,6 +240,7 @@ nnoremap n nzz
 nnoremap K kJ
 
 nnoremap Q q:
+tnoremap <esc> <c-\><c-n>
 " }}}
 " {{{ FileBeagle
 let g:filebeagle_suppress_keymaps = 1
