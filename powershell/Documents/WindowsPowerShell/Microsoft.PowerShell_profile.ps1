@@ -16,11 +16,6 @@ function ll { ls -l $args }
 function la { ls --almost-all $args }
 function lla { ls -l --almost-all $args }
 
-function python { python3 $args }
-function pip2 { python2 -m pip $args }
-function pip3 { python3 -m pip $args }
-function pip { python3 -m pip $args }
-
 Set-Alias g git
 
 Set-PSReadlineKeyHandler -Chord Ctrl+P -Function PreviousHistory
