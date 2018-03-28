@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -eu
+
+disk=/dev/disk/by-label/KINGSTON
+gpghome=/run/media/daniel/KINGSTON/.gnupg
+
+udisksctl mount -b $disk
+echo "Launching $SHELL with \$GNUPGHOME=$gpghome"
+env GNUPGHOME=$gpghome $SHELL
+udisksctl unmount -b $disk
