@@ -87,13 +87,14 @@ myModKey :: KeyMask
 myModKey = mod4Mask
 
 xf86AudioLower, xf86AudioMute, xf86AudioPlay, xf86AudioRaise, xf86Email,
-  xf86Favorites :: KeySym
+  xf86Favorites, xf86Launch6 :: KeySym
 xf86AudioLower = 0x1008ff11
 xf86AudioMute  = 0x1008ff12
 xf86AudioPlay  = 0x1008ff14
 xf86AudioRaise = 0x1008ff13
 xf86Email      = 0x1008ff19
 xf86Favorites  = 0x1008ff30
+xf86Launch6    = 0x1008ff46
 
 myKeyMaps :: Map (KeyMask, KeySym) (X ())
 myKeyMaps = fromList
@@ -191,6 +192,8 @@ myKeyMaps = fromList
   , xf86AudioMute  ^ volumectl ["toggle"]
   , xf86AudioLower ^ volumectl ["decrease", "5"]
   , xf86AudioRaise ^ volumectl ["increase", "5"]
+
+  , xf86Launch6 ^ safeSpawnProg "smooth-jazz"
   ]
   where
     key ^ action = ((0, key), action)
