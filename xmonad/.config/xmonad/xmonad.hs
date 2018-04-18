@@ -77,10 +77,11 @@ myPP handle = filterOutWsPP ["NSP"] def
 myModKey :: KeyMask
 myModKey = mod4Mask
 
-xf86AudioLower, xf86AudioMute, xf86AudioRaise :: KeySym
+xf86AudioLower, xf86AudioMute, xf86AudioRaise, xf86Launch6 :: KeySym
 xf86AudioLower = 0x1008ff11
 xf86AudioMute  = 0x1008ff12
 xf86AudioRaise = 0x1008ff13
+xf86Launch6    = 0x1008ff46
 
 myKeyMaps :: Map (KeyMask, KeySym) (X ())
 myKeyMaps = fromList
@@ -168,6 +169,8 @@ myKeyMaps = fromList
   , xf86AudioMute  & wpctl ["set-mute", "@DEFAULT_AUDIO_SINK@", "toggle"]
   , xf86AudioLower & wpctl ["set-volume", "@DEFAULT_AUDIO_SINK@", "5%-"]
   , xf86AudioRaise & wpctl ["set-volume", "@DEFAULT_AUDIO_SINK@", "5%+"]
+
+  , xf86Launch6 & safeSpawnProg "smooth-jazz"
   ]
   where
     key & action = ((0, key), action)
