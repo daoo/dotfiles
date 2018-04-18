@@ -82,14 +82,13 @@ myModKey :: KeyMask
 myModKey = mod4Mask
 
 xf86AudioLower, xf86AudioMute, xf86AudioPlay, xf86AudioRaise, xf86Email,
-  xf86Favorites, xf86TouchpadToggle :: KeySym
-xf86AudioLower     = 0x1008ff11
-xf86AudioMute      = 0x1008ff12
-xf86AudioPlay      = 0x1008ff14
-xf86AudioRaise     = 0x1008ff13
-xf86Email          = 0x1008ff19
-xf86Favorites      = 0x1008ff30
-xf86TouchpadToggle = 0x1008ffa9
+  xf86Favorites :: KeySym
+xf86AudioLower = 0x1008ff11
+xf86AudioMute  = 0x1008ff12
+xf86AudioPlay  = 0x1008ff14
+xf86AudioRaise = 0x1008ff13
+xf86Email      = 0x1008ff19
+xf86Favorites  = 0x1008ff30
 
 myKeyMaps :: Map (KeyMask, KeySym) (X ())
 myKeyMaps = fromList
