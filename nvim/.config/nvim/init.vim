@@ -218,11 +218,11 @@ inoremap <c-s> <c-o>:write<cr>
 nnoremap <c-s> :write<cr>
 
 " FZF
-nnoremap <silent> <c-p> :FZF<cr>
+nnoremap <silent> <c-p> :GitFiles<cr>
 nnoremap <silent> <leader>ob :Buffers<cr>
 nnoremap <silent> <leader>oc :History:<cr>
-nnoremap <silent> <leader>of :FZF %:p:h<cr>
-nnoremap <silent> <leader>og :GitFiles<cr>
+nnoremap <silent> <leader>od :FZF %:p:h<cr>
+nnoremap <silent> <leader>of :FZF<cr>
 nnoremap <silent> <leader>om :Marks<cr>
 nnoremap <silent> <leader>ot :BTags<cr>
 
