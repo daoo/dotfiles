@@ -181,8 +181,14 @@ myKeyMaps = fromList
   , xK_F5 # playerctl "play-pause"
   , xK_F6 # playerctl "previous"
   , xK_F7 # playerctl "next"
+
+  -- Volume control
+  , xf86AudioMute  ^ volumectl ["toggle"]
+  , xf86AudioLower ^ volumectl ["decrease", "5"]
+  , xf86AudioRaise ^ volumectl ["increase", "5"]
   ]
   where
+    key ^ action = ((0, key), action)
     key # action = ((myModKey, key), action)
     key ! action = ((myModKey .|. shiftMask, key), action)
 
@@ -212,6 +218,8 @@ myKeyMaps = fromList
     lock = safeSpawn "physlock" ["-m"]
 
     playerctl cmd = safeSpawn "playerctl" [cmd]
+
+    volumectl cmd = safeSpawn "/usr/bin/ponymix" ("-N" : cmd)
 
     rofi = runProcessWithInput "rofi"
 
