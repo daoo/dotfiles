@@ -5,7 +5,16 @@ set -eu
 disk=/dev/disk/by-label/KINGSTON
 gpghome=/run/media/daniel/KINGSTON/.gnupg
 
-udisksctl mount -b $disk
+function disk-unmount {
+  udisksctl unmount -b $disk
+}
+
+function disk-mount {
+  udisksctl mount -b $disk
+}
+
+disk-mount
+trap disk-unmount EXIT
+
 echo "Launching $SHELL with \$GNUPGHOME=$gpghome"
 env GNUPGHOME=$gpghome $SHELL
-udisksctl unmount -b $disk
