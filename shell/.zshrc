@@ -62,8 +62,6 @@ alias p='yay'
 
 alias bell="echo -ne '\a'"
 alias calc='noglob calc'
-alias pwc='pw copy "$(pw list | fzf)"'
-alias pws='pw show "$(pw list | fzf)"'
 alias ctl='systemctl'
 alias sctl='sudo systemctl'
 alias uctl='systemctl --user'
