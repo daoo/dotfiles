@@ -4,6 +4,7 @@ import configparser
 import filecmp
 import os
 import posixpath
+import shlex
 import subprocess
 import sys
 import tarfile
@@ -41,18 +42,27 @@ def download_package(name, path):
 def get_pacman_cache_path():
     config = configparser.ConfigParser(allow_no_value=True)
     config.read(PACMAN_CONF_PATH)
-    return config.get("options", "CacheDir", fallback=DEFAULT_PACMAN_CACHE_PATH)
+    return config.get(
+        "options",
+        "CacheDir",
+        fallback=DEFAULT_PACMAN_CACHE_PATH)
 
 
-def main(path):
+def main(diffprog, path):
+    if os.path.isdir(path):
+        sys.stderr.write("{} is a directory.\n".format(path))
+        return
+
     package = get_owning_package(path)
     if not package:
-        sys.stderr.write("%s has no owning package.\n" % path)
-        return 1
+        sys.stderr.write("{} has no owning package.\n".format(path))
+        return
 
     # Get path to package if cached, otherwise download it
     download_url = get_package_download_url(package)
-    package_path = os.path.join(get_pacman_cache_path(), posixpath.basename(download_url))
+    package_path = os.path.join(
+        get_pacman_cache_path(),
+        posixpath.basename(download_url))
     if not os.path.exists(package_path):
         print("Package not found in cache, downloading...")
         package_path = tempfile.mkstemp()[1]
@@ -61,18 +71,26 @@ def main(path):
     # Extract target member to temporary directory
     tar_file = tarfile.open(package_path)
     member_path = os.path.relpath(path, "/")
-    file_descriptor, extraction_path = tempfile.mkstemp(os.path.basename(member_path))
-    with os.fdopen(file_descriptor, "wb") as file:
+    dir_path = os.path.basename(member_path)
+    with tempfile.NamedTemporaryFile() as file:
         member = tar_file.extractfile(member_path)
         file.write(member.read())
-
-    if filecmp.cmp(extraction_path, path):
-        print("%s is not modified." % path)
-    else:
-        subprocess.run(["nvim", "-d", extraction_path, path])
-
-    return 0
+        file.flush()
+        try:
+            if filecmp.cmp(file.name, path):
+                print("{} is not modified.".format(path))
+            else:
+                subprocess.run(diffprog + [file.name, path])
+        except IOError:
+            sys.stderr.write("{} error occourd when reading.\n".format(path))
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1]))
+    diffprog = shlex.split(os.getenv('DIFFPROG', 'nvim -d'))
+
+    if len(sys.argv) <= 1:
+        print('Usage: {0} path [path...]'.format(sys.argv[0]))
+        sys.exit(1)
+
+    for path in sys.argv[1:]:
+        main(diffprog, path)
