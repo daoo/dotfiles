@@ -48,6 +48,22 @@ def get_pacman_cache_path():
         fallback=DEFAULT_PACMAN_CACHE_PATH)
 
 
+def get_package_path(package):
+    return os.path.join(
+        get_pacman_cache_path(),
+        posixpath.basename(get_package_download_url(package)))
+
+def extract_file(path, package_path):
+    tar_file = tarfile.open(package_path)
+    member_path = os.path.relpath(path, "/")
+    dir_path = os.path.basename(member_path)
+    member = tar_file.extractfile(member_path)
+    file = tempfile.NamedTemporaryFile()
+    file.write(member.read())
+    file.flush()
+    return file
+
+
 def main(diffprog, path):
     if os.path.isdir(path):
         sys.stderr.write("{} is a directory.\n".format(path))
@@ -59,23 +75,14 @@ def main(diffprog, path):
         return
 
     # Get path to package if cached, otherwise download it
-    download_url = get_package_download_url(package)
-    package_path = os.path.join(
-        get_pacman_cache_path(),
-        posixpath.basename(download_url))
+    package_path = get_package_path(package)
     if not os.path.exists(package_path):
         print("Package not found in cache, downloading...")
         package_path = tempfile.mkstemp()[1]
         download_package(package, package_path)
 
     # Extract target member to temporary directory
-    tar_file = tarfile.open(package_path)
-    member_path = os.path.relpath(path, "/")
-    dir_path = os.path.basename(member_path)
-    with tempfile.NamedTemporaryFile() as file:
-        member = tar_file.extractfile(member_path)
-        file.write(member.read())
-        file.flush()
+    with extract_file(path, package_path) as file:
         try:
             if filecmp.cmp(file.name, path):
                 print("{} is not modified.".format(path))
