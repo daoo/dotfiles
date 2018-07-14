@@ -102,18 +102,12 @@
     <chainQuitKey>C-g</chainQuitKey>
     <keybind key="W-F1">
       <action name="Execute">
-        <execute>setxkbmap dvoormak</execute>
-      </action>
-      <action name="Execute">
-        <execute>notify-send dvoormak "Changed keymap to dvoormak"</execute>
+        <execute>keymap.sh dvoormak</execute>
       </action>
     </keybind>
     <keybind key="W-F2">
       <action name="Execute">
-        <execute>setxkbmap usaswe</execute>
-      </action>
-      <action name="Execute">
-        <execute>notify-send usaswe "Changed keymap to usaswe"</execute>
+        <execute>keymap.sh usaswe</execute>
       </action>
     </keybind>
     <keybind key="XF86AudioMute">

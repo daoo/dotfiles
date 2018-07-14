@@ -212,13 +212,13 @@ myKeyMaps = fromList
 
     reload = spawn "xmonad --recompile && xmonad --restart"
 
-    keymap name = safeSpawn "setxkbmap" [name]
+    keymap name = safeSpawn "keymap.sh" [name]
 
     lock = safeSpawn "physlock" ["-m"]
 
     playerctl cmd = safeSpawn "playerctl" [cmd]
 
-    volumectl cmd = safeSpawn "/usr/bin/ponymix" ("-N" : cmd)
+    volumectl cmd = safeSpawn "ponymix" ("-N" : cmd)
 
     rofi = runProcessWithInput "rofi"
 
