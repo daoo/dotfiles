@@ -69,6 +69,6 @@ our $CONFIG = {
                            },
   "locale_support"      => 1,
   "missing_icon"        => "gtk-missing-image",
-  "terminal"            => "alacritty",
+  "terminal"            => "kitty",
   "VERSION"             => 0.84,
 }
