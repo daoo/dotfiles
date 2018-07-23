@@ -15,7 +15,6 @@ Plug 'junegunn/gv.vim'
 Plug 'kana/vim-altr'
 Plug 'kshenoy/vim-signature'
 Plug 'machakann/vim-highlightedyank'
-Plug 'machakann/vim-sandwich'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'morhetz/gruvbox'
@@ -35,6 +34,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'wellle/targets.vim'
 
@@ -235,10 +235,6 @@ nnoremap n nzz
 nnoremap K kJ
 
 nnoremap Q q:
-
-" Disable s as substitute in favor of sandwich plugin
-nmap s <Nop>
-xmap s <Nop>
 " }}}
 " {{{ FileBeagle
 let g:filebeagle_suppress_keymaps = 1
