@@ -181,7 +181,7 @@ vmap     <leader>m    <plug>(quickhl-manual-this)
 nnoremap <leader>se   :setlocal spelllang=en<cr>
 nnoremap <leader>ss   :setlocal spelllang=sv<cr>
 nnoremap <leader>t    :call <sid>togglelongline()<cr>
-nnoremap <leader>wc   :bp<bar>sp<bar>bn<bar>bd<cr>
+nnoremap <leader>bc   :bprevious<bar>split<bar>bnext<bar>bdelete<cr>
 vnoremap <leader>x    c<c-r>=<c-r>"<cr><esc>
 nnoremap <leader>ya   :%y+<cr>
 
@@ -279,5 +279,8 @@ let g:neosnippet#snippets_directory = '~/.config/nvim/snippets/'
 imap <tab> <plug>(neosnippet_expand_or_jump)
 smap <tab> <plug>(neosnippet_expand_or_jump)
 xmap <tab> <plug>(neosnippet_expand_target)
+" }}}
+" {{{ WinResizer
+let g:winresizer_start_key='<leader>w'
 " }}}
 " vim: fdm=marker :
