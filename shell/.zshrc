@@ -79,8 +79,9 @@ autoload -U promptinit
 setopt prompt_subst
 
 prompt_daoo_setup() {
-  # color is #ebdbb2 from gruvbox
-  local color_prompt="%{[38;2;235;219;178m%}"
+  # default color is light1 (#ebdbb2) from gruvbox
+  local color="${BASH_COLOR:-235;219;178}"
+  local color_prompt="%{[38;2;${color}m%}"
   local color_separator="%{[01m[38;5;008m%}"
   local color_directory="%{[01m[38;5;005m%}"
   local color_white="%{[00m%}"
