@@ -162,6 +162,7 @@ let maplocalleader=" "
 " Leader mappings
 nnoremap <leader>ac   :ClangFormat<cr>
 nnoremap <leader>ae   :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
+nnoremap <leader>ab   :let @"=@/<cr>:%s/<c-v><esc>[[0-9]*m//g<cr>:let @/=@"<cr>
 vmap     <leader>as   <plug>(EasyAlign)
 vmap     <leader>al   <plug>(LiveEasyAlign)
 nnoremap <leader>ef   :e %<cr>
