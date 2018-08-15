@@ -15,7 +15,7 @@ import XMonad.Hooks.DynamicLog (PP(..), dynamicLogWithPP, xmobarColor, trim, wra
 import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(ToggleStruts))
 import XMonad.Hooks.UrgencyHook (NoUrgencyHook(NoUrgencyHook), withUrgencyHook)
-import XMonad.Layout.NoBorders (lessBorders, Ambiguity(..), With(..))
+import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg, runProcessWithInput)
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
@@ -40,10 +40,9 @@ myManageHook =
 
     windowRole = stringProperty "WM_WINDOW_ROLE"
 
-myLayoutHook = avoidStruts (lessBorders borders (tall ||| Mirror tall ||| Full))
+myLayoutHook = avoidStruts (smartBorders (tall ||| Mirror tall ||| Full))
   where
     tall = Tall 1 (3%100) (1%2)
-    borders = Combine Difference Screen OnlyFloat
 
 colorRed, colorGreen, colorBlue, colorPurple :: String
 colorRed    = "#cc241d"
