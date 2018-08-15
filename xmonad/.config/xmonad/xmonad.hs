@@ -212,7 +212,7 @@ myKeyMaps = fromList
 
     reload = spawn "xmonad --recompile && xmonad --restart"
 
-    keymap name = safeSpawn "keymap.sh" [name]
+    keymap name = safeSpawn "keymap" [name]
 
     lock = safeSpawn "physlock" ["-m"]
 

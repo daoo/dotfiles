@@ -102,12 +102,12 @@
     <chainQuitKey>C-g</chainQuitKey>
     <keybind key="W-F1">
       <action name="Execute">
-        <execute>keymap.sh dvoormak</execute>
+        <execute>keymap dvoormak</execute>
       </action>
     </keybind>
     <keybind key="W-F2">
       <action name="Execute">
-        <execute>keymap.sh usaswe</execute>
+        <execute>keymap usaswe</execute>
       </action>
     </keybind>
     <keybind key="XF86AudioMute">
