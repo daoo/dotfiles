@@ -242,6 +242,7 @@ main :: IO ()
 main = do
   safeSpawn "feh" ["--bg-tile", "media/wallpaper"]
   safeSpawn "xsetroot" ["-cursor_name", "left_ptr"]
+  safeSpawnProg "nextcloud"
   hxmobar <- spawnPipe "xmobar .config/xmobar/xmobarrc"
 
   xmonad $ ewmh $ withUrgencyHook NoUrgencyHook def
