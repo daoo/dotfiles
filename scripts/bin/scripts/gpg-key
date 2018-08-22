@@ -17,4 +17,4 @@ disk-mount
 trap disk-unmount EXIT
 
 echo "Launching $SHELL with \$GNUPGHOME=$gpghome"
-env GNUPGHOME=$gpghome $SHELL
+env GNUPGHOME=$gpghome "$SHELL"

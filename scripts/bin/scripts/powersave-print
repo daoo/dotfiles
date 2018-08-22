@@ -5,7 +5,7 @@ set -eu
 function check()
 {
   if read -r content 2>/dev/null < "$1"; then
-    printf "%s: %s\n" "$1" "$content"
+    printf "%s: %s\\n" "$1" "$content"
   fi
 }
 

@@ -12,7 +12,7 @@ function shell_in_dir() {
 }
 
 # Check for atool
-if ! which atool &> /dev/null; then
+if ! command -v atool &> /dev/null; then
   echo "atool not found" >&2
   exit 1
 fi
@@ -57,7 +57,7 @@ if [[ -a "$file" ]]; then
       backupfile="$(mktemp "/tmp/$name-XXXXXXXX")"
       mv "$archive" "$backupfile"
 
-      atool -a -f "$archive" $(ls -b "$working_dir") &> /dev/null
+      atool -a -f "$archive" "$(ls -b "$working_dir")" &> /dev/null
     fi
   else
     # Start a new shell in the tmp directory
