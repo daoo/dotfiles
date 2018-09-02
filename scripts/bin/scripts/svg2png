@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -eu
+
+if [[ $# -ne 1 ]]; then
+  echo "Usage: $0 OUTPUT.PNG < INPUT.SVG" 2>&1
+  exit 1
+fi
+
+inkscape --without-gui --export-png "$1" --export-area-drawing /dev/stdin
