@@ -22,7 +22,7 @@ import qualified XMonad.StackSet as W
 import qualified XMonad.Util.NamedScratchpad as NS
 
 scratchpad :: NS.NamedScratchpad
-scratchpad = NS.NS "kitty" "kitty --class=scratchpad" query hook
+scratchpad = NS.NS "alacritty" "alacritty --class=scratchpad" query hook
   where
     query = className =? "scratchpad"
     hook = NS.customFloating (W.RationalRect 0.25 0.375 0.5 0.25)
@@ -58,7 +58,7 @@ colorForeground     = "#fbf1c7"
 colorForegroundDark = "#757575"
 
 myTerminal :: String
-myTerminal = "kitty"
+myTerminal = "alacritty"
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "NSP"]
@@ -97,7 +97,7 @@ myKeyMaps = fromList
   [ xK_c      ! kill
   , xK_p      # rofiRun
   , xK_i      # NS.namedScratchpadAction [scratchpad] (NS.name scratchpad)
-  , xK_Return # safeSpawnProg "kitty"
+  , xK_Return # safeSpawnProg "alacritty"
 
   -- Layout
   , xK_n     # refresh
@@ -244,7 +244,7 @@ main = do
     { borderWidth        = 1
     , workspaces         = myWorkspaces
     , layoutHook         = myLayoutHook
-    , terminal           = "kitty"
+    , terminal           = "alacritty"
     , normalBorderColor  = colorBackground
     , focusedBorderColor = colorGreen
     , modMask            = myModKey

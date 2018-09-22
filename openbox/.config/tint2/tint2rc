@@ -162,7 +162,7 @@ startup_notifications = 1
 launcher_tooltip = 1
 launcher_item_app = tint2conf.desktop
 launcher_item_app = /usr/share/applications/firefox.desktop
-launcher_item_app = /usr/share/applications/kitty.desktop
+launcher_item_app = /usr/share/applications/alacritty.desktop
 launcher_item_app = /usr/share/applications/pcmanfm.desktop
 
 #-------------------------------------
