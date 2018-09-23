@@ -24,7 +24,7 @@ import qualified XMonad.Util.NamedScratchpad as NS
 scratchpad :: NS.NamedScratchpad
 scratchpad = NS.NS "alacritty" "alacritty --class=scratchpad" query hook
   where
-    query = className =? "scratchpad"
+    query = appName =? "scratchpad"
     hook = NS.customFloating (W.RationalRect 0.25 0.375 0.5 0.25)
 
 myManageHook :: ManageHook
