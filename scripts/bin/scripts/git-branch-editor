@@ -28,13 +28,20 @@ def git_branches():
     return (current_name, branches)
 
 
-def edit(string):
-    with tempfile.NamedTemporaryFile() as fobj:
-        fobj.write(string.encode("utf-8"))
-        fobj.flush()
-        subprocess.check_call([os.environ["EDITOR"], fobj.name])
-        fobj.seek(0)
-        return fobj.read().decode("utf-8")
+def edit(branches):
+    fwrite = tempfile.NamedTemporaryFile(mode='w', delete=False)
+    tmp_path = fwrite.name
+    fwrite.write(branches)
+    fwrite.close()
+
+    subprocess.check_call([os.environ["EDITOR"], tmp_path])
+
+    fread = open(tmp_path, 'r')
+    commands = fread.read()
+    fread.close()
+
+    os.remove(tmp_path)
+    return commands
 
 
 def format_output(current, branches):
