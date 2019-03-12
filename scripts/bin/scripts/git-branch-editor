@@ -43,6 +43,7 @@ def format_output(current, branches):
 #
 # Commands:
 # d = delete the branch
+# D = delete the branch (even if not merged)
 # u <upstream> = set the branch's upstream
 # uu = unset the branch's upstream
 # * = checkout the branch
@@ -67,6 +68,8 @@ def parse_command(branch, string):
 
     if chunks[0] == "d":
         return ["git", "branch", "--delete", branch]
+    elif chunks[0] == "D":
+        return ["git", "branch", "-D", branch]
     elif chunks[0] == "u":
         return ["git", "branch", "--set-upstream-to=" + chunks[1], branch]
     elif chunks[0] == "uu":
