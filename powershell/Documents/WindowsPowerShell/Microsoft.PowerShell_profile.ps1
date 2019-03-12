@@ -1,10 +1,13 @@
-﻿Set-PSReadlineOption -EditMode vi
+﻿Import-Module PSReadLine
+
+Set-PSReadlineOption -EditMode vi
 
 # Remove PowerShell aliases that conflicts with programs
-Remove-Alias ls
 Remove-Alias cat
-Remove-Alias rm
+Remove-Alias cp
+Remove-Alias ls
 Remove-Alias r
+Remove-Alias rm
 
 # C:\WINDOWS\system32\find.exe overrides scoop shim,
 # fix by explicitly aliasing.
@@ -22,10 +25,6 @@ Set-PSReadlineKeyHandler -Chord Ctrl+P -Function PreviousHistory
 Set-PSReadlineKeyHandler -Chord Ctrl+N -Function NextHistory
 Set-PSReadlineKeyHandler -Chord Ctrl+R -Function ReverseSearchHistory
 Set-PSReadlineKeyHandler -Key Tab -Function Complete
-
-function make-link ($target, $link) {
-    New-Item -Path $link -ItemType SymbolicLink -Value $target
-}
 
 function Prompt
 {
