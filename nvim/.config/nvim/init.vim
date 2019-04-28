@@ -218,6 +218,7 @@ nnoremap <silent> <leader>ob :Buffers<cr>
 nnoremap <silent> <leader>oc :History:<cr>
 nnoremap <silent> <leader>od :FZF %:p:h<cr>
 nnoremap <silent> <leader>of :FZF<cr>
+nnoremap <silent> <leader>og :GitFiles?<cr>
 nnoremap <silent> <leader>om :Marks<cr>
 nnoremap <silent> <leader>ot :BTags<cr>
 
