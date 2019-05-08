@@ -174,8 +174,9 @@ myKeyMaps = fromList
   , xK_b # lock
 
   -- Setting keyboard layout
-  , xK_F1 # keymap "dvoormak"
-  , xK_F2 # keymap "usaswe"
+  -- Note: z and apostrophe is the same physical key in both layouts
+  , xK_z          # keymap "dvoormak"
+  , xK_apostrophe # keymap "usaswe"
 
   -- Music player control
   , xK_F5 # playerctl "play-pause"
