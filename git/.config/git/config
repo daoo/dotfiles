@@ -24,8 +24,8 @@
   ll   = log --decorate --patch
   p    = push
   pf   = push --force
+  poh  = push --set-upstream origin HEAD
   pom  = push origin master
-  pu   = push --set-upstream
   rb   = rebase --autostash
   rba  = rebase --abort
   rbc  = rebase --continue
