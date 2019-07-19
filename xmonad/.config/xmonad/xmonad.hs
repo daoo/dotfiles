@@ -14,6 +14,7 @@ import XMonad.Actions.WindowBringer (windowMap)
 import XMonad.Hooks.DynamicLog (PP(..), dynamicLogWithPP, xmobarColor, trim, wrap)
 import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(ToggleStruts))
+import XMonad.Hooks.ManageHelpers (doCenterFloat)
 import XMonad.Hooks.UrgencyHook (NoUrgencyHook(NoUrgencyHook), withUrgencyHook)
 import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg, runProcessWithInput)
@@ -32,6 +33,7 @@ myManageHook =
   (firefox --> doShift "2") <>
   (steam --> doShift "6") <>
   (gimp <&&> not <$> gimpImageWindow --> doFloat) <>
+  (gnomeKeyring --> doCenterFloat) <>
   NS.namedScratchpadManageHook [scratchpad] <>
   manageDocks
   where
@@ -39,6 +41,7 @@ myManageHook =
     gimp = className =? "Gimp"
     gimpImageWindow = windowRole =? "gimp-image-window"
     steam = className =? "Steam"
+    gnomeKeyring = className =? "Gcr-prompter"
 
     windowRole = stringProperty "WM_WINDOW_ROLE"
 
