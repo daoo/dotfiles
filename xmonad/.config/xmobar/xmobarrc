@@ -9,7 +9,7 @@ Config
 
   , sepChar = "%"
   , alignSep = "}{"
-  , template = "%StdinReader% }{ <icon=cpu.xbm/> %cpu% <icon=mem.xbm/> %memory% <icon=hdd.xbm/> %disku% %dynnetwork% | %kbd% | <icon=clock.xbm/> %date%"
+  , template = "%StdinReader% }{ <icon=cpu.xbm/> %cpu% <icon=mem.xbm/> %memory% <icon=hdd.xbm/> %disku% %wi% %dynnetwork% | %kbd% | <icon=clock.xbm/> %date%"
 
   , commands =
       [ Run Cpu ["--template", "<total>%"] 50
@@ -19,5 +19,6 @@ Config
       , Run Kbd []
       , Run Memory ["--template", "<usedratio>%"] 50
       , Run StdinReader
+      , Run Wireless "" ["--template", "<icon=wifi.xbm/> <quality>% <essid>"] 50
       ]
   }
