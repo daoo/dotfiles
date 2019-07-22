@@ -30,18 +30,19 @@ scratchpad = NS.NS "alacritty" "alacritty --class=scratchpad" query hook
 
 myManageHook :: ManageHook
 myManageHook =
-  (firefox --> doShift "2") <>
-  (steam --> doShift "6") <>
-  (gimp <&&> not <$> gimpImageWindow --> doFloat) <>
-  (gnomeKeyring --> doCenterFloat) <>
+  (isNextcloud --> doShift "1") <>
+  (isFirefox --> doShift "2") <>
+  (isSteam --> doShift "6") <>
+  (isGimpDialog --> doFloat) <>
+  (isGnomeKeyring --> doCenterFloat) <>
   NS.namedScratchpadManageHook [scratchpad] <>
   manageDocks
   where
-    firefox = className =? "Firefox"
-    gimp = className =? "Gimp"
-    gimpImageWindow = windowRole =? "gimp-image-window"
-    steam = className =? "Steam"
-    gnomeKeyring = className =? "Gcr-prompter"
+    isNextcloud = className =? "Nextcloud"
+    isFirefox = className =? "Firefox"
+    isGimpDialog = className =? "Gimp" <&&> not <$> windowRole =? "gimp-image-window"
+    isSteam = className =? "Steam"
+    isGnomeKeyring = className =? "Gcr-prompter"
 
     windowRole = stringProperty "WM_WINDOW_ROLE"
 
