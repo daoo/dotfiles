@@ -103,17 +103,6 @@ augroup togglecursor
   autocmd WinLeave * setlocal nocursorcolumn | setlocal nocursorline
 augroup END
 
-function! s:togglelongline()
-  if exists('w:long_line_match')
-    silent! call matchdelete(w:long_line_match)
-    unlet w:long_line_match
-  elseif &textwidth > 0
-    let w:long_line_match = matchadd('ErrorMsg', '\%>'.&tw.'v.\+', -1)
-  else
-    let w:long_line_match = matchadd('ErrorMsg', '\%>80v.\+', -1)
-  endif
-endfunction
-
 function! s:clangformat(first, last)
   let l:winview = winsaveview()
   execute a:first . "," . a:last . "!clang-format"
@@ -158,8 +147,6 @@ let maplocalleader=" "
 nnoremap <leader>ac   :ClangFormat<cr>
 nnoremap <leader>ae   :let @"=@/<cr>:%s/\s\+$//<cr>:let @/=@"<cr>
 nnoremap <leader>ab   :let @"=@/<cr>:%s/<c-v><esc>[[0-9]*m//g<cr>:let @/=@"<cr>
-vmap     <leader>as   <plug>(EasyAlign)
-vmap     <leader>al   <plug>(LiveEasyAlign)
 nnoremap <leader>ef   :e %<cr>
 nnoremap <leader>eF   :e! %<cr>
 nnoremap <leader>eve  :e $MYVIMRC<cr>
@@ -176,7 +163,6 @@ nmap     <leader>m    <plug>(quickhl-manual-this)
 vmap     <leader>m    <plug>(quickhl-manual-this)
 nnoremap <leader>se   :setlocal spelllang=en<cr>
 nnoremap <leader>ss   :setlocal spelllang=sv<cr>
-nnoremap <leader>t    :call <sid>togglelongline()<cr>
 nnoremap <leader>bc   :bprevious<bar>split<bar>bnext<bar>bdelete<cr>
 vnoremap <leader>x    c<c-r>=<c-r>"<cr><esc>
 nnoremap <leader>ya   :%y+<cr>
