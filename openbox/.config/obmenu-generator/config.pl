@@ -24,6 +24,7 @@
                             ],
 
 || ICON SETTINGS
+    | use_gtk3            : Use the Gtk3 library for resolving the icon paths. (default: 0)
     | gtk_rc_filename     : Absolute path to the GTK configuration file.
     | missing_icon        : Use this icon for missing icons (default: gtk-missing-image)
     | icon_size           : Preferred size for icons. (default: 48)
@@ -70,5 +71,6 @@ our $CONFIG = {
   "locale_support"      => 1,
   "missing_icon"        => "gtk-missing-image",
   "terminal"            => "alacritty",
-  "VERSION"             => 0.85,
+  "use_gtk3"            => 0,
+  "VERSION"             => 0.87,
 }
