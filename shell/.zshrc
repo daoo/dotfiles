@@ -97,7 +97,9 @@ prompt_daoo_setup() {
   local dir="${l_paren}${color_directory}%~${color_white}${r_paren}"
   local host_info="${l_paren}${color_white}%n${at_char}${color_white}%m${r_paren}"
   local time="${l_bracket}${color_white}%D${pipe}${color_white}%*${r_bracket}"
-  local env="${l_paren}${color_white}%?${pipe}${color_white}${SSH_CONNECTION+s}${TMUX+t}${RANGER_LEVEL+r}${r_paren}"
+  export ZSH_LEVEL="z${ZSH_LEVEL}"
+  local indicators="${SSH_CONNECTION+s}${TMUX+t}${ZSH_LEVEL}${RANGER_LEVEL+r}"
+  local env="${l_paren}${color_white}%?${pipe}${color_white}${indicators}${r_paren}"
 
   line1_a="${hyphen}${dir}${color_prompt}"
   line1_b="${env}${hyphen}${time}${hyphen}${host_info}${color_prompt}-"
