@@ -7,7 +7,6 @@ import posixpath
 import shlex
 import subprocess
 import sys
-import tarfile
 import tempfile
 import urllib.request
 
@@ -54,15 +53,16 @@ def get_package_path(package):
         posixpath.basename(get_package_download_url(package)))
 
 def extract_file(path, package_path):
-    tar_file = tarfile.open(package_path)
     member_path = os.path.relpath(path, "/")
-    dir_path = os.path.basename(member_path)
-    member = tar_file.extractfile(member_path)
     file = tempfile.NamedTemporaryFile()
-    file.write(member.read())
-    file.flush()
+    subprocess.check_call([
+        'tar',
+        '--extract',
+        '--to-stdout',
+        '--use-compress-program=zstd',
+        '--file=' + package_path,
+        member_path], stdout=file)
     return file
-
 
 def main(diffprog, path):
     if os.path.isdir(path):
