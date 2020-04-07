@@ -18,7 +18,6 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'morhetz/gruvbox'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'olical/vim-enmasse'
 Plug 'romainl/vim-qf'
 Plug 'sgeb/vim-diff-fold'
@@ -44,7 +43,6 @@ set hidden
 set backupdir=/tmp
 set directory=/tmp
 set nobackup
-set nowritebackup
 set noswapfile
 
 set cursorcolumn
@@ -236,65 +234,20 @@ endfunction
 
 let g:lightline = {
     \ 'active': {
-    \   'left': [ ['mode', 'paste'], ['cocstatus', 'relativepath', 'readonly', 'modified'] ],
+    \   'left': [ ['mode', 'paste'], ['relativepath', 'readonly', 'modified'] ],
     \   'right': [ ['lineinfo'], ['bufferinfo'] ]
     \ },
     \ 'inactive': {
-    \   'left': [ ['cocstatus', 'relativepath', 'readonly', 'modified'] ],
+    \   'left': [ ['relativepath', 'readonly', 'modified'] ],
     \   'right': [ ['lineinfo'], ['bufferinfo'] ]
     \ },
     \ 'component': {
     \   'lineinfo': '%l:%v %3p%%',
     \   'bufferinfo': '%{LightLineBufferInfo()}',
-    \ },
-    \ 'component_function': {
-    \   'cocstatus': 'coc#status',
     \ }
     \ }
 " }}}
 " {{{ WinResizer
 let g:winresizer_start_key='<leader>w'
-" }}}
-" {{{ coc.nvim
-set updatetime=300
-set shortmess+=c
-set signcolumn=yes
-
-inoremap <silent><expr> <c-space> coc#refresh()
-inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-nmap <leader>cr <Plug>(coc-rename)
-xmap <leader>cf <Plug>(coc-format-selected)
-nmap <leader>cf <Plug>(coc-format-selected)
-xmap <leader>ca <Plug>(coc-codeaction-selected)
-nmap <leader>ca <Plug>(coc-codeaction-selected)
-
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
-
-command! -nargs=0 Format :call CocAction('format')
-command! -nargs=0 OrganizeImports :call CocAction('runCommand', 'editor.action.organizeImport')
 " }}}
 " vim: fdm=marker :
