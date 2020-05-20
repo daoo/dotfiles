@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -eu
+
+directory="${1-.}"
+
+if [[ ! -d "$directory" ]]; then
+  echo "Error: ${directory} not a directory." 2>&1
+  echo "" 2>&1
+  echo "Usage: $0 DIRECTORY" 2>&1
+  exit 1
+fi
+
+preview="head -\${FZF_PREVIEW_LINES} {}"
+files="$(rg "$directory" --files | fzf --preview="$preview")"
+rifle "$files"
