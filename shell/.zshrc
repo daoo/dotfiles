@@ -58,7 +58,7 @@ alias lla='ls -l --almost-all'
 alias '..'='cd ..'
 
 alias g='git'
-alias p='yay'
+alias p='yay --answerdiff A --nocleanmenu'
 
 alias bell="echo -ne '\a'"
 alias calc='noglob calc'
