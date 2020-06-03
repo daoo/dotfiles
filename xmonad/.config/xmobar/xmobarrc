@@ -1,5 +1,5 @@
 Config
-  { font = "xft:Inconsolata:size=10"
+  { font = "xft:Liberation Mono:size=9"
   , bgColor = "#1d2021"
   , fgColor = "#fbf1c7"
   , alpha = 255
