@@ -18,6 +18,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'morhetz/gruvbox'
+Plug 'neovim/nvim-lspconfig'
 Plug 'olical/vim-enmasse'
 Plug 'romainl/vim-qf'
 Plug 'sgeb/vim-diff-fold'
@@ -232,22 +233,51 @@ function! LightLineBufferInfo()
   return join(tmp, " ")
 endfunction
 
+let lightline_left = ['relativepath', 'readonly', 'modified']
+let lightline_right = [ ['lineinfo'], ['spell', 'filetype'], ['lsp'] ]
 let g:lightline = {
     \ 'active': {
-    \   'left': [ ['mode', 'paste'], ['relativepath', 'readonly', 'modified'] ],
-    \   'right': [ ['lineinfo'], ['bufferinfo'] ]
+    \   'left': [ ['mode', 'paste'], ['gitbranch'] + lightline_left ],
+    \   'right': lightline_right,
     \ },
     \ 'inactive': {
-    \   'left': [ ['relativepath', 'readonly', 'modified'] ],
-    \   'right': [ ['lineinfo'], ['bufferinfo'] ]
+    \   'left': [ lightline_left ],
+    \   'right': lightline_right,
     \ },
-    \ 'component': {
-    \   'lineinfo': '%l:%v %3p%%',
-    \   'bufferinfo': '%{LightLineBufferInfo()}',
-    \ }
+    \ 'component_function': {
+    \   'gitbranch': 'FugitiveHead',
+    \   'lsp': 'LspStatus',
+    \ },
     \ }
 " }}}
 " {{{ WinResizer
 let g:winresizer_start_key='<leader>w'
+" }}}
+" {{{ LSP client
+lua <<EOF
+  require'nvim_lsp'.pyls.setup{
+    plugins = { pyls_mypy = { enabled = true; } }
+  }
+EOF
+
+function! LspStatus() abort
+  let tmp = []
+  if luaeval("not vim.tbl_isempty(vim.lsp.buf_get_clients(0))")
+    let errors = luaeval("vim.lsp.diagnostic.get_count(0, [[Error]])")
+    let warnings = luaeval("vim.lsp.diagnostic.get_count(0, [[Warning]])")
+    return 'E' . errors . ' ' . 'W' . warnings
+  endif
+  return 'no lsp'
+endfunction
+
+autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 " }}}
 " vim: fdm=marker :
