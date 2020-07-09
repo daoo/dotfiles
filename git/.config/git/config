@@ -6,7 +6,7 @@
   ci   = commit
   cia  = commit --amend
   cif  = commit --fixup
-  cifa = !bash -c 'git commit --fixup=\"${0}\" && git commit --amend'
+  cife = commit --edit --fixup
   co   = checkout
   cob  = checkout --branch
   cp   = cherry-pick
