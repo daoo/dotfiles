@@ -39,7 +39,9 @@ def download_package(name, path):
 
 
 def get_pacman_cache_path():
-    config = configparser.ConfigParser(allow_no_value=True)
+    config = configparser.ConfigParser(
+        allow_no_value=True,
+        strict=False)
     config.read(PACMAN_CONF_PATH)
     return config.get(
         "options",
