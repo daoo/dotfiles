@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Interactive file opener using rg, fzf and rifle.
+
 set -eu
 
 directory="${1-.}"
