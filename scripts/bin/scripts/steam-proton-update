@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# Downloads and extracts the latest GloriousEggroll proton build in the right
+# location.
+
+set -eu
+
+steamroot=$(realpath "$HOME/.steam/root")
+if [[ ! -d "$steamroot" ]]; then
+  echo "Error: steam not found at ${steamroot}." >&2
+  exit 1
+fi
+echo "Steam root: ${steamroot}"
+
+toolsdir="${steamroot}/compatibilitytools.d"
+mkdir -p "$toolsdir"
+
+url="$(curl --silent 'https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest' | grep 'browser_download_url' | cut -d \" -f 4)"
+filename="$(echo $url | sed 's|.*/||')"
+dirname="$(echo $filename | sed 's|.tar\.gz||')"
+dirpath="${toolsdir}/${dirname}"
+
+echo "Latest url: ${url}"
+echo "Target file name: ${filename}"
+echo "Target directory: ${dirpath}"
+
+if [[ -d "${dirpath}" ]]; then
+  echo "Target directory exists. Already up to date. Doing nothing."
+  exit 0
+fi
+
+echo "Downloading ${url}"
+curl --location "${url}" --output "${toolsdir}/${filename}"
+
+echo "Extracting ${toolsdir}/${filename}"
+tar --extract --file="${toolsdir}/${filename}" --directory="${toolsdir}"
+rm "${toolsdir}/${filename}"
+
+echo "Upgrading done."
