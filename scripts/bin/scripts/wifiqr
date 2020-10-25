@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Produces an Android system join-wifi compatible QR code with SSID and
+# password encoded.
+
+echo -n "SSDI: "
+read ssid
+
+echo -n "password: "
+read password
+
+qrencode "WIFI:T:WPA;S:${ssid};P:${password}" -t ANSI256
