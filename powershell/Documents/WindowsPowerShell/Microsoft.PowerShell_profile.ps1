@@ -26,6 +26,8 @@ function Prompt
     $hostinfo = $ENV:USERNAME + "@" + $ENV:COMPUTERNAME
     $timedate = (get-date -uformat "%Y-%m-%d %H:%M:%S")
 
+    $Host.UI.RawUI.WindowTitle = $dir
+
     $left = "-(" + $dir + ")-"
     $right = "-(" + $hostinfo + ")-[" + $timedate + "]-"
     $fill = "-" * ($width - $left.length - $right.length)
