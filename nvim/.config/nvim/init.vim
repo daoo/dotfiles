@@ -41,10 +41,12 @@ set autoread
 set autowrite
 set hidden
 
+" Entirely disable backups and swap.
 set backupdir=/tmp
 set directory=/tmp
 set nobackup
 set noswapfile
+set nowritebackup
 
 set cursorcolumn
 set cursorline
