@@ -4,23 +4,15 @@ Set-PSReadlineOption -BellStyle None
 Set-PSReadlineOption -EditMode vi
 
 # Remove PowerShell aliases that conflicts with programs
-Remove-Alias cat
-Remove-Alias cp
 Remove-Alias ls
-Remove-Alias r
-Remove-Alias rm
 
-# C:\WINDOWS\system32\find.exe overrides scoop shim,
-# fix by explicitly aliasing.
-Set-Alias find find.ps1
-
-function ls { ls.exe --human-readable --group-directories-first --color=yes $args }
+function ls { & $ENV:USERPROFILE\scoop\apps\git-with-openssh\current\usr\bin\ls.exe --human-readable --group-directories-first --color=yes $args }
 Set-Alias l ls
 function ll { ls -l $args }
 function la { ls --almost-all $args }
 function lla { ls -l --almost-all $args }
 
-Set-Alias g git
+Set-Alias g git.exe
 
 Set-PSReadlineKeyHandler -Chord Ctrl+P -Function PreviousHistory
 Set-PSReadlineKeyHandler -Chord Ctrl+N -Function NextHistory
