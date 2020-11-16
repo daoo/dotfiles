@@ -1,5 +1,6 @@
 ﻿Import-Module PSReadLine
 
+Set-PSReadlineOption -BellStyle None
 Set-PSReadlineOption -EditMode vi
 
 # Remove PowerShell aliases that conflicts with programs
