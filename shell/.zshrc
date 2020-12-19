@@ -48,7 +48,7 @@ autoload edit-command-line
 zle -N edit-command-line
 # ]]]
 # [[[ Aliases
-alias ls='ls --human-readable --classify --si --color=auto --group-directories-first'
+alias ls='ls --classify --si --color=auto --group-directories-first'
 
 alias l='ls'
 alias ll='ls -l'
