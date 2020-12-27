@@ -9,19 +9,13 @@ function check()
   fi
 }
 
-# Misc
-check "/sys/class/backlight/intel_backlight/actual_brightness"
-check "/proc/sys/kernel/nmi_watchdog"
-check "/sys/module/pcie_aspm/parameters/policy"
-
-# Sound
-check "/sys/module/snd_hda_intel/parameters/power_save"
-check "/sys/module/snd_hda_intel/parameters/power_save_controller"
-
 # CPU
+check "/proc/sys/kernel/nmi_watchdog"
+check "/sys/devices/system/cpu/intel_pstate/status"
+check "/sys/devices/system/cpu/intel_pstate/no_turbo"
 for path in /sys/devices/system/cpu/cpufreq/policy[0-9]; do
   check "$path/scaling_governor"
-  check "$path/scaling_available_governors"
+  check "$path/energy_performance_preference"
 done
 
 # Disks
@@ -32,9 +26,27 @@ check "/proc/sys/vm/dirty_expire_centisecs"
 check "/proc/sys/vm/dirty_writeback_centisecs"
 
 # SATA
-check "/sys/class/scsi_host/host0/link_power_management_policy"
-check "/sys/class/scsi_host/host1/link_power_management_policy"
-check "/sys/class/scsi_host/host2/link_power_management_policy"
-check "/sys/class/scsi_host/host3/link_power_management_policy"
-check "/sys/class/scsi_host/host4/link_power_management_policy"
-check "/sys/class/scsi_host/host5/link_power_management_policy"
+for path in /sys/class/scsi_host/*; do
+  check "$path/link_power_management_policy"
+done
+
+# PCI-e
+check "/sys/module/pcie_aspm/parameters/policy"
+
+# Wifi and bluetooth
+check "/sys/module/iwlwifi/parameters/power_save"
+for path in /sys/module/rfkill/holders/*; do
+  check "$path/initstate"
+done
+
+# USB
+for path in /sys/bus/usb/devices/*; do
+  check "$path/power/control"
+done
+
+# Sound
+check "/sys/module/snd_hda_intel/parameters/power_save"
+check "/sys/module/snd_hda_intel/parameters/power_save_controller"
+
+# Misc
+check "/sys/class/backlight/intel_backlight/actual_brightness"
