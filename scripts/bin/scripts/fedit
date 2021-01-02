@@ -15,4 +15,4 @@ fi
 
 preview="head -\${FZF_PREVIEW_LINES} {}"
 files="$(rg "$directory" --files | fzf --preview="$preview")"
-xdg-open "$files"
+"$EDITOR" "$files"
