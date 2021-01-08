@@ -156,10 +156,10 @@ nnoremap <leader>eve  :e $MYVIMRC<cr>
 nnoremap <leader>evs  :source $MYVIMRC<cr>
 nmap     <leader>en   <Plug>(altr-forward)
 nmap     <leader>eb   <Plug>(altr-backward)
-nnoremap <leader>fg   :grep!<space>
-vnoremap <leader>fg   y:grep! "<cr>
-nnoremap <leader>fr   :%s/<c-r>=expand("<cword>")<cr>/
-vnoremap <leader>fr   y:%s/<c-r>"/
+nnoremap <leader>f    :grep!<space>
+vnoremap <leader>f    y:grep! '"'
+nnoremap <leader>rt   :%s/<c-r>=expand("<cword>")<cr>/
+vnoremap <leader>rt   y:%s/<c-r>"/
 nmap     <leader>M    <plug>(quickhl-manual-reset)
 vmap     <leader>M    <plug>(quickhl-manual-reset)
 nmap     <leader>m    <plug>(quickhl-manual-this)
@@ -256,30 +256,56 @@ let g:lightline = {
 let g:winresizer_start_key='<leader>w'
 " }}}
 " {{{ LSP client
-lua <<EOF
-  require'nvim_lsp'.pyls.setup{
-    plugins = { pyls_mypy = { enabled = true; } }
+if has('nvim-0.5')
+  function! LspStatus() abort
+    let tmp = []
+    if luaeval("not vim.tbl_isempty(vim.lsp.buf_get_clients(0))")
+      let errors = luaeval("vim.lsp.diagnostic.get_count(0, [[Error]])")
+      let warnings = luaeval("vim.lsp.diagnostic.get_count(0, [[Warning]])")
+      return 'E' . errors . ' ' . 'W' . warnings
+    endif
+    return 'lsp off'
+  endfunction
+
+  lua << EOF
+  local custom_on_attach = function(client, bufnr)
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    local opts = { noremap=true, silent=true }
+    buf_set_keymap('n', 'g0', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+    buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<cr>', opts)
+    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+    buf_set_keymap('n', '<c-k>', '<Cmd>lua vim.lsp.buf.hover()<cr>', opts)
+    buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+    buf_set_keymap('n', '<leader>i', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>', opts)
+    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>', opts)
+    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<cr>', opts)
+    buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>', opts)
+
+    if client.resolved_capabilities.document_formatting then
+      buf_set_keymap("n", "<space>af", "<cmd>lua vim.lsp.buf.formatting()<cr>", opts)
+    elseif client.resolved_capabilities.document_range_formatting then
+      buf_set_keymap("n", "<space>af", "<cmd>lua vim.lsp.buf.formatting()<cr>", opts)
+    end
+  end
+
+  require('lspconfig').pyls.setup{
+    plugins = { pyls_mypy = { enabled = true; } },
+    on_attach = custom_on_attach
   }
 EOF
-
-function! LspStatus() abort
-  let tmp = []
-  if luaeval("not vim.tbl_isempty(vim.lsp.buf_get_clients(0))")
-    let errors = luaeval("vim.lsp.diagnostic.get_count(0, [[Error]])")
-    let warnings = luaeval("vim.lsp.diagnostic.get_count(0, [[Warning]])")
-    return 'E' . errors . ' ' . 'W' . warnings
-  endif
-  return 'no lsp'
-endfunction
-
-autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
-
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+else
+  function! LspStatus() abort
+    return 'lsp n/a'
+  endfunction
+endif
+" }}}
+" {{{ vim lion
+let g:lion_squeeze_spaces = 1
 " }}}
 " vim: fdm=marker :
