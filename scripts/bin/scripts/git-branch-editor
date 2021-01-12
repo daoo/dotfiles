@@ -28,10 +28,10 @@ def git_branches():
     return (current_name, branches)
 
 
-def edit(branches):
+def edit(lines):
     fwrite = tempfile.NamedTemporaryFile(mode='w', delete=False)
     tmp_path = fwrite.name
-    fwrite.write(branches)
+    fwrite.write(lines)
     fwrite.close()
 
     subprocess.check_call([os.environ["EDITOR"], tmp_path])
@@ -110,5 +110,6 @@ def execute(old_branches, string, dry_run):
 def main():
     (current, local) = git_branches()
     execute(local, edit(format_output(current, local)), dry_run=False)
+
 
 main()
