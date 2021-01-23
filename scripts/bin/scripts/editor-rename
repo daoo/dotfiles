@@ -65,10 +65,18 @@ def rename(old_names, new_names, parents):
                 str.format("Warning: file {} already exists.\n", new))
 
 
-def program(args):
-    list_func = recursive_list_dir if args.recursive else list_dir
+def read_from_stdin():
+    return sorted((path.strip() for path in sys.stdin.readlines()))
 
-    old_names = sorted(concat((list_func(path, args.directories, args.files) for path in args.paths)))
+
+def read_from_paths(args):
+    list_func = recursive_list_dir if args.recursive else list_dir
+    paths = (list_func(path, args.directories, args.files) for path in args.paths)
+    return sorted(concat(paths))
+
+
+def program(args):
+    old_names = read_from_stdin() if args.paths == ['-'] else read_from_paths(args)
     new_names = interact(args.editor, old_names)
 
     if len(new_names) == 0:
@@ -91,7 +99,7 @@ def main():
         "paths",
         nargs='+',
         default='.',
-        help="directory to rename files in")
+        help="directory to rename files in, specify - to read from standard input")
 
     parser.add_argument(
         "-p", "--parents",
