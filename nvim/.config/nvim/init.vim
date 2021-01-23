@@ -18,7 +18,9 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'morhetz/gruvbox'
-Plug 'neovim/nvim-lspconfig'
+if has('nvim-0.5')
+  Plug 'neovim/nvim-lspconfig'
+endif
 Plug 'olical/vim-enmasse'
 Plug 'romainl/vim-qf'
 Plug 'sgeb/vim-diff-fold'
