@@ -1,5 +1,6 @@
 #!/usr/bin/env runhaskell
 {-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE TupleSections #-}
 {-# LANGUAGE OverloadedStrings #-}
 module Main (main) where
 
@@ -8,6 +9,7 @@ import Control.Monad.Except
 import Data.Bifunctor
 import Data.List
 import Data.Map (Map)
+import Data.Maybe (fromMaybe, listToMaybe, catMaybes)
 import Data.Monoid
 import Data.Text (Text)
 import System.Environment
@@ -90,7 +92,7 @@ data Opts = Opts FilePath Mode
 
 data Action = Copy Int | Print | Show
 
-data Mode = List | With Text Action
+data Mode = List | With Text Action | Csv
 
 opts :: FilePath -> Opt.ParserInfo Opts
 opts defpath = Opt.info (Opt.helper <*> parse) (Opt.fullDesc <> header)
@@ -100,7 +102,7 @@ opts defpath = Opt.info (Opt.helper <*> parse) (Opt.fullDesc <> header)
     parse = Opts <$> flagPath <*> commandMode
 
     commandMode :: Opt.Parser Mode
-    commandMode = Opt.subparser $ optList <> optCopy <> optPrint <> optShow
+    commandMode = Opt.subparser $ optList <> optCopy <> optPrint <> optShow <> optCsv
 
     optCommand name parser desc =
       Opt.command name (Opt.info (Opt.helper <*> parser) (Opt.progDesc desc))
@@ -108,6 +110,10 @@ opts defpath = Opt.info (Opt.helper <*> parse) (Opt.fullDesc <> header)
     optList = optCommand "list"
       (pure List)
       "List all availible password identifiers"
+
+    optCsv = optCommand "csv"
+      (pure Csv)
+      "Export to csv"
 
     optCopy = optCommand "copy"
       (With <$> argumentIdent <*> (Copy <$> flagClear))
@@ -150,6 +156,7 @@ main = defpath >>= Opt.execParser . opts >>= program
 program :: Opts -> IO ()
 program (Opts path mode) = handleExceptT $ case mode of
   List -> readPws >>= listPws
+  Csv -> readPws >>= csvPws
   With ident action
     | T.null ident -> throwError "No password identifier provided."
     | otherwise -> readPws >>= findPw ident >>= actionPw action
@@ -164,6 +171,35 @@ program (Opts path mode) = handleExceptT $ case mode of
 
     listPws :: [Password] -> ExceptT String IO ()
     listPws = mapM_ (lift . T.putStrLn . identifier)
+
+    csvPws :: [Password] -> ExceptT String IO ()
+    csvPws = mapM_ (lift . T.putStrLn . fmt)
+      where
+        fmt pw = T.intercalate "," $ map quote
+          [ "ungrouped"
+          , identifier pw
+          , maybe mempty snd user
+          , escape $ password pw
+          , url
+          , escape notes
+          ]
+          where
+            quote s = T.pack "\"" `T.append` s `T.append` T.pack "\""
+            escape s = T.replace "\"" "\"\"" s
+
+            user :: Maybe (Text, Text)
+            user = listToMaybe $ catMaybes user'
+            user' :: [Maybe (Text, Text)]
+            user' = map (\k -> (k,) <$> (fields pw M.!? k)) ["userid", "user", "username", "email", "name"]
+
+            url = fromMaybe mempty $ fields pw M.!? "url"
+
+            fmtnote (k, v) = k `T.append` ": " `T.append` v
+            notes :: Text
+            notes = T.intercalate "\n" $ map fmtnote $ M.assocs (notes' user)
+            notes' Nothing = notes''
+            notes' (Just (k, _)) = M.delete k notes''
+            notes'' = M.delete "url" $ fields pw
 
     actionPw :: Action -> Password -> ExceptT String IO ()
     actionPw = \case
