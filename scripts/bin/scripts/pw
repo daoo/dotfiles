@@ -1,1 +1,50 @@
-pw.hs
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+key_file="$(cat ~/.config/pw/keyfile)"
+database="$(cat ~/.config/pw/database)"
+
+pw-list() {
+  keepassxc-cli ls \
+    --key-file "$key_file" \
+    --flatten --recursive \
+    "$database"
+}
+
+pw-show() {
+  keepassxc-cli show \
+    --key-file "$key_file" \
+    "$database" \
+    "$1"
+}
+
+pw-copy() {
+  keepassxc-cli clip \
+    --key-file "$key_file" \
+    "$database" \
+    "$1"
+}
+
+pw-print() {
+  keepassxc-cli show \
+    --key-file "$key_file" \
+    --attributes password \
+    --show-protected \
+    "$database" \
+    "$1"
+}
+
+if list="$(pw-list)"; then
+  selection="$(echo "$list" | fzf)"
+  if [[ -n "$selection" ]]; then
+    case "$1" in
+      "copy") pw-copy "$selection" ;;
+      "show") pw-show "$selection" ;;
+      "qr") pw-print "$selection" | qrencode -t ANSI256 ;;
+    esac
+  fi
+else
+  echo "Error: failed to list passwords." 1>&2
+  exit 1
+fi

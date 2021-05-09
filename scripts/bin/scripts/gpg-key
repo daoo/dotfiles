@@ -2,8 +2,8 @@
 
 set -eu
 
-disk=/dev/disk/by-label/KINGSTON
-gpghome=/run/media/daniel/KINGSTON/.gnupg
+disk="/dev/disk/by-label/KINGSTON"
+gpghome="/run/media/${USER}/KINGSTON/.gnupg"
 
 function disk-unmount {
   udisksctl unmount -b $disk

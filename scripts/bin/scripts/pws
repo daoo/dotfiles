@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
 
-set -eu
+set -euo pipefail
 
-if list="$(pw list)"; then
-  selection="$(echo "$list" | fzf)"
-  if [[ -n "$selection" ]]; then
-    pw show "$selection"
-  fi
-else
-  echo "Error: failed to list passwords." 1>&2
-  exit 1
-fi
+pw show
