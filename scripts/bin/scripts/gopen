@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-# Interactive file opener using git ls-files, fzf and rifle.
-
-set -eu
-
-preview="head -\${FZF_PREVIEW_LINES} {}"
-files="$(git ls-files | fzf --preview="$preview")"
-rifle "$files"
