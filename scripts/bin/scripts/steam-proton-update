@@ -3,7 +3,7 @@
 # Downloads and extracts the latest GloriousEggroll proton build in the right
 # location.
 
-set -eu
+set -euo pipefail
 
 steamroot=$(realpath "$HOME/.steam/root")
 if [[ ! -d "$steamroot" ]]; then
@@ -14,8 +14,19 @@ echo "Steam root: ${steamroot}"
 
 toolsdir="${steamroot}/compatibilitytools.d"
 mkdir -p "$toolsdir"
+echo "Tools directory: ${toolsdir}"
+echo "Tools directory file count: $(ls "${toolsdir}" | wc -l)"
+echo "Tools directory file size: $(du --si --summarize "${toolsdir}" | cut -f1)"
 
-url="$(curl --silent 'https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest' | grep 'browser_download_url' | cut -d \" -f 4)"
+fetch_latest_release() {
+  curl --silent 'https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest'
+}
+
+parse_browser_download_url() {
+  jq --raw-output '.assets | to_entries[] | select(.value.name | endswith(".tar.gz")) | .value.browser_download_url'
+}
+
+url="$(fetch_latest_release | parse_browser_download_url)"
 filename="$(echo $url | sed 's|.*/||')"
 dirname="$(echo $filename | sed 's|.tar\.gz||')"
 dirpath="${toolsdir}/${dirname}"
