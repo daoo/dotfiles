@@ -18,9 +18,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'morhetz/gruvbox'
-if has('nvim-0.5')
-  Plug 'neovim/nvim-lspconfig'
-endif
+Plug 'neovim/nvim-lspconfig'
 Plug 'olical/vim-enmasse'
 Plug 'romainl/vim-qf'
 Plug 'sgeb/vim-diff-fold'
@@ -258,54 +256,44 @@ let g:lightline = {
 let g:winresizer_start_key='<leader>w'
 " }}}
 " {{{ LSP client
-if has('nvim-0.5')
-  function! LspStatus() abort
-    let tmp = []
-    if luaeval("not vim.tbl_isempty(vim.lsp.buf_get_clients(0))")
-      let errors = luaeval("vim.lsp.diagnostic.get_count(0, [[Error]])")
-      let warnings = luaeval("vim.lsp.diagnostic.get_count(0, [[Warning]])")
-      return 'E' . errors . ' ' . 'W' . warnings
-    endif
-    return 'lsp off'
-  endfunction
+function! LspStatus() abort
+  let tmp = []
+  if luaeval("not vim.tbl_isempty(vim.lsp.buf_get_clients(0))")
+    let errors = luaeval("vim.lsp.diagnostic.get_count(0, [[Error]])")
+    let warnings = luaeval("vim.lsp.diagnostic.get_count(0, [[Warning]])")
+    return 'E' . errors . ' ' . 'W' . warnings
+  endif
+  return 'lsp off'
+endfunction
 
-  lua << EOF
-  local custom_on_attach = function(client, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+lua << EOF
+local custom_on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    local opts = { noremap=true, silent=true }
-    buf_set_keymap('n', 'g0', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-    buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<cr>', opts)
-    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-    buf_set_keymap('n', '<c-k>', '<Cmd>lua vim.lsp.buf.hover()<cr>', opts)
-    buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-    buf_set_keymap('n', '<leader>i', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>', opts)
-    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>', opts)
-    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<cr>', opts)
-    buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>', opts)
+  local opts = { noremap=true, silent=true }
+  buf_set_keymap('n', 'g0', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+  buf_set_keymap('n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<leader>k', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+  buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+  buf_set_keymap('n', '<leader>i', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>', opts)
+  buf_set_keymap("n", "<leader>af", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<cr>', opts)
+end
 
-    if client.resolved_capabilities.document_formatting then
-      buf_set_keymap("n", "<space>af", "<cmd>lua vim.lsp.buf.formatting()<cr>", opts)
-    elseif client.resolved_capabilities.document_range_formatting then
-      buf_set_keymap("n", "<space>af", "<cmd>lua vim.lsp.buf.formatting()<cr>", opts)
-    end
-  end
-
-  require('lspconfig').pyls.setup{
-    plugins = { pyls_mypy = { enabled = true; } },
-    on_attach = custom_on_attach
-  }
+require('lspconfig').pyls.setup{
+  plugins = { pyls_mypy = { enabled = true; } },
+  on_attach = custom_on_attach
+}
 EOF
-else
-  function! LspStatus() abort
-    return 'lsp n/a'
-  endfunction
-endif
 " }}}
 " {{{ vim lion
 let g:lion_squeeze_spaces = 1
