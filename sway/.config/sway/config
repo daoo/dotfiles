@@ -1,0 +1,85 @@
+set $mod Mod4
+set $term alacritty
+set $menu rofi -show run -run-command 'echo -n {cmd}' | xargs swaymsg exec --
+
+output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1366x768.png fill
+
+input * xkb_layout "dvoormak,usaswe"
+
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+c kill
+bindsym $mod+p exec $menu
+floating_modifier $mod normal
+bindsym $mod+q reload
+bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+bindsym $mod+ampersand workspace number 1
+bindsym $mod+bracketleft workspace number 2
+bindsym $mod+braceleft workspace number 3
+bindsym $mod+braceright workspace number 4
+bindsym $mod+parenleft workspace number 5
+bindsym $mod+equal workspace number 6
+bindsym $mod+asterisk workspace number 7
+bindsym $mod+parenright workspace number 8
+bindsym $mod+plus workspace number 9
+bindsym $mod+bracketright workspace number 10
+bindsym $mod+Shift+ampersand move container to workspace number 1
+bindsym $mod+Shift+bracketleft move container to workspace number 2
+bindsym $mod+Shift+braceleft move container to workspace number 3
+bindsym $mod+Shift+braceright move container to workspace number 4
+bindsym $mod+Shift+parenleft move container to workspace number 5
+bindsym $mod+Shift+equal move container to workspace number 6
+bindsym $mod+Shift+asterisk move container to workspace number 7
+bindsym $mod+Shift+parenright move container to workspace number 8
+bindsym $mod+Shift+plus move container to workspace number 9
+bindsym $mod+Shift+bracketright move container to workspace number 10
+
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+f fullscreen
+
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+a focus parent
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+mode "resize" {
+    bindsym h resize shrink width 10px
+    bindsym j resize grow height 10px
+    bindsym k resize shrink height 10px
+    bindsym l resize grow width 10px
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+bar {
+    position bottom
+
+    status_command i3status
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
+
+include /etc/sway/config.d/*
