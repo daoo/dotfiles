@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 
-export PATH="$HOME/bin:$HOME/bin/scripts:$PATH"
+export PATH="$HOME/bin:$HOME/bin/scripts:$HOME/.local/bin:$PATH"
 
 # source ansible controlled environment
 if [[ -f "$HOME/.ansible_env" ]]; then
