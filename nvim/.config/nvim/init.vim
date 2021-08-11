@@ -19,10 +19,10 @@ Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'morhetz/gruvbox'
 Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'olical/vim-enmasse'
 Plug 'romainl/vim-qf'
 Plug 'sgeb/vim-diff-fold'
-Plug 'sheerun/vim-polyglot'
 Plug 'simeji/winresizer'
 Plug 't9md/vim-quickhl'
 Plug 'tommcdo/vim-lion'
@@ -61,9 +61,6 @@ set relativenumber
 set scrolloff=1
 set sidescrolloff=5
 set shortmess+=F
-
-set foldmethod=syntax
-set nofoldenable
 
 set ignorecase
 set smartcase
@@ -297,5 +294,18 @@ EOF
 " }}}
 " {{{ vim lion
 let g:lion_squeeze_spaces = 1
+" }}}
+" {{{ tree-sitter
+lua <<EOF
+require('nvim-treesitter.configs').setup {
+  ensure_installed = "maintained",
+  highlight = { enable = true },
+  incremental_selection = { enable = true },
+  indent = { enable = true },
+}
+EOF
+set nofoldenable
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 " }}}
 " vim: fdm=marker :
