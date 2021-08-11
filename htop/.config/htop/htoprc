@@ -36,3 +36,4 @@ left_meters=CPU AllCPUs4 Memory
 left_meter_modes=1 1 1
 right_meters=Hostname DateTime Uptime DiskIO NetworkIO
 right_meter_modes=2 2 2 2 2
+hide_function_bar=0
