@@ -286,8 +286,7 @@ local custom_on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<cr>', opts)
 end
 
-require('lspconfig').pyls.setup{
-  plugins = { pyls_mypy = { enabled = true; } },
+require('lspconfig').pylsp.setup {
   on_attach = custom_on_attach
 }
 EOF
