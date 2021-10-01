@@ -297,7 +297,10 @@ let g:lion_squeeze_spaces = 1
 " {{{ tree-sitter
 lua <<EOF
 require('nvim-treesitter.configs').setup {
-  ensure_installed = "maintained",
+  ensure_installed = {
+    "bash", "c", "c_sharp", "cmake", "cpp", "css", "dockerfile", "haskell", "html",
+    "java", "javascript", "json", "jsonc", "latex", "lua", "perl", "php", "python",
+    "regex", "rust", "vim", "yaml" },
   highlight = { enable = true },
   incremental_selection = { enable = true },
   indent = { enable = true },
