@@ -16,6 +16,7 @@ esac
 
 HISTFILE=$HOME/.zhistory
 HISTSIZE=100000
+HISTORY_IGNORE="(cd|l|ls|ll|la|lla|fc|fh|fg|bg|..)"
 SAVEHIST=100000
 setopt hist_fcntl_lock
 setopt hist_find_no_dups
