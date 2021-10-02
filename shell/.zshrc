@@ -194,7 +194,7 @@ export FZF_DEFAULT_COMMAND='rg --files'
 
 # fh - repeat history
 fh() {
-  print -z $(fc -ln 1 | sort -u | fzf)
+  print -z $(fc -ln 1 | fzf)
 }
 # ]]]
 
