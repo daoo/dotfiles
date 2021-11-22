@@ -39,7 +39,7 @@ myManageHook =
   manageDocks
   where
     isNextcloud = className =? "Nextcloud"
-    isFirefox = className =? "Firefox"
+    isFirefox = appName =? "Navigator"
     isGimpDialog = className =? "Gimp" <&&> not <$> windowRole =? "gimp-image-window"
     isSteam = className =? "Steam"
     isGnomeKeyring = className =? "Gcr-prompter"
