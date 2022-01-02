@@ -12,7 +12,6 @@ import XMonad.Actions.Navigation2D (windowGo, windowSwap, Direction2D(..))
 import XMonad.Actions.NoBorders (toggleBorder)
 import XMonad.Actions.WindowBringer (windowMap)
 import XMonad.Hooks.DynamicLog (PP(..), dynamicLogWithPP, xmobarColor, trim, wrap)
-import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(ToggleStruts))
 import XMonad.Hooks.ManageHelpers (doCenterFloat)
 import XMonad.Hooks.UrgencyHook (NoUrgencyHook(NoUrgencyHook), withUrgencyHook)
@@ -245,7 +244,7 @@ main = do
   safeSpawnProg "nextcloud"
   hxmobar <- spawnPipe "xmobar .config/xmobar/xmobarrc"
 
-  xmonad $ ewmh $ withUrgencyHook NoUrgencyHook def
+  xmonad $ withUrgencyHook NoUrgencyHook def
     { borderWidth        = 1
     , workspaces         = myWorkspaces
     , layoutHook         = myLayoutHook
@@ -256,7 +255,7 @@ main = do
     , keys               = const myKeyMaps
     , logHook            = dynamicLogWithPP (myPP hxmobar)
     , manageHook         = myManageHook
-    , handleEventHook    = fullscreenEventHook <+> docksEventHook
+    , handleEventHook    = docksEventHook
     , focusFollowsMouse  = False
     , clickJustFocuses   = False
     }
