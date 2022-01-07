@@ -1,7 +1,8 @@
 " {{{ Plugins
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'airblade/vim-gitgutter'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'ap/vim-buftabline'
 Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-sort-motion'
@@ -289,6 +290,11 @@ end
 require('lspconfig').pylsp.setup {
   on_attach = custom_on_attach
 }
+EOF
+" }}}
+" {{{ git signs
+lua << EOF
+require('gitsigns').setup()
 EOF
 " }}}
 " {{{ vim lion
