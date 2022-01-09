@@ -3,6 +3,7 @@
 import os
 import sys
 
+
 def print_file(dir, printed, path):
     if path in printed:
         return
@@ -15,8 +16,9 @@ def print_file(dir, printed, path):
             else:
                 sys.stdout.write(line)
 
+
 if len(sys.argv) == 3:
-    dir  = sys.argv[1]
+    dir = sys.argv[1]
     file = sys.argv[2]
     print_file(dir, set(), os.path.relpath(file, dir))
 else:
