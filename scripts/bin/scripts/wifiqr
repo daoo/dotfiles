@@ -4,9 +4,9 @@
 # password encoded.
 
 echo -n "SSDI: "
-read ssid
+read -r ssid
 
 echo -n "password: "
-read password
+read -r password
 
 qrencode "WIFI:T:WPA;S:${ssid};P:${password}" -t ANSI256

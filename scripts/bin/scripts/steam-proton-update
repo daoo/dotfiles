@@ -15,7 +15,7 @@ echo "Steam root: ${steamroot}"
 toolsdir="${steamroot}/compatibilitytools.d"
 mkdir -p "$toolsdir"
 echo "Tools directory: ${toolsdir}"
-echo "Tools directory file count: $(ls "${toolsdir}" | wc -l)"
+echo "Tools directory file count: $(find "${toolsdir}" -mindepth 1 -maxdepth 1 | wc -l)"
 echo "Tools directory file size: $(du --si --summarize "${toolsdir}" | cut -f1)"
 
 fetch_latest_release() {
@@ -27,8 +27,8 @@ parse_browser_download_url() {
 }
 
 url="$(fetch_latest_release | parse_browser_download_url)"
-filename="$(echo $url | sed 's|.*/||')"
-dirname="$(echo $filename | sed 's|.tar\.gz||')"
+filename="${url/*\/}"
+dirname="${filename/.tar.gz/}"
 dirpath="${toolsdir}/${dirname}"
 
 echo "Latest url: ${url}"
