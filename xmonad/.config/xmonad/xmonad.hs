@@ -161,11 +161,11 @@ myKeyMaps = fromList
   , xK_bracketright ! windows (W.shift (myWorkspaces !! 9))
 
   -- Restarting and stopping xmonad
-  , xK_q # reload
+  , xK_q # spawn "xmonad --recompile && xmonad --restart"
   , xK_q ! io exitSuccess
 
   -- Screen locker
-  , xK_b # lock
+  , xK_b # safeSpawn "physlock" ["-m"]
 
   -- Setting keyboard layout
   -- Note: z and apostrophe is the same physical key in both layouts
@@ -193,14 +193,8 @@ myKeyMaps = fromList
     toggleWorkspace = windows (W.view =<< W.tag . head . hiddenNonNSP)
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 
-    reload = spawn "xmonad --recompile && xmonad --restart"
-
     keymap name = safeSpawn "keymap" [name]
-
-    lock = safeSpawn "physlock" ["-m"]
-
     playerctl cmd = safeSpawn "playerctl" [cmd]
-
     volumectl cmd = safeSpawn "ponymix" ("-N" : cmd)
 
     rofi = runProcessWithInput "rofi"
