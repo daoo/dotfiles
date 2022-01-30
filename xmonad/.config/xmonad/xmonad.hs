@@ -1,7 +1,6 @@
 module Main (main) where
 
 import Data.Map (Map, fromList)
-import Data.Monoid ((<>))
 import Data.Ratio ((%))
 import System.Exit (exitSuccess)
 import System.IO (Handle, hPutStrLn)
@@ -56,9 +55,6 @@ colorBackground     = "#1d2021"
 colorForeground     = "#fbf1c7"
 colorForegroundDark = "#757575"
 
-myTerminal :: String
-myTerminal = "alacritty"
-
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "NSP"]
 
@@ -81,14 +77,10 @@ myPP handle = NS.namedScratchpadFilterOutWorkspacePP def
 myModKey :: KeyMask
 myModKey = mod4Mask
 
-xf86AudioLower, xf86AudioMute, xf86AudioPlay, xf86AudioRaise, xf86Email,
-  xf86Favorites :: KeySym
+xf86AudioLower, xf86AudioMute, xf86AudioRaise :: KeySym
 xf86AudioLower = 0x1008ff11
 xf86AudioMute  = 0x1008ff12
-xf86AudioPlay  = 0x1008ff14
 xf86AudioRaise = 0x1008ff13
-xf86Email      = 0x1008ff19
-xf86Favorites  = 0x1008ff30
 
 myKeyMaps :: Map (KeyMask, KeySym) (X ())
 myKeyMaps = fromList
@@ -178,12 +170,12 @@ myKeyMaps = fromList
   , xK_F7 # playerctl "next"
 
   -- Volume control
-  , xf86AudioMute  ^ volumectl ["toggle"]
-  , xf86AudioLower ^ volumectl ["decrease", "5"]
-  , xf86AudioRaise ^ volumectl ["increase", "5"]
+  , xf86AudioMute  & volumectl ["toggle"]
+  , xf86AudioLower & volumectl ["decrease", "5"]
+  , xf86AudioRaise & volumectl ["increase", "5"]
   ]
   where
-    key ^ action = ((0, key), action)
+    key & action = ((0, key), action)
     key # action = ((myModKey, key), action)
     key ! action = ((myModKey .|. shiftMask, key), action)
 
@@ -196,12 +188,6 @@ myKeyMaps = fromList
     keymap name = safeSpawn "keymap" [name]
     playerctl cmd = safeSpawn "playerctl" [cmd]
     volumectl cmd = safeSpawn "ponymix" ("-N" : cmd)
-
-myMouseBindings :: Map (KeyMask, Button) (Window -> X ())
-myMouseBindings = fromList
-  [ ((myModKey, button1), \w -> focus w >> mouseMoveWindow w)
-  , ((myModKey, button3), \w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster)
-  ]
 
 main :: IO ()
 main = do
