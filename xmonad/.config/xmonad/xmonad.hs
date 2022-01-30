@@ -7,7 +7,6 @@ import Data.Ratio ((%))
 import System.Exit (exitSuccess)
 import System.IO (Handle, hPutStrLn)
 import XMonad
-import XMonad.Actions.DynamicWorkspaces (addHiddenWorkspace, removeEmptyWorkspace)
 import XMonad.Actions.Navigation2D (windowGo, windowSwap, Direction2D(..))
 import XMonad.Actions.NoBorders (toggleBorder)
 import XMonad.Actions.WindowBringer (windowMap)
@@ -141,11 +140,8 @@ myKeyMaps = fromList
   , xK_w ! screenWorkspace 0 >>= flip whenJust (windows . W.shift)
   , xK_e ! screenWorkspace 1 >>= flip whenJust (windows . W.shift)
 
-  -- Handling workspaces
+  -- Workspace toggling
   , xK_o # toggleWorkspace
-  , xK_r ! removeEmptyWorkspace
-  , xK_v # listWorkspaces >>= rofiPrompt "view:"  >>= createView
-  , xK_s # listWorkspaces >>= rofiPrompt "shift:" >>= createShift
 
   -- Workspace keys
   , xK_ampersand    # windows (W.greedyView (myWorkspaces !! 0))
@@ -202,13 +198,6 @@ myKeyMaps = fromList
     toggleWorkspace = windows (W.view =<< W.tag . head . hiddenNonNSP)
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 
-    createAnd newtag f = unless (null newtag) $
-      addHiddenWorkspace newtag >> windows (f newtag)
-
-    createView = (`createAnd` W.greedyView)
-    createShift = (`createAnd` W.shift)
-
-    listWorkspaces = gets (map W.tag . W.workspaces . windowset)
 
     selectWindow = do
       m <- windowMap
