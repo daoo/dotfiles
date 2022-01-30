@@ -1,6 +1,5 @@
 module Main (main) where
 
-import Control.Monad (unless)
 import Data.Map (Map, fromList)
 import Data.Monoid ((<>))
 import Data.Ratio ((%))
@@ -9,14 +8,12 @@ import System.IO (Handle, hPutStrLn)
 import XMonad
 import XMonad.Actions.Navigation2D (windowGo, windowSwap, Direction2D(..))
 import XMonad.Actions.NoBorders (toggleBorder)
-import XMonad.Actions.WindowBringer (windowMap)
-import XMonad.Hooks.DynamicLog (PP(..), dynamicLogWithPP, xmobarColor, trim, wrap)
+import XMonad.Hooks.DynamicLog (PP(..), dynamicLogWithPP, xmobarColor, wrap)
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(ToggleStruts))
 import XMonad.Hooks.ManageHelpers (doCenterFloat)
 import XMonad.Hooks.UrgencyHook (NoUrgencyHook(NoUrgencyHook), withUrgencyHook)
 import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg, runProcessWithInput)
-import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 import qualified XMonad.Util.NamedScratchpad as NS
 
@@ -118,8 +115,6 @@ myKeyMaps = fromList
   , xK_x # sendMessage ToggleStruts
 
   -- Focus and swapping
-  , xK_f # selectWindow
-
   , xK_Tab # windows W.focusDown
   , xK_Tab ! windows W.focusUp
   , xK_m   # windows W.focusMaster
@@ -198,12 +193,6 @@ myKeyMaps = fromList
     toggleWorkspace = windows (W.view =<< W.tag . head . hiddenNonNSP)
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 
-
-    selectWindow = do
-      m <- windowMap
-      rofiPrompt "focus:" (M.keys m) >>= \k -> unless (null k) $
-        maybe (return ()) (windows . W.focusWindow) (M.lookup k m)
-
     reload = spawn "xmonad --recompile && xmonad --restart"
 
     keymap name = safeSpawn "keymap" [name]
@@ -217,8 +206,6 @@ myKeyMaps = fromList
     rofi = runProcessWithInput "rofi"
 
     rofiRun = rofi ["-show", "run", "-run-command", "echo -n {cmd}"] "" >>= safeSpawnProg
-
-    rofiPrompt prompt opts = trim <$> rofi ["-dmenu", "-p", prompt] (unlines opts)
 
 myMouseBindings :: Map (KeyMask, Button) (Window -> X ())
 myMouseBindings = fromList
