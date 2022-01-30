@@ -2,5 +2,6 @@
 
 set -eu
 
+icon="/usr/share/icons/Arc/panel/16/indicator-keyboard.svg"
 setxkbmap "$1"
-notify-send "Keymap" "Keymap changed to $1" -h string:x-canonical-private-synchronous:keymap
+notify-send "Keymap" "Keymap changed to $1" -h "string:image-path:${icon}"
