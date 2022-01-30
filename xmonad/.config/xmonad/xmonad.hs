@@ -13,7 +13,7 @@ import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, Toggl
 import XMonad.Hooks.ManageHelpers (doCenterFloat)
 import XMonad.Hooks.UrgencyHook (NoUrgencyHook(NoUrgencyHook), withUrgencyHook)
 import XMonad.Layout.NoBorders (smartBorders)
-import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg, runProcessWithInput)
+import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg)
 import qualified XMonad.StackSet as W
 import qualified XMonad.Util.NamedScratchpad as NS
 
@@ -94,7 +94,7 @@ myKeyMaps :: Map (KeyMask, KeySym) (X ())
 myKeyMaps = fromList
   -- Launching and killing programs
   [ xK_c      ! kill
-  , xK_p      # rofiRun
+  , xK_p      # safeSpawnProg "kupfer"
   , xK_i      # NS.namedScratchpadAction [scratchpad] (NS.name scratchpad)
   , xK_Return # safeSpawnProg "alacritty"
 
@@ -196,10 +196,6 @@ myKeyMaps = fromList
     keymap name = safeSpawn "keymap" [name]
     playerctl cmd = safeSpawn "playerctl" [cmd]
     volumectl cmd = safeSpawn "ponymix" ("-N" : cmd)
-
-    rofi = runProcessWithInput "rofi"
-
-    rofiRun = rofi ["-show", "run", "-run-command", "echo -n {cmd}"] "" >>= safeSpawnProg
 
 myMouseBindings :: Map (KeyMask, Button) (Window -> X ())
 myMouseBindings = fromList
