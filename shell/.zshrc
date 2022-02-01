@@ -195,7 +195,22 @@ export FZF_DEFAULT_COMMAND='rg --files'
 
 # fh - repeat history
 fh() {
-  print -z $(fc -ln 1 | fzf)
+  local tmpremove="$(mktemp --tmpdir 'fh.remove.XXX')"
+  print -z $(fc -ln 1 | fzf --bind "ctrl-x:execute(echo {} >> ${tmpremove})")
+  # TODO: Remove item from fzf with reload(...)
+  if [[ -s "${tmpremove}" ]]; then
+    fc -W
+    local tmphistory="$(mktemp --tmpdir 'fh.history.XXX')"
+    grep --text \
+      --fixed-strings \
+      --invert-match \
+      --line-regexp \
+      --file="${tmpremove}" \
+      "$HISTFILE" > "$tmphistory"
+    mv "$tmphistory" "$HISTFILE"
+    fc -p "$HISTFILE" "$HISTSIZE" "$SAVEHIST"
+  fi
+  rm "$tmpremove"
 }
 # ]]]
 
