@@ -54,7 +54,6 @@ set cursorline
 set laststatus=2
 set lazyredraw
 set list
-set listchars=tab:▸\ ,extends:❯,precedes:❮
 set mouse=
 set nowrap
 set nonumber
@@ -90,12 +89,6 @@ augroup togglenumbers
   auto!
   auto BufWinEnter,WinEnter * setlocal relativenumber
   auto WinLeave * setlocal norelativenumber
-augroup END
-
-augroup toggletrailing
-  autocmd!
-  autocmd InsertEnter * setlocal listchars-=trail:⌴
-  autocmd InsertLeave * setlocal listchars+=trail:⌴
 augroup END
 
 augroup togglecursor
