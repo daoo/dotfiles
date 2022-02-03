@@ -1,3 +1,3 @@
-if filereadable("Build.hs")
-  setlocal makeprg=./Build.hs\ -j4
-endif
+setlocal tabstop=4
+setlocal shiftwidth=4
+setlocal expandtab
