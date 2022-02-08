@@ -1,13 +1,10 @@
 " {{{ Plugins
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'nvim-lua/plenary.nvim'
-Plug 'lewis6991/gitsigns.nvim'
 Plug 'ap/vim-buftabline'
 Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-sort-motion'
 Plug 'haya14busa/vim-asterisk'
-Plug 'itchyny/lightline.vim'
 Plug 'jamessan/vim-gnupg'
 Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'junegunn/fzf'
@@ -15,11 +12,14 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/gv.vim'
 Plug 'kana/vim-altr'
 Plug 'kshenoy/vim-signature'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'morhetz/gruvbox'
 Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'olical/vim-enmasse'
 Plug 'romainl/vim-qf'
@@ -214,70 +214,64 @@ nnoremap Q q:
 " {{{ FileBeagle
 let g:filebeagle_suppress_keymaps = 1
 " }}}
-" {{{ Lightline
-function! LightLineBufferInfo()
-  let tmp = []
-  if strlen(&filetype)
-    call add(tmp, &filetype)
-  endif
-  if &spell
-    call add(tmp, &spelllang)
-  endif
-  return join(tmp, " ")
-endfunction
-
-let lightline_left = ['relativepath', 'readonly', 'modified']
-let lightline_right = [ ['lineinfo'], ['spell', 'filetype'], ['lsp'] ]
-let g:lightline = {
-    \ 'active': {
-    \   'left': [ ['mode', 'paste'], ['gitbranch'] + lightline_left ],
-    \   'right': lightline_right,
-    \ },
-    \ 'inactive': {
-    \   'left': [ lightline_left ],
-    \   'right': lightline_right,
-    \ },
-    \ 'component_function': {
-    \   'gitbranch': 'FugitiveHead',
-    \   'lsp': 'LspStatus',
-    \ },
-    \ }
+" {{{ lualine
+lua << EOF
+local function lualine_spell()
+  if vim.o.spell then
+    return vim.o.spelllang
+  end
+  return ''
+end
+require('lualine').setup {
+  options = {
+    icons_enabled = false,
+    component_separators = { left = '', right = '|'},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {},
+    always_divide_middle = true,
+  },
+  sections = {
+    lualine_a = {'mode', 'paste'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat'},
+    lualine_y = {'filetype', lualine_spell},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  }
+}
+EOF
 " }}}
 " {{{ WinResizer
 let g:winresizer_start_key='<leader>w'
 " }}}
 " {{{ LSP client
-function! LspStatus() abort
-  let tmp = []
-  if luaeval("not vim.tbl_isempty(vim.lsp.buf_get_clients(0))")
-    let errors = luaeval("vim.lsp.diagnostic.get_count(0, [[Error]])")
-    let warnings = luaeval("vim.lsp.diagnostic.get_count(0, [[Warning]])")
-    return 'E' . errors . ' ' . 'W' . warnings
-  endif
-  return 'lsp off'
-endfunction
-
 lua << EOF
-local custom_on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+local custom_on_attach = function(client)
+  vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_option(0, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
 
   local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', 'g0', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-  buf_set_keymap('n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<leader>k', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-  buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-  buf_set_keymap('n', '<leader>i', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>', opts)
-  buf_set_keymap("n", "<leader>af", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<cr>', opts)
+  vim.api.nvim_buf_set_keymap(0, 'n', 'g0', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+  vim.api.nvim_buf_set_keymap(0, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+  vim.api.nvim_buf_set_keymap(0, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+  vim.api.nvim_buf_set_keymap(0, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+  vim.api.nvim_buf_set_keymap(0, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+  vim.api.nvim_buf_set_keymap(0, 'n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(0, 'n', '<leader>k', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+  vim.api.nvim_buf_set_keymap(0, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+  vim.api.nvim_buf_set_keymap(0, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+  vim.api.nvim_buf_set_keymap(0, 'n', '<leader>i', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>', opts)
+  vim.api.nvim_buf_set_keymap(0, 'n', '<leader>af', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(0, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>', opts)
+  vim.api.nvim_buf_set_keymap(0, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<cr>', opts)
 end
 
 require('lspconfig').pylsp.setup {
