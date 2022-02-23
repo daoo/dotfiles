@@ -145,7 +145,7 @@ nnoremap <leader>evs  :source $MYVIMRC<cr>
 nmap     <leader>en   <Plug>(altr-forward)
 nmap     <leader>eb   <Plug>(altr-backward)
 nnoremap <leader>f    :grep!<space>
-vnoremap <leader>f    y:grep! '"'
+vnoremap <leader>f    y:grep! """
 nnoremap <leader>rt   :%s/<c-r>=expand("<cword>")<cr>/
 vnoremap <leader>rt   y:%s/<c-r>"/
 nmap     <leader>M    <plug>(quickhl-manual-reset)
