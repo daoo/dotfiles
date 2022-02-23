@@ -219,6 +219,19 @@ local function lualine_spell()
   end
   return ''
 end
+
+local function lualine_diff()
+  local gitsigns = vim.b.gitsigns_status_dict
+  if gitsigns then
+    return {
+      added = gitsigns.added,
+      modified = gitsigns.changed,
+      removed = gitsigns.removed
+    }
+  end
+  return ''
+end
+
 require('lualine').setup {
   options = {
     icons_enabled = false,
@@ -229,8 +242,8 @@ require('lualine').setup {
   },
   sections = {
     lualine_a = {'mode', 'paste'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
+    lualine_b = {'b:gitsigns_head', {'diff', sources = lualine_diff}, 'diagnostics'},
+    lualine_c = {{'filename', filestatus = true, path = 1}},
     lualine_x = {'encoding', 'fileformat'},
     lualine_y = {'filetype', lualine_spell},
     lualine_z = {'location'}
@@ -238,7 +251,7 @@ require('lualine').setup {
   inactive_sections = {
     lualine_a = {},
     lualine_b = {},
-    lualine_c = {'filename'},
+    lualine_c = {{'filename', filestatus = true, path = 1}},
     lualine_x = {'location'},
     lualine_y = {},
     lualine_z = {}
