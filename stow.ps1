@@ -1,4 +1,4 @@
-function dodiff($file1, $file2)
+function DiffFile($file1, $file2)
 {
     if (!($str1 = $(Get-Content $file1 -ErrorAction SilentlyContinue)))
     {
@@ -20,7 +20,9 @@ function dodiff($file1, $file2)
     Write-Host $file2 up to date
 }
 
-dodiff "nvim\.config\nvim\init.vim" "$HOME\AppData\Local\nvim\init.vim"
-dodiff "git\.config\git\config" "$HOME\.gitconfig"
-dodiff "powershell\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
-dodiff "tig\.config\tig\config" "$HOME\.tigrc"
+DiffFile "git\.config\git\config" "$HOME\.gitconfig"
+DiffFile "nvim\.config\nvim\ftplugin\cpp.vim" "$HOME\AppData\Local\nvim\ftplugin\cpp.vim"
+DiffFile "nvim\.config\nvim\ftplugin\git.vim" "$HOME\AppData\Local\nvim\ftplugin\git.vim"
+DiffFile "nvim\.config\nvim\init.vim" "$HOME\AppData\Local\nvim\init.vim"
+DiffFile "powershell\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
+DiffFile "tig\.config\tig\config" "$HOME\.tigrc"
