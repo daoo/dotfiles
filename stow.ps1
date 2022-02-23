@@ -1,5 +1,6 @@
 function DiffFile($file1, $file2)
 {
+    New-Item -ItemType Directory -Force -Path $(Split-Path -Path $file2) | Out-Null
     if (!($str1 = $(Get-Content $file1 -ErrorAction SilentlyContinue)))
     {
         Write-Host $file1 does not exist
