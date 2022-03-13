@@ -1,14 +1,12 @@
 [alias]
   a    = add
   ap   = add --patch
-  bmv  = branch --move
   bv   = branch --verbose
   ci   = commit
   cia  = commit --amend
   cif  = commit --fixup
   cife = commit --edit --fixup
   co   = checkout
-  cob  = checkout --branch
   cp   = cherry-pick
   cpa  = cherry-pick --abort
   cpc  = cherry-pick --continue
@@ -18,15 +16,12 @@
   ff   = merge --ff-only @{u}
   l    = !git --no-pager log --decorate --oneline --no-merges -n20
   lg   = !git --no-pager log --decorate --oneline --graph -n15
-  lb   = !git --no-pager log --no-decorate --oneline ^master ^origin/master
-  lbh  = !git --no-pager log --no-decorate --oneline ^master ^origin/master HEAD
+  lb   = !git --no-pager log --no-decorate --oneline ^master
   lu   = !git --no-pager log --no-decorate --oneline ^HEAD @{u}
-  ll   = log --decorate --patch
   p    = push
   pf   = push --force
   poh  = push --set-upstream origin HEAD
   pom  = push origin master
-  pu   = push --set-upstream
   rb   = rebase --autostash
   rba  = rebase --abort
   rbc  = rebase --continue
@@ -35,14 +30,13 @@
   rbs  = rebase --skip
   re   = reset
   reh  = reset --hard
-  sa   = stash apply
-  sc   = stash clear
-  sd   = stash drop
   sl   = stash list
   sp   = stash pop
   ss   = stash save
   st   = status --short --branch
-  sur  = submodule update --recursive
+
+  main-alias = symbolic-ref refs/heads/main refs/heads/master
+  master-alias = symbolic-ref refs/heads/master refs/heads/main
 
 [color]
   pager = false
