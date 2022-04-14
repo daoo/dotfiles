@@ -279,9 +279,8 @@ local custom_on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
-require('lspconfig').pylsp.setup {
-  on_attach = custom_on_attach
-}
+require('lspconfig').pylsp.setup { on_attach = custom_on_attach }
+require('lspconfig').pyright.setup { on_attach = custom_on_attach }
 EOF
 " }}}
 " {{{ git signs
