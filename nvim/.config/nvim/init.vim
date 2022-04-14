@@ -11,7 +11,6 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/gv.vim'
 Plug 'kana/vim-altr'
-Plug 'kevinhwang91/nvim-bqf'
 Plug 'kshenoy/vim-signature'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'machakann/vim-highlightedyank'
@@ -153,7 +152,6 @@ nmap     <leader>m    <plug>(quickhl-manual-this)
 vmap     <leader>m    <plug>(quickhl-manual-this)
 nnoremap <leader>se   :setlocal spelllang=en<cr>
 nnoremap <leader>ss   :setlocal spelllang=sv<cr>
-nnoremap <leader>bc   :bprevious<bar>split<bar>bnext<bar>bdelete<cr>
 vnoremap <leader>x    c<c-r>=<c-r>"<cr><esc>
 nnoremap <leader>ya   :%y+<cr>
 
@@ -191,7 +189,6 @@ nnoremap <c-s> :write<cr>
 " FZF
 nnoremap <silent> <c-p> :GitFiles<cr>
 nnoremap <silent> <leader>ob :Buffers<cr>
-nnoremap <silent> <leader>oc :History:<cr>
 nnoremap <silent> <leader>od :FZF %:p:h<cr>
 nnoremap <silent> <leader>of :FZF<cr>
 nnoremap <silent> <leader>og :GitFiles?<cr>
