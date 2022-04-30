@@ -50,7 +50,6 @@ zle -N edit-command-line
 # ]]]
 # [[[ Aliases
 alias ls='ls --classify --si --color=auto --group-directories-first --time-style=long-iso'
-
 alias l='ls'
 alias ll='ls -l'
 alias la='ls --almost-all'
@@ -61,8 +60,6 @@ alias '..'='cd ..'
 alias g='git'
 alias p='paru'
 
-alias bell="echo -ne '\a'"
-alias calc='noglob calc'
 alias ctl='systemctl'
 alias sctl='sudo systemctl'
 alias uctl='systemctl --user'
