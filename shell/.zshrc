@@ -126,66 +126,29 @@ prompt_daoo_setup
 # [[[ Auto completion
 autoload -Uz compinit && compinit -i
 
-setopt always_to_end       # Move cursor to the end of a completed word.
-setopt auto_menu           # Show completion menu on a succesive tab press.
-setopt auto_list           # Automatically list choices on ambiguous completion.
-setopt auto_param_slash    # If completed parameter is a directory, add a trailing slash.
-unsetopt menu_complete     # Do not autoselect the first completion entry.
-unsetopt flow_control      # Disable start/stop characters in shell editor.
+zstyle ':completion:*' completer _extensions _complete
 
-WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+# Completion cache
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
 
-zstyle ':completion::complete:*' use-cache on
-zstyle ':completion::complete:*' cache-path "/tmp/zcache"
-
-# Group matches and describe.
-zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
+# Menu and formatting
+zstyle ':completion:*' menu select
 zstyle ':completion:*' group-name ''
-zstyle ':completion:*' verbose yes
-zstyle ':completion:*:*:*:*:*' menu select
-zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
-zstyle ':completion:*:default' list-prompt '%S%M matches%s'
-zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
-zstyle ':completion:*:matches' group 'yes'
+zstyle ':completion:*:descriptions' format '%F{green}-- %d --%f'
 zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
-zstyle ':completion:*:options' auto-description '%d'
-zstyle ':completion:*:options' description 'yes'
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 
-# Don't complete unavailable commands.
-zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
-
-# Array completion element sorting.
-zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
-
-# Directories
+# Directory matching
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' complete-options true
 zstyle ':completion:*' squeeze-slashes true
-zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
-zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
-zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directories' 'users' 'expand'
 
-# Populate hostname completion.
-zstyle -e ':completion:*:hosts' hosts 'reply=(
-  ${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) 2>/dev/null)"}%%[#| ]*}//,/ }
-  ${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2>/dev/null))"}%%\#*}
-  ${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
-)'
-
-# Ignore multiple entries.
-zstyle ':completion:*:(rm|kill|diff):*' ignore-line yes
-zstyle ':completion:*:rm:*' file-patterns '*:all-files'
-
-# Kill
-zstyle ':completion:*:*:*:*:processes' command 'ps -u $USER -o pid,user,comm -w'
-zstyle ':completion:*:*:kill:*' force-list always
-zstyle ':completion:*:*:kill:*' insert-ids single
-zstyle ':completion:*:*:kill:*' menu yes select
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;36=0=01'
+# Case insensitive match if at first does not match
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
 # Man
 zstyle ':completion:*:manuals' separate-sections true
-zstyle ':completion:*:manuals.(^1*)' insert-sections true
 # ]]]
 # [[[ FZF
 export FZF_DEFAULT_COMMAND='rg --files'
