@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 
-xrdb -merge "$HOME/.Xresources"
+xrdb -merge "$XDG_CONFIG_HOME/.config/X11/xresources"
 
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
