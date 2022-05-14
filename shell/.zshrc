@@ -3,16 +3,8 @@
 [[ ! $- =~ i ]] && return
 
 # [[[ Config
-case $TERM in
-  screen*)
-      precmd() { print -Pn '\ek%~\e\\' }
-      preexec() { print -Pn '\ek$1\e\\' }
-    ;;
-  *)
-      precmd() { print -Pn '\e]2;%~ (%n@%m)\a' }
-      preexec() { print -Pn '\e]2;$1 (%n@%m)\a' }
-    ;;
-esac
+precmd() { print -Pn '\e]2;%~ (%n@%m)\a' }
+preexec() { print -Pn '\e]2;$1 (%n@%m)\a' }
 
 # Misc zsh settings
 setopt long_list_jobs
