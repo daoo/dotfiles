@@ -14,7 +14,29 @@ case $TERM in
     ;;
 esac
 
-HISTFILE=$HOME/.zhistory
+# Misc zsh settings
+setopt long_list_jobs
+setopt nobeep
+setopt nohup
+setopt notify
+unsetopt bg_nice
+unsetopt check_jobs
+
+export EDITOR='nvim'
+export PAGER="nvim -R -c silent!%sm/\\e.\\{-\\}m//g -"
+export MANPAGER="bash -c \"nvim -c \\\"set ft=man\\\" </dev/tty <(col -bx)\""
+
+export FZF_DEFAULT_COMMAND='rg --files'
+export RANGER_LOAD_DEFAULT_RC=FALSE
+
+# Disable ctrl-q and ctrl-s
+stty -ixon
+
+autoload edit-command-line
+zle -N edit-command-line
+# ]]]
+# [[[ History
+HISTFILE="$HOME/.zhistory" # TODO: Move according to XDG
 HISTSIZE=100000
 HISTORY_IGNORE="(cd|l|ls|ll|la|lla|fc|fh|fg|bg|..)"
 SAVEHIST=100000
@@ -28,25 +50,25 @@ setopt hist_save_no_dups
 setopt hist_verify
 setopt inc_append_history
 
-# Misc zsh settings
-setopt long_list_jobs
-setopt nobeep
-setopt nohup
-setopt notify
-unsetopt bg_nice
-unsetopt check_jobs
-
-export EDITOR='nvim'
-export PAGER="nvim -R -c silent!%sm/\\e.\\{-\\}m//g -"
-export MANPAGER="bash -c \"nvim -c \\\"set ft=man\\\" </dev/tty <(col -bx)\""
-
-export RANGER_LOAD_DEFAULT_RC=FALSE
-
-# Disable ctrl-q and ctrl-s
-stty -ixon
-
-autoload edit-command-line
-zle -N edit-command-line
+# fh - repeat history
+fh() {
+  local tmpremove="$(mktemp --tmpdir 'fh.remove.XXX')"
+  print -z $(fc -ln 1 | fzf --bind "ctrl-x:execute(echo {} >> ${tmpremove})")
+  # TODO: Remove item from fzf with reload(...)
+  if [[ -s "${tmpremove}" ]]; then
+    fc -W
+    local tmphistory="$(mktemp --tmpdir 'fh.history.XXX')"
+    grep --text \
+      --fixed-strings \
+      --invert-match \
+      --line-regexp \
+      --file="${tmpremove}" \
+      "$HISTFILE" > "$tmphistory"
+    mv "$tmphistory" "$HISTFILE"
+    fc -p "$HISTFILE" "$HISTSIZE" "$SAVEHIST"
+  fi
+  rm "$tmpremove"
+}
 # ]]]
 # [[[ Aliases
 alias ls='ls --classify --si --color=auto --group-directories-first --time-style=long-iso'
@@ -149,29 +171,6 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
 # Man
 zstyle ':completion:*:manuals' separate-sections true
-# ]]]
-# [[[ FZF
-export FZF_DEFAULT_COMMAND='rg --files'
-
-# fh - repeat history
-fh() {
-  local tmpremove="$(mktemp --tmpdir 'fh.remove.XXX')"
-  print -z $(fc -ln 1 | fzf --bind "ctrl-x:execute(echo {} >> ${tmpremove})")
-  # TODO: Remove item from fzf with reload(...)
-  if [[ -s "${tmpremove}" ]]; then
-    fc -W
-    local tmphistory="$(mktemp --tmpdir 'fh.history.XXX')"
-    grep --text \
-      --fixed-strings \
-      --invert-match \
-      --line-regexp \
-      --file="${tmpremove}" \
-      "$HISTFILE" > "$tmphistory"
-    mv "$tmphistory" "$HISTFILE"
-    fc -p "$HISTFILE" "$HISTSIZE" "$SAVEHIST"
-  fi
-  rm "$tmpremove"
-}
 # ]]]
 
 # vim: foldmarker=[[[,]]] fdm=marker :
