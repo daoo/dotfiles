@@ -18,9 +18,6 @@ export EDITOR='nvim'
 export PAGER="nvim -R -c silent!%sm/\\e.\\{-\\}m//g -"
 export MANPAGER="bash -c \"nvim -c \\\"set ft=man\\\" </dev/tty <(col -bx)\""
 
-export FZF_DEFAULT_COMMAND='rg --files'
-export RANGER_LOAD_DEFAULT_RC=FALSE
-
 # Disable ctrl-q and ctrl-s
 stty -ixon
 
@@ -77,6 +74,12 @@ alias p='paru'
 alias ctl='systemctl'
 alias sctl='sudo systemctl'
 alias uctl='systemctl --user'
+# ]]]
+# [[[ Program settings
+alias units="units --history '${XDG_DATA_HOME}/units_history'"
+
+export FZF_DEFAULT_COMMAND='rg --files'
+export RANGER_LOAD_DEFAULT_RC=FALSE
 # ]]]
 # [[[ Binds
 bindkey '' history-search-backward
