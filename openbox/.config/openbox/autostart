@@ -1,2 +1,2 @@
-feh --bg-tile ~/media/wallpaper &
+feh --no-fehbg --bg-tile ~/media/wallpaper &
 tint2 &
