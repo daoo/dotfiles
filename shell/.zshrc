@@ -69,7 +69,7 @@ alias lla='ls -l --almost-all'
 alias '..'='cd ..'
 
 alias g='git'
-alias p='paru'
+alias p="${commands[paru]:-sudo pacman}"
 
 alias ctl='systemctl'
 alias sctl='sudo systemctl'
