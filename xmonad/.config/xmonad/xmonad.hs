@@ -7,9 +7,9 @@ import System.IO (Handle, hPutStrLn)
 import XMonad
 import XMonad.Actions.Navigation2D (windowGo, windowSwap, Direction2D(..))
 import XMonad.Actions.NoBorders (toggleBorder)
-import XMonad.Hooks.DynamicLog (PP(..), dynamicLogWithPP, xmobarColor, wrap)
-import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(ToggleStruts))
+import XMonad.Hooks.ManageDocks (avoidStruts, docks, manageDocks, ToggleStruts(ToggleStruts))
 import XMonad.Hooks.ManageHelpers (doCenterFloat)
+import XMonad.Hooks.StatusBar.PP (PP(..), dynamicLogWithPP, filterOutWsPP, xmobarColor, wrap)
 import XMonad.Hooks.UrgencyHook (NoUrgencyHook(NoUrgencyHook), withUrgencyHook)
 import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg)
@@ -59,7 +59,7 @@ myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "NSP"]
 
 myPP :: Handle -> PP
-myPP handle = NS.namedScratchpadFilterOutWorkspacePP def
+myPP handle = filterOutWsPP ["NSP"] def
   { ppCurrent = xmobarColor colorForeground colorBlue . wrapWS
   , ppHiddenNoWindows = xmobarColor colorForegroundDark colorBackground . wrapWS
   , ppUrgent = xmobarColor colorForeground colorRed . wrapWS
@@ -197,7 +197,7 @@ main = do
   safeSpawnProg "nextcloud"
   hxmobar <- spawnPipe "xmobar .config/xmobar/xmobarrc"
 
-  xmonad $ withUrgencyHook NoUrgencyHook def
+  xmonad $ docks $ withUrgencyHook NoUrgencyHook def
     { borderWidth        = 1
     , workspaces         = myWorkspaces
     , layoutHook         = myLayoutHook
@@ -208,7 +208,6 @@ main = do
     , keys               = const myKeyMaps
     , logHook            = dynamicLogWithPP (myPP hxmobar)
     , manageHook         = myManageHook
-    , handleEventHook    = docksEventHook
     , focusFollowsMouse  = False
     , clickJustFocuses   = False
     }
