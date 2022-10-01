@@ -4,7 +4,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'ap/vim-buftabline'
 Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-sort-motion'
-Plug 'haya14busa/vim-asterisk'
 Plug 'jamessan/vim-gnupg'
 Plug 'jeetsukumaran/vim-filebeagle'
 Plug 'junegunn/fzf'
@@ -155,16 +154,6 @@ nnoremap <leader>se   :setlocal spelllang=en<cr>
 nnoremap <leader>ss   :setlocal spelllang=sv<cr>
 vnoremap <leader>x    c<c-r>=<c-r>"<cr><esc>
 nnoremap <leader>ya   :%y+<cr>
-
-" Asterisk
-map *   <Plug>(asterisk-*)
-map #   <Plug>(asterisk-#)
-map g*  <Plug>(asterisk-g*)
-map g#  <Plug>(asterisk-g#)
-map z*  <Plug>(asterisk-z*)
-map gz* <Plug>(asterisk-gz*)
-map z#  <Plug>(asterisk-z#)
-map gz# <Plug>(asterisk-gz#)
 
 " F-keys
 nmap <silent> <f2> <plug>FileBeagleOpenCurrentBufferDir
