@@ -44,6 +44,7 @@ set nobackup
 set noswapfile
 set nowritebackup
 
+set cmdheight=0
 set cursorcolumn
 set cursorline
 set laststatus=2
