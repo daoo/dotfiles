@@ -13,7 +13,7 @@ function check()
 check "/proc/sys/kernel/nmi_watchdog"
 check "/sys/devices/system/cpu/intel_pstate/status"
 check "/sys/devices/system/cpu/intel_pstate/no_turbo"
-for path in /sys/devices/system/cpu/cpufreq/policy[0-9]; do
+for path in /sys/devices/system/cpu/cpufreq/policy*; do
   check "$path/scaling_governor"
   check "$path/energy_performance_preference"
 done
