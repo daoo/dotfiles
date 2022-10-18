@@ -11,7 +11,8 @@ import XMonad.Hooks.ManageDocks (avoidStruts, docks, manageDocks, ToggleStruts(T
 import XMonad.Hooks.ManageHelpers (doCenterFloat)
 import XMonad.Hooks.StatusBar.PP (PP(..), dynamicLogWithPP, filterOutWsPP, xmobarColor, wrap)
 import XMonad.Hooks.UrgencyHook (NoUrgencyHook(NoUrgencyHook), withUrgencyHook)
-import XMonad.Layout.NoBorders (smartBorders)
+import XMonad.Layout.NoBorders (noBorders, smartBorders)
+import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Util.Run (spawnPipe, safeSpawn, safeSpawnProg)
 import qualified XMonad.StackSet as W
 import qualified XMonad.Util.NamedScratchpad as NS
@@ -40,8 +41,10 @@ myManageHook =
 
     windowRole = stringProperty "WM_WINDOW_ROLE"
 
-myLayoutHook = avoidStruts (smartBorders (tall ||| Mirror tall ||| Full))
+myLayoutHook = onWorkspace "7" fullScreen normal
   where
+    normal = avoidStruts (smartBorders (tall ||| Mirror tall ||| Full))
+    fullScreen = noBorders Full
     tall = Tall 1 (3%100) (1%2)
 
 colorRed, colorGreen, colorBlue, colorPurple :: String
