@@ -1,35 +1,35 @@
 " {{{ Plugins
-call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'ap/vim-buftabline'
-Plug 'chrisbra/csv.vim'
-Plug 'christoomey/vim-sort-motion'
-Plug 'jamessan/vim-gnupg'
-Plug 'jeetsukumaran/vim-filebeagle'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'junegunn/gv.vim'
-Plug 'kana/vim-altr'
-Plug 'kshenoy/vim-signature'
-Plug 'lewis6991/gitsigns.nvim'
-Plug 'machakann/vim-highlightedyank'
-Plug 'morhetz/gruvbox'
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'sgeb/vim-diff-fold'
-Plug 'simeji/winresizer'
-Plug 't9md/vim-quickhl'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
-Plug 'wellle/targets.vim'
-
-call plug#end()
+lua <<EOF
+require('packer').startup(function(use)
+  use {'ap/vim-buftabline'}
+  use {'christoomey/vim-sort-motion'}
+  use {'jamessan/vim-gnupg'}
+  use {'jeetsukumaran/vim-filebeagle'}
+  use {'junegunn/fzf'}
+  use {'junegunn/fzf.vim'}
+  use {'junegunn/gv.vim'}
+  use {'kana/vim-altr'}
+  use {'kshenoy/vim-signature'}
+  use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}, config = function() require('gitsigns').setup() end}
+  use {'machakann/vim-highlightedyank'}
+  use {'morhetz/gruvbox'}
+  use {'neovim/nvim-lspconfig'}
+  use {'nvim-lualine/lualine.nvim'}
+  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+  use {'sgeb/vim-diff-fold'}
+  use {'simeji/winresizer'}
+  use {'t9md/vim-quickhl'}
+  use {'tpope/vim-commentary'}
+  use {'tpope/vim-eunuch'}
+  use {'tpope/vim-fugitive'}
+  use {'tpope/vim-repeat'}
+  use {'tpope/vim-surround'}
+  use {'tpope/vim-unimpaired'}
+  use {'wbthomason/packer.nvim'}
+  use {'wellle/targets.vim'}
+end)
+EOF
 " }}}
 " {{{ Settings
 set autoread
