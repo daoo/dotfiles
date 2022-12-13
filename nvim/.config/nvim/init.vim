@@ -279,11 +279,8 @@ require('nvim-treesitter.configs').setup {
     "regex", "rust", "vim", "yaml" },
   highlight = { enable = true },
   incremental_selection = { enable = true },
-  indent = { enable = true },
+  indent = { enable = false },
 }
 EOF
-set nofoldenable
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
 " }}}
 " vim: fdm=marker :
