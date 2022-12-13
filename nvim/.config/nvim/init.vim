@@ -68,8 +68,6 @@ set shiftround
 set shiftwidth=2
 set softtabstop=2
 
-set path+=./src
-
 set grepprg=rg\ --vimgrep
 
 let g:gruvbox_contrast_dark='hard'
