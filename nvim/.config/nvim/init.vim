@@ -73,9 +73,6 @@ set grepprg=rg\ --vimgrep
 let g:gruvbox_contrast_dark='hard'
 set background=dark
 silent! colorscheme gruvbox
-
-syn match myTodo contained "\<\(TODO\|FIXME\)"
-hi def link myTodo Todo
 " }}}
 " {{{ Commands
 augroup togglenumbers
