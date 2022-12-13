@@ -270,9 +270,6 @@ lua << EOF
 require('gitsigns').setup()
 EOF
 " }}}
-" {{{ vim lion
-let g:lion_squeeze_spaces = 1
-" }}}
 " {{{ tree-sitter
 lua <<EOF
 require('nvim-treesitter.configs').setup {
