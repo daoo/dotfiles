@@ -34,6 +34,7 @@
   sp   = stash pop
   ss   = stash save
   st   = status --short --branch
+  sur  = submodule update --recursive
 
   main-alias = symbolic-ref refs/heads/main refs/heads/master
   master-alias = symbolic-ref refs/heads/master refs/heads/main
