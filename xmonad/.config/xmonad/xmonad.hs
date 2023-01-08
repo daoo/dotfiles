@@ -165,9 +165,9 @@ myKeyMaps = fromList
   , xK_apostrophe # keymap "usaswe"
 
   -- Volume control
-  , xf86AudioMute  & volumectl ["toggle"]
-  , xf86AudioLower & volumectl ["decrease", "5"]
-  , xf86AudioRaise & volumectl ["increase", "5"]
+  , xf86AudioMute  & wpctl ["set-mute", "@DEFAULT_AUDIO_SINK@", "toggle"]
+  , xf86AudioLower & wpctl ["set-volume", "@DEFAULT_AUDIO_SINK@", "5%-"]
+  , xf86AudioRaise & wpctl ["set-volume", "@DEFAULT_AUDIO_SINK@", "5%+"]
   ]
   where
     key & action = ((0, key), action)
@@ -180,8 +180,8 @@ myKeyMaps = fromList
     toggleWorkspace = windows (W.view =<< W.tag . head . hiddenNonNSP)
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 
-    keymap name = safeSpawn "keymap" [name]
-    volumectl cmd = safeSpawn "ponymix" ("-N" : cmd)
+    keymap = safeSpawn "keymap" . (:[])
+    wpctl = safeSpawn "wpctl"
 
 main :: IO ()
 main = do
