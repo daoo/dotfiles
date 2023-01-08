@@ -164,11 +164,6 @@ myKeyMaps = fromList
   , xK_z          # keymap "dvoormak"
   , xK_apostrophe # keymap "usaswe"
 
-  -- Music player control
-  , xK_F5 # playerctl "play-pause"
-  , xK_F6 # playerctl "previous"
-  , xK_F7 # playerctl "next"
-
   -- Volume control
   , xf86AudioMute  & volumectl ["toggle"]
   , xf86AudioLower & volumectl ["decrease", "5"]
@@ -186,7 +181,6 @@ myKeyMaps = fromList
     hiddenNonNSP = filter ((/= "NSP") . W.tag) . W.hidden
 
     keymap name = safeSpawn "keymap" [name]
-    playerctl cmd = safeSpawn "playerctl" [cmd]
     volumectl cmd = safeSpawn "ponymix" ("-N" : cmd)
 
 main :: IO ()
