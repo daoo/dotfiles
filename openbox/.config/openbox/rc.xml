@@ -112,17 +112,17 @@
     </keybind>
     <keybind key="XF86AudioMute">
       <action name="Execute">
-        <execute>ponymix -N toggle</execute>
+        <execute>wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle</execute>
       </action>
     </keybind>
     <keybind key="XF86AudioLowerVolume">
       <action name="Execute">
-        <execute>ponymix -N decrease 5</execute>
+        <execute>wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-</execute>
       </action>
     </keybind>
     <keybind key="XF86AudioRaiseVolume">
       <action name="Execute">
-        <execute>ponymix -N increase 5</execute>
+        <execute>wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+</execute>
       </action>
     </keybind>
     <keybind key="C-A-Left">
