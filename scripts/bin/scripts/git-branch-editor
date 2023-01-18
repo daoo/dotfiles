@@ -47,12 +47,13 @@ def format_output(current, branches):
 # git-branch-editor
 #
 # Commands:
-# d = delete the branch
-# D = delete the branch (even if not merged)
-# po = push to origin
-# u <upstream> = set the branch's upstream
-# uu = unset the branch's upstream
-# * = checkout the branch
+# * = current branch
+# s branch = switch to "branch"
+# d branch = delete "branch"
+# D branch = delete "branch" (even if not merged)
+# po branch = push to origin
+# u branch upstream = set upstream for "branch" to "upstream"
+# uu branch = unset upstream for "branch"
 #
 # Other lines are treated as branch renaming.
 """
@@ -67,25 +68,24 @@ def format_output(current, branches):
     return branches + "\n" + documentation
 
 
-def parse_command(branch, string):
-    chunks = string.split()
-    if not chunks:
-        return None
-
-    if chunks[0] == "d":
-        return ["git", "branch", "--delete", branch]
-    elif chunks[0] == "D":
-        return ["git", "branch", "-D", branch]
-    elif chunks[0] == "po":
-        return ["git", "push", "origin", branch]
-    elif chunks[0] == "u":
-        return ["git", "branch", "--set-upstream-to=" + chunks[1], branch]
-    elif chunks[0] == "uu":
-        return ["git", "branch", "--unset-upstream", branch]
-    elif chunks[0] == "*":
-        return ["git", "checkout", branch]
-    elif branch != string:
-        return ["git", "branch", "--move", branch, string]
+def parse_command(old_branch, string):
+    match string.split():
+        case ["*", _]:
+            return None # ignore current branch
+        case ["s", branch]:
+            return ["git", "switch", branch]
+        case ["d", branch]:
+            return ["git", "branch", "--delete", branch]
+        case ["D", branch]:
+            return ["git", "branch", "-D", branch]
+        case ["u", branch, upstream]:
+            return ["git", "branch", "--set-upstream-to=" + upstream, branch]
+        case ["uu", branch]:
+            return ["git", "branch", "--unset-upstream", branch]
+        case [new_branch] if new_branch != old_branch:
+            return ["git", "branch", "--move", old_branch, new_branch]
+        case ["po", branch]:
+            return ["git", "push", "origin", branch]
 
     return None
 
