@@ -41,7 +41,6 @@ vim.opt.backup = false
 vim.opt.swapfile = false
 vim.opt.writebackup = false
 
-vim.opt.cmdheight = 0
 vim.opt.cursorcolumn = true
 vim.opt.cursorline = true
 vim.opt.laststatus = 2
