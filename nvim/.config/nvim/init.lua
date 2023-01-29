@@ -43,6 +43,7 @@ vim.opt.writebackup = false
 
 vim.opt.cursorcolumn = true
 vim.opt.cursorline = true
+vim.opt.foldenable = false
 vim.opt.laststatus = 2
 vim.opt.lazyredraw = true
 vim.opt.list = true
