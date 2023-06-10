@@ -34,7 +34,7 @@ with tempfile.TemporaryDirectory() as tmpdir:
     outputdir = ["-outputdir", tmpdir]
     srcdir = ["-isrc"] if os.path.isdir("src") else []
     dbdir = ["-package-db=" + db[-1]] if db else []
-    command = [ghc] + output + outputdir + srcdir + dbdir + options + sys.argv[1:]
+    command = ghc.split() + output + outputdir + srcdir + dbdir + options + sys.argv[1:]
     print(" ".join(command))
     result = subprocess.call(command)
     if result == 0:
