@@ -1,11 +1,12 @@
 Config
-  { font = "xft:Liberation Mono:size=9"
+  { font = "Liberation Mono 10"
   , bgColor = "#1d2021"
   , fgColor = "#fbf1c7"
   , alpha = 255
   , position = Bottom
   , border = NoBorder
   , iconRoot = ".config/xmobar/icons"
+  , textOffset = 1
 
   , sepChar = "%"
   , alignSep = "}{"
