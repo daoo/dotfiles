@@ -15,7 +15,6 @@ require('packer').startup(function(use)
   use {'morhetz/gruvbox'}
   use {'neovim/nvim-lspconfig'}
   use {'nvim-lualine/lualine.nvim'}
-  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use {'sgeb/vim-diff-fold'}
   use {'simeji/winresizer'}
   use {'t9md/vim-quickhl'}
@@ -254,21 +253,12 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
+if vim.fn.has('unix') then
+  vim.g.python3_host_prog = '/usr/bin/python3'
+end
 require('lspconfig').pylsp.setup {}
 require('lspconfig').pyright.setup {}
 -- }}}
 -- {{{ git signs
 require('gitsigns').setup()
 -- }}}
--- {{{ tree-sitter
-require('nvim-treesitter.configs').setup {
-  ensure_installed = {
-    "bash", "c", "c_sharp", "cmake", "cpp", "css", "dockerfile", "haskell", "html",
-    "java", "javascript", "json", "jsonc", "latex", "lua", "perl", "php", "python",
-    "regex", "rust", "vim", "yaml" },
-  highlight = { enable = true },
-  incremental_selection = { enable = true },
-  indent = { enable = false },
-}
--- }}}
--- vim: fdm=marker :
