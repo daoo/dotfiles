@@ -35,7 +35,7 @@ myManageHook =
     isNextcloud = className =? "Nextcloud"
     isFirefox = appName =? "Navigator"
     isGimpDialog = className =? "Gimp" <&&> not <$> windowRole =? "gimp-image-window"
-    isSteam = className =? "Steam"
+    isSteam = className =? "steam"
     isGnomeKeyring = className =? "Gcr-prompter"
 
     windowRole = stringProperty "WM_WINDOW_ROLE"
