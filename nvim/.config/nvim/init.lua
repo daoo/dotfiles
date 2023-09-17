@@ -256,6 +256,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 if vim.fn.has('unix') then
   vim.g.python3_host_prog = '/usr/bin/python3'
 end
+require('lspconfig').hls.setup {filetypes={'haskell', 'lhaskell', 'cabal'}}
 require('lspconfig').pylsp.setup {}
 require('lspconfig').pyright.setup {}
 -- }}}
