@@ -1,32 +1,36 @@
 -- {{{ Plugins
-require('packer').startup(function(use)
-  use {'aklt/plantuml-syntax'}
-  use {'ap/vim-buftabline'}
-  use {'christoomey/vim-sort-motion'}
-  use {'jamessan/vim-gnupg'}
-  use {'jeetsukumaran/vim-filebeagle'}
-  use {'junegunn/fzf'}
-  use {'junegunn/fzf.vim'}
-  use {'junegunn/gv.vim'}
-  use {'kana/vim-altr'}
-  use {'kshenoy/vim-signature'}
-  use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}, config = function() require('gitsigns').setup() end}
-  use {'machakann/vim-highlightedyank'}
-  use {'morhetz/gruvbox'}
-  use {'neovim/nvim-lspconfig'}
-  use {'nvim-lualine/lualine.nvim'}
-  use {'sgeb/vim-diff-fold'}
-  use {'simeji/winresizer'}
-  use {'t9md/vim-quickhl'}
-  use {'tpope/vim-commentary'}
-  use {'tpope/vim-eunuch'}
-  use {'tpope/vim-fugitive'}
-  use {'tpope/vim-repeat'}
-  use {'tpope/vim-surround'}
-  use {'tpope/vim-unimpaired'}
-  use {'wbthomason/packer.nvim'}
-  use {'wellle/targets.vim'}
-end)
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+vim.opt.rtp:prepend(vim.fn.stdpath('data') .. '/lazy/lazy.nvim')
+require('lazy').setup({
+  'aklt/plantuml-syntax',
+  'ap/vim-buftabline',
+  'christoomey/vim-sort-motion',
+  'jamessan/vim-gnupg',
+  'jeetsukumaran/vim-filebeagle',
+  'junegunn/fzf',
+  'junegunn/fzf.vim',
+  'junegunn/gv.vim',
+  'kana/vim-altr',
+  'kshenoy/vim-signature',
+  'lewis6991/gitsigns.nvim',
+  'machakann/vim-highlightedyank',
+  'morhetz/gruvbox',
+  'neovim/nvim-lspconfig',
+  'nvim-lualine/lualine.nvim',
+  'sgeb/vim-diff-fold',
+  'simeji/winresizer',
+  't9md/vim-quickhl',
+  'tpope/vim-commentary',
+  'tpope/vim-eunuch',
+  'tpope/vim-fugitive',
+  'tpope/vim-repeat',
+  'tpope/vim-surround',
+  'tpope/vim-unimpaired',
+  'wbthomason/packer.nvim',
+  'wellle/targets.vim',
+})
 -- }}}
 -- {{{ Settings
 vim.opt.autoread = true
@@ -115,9 +119,6 @@ vim.keymap.set({'i', 'n'}, '<pagedown>', '<nop>')
 vim.keymap.set({'i', 'n'}, '<pageup>', '<nop>')
 -- }}}
 -- {{{ Key bindings
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
 -- Leader mappings
 vim.keymap.set('n', '<leader>ac', ':ClangFormat<cr>')
 vim.keymap.set('n', '<leader>ae', ':let @"=@/<cr>:%s/\\s\\+$//<cr>:let @/=@"<cr>')
