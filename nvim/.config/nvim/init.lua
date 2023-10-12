@@ -7,7 +7,6 @@ require('lazy').setup({
   'aklt/plantuml-syntax',
   'ap/vim-buftabline',
   'christoomey/vim-sort-motion',
-  'jamessan/vim-gnupg',
   'jeetsukumaran/vim-filebeagle',
   'junegunn/fzf',
   'junegunn/fzf.vim',
@@ -28,7 +27,6 @@ require('lazy').setup({
   'tpope/vim-repeat',
   'tpope/vim-surround',
   'tpope/vim-unimpaired',
-  'wbthomason/packer.nvim',
   'wellle/targets.vim',
 })
 -- }}}
