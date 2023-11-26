@@ -2,8 +2,13 @@
 
 set -euo pipefail
 
-key_file="$(cat ~/.config/pw/keyfile)"
-database="$(cat ~/.config/pw/database)"
+if [[ $# -ne 1 ]]; then
+  echo "Usage: $0 copy|show|qr|print" >&2
+  exit 1
+fi
+
+read key_file < ~/.config/pw/keyfile
+read database < ~/.config/pw/database
 
 pw-list() {
   keepassxc-cli ls \
@@ -35,16 +40,19 @@ pw-print() {
     "$1"
 }
 
-if list="$(pw-list)"; then
-  selection="$(echo "$list" | fzf)"
-  if [[ -n "$selection" ]]; then
-    case "$1" in
-      "copy") pw-copy "$selection" ;;
-      "show") pw-show "$selection" ;;
-      "qr") pw-print "$selection" | qrencode -t ANSI256 ;;
-    esac
-  fi
-else
-  echo "Error: failed to list passwords." 1>&2
+if ! list="$(pw-list)"; then
+  echo "Error: failed to list passwords." >&2
   exit 1
 fi
+
+selection="$(echo "$list" | fzf)"
+if [ -z "$selection" ]; then
+  exit 1
+fi
+
+case "$1" in
+  "copy") pw-copy "$selection" ;;
+  "show") pw-show "$selection" ;;
+  "qr") pw-print "$selection" | qrencode -t ANSI256 ;;
+  "print") pw-print "$selection" ;;
+esac
