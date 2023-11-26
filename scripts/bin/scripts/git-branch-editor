@@ -6,10 +6,6 @@ import tempfile
 
 
 def git_branches():
-    def find_name_end(string):
-        index = string.find(" ", 2)
-        return index if index >= 0 else len(string)
-
     command = ["git", "branch"]
     output = subprocess.check_output(command)
     raw_branches = output.decode("utf-8").splitlines()
@@ -71,7 +67,7 @@ def format_output(current, branches):
 def parse_command(old_branch, string):
     match string.split():
         case ["*", _]:
-            return None # ignore current branch
+            return None  # ignore current branch
         case ["s", branch]:
             return ["git", "switch", branch]
         case ["d", branch]:
