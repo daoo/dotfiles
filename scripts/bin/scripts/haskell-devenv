@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
+
+exec "$SHELL"

@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 
-export PATH="$HOME/bin:$HOME/bin/scripts:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
+export PATH="$HOME/bin:$HOME/bin/scripts:$HOME/.local/bin:$PATH"
 
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
