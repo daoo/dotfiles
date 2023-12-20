@@ -16,7 +16,7 @@ unsetopt check_jobs
 
 export EDITOR='nvim'
 export PAGER="nvim -R -c silent!%sm/\\e.\\{-\\}m//g -"
-export MANPAGER="bash -c \"nvim -c \\\"set ft=man\\\" </dev/tty <(col -bx)\""
+export MANPAGER="nvim +Man!"
 
 # Disable ctrl-q and ctrl-s
 stty -ixon
