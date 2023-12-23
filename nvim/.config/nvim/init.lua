@@ -7,6 +7,7 @@ require('lazy').setup({
   'aklt/plantuml-syntax',
   'ap/vim-buftabline',
   'christoomey/vim-sort-motion',
+  'ellisonleao/gruvbox.nvim',
   'jeetsukumaran/vim-filebeagle',
   'junegunn/fzf',
   'junegunn/fzf.vim',
@@ -15,7 +16,6 @@ require('lazy').setup({
   'kshenoy/vim-signature',
   'lewis6991/gitsigns.nvim',
   'machakann/vim-highlightedyank',
-  'morhetz/gruvbox',
   'neovim/nvim-lspconfig',
   'nvim-lualine/lualine.nvim',
   'sgeb/vim-diff-fold',
@@ -69,7 +69,10 @@ vim.opt.softtabstop = 2
 
 vim.opt.grepprg = 'rg --vimgrep'
 
-vim.g.gruvbox_contrast_dark = 'hard'
+require('gruvbox').setup({
+  italic = { strings = false, comments = false, folds = false },
+  contrast = 'hard'
+})
 vim.opt.background = 'dark'
 vim.cmd.colorscheme('gruvbox')
 -- }}}
