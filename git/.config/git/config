@@ -16,12 +16,12 @@
   ff   = merge --ff-only @{u}
   l    = !git --no-pager log --decorate --oneline --no-merges -n20
   lg   = !git --no-pager log --decorate --oneline --graph -n15
-  lb   = !git --no-pager log --no-decorate --oneline ^master
+  lb   = !bash -c 'git --no-pager log --no-decorate --oneline HEAD ^"$(git main-branch)"'
   lu   = !git --no-pager log --no-decorate --oneline ^HEAD @{u}
   p    = push
   pf   = push --force
   poh  = push --set-upstream origin HEAD
-  pom  = push origin master
+  pom  = !bash -c 'git push origin $(git main-branch)'
   rb   = rebase --autostash
   rba  = rebase --abort
   rbc  = rebase --continue
@@ -36,8 +36,7 @@
   st   = status --short --branch
   sur  = submodule update --recursive
 
-  main-alias = symbolic-ref refs/heads/main refs/heads/master
-  master-alias = symbolic-ref refs/heads/master refs/heads/main
+  main-branch = !bash -c '(test -f .git/refs/remotes/origin/main && echo main) || echo master'
 
 [color]
   pager = false
