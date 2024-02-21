@@ -75,24 +75,6 @@ vim.opt.background = 'dark'
 vim.cmd.colorscheme('gruvbox')
 -- }}}
 -- {{{ Commands
-local windowstate = vim.api.nvim_create_augroup('windowstate', {clear = true})
-vim.api.nvim_create_autocmd({'BufWinEnter', 'WinEnter'}, {
-  group = windowstate,
-  callback = function()
-    vim.opt.relativenumber = true
-    vim.opt.cursorcolumn = true
-    vim.opt.cursorline = true
-  end
-})
-vim.api.nvim_create_autocmd('WinLeave', {
-  group = windowstate,
-  callback = function()
-    vim.opt.relativenumber = false
-    vim.opt.cursorcolumn = false
-    vim.opt.cursorline = false
-  end
-})
-
 function clangformat(first, last)
   local winview = vim.fn.winsaveview()
   vim.fn.execute(first .. "," .. last .. "!clang-format")
