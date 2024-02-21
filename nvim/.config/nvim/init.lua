@@ -242,6 +242,7 @@ end
 require('lspconfig').hls.setup {filetypes={'haskell', 'lhaskell', 'cabal'}}
 require('lspconfig').pylsp.setup {}
 require('lspconfig').pyright.setup {}
+require('lspconfig').rust_analyzer.setup {}
 -- }}}
 -- {{{ git signs
 require('gitsigns').setup()
