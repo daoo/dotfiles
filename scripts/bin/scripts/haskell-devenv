@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+set -eu
+
+if [[ $PATH == *.cabal/bin* && $PATH == *.ghcup/bin* ]]; then
+  echo Error: \$PATH already contains .cabal/bin and .ghcup/bin.
+  exit 1
+fi
+
 export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
 
 exec "$SHELL"
