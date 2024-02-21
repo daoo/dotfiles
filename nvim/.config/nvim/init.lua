@@ -44,6 +44,7 @@ vim.opt.writebackup = false
 
 vim.opt.cursorcolumn = true
 vim.opt.cursorline = true
+vim.opt.completeopt = 'menu,noinsert'
 vim.opt.foldenable = false
 vim.opt.list = true
 vim.opt.mouse = ''
