@@ -161,6 +161,8 @@ vim.keymap.set('n', 'n', 'nzz')
 vim.keymap.set('n', 'K', 'kJ')
 
 vim.keymap.set('n', 'Q', 'q:')
+
+vim.keymap.set('i', '<c-space>', '<c-x><c-o>')
 -- }}}
 -- {{{ FileBeagle
 vim.g.filebeagle_suppress_keymaps = 1
@@ -225,7 +227,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', '<leader>k', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set('n', '<c-space>', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', '<c-.>', vim.lsp.buf.code_action, opts)
   end
 })
 
