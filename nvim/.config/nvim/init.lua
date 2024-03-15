@@ -104,25 +104,21 @@ vim.keymap.set({'i', 'n'}, '<pageup>', '<nop>')
 -- {{{ Key bindings
 -- Leader mappings
 vim.keymap.set('n', '<leader>ac', ':ClangFormat<cr>')
-vim.keymap.set('n', '<leader>ae', ':let @"=@/<cr>:%s/\\s\\+$//<cr>:let @/=@"<cr>')
-vim.keymap.set('n', '<leader>ab', ':let @"=@/<cr>:%s/<c-v><esc>[[0-9]*m//g<cr>:let @/=@"<cr>')
+vim.keymap.set('n', '<leader>as', ':let @"=@/<cr>:%s/\\s\\+$//<cr>:let @/=@"<cr>')
+vim.keymap.set('v', '<leader>ax', 'c<c-r>=<c-r>"<cr><esc>')
+
 vim.keymap.set('n', '<leader>ef', ':e %<cr>')
 vim.keymap.set('n', '<leader>eF', ':e! %<cr>')
 vim.keymap.set('n', '<leader>eve', ':e $MYVIMRC<cr>')
 vim.keymap.set('n', '<leader>evs', ':source $MYVIMRC<cr>')
-
 vim.keymap.set('n', '<leader>en', '<Plug>(altr-forward)')
 vim.keymap.set('n', '<leader>eb', '<Plug>(altr-backward)')
-vim.keymap.set('n', '<leader>f', ':grep!<space>')
-vim.keymap.set('v', '<leader>f', 'y:grep! """')
-vim.keymap.set('n', '<leader>rt', ':%s/<c-r>=expand("<cword>")<cr>/')
-vim.keymap.set('v', '<leader>rt', 'y:%s/<c-r>"/')
+
 vim.keymap.set({'n', 'v'}, '<leader>M', '<plug>(quickhl-manual-reset)')
 vim.keymap.set({'n', 'v'}, '<leader>m', '<plug>(quickhl-manual-this)')
+
 vim.keymap.set('n', '<leader>se', ':setlocal spelllang=en<cr>')
 vim.keymap.set('n', '<leader>ss', ':setlocal spelllang=sv<cr>')
-vim.keymap.set('v', '<leader>x', 'c<c-r>=<c-r>"<cr><esc>')
-vim.keymap.set('n', '<leader>ya', ':%y+<cr>')
 
 -- F-keys
 vim.keymap.set('n', '<f2>', '<plug>FileBeagleOpenCurrentBufferDir')
@@ -227,9 +223,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', '<leader>k', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set('n', '<c-.>', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', '<leader>d', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', '<leader>k', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<leader>af', vim.lsp.buf.format, opts)
+    vim.keymap.set({'n', 'v'}, '<a-cr>', vim.lsp.buf.code_action, opts)
   end
 })
 
