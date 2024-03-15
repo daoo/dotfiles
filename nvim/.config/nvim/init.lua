@@ -8,6 +8,7 @@ require('lazy').setup({
   'ap/vim-buftabline',
   'christoomey/vim-sort-motion',
   'ellisonleao/gruvbox.nvim',
+  'j-hui/fidget.nvim',
   'jeetsukumaran/vim-filebeagle',
   'junegunn/fzf',
   'junegunn/fzf.vim',
@@ -187,6 +188,7 @@ local function lualine_diff()
   return ''
 end
 
+require('fidget').setup {}
 require('lualine').setup {
   options = {
     icons_enabled = false,
