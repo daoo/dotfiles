@@ -203,7 +203,7 @@ require('lualine').setup {
     lualine_c = {{'filename', filestatus = true, path = 1}},
     lualine_x = {'encoding', 'fileformat'},
     lualine_y = {'filetype', lualine_spell},
-    lualine_z = {'location'}
+    lualine_z = {'location', 'searchcount', 'selectioncount'}
   },
   inactive_sections = {
     lualine_a = {},
