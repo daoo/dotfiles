@@ -171,6 +171,9 @@ myKeyMaps = fromList
   , xf86AudioMute  & wpctl ["set-mute", "@DEFAULT_AUDIO_SINK@", "toggle"]
   , xf86AudioLower & wpctl ["set-volume", "@DEFAULT_AUDIO_SINK@", "5%-"]
   , xf86AudioRaise & wpctl ["set-volume", "@DEFAULT_AUDIO_SINK@", "5%+"]
+
+  -- Screenshots
+  , xK_s ! safeSpawn "flameshot" ["gui"]
   ]
   where
     key & action = ((0, key), action)
