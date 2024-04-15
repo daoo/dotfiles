@@ -241,8 +241,12 @@ if vim.fn.has('unix') then
   vim.g.python3_host_prog = '/usr/bin/python3'
 end
 require('lspconfig').hls.setup {filetypes={'haskell', 'lhaskell', 'cabal'}}
-require('lspconfig').pylsp.setup {}
-require('lspconfig').ruff.setup {}
+if vim.fn.executable('pylsp') == 1 then
+  require('lspconfig').pylsp.setup {}
+end
+if vim.fn.executable('ruff') == 1 then
+  require('lspconfig').ruff.setup {}
+end
 require('lspconfig').rust_analyzer.setup {}
 -- }}}
 -- {{{ git signs
