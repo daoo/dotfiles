@@ -278,13 +278,13 @@ require('lspconfig').hls.setup {
   filetypes={'haskell', 'lhaskell', 'cabal'},
   capabilities = capabilities
 }
-if vim.fn.executable('pylsp') == 1 then
-  require('lspconfig').pylsp.setup {
+if vim.fn.executable('ruff-lsp') == 1 then
+  require('lspconfig').ruff_lsp.setup {
     capabilities = capabilities
   }
 end
-if vim.fn.executable('ruff') == 1 then
-  require('lspconfig').ruff.setup {
+if vim.fn.executable('pyright') == 1 then
+  require('lspconfig').pyright.setup {
     capabilities = capabilities
   }
 end
