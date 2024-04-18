@@ -9,7 +9,6 @@ require('lazy').setup({
   'christoomey/vim-sort-motion',
   'ellisonleao/gruvbox.nvim',
   'j-hui/fidget.nvim',
-  'jeetsukumaran/vim-filebeagle',
   'junegunn/fzf',
   'junegunn/fzf.vim',
   'junegunn/gv.vim',
@@ -20,7 +19,6 @@ require('lazy').setup({
   'neovim/nvim-lspconfig',
   'nvim-lualine/lualine.nvim',
   'sgeb/vim-diff-fold',
-  'simeji/winresizer',
   't9md/vim-quickhl',
   'tpope/vim-commentary',
   'tpope/vim-eunuch',
@@ -161,9 +159,6 @@ vim.keymap.set('n', 'Q', 'q:')
 
 vim.keymap.set('i', '<c-space>', '<c-x><c-o>')
 -- }}}
--- {{{ FileBeagle
-vim.g.filebeagle_suppress_keymaps = 1
--- }}}
 -- {{{ lualine
 local function lualine_spell()
   if vim.o.spell then
@@ -210,9 +205,6 @@ require('lualine').setup {
     lualine_z = {}
   }
 }
--- }}}
--- {{{ WinResizer
-vim.g.winresizer_start_key = '<leader>w'
 -- }}}
 -- {{{ LSP client
 vim.api.nvim_create_autocmd('LspAttach', {
