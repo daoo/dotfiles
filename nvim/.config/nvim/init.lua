@@ -16,6 +16,13 @@ require('lazy').setup({
   'kshenoy/vim-signature',
   'lewis6991/gitsigns.nvim',
   'machakann/vim-highlightedyank',
+  'hrsh7th/cmp-buffer',
+  'hrsh7th/cmp-cmdline',
+  'hrsh7th/cmp-nvim-lsp',
+  'hrsh7th/cmp-path',
+  'hrsh7th/nvim-cmp',
+  'hrsh7th/cmp-vsnip',
+  'hrsh7th/vim-vsnip',
   'neovim/nvim-lspconfig',
   'nvim-lualine/lualine.nvim',
   'sgeb/vim-diff-fold',
@@ -156,8 +163,6 @@ vim.keymap.set('n', 'n', 'nzz')
 vim.keymap.set('n', 'K', 'kJ')
 
 vim.keymap.set('n', 'Q', 'q:')
-
-vim.keymap.set('i', '<c-space>', '<c-x><c-o>')
 -- }}}
 -- {{{ lualine
 local function lualine_spell()
@@ -206,6 +211,43 @@ require('lualine').setup {
   }
 }
 -- }}}
+-- {{{ nvim-cmp
+local cmp = require'cmp'
+
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<c-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<c-f>'] = cmp.mapping.scroll_docs(4),
+    ['<c-space>'] = cmp.mapping.complete(),
+    ['<c-e>'] = cmp.mapping.abort(),
+    ['<cr>'] = cmp.mapping.confirm({ select = true }),
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+  }, {
+    { name = 'buffer' },
+  })
+})
+
+cmp.setup.cmdline({ '/', '?' }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {{ name = 'buffer' }}
+})
+
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({{ name = 'path' }}, {{ name = 'cmdline' }}),
+  matching = { disallow_symbol_nonprefix_matching = false }
+})
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- }}}
 -- {{{ LSP client
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
@@ -232,14 +274,23 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 if vim.fn.has('unix') then
   vim.g.python3_host_prog = '/usr/bin/python3'
 end
-require('lspconfig').hls.setup {filetypes={'haskell', 'lhaskell', 'cabal'}}
+require('lspconfig').hls.setup {
+  filetypes={'haskell', 'lhaskell', 'cabal'},
+  capabilities = capabilities
+}
 if vim.fn.executable('pylsp') == 1 then
-  require('lspconfig').pylsp.setup {}
+  require('lspconfig').pylsp.setup {
+    capabilities = capabilities
+  }
 end
 if vim.fn.executable('ruff') == 1 then
-  require('lspconfig').ruff.setup {}
+  require('lspconfig').ruff.setup {
+    capabilities = capabilities
+  }
 end
-require('lspconfig').rust_analyzer.setup {}
+require('lspconfig').rust_analyzer.setup {
+  capabilities = capabilities
+}
 -- }}}
 -- {{{ git signs
 require('gitsigns').setup()
