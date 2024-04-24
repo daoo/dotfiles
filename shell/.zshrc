@@ -42,19 +42,15 @@ setopt inc_append_history
 # fh - repeat history
 fh() {
   local tmpremove="$(mktemp --tmpdir 'fh.remove.XXX')"
-  print -z $(fc -ln 1 | fzf --bind "ctrl-x:execute(echo {} >> ${tmpremove})")
-  # TODO: Remove item from fzf with reload(...)
+  local grep_args="--text --fixed-strings --invert-match --line-regexp --file=${tmpremove} $HISTFILE"
+  print -z $(fc -ln 1 | fzf --bind "ctrl-x:execute(echo {} >> ${tmpremove})+reload(grep ${grep_args})")
   if [[ -s "${tmpremove}" ]]; then
     fc -W
     local tmphistory="$(mktemp --tmpdir 'fh.history.XXX')"
-    grep --text \
-      --fixed-strings \
-      --invert-match \
-      --line-regexp \
-      --file="${tmpremove}" \
-      "$HISTFILE" > "$tmphistory"
-    mv "$tmphistory" "$HISTFILE"
-    fc -p "$HISTFILE" "$HISTSIZE" "$SAVEHIST"
+    if grep $(expr $grep_args) > "${tmphistory}"; then
+      mv ${tmphistory} $HISTFILE
+      fc -p $HISTFILE $HISTSIZE $SAVEHIST
+    fi
   fi
   rm "$tmpremove"
 }
