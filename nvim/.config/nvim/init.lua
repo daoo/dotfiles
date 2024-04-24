@@ -125,9 +125,6 @@ vim.keymap.set({'n', 'v'}, '<leader>m', '<plug>(quickhl-manual-this)')
 vim.keymap.set('n', '<leader>se', ':setlocal spelllang=en<cr>')
 vim.keymap.set('n', '<leader>ss', ':setlocal spelllang=sv<cr>')
 
--- F-keys
-vim.keymap.set('n', '<f2>', '<plug>FileBeagleOpenCurrentBufferDir')
-
 -- Window navigation
 vim.keymap.set('n', '<c-left>', '<c-w>5>')
 vim.keymap.set('n', '<c-down>', '<c-w>5-')
