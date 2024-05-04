@@ -186,6 +186,7 @@ vim.opt.softtabstop = 2
 vim.opt.grepprg = 'rg --vimgrep'
 
 vim.api.nvim_create_autocmd('TextYankPost', {
+  group = vim.api.nvim_create_augroup("TextYankHighlight", { clear = true }),
   callback = function(ev)
     vim.highlight.on_yank({higroup='Visual', timeout=500})
   end
