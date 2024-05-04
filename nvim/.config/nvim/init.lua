@@ -265,6 +265,7 @@ vim.keymap.set('n', '<leader>of', ':FzfLua files<cr>')
 vim.keymap.set('n', '<leader>og', ':FzfLua git_status<cr>')
 vim.keymap.set('n', '<leader>om', ':FzfLua marks<cr>')
 vim.keymap.set('n', '<leader>ot', ':FzfLua btags<cr>')
+vim.keymap.set({'n', 'v'}, '<a-cr>', ':FzfLua lsp_code_actions<cr>')
 
 -- Center matches when searching
 vim.keymap.set('n', 'N', 'Nzz')
@@ -289,7 +290,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>k', vim.lsp.buf.signature_help, opts)
     vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, opts)
     vim.keymap.set('n', '<leader>af', vim.lsp.buf.format, opts)
-    vim.keymap.set({'n', 'v'}, '<a-cr>', vim.lsp.buf.code_action, opts)
   end
 })
 
