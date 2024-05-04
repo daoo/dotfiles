@@ -20,7 +20,6 @@ require('lazy').setup({
   'hrsh7th/vim-vsnip',
   'neovim/nvim-lspconfig',
   'nvim-lualine/lualine.nvim',
-  'sgeb/vim-diff-fold',
   't9md/vim-quickhl',
   'tpope/vim-commentary',
   'tpope/vim-eunuch',
