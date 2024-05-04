@@ -81,13 +81,7 @@ vim.opt.background = 'dark'
 vim.cmd.colorscheme('gruvbox')
 -- }}}
 -- {{{ Commands
-function clangformat(first, last)
-  local winview = vim.fn.winsaveview()
-  vim.fn.execute(first .. "," .. last .. "!clang-format")
-  vim.fn.winrestview(winview)
-end
 
-vim.cmd("command! -range=% ClangFormat call luaeval('clangformat(_A[1], _A[2])', [expand('<line1>'), expand('<line2>')])")
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function(ev)
     vim.highlight.on_yank({higroup='Visual', timeout=500})
