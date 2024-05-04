@@ -14,7 +14,6 @@ require('lazy').setup({
 
   -- Looks
   { 'aklt/plantuml-syntax', event = 'VeryLazy' },
-  { 'nvim-lualine/lualine.nvim', event = 'VeryLazy' },
   { 't9md/vim-quickhl', event = 'VeryLazy' },
   {
     'ellisonleao/gruvbox.nvim',
@@ -32,6 +31,47 @@ require('lazy').setup({
     event = 'VeryLazy',
     config = function()
       require('gitsigns').setup()
+    end
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    event = 'VeryLazy',
+    config = function()
+      local function lualine_spell()
+        return vim.o.spell and vim.o.spelllang or ''
+      end
+      local function lualine_diff()
+        local gitsigns = vim.b.gitsigns_status_dict
+        return gitsigns and {
+          added = gitsigns.added,
+          modified = gitsigns.changed,
+          removed = gitsigns.removed
+        } or ''
+      end
+
+      require('lualine').setup({
+        options = {
+          icons_enabled = false,
+          component_separators = { left = '', right = '|'},
+          section_separators = { left = '', right = ''},
+        },
+        sections = {
+          lualine_a = {'mode'},
+          lualine_b = {'b:gitsigns_head', {'diff', sources = lualine_diff}, 'diagnostics'},
+          lualine_c = {{'filename', filestatus = true, path = 1}},
+          lualine_x = {'encoding', 'fileformat', 'filetype', lualine_spell},
+          lualine_y = {'progress'},
+          lualine_z = {'location'}
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {{'filename', filestatus = true, path = 1}},
+          lualine_x = {'location'},
+          lualine_y = {},
+          lualine_z = {}
+        }
+      })
     end
   },
 
@@ -181,52 +221,6 @@ vim.keymap.set('n', 'n', 'nzz')
 vim.keymap.set('n', 'K', 'kJ')
 
 vim.keymap.set('n', 'Q', 'q:')
--- }}}
--- {{{ lualine
-local function lualine_spell()
-  if vim.o.spell then
-    return vim.o.spelllang
-  end
-  return ''
-end
-
-local function lualine_diff()
-  local gitsigns = vim.b.gitsigns_status_dict
-  if gitsigns then
-    return {
-      added = gitsigns.added,
-      modified = gitsigns.changed,
-      removed = gitsigns.removed
-    }
-  end
-  return ''
-end
-
-require('lualine').setup {
-  options = {
-    icons_enabled = false,
-    component_separators = { left = '', right = '|'},
-    section_separators = { left = '', right = ''},
-    disabled_filetypes = {},
-    always_divide_middle = true,
-  },
-  sections = {
-    lualine_a = {'mode', 'paste'},
-    lualine_b = {'b:gitsigns_head', {'diff', sources = lualine_diff}, 'diagnostics'},
-    lualine_c = {{'filename', filestatus = true, path = 1}},
-    lualine_x = {'encoding', 'fileformat'},
-    lualine_y = {'filetype', lualine_spell},
-    lualine_z = {'location', 'searchcount', 'selectioncount'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {{'filename', filestatus = true, path = 1}},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  }
-}
 -- }}}
 -- {{{ LSP
 local cmp = require('cmp')
