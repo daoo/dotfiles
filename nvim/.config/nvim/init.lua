@@ -91,9 +91,6 @@ require('lazy').setup({
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
       local opts = { capabilities = capabilities }
 
-      if vim.fn.has('unix') then
-        vim.g.python3_host_prog = '/usr/bin/python3'
-      end
       lspconfig.hls.setup({
         filetypes={'haskell', 'lhaskell', 'cabal'},
         capabilities = capabilities
