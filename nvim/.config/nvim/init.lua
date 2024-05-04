@@ -5,7 +5,6 @@ vim.g.maplocalleader = " "
 vim.opt.rtp:prepend(vim.fn.stdpath('data') .. '/lazy/lazy.nvim')
 require('lazy').setup({
   'aklt/plantuml-syntax',
-  'ap/vim-buftabline',
   'christoomey/vim-sort-motion',
   'ellisonleao/gruvbox.nvim',
   'j-hui/fidget.nvim',
