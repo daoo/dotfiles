@@ -9,8 +9,6 @@ require('lazy').setup({
   'christoomey/vim-sort-motion',
   'ellisonleao/gruvbox.nvim',
   'j-hui/fidget.nvim',
-  'junegunn/fzf',
-  'junegunn/fzf.vim',
   'junegunn/gv.vim',
   'kana/vim-altr',
   'kshenoy/vim-signature',
@@ -33,6 +31,11 @@ require('lazy').setup({
   'tpope/vim-surround',
   'tpope/vim-unimpaired',
   'wellle/targets.vim',
+
+  {
+    'ibhagwan/fzf-lua',
+    cmd = 'FzfLua'
+  },
 })
 -- }}}
 -- {{{ Settings
@@ -141,14 +144,14 @@ vim.keymap.set('n', '<m-l>',    '<c-w>v<c-w>l')
 vim.keymap.set('i', '<c-s>', '<c-o>:write<cr>')
 vim.keymap.set('n', '<c-s>', ':write<cr>')
 
--- FZF
-vim.keymap.set('n', '<c-p>', ':GitFiles<cr>')
-vim.keymap.set('n', '<leader>ob', ':Buffers<cr>')
-vim.keymap.set('n', '<leader>od', ':FZF %:p:h<cr>')
-vim.keymap.set('n', '<leader>of', ':FZF<cr>')
-vim.keymap.set('n', '<leader>og', ':GitFiles?<cr>')
-vim.keymap.set('n', '<leader>om', ':Marks<cr>')
-vim.keymap.set('n', '<leader>ot', ':BTags<cr>')
+-- FzfLua
+vim.keymap.set('n', '<c-p>', ':FzfLua git_files<cr>')
+vim.keymap.set('n', '<leader>ob', ':FzfLua buffers<cr>')
+vim.keymap.set('n', '<leader>od', ':FzfLua files cwd=%:p:h<cr>')
+vim.keymap.set('n', '<leader>of', ':FzfLua files<cr>')
+vim.keymap.set('n', '<leader>og', ':FzfLua git_status<cr>')
+vim.keymap.set('n', '<leader>om', ':FzfLua marks<cr>')
+vim.keymap.set('n', '<leader>ot', ':FzfLua btags<cr>')
 
 -- Center matches when searching
 vim.keymap.set('n', 'N', 'Nzz')
