@@ -79,14 +79,35 @@ require('lazy').setup({
   { 'tpope/vim-fugitive', event = 'VeryLazy' },
 
   -- LSP
-  { 'neovim/nvim-lspconfig' },
   {
-    'j-hui/fidget.nvim',
-    event = 'VeryLazy',
+    'neovim/nvim-lspconfig',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = {
+      'j-hui/fidget.nvim',
+      'hrsh7th/cmp-nvim-lsp',
+    },
     config = function()
-      require('fidget').setup()
+      local lspconfig = require('lspconfig')
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      local opts = { capabilities = capabilities }
+
+      if vim.fn.has('unix') then
+        vim.g.python3_host_prog = '/usr/bin/python3'
+      end
+      lspconfig.hls.setup({
+        filetypes={'haskell', 'lhaskell', 'cabal'},
+        capabilities = capabilities
+      })
+      if vim.fn.executable('ruff-lsp') == 1 then
+        lspconfig.ruff_lsp.setup(opts)
+      end
+      if vim.fn.executable('pyright') == 1 then
+        lspconfig.pyright.setup(opts)
+      end
+      lspconfig.rust_analyzer.setup(opts)
     end
   },
+  { 'j-hui/fidget.nvim', lazy = true, config = true },
   {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
@@ -97,7 +118,35 @@ require('lazy').setup({
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-vsnip',
       'hrsh7th/vim-vsnip',
-    }
+    },
+    config = function()
+      local cmp = require('cmp')
+
+      cmp.setup({
+        mapping = cmp.mapping.preset.insert({
+          ['<c-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<c-f>'] = cmp.mapping.scroll_docs(4),
+          ['<c-space>'] = cmp.mapping.complete(),
+          ['<c-e>'] = cmp.mapping.abort(),
+          ['<cr>'] = cmp.mapping.confirm({ select = true }),
+        }),
+        sources = cmp.config.sources(
+          {{name = 'nvim_lsp'}},
+          {{name = 'buffer'}}
+        )
+      })
+
+      cmp.setup.cmdline({ '/', '?' }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {{ name = 'buffer' }}
+      })
+
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({{ name = 'path' }}, {{ name = 'cmdline' }}),
+        matching = { disallow_symbol_nonprefix_matching = false }
+      })
+    end
   }
 })
 -- }}}
@@ -215,44 +264,8 @@ vim.keymap.set('n', 'n', 'nzz')
 vim.keymap.set('n', 'K', 'kJ')
 
 vim.keymap.set('n', 'Q', 'q:')
--- }}}
--- {{{ LSP
-local cmp = require('cmp')
 
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<c-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<c-f>'] = cmp.mapping.scroll_docs(4),
-    ['<c-space>'] = cmp.mapping.complete(),
-    ['<c-e>'] = cmp.mapping.abort(),
-    ['<cr>'] = cmp.mapping.confirm({ select = true }),
-  }),
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'vsnip' },
-  }, {
-    { name = 'buffer' },
-  })
-})
-
-cmp.setup.cmdline({ '/', '?' }, {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {{ name = 'buffer' }}
-})
-
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({{ name = 'path' }}, {{ name = 'cmdline' }}),
-  matching = { disallow_symbol_nonprefix_matching = false }
-})
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
+-- LSP
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
@@ -274,25 +287,4 @@ vim.keymap.set('n', '<leader>i', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
-
-if vim.fn.has('unix') then
-  vim.g.python3_host_prog = '/usr/bin/python3'
-end
-require('lspconfig').hls.setup {
-  filetypes={'haskell', 'lhaskell', 'cabal'},
-  capabilities = capabilities
-}
-if vim.fn.executable('ruff-lsp') == 1 then
-  require('lspconfig').ruff_lsp.setup {
-    capabilities = capabilities
-  }
-end
-if vim.fn.executable('pyright') == 1 then
-  require('lspconfig').pyright.setup {
-    capabilities = capabilities
-  }
-end
-require('lspconfig').rust_analyzer.setup {
-  capabilities = capabilities
-}
 -- }}}
