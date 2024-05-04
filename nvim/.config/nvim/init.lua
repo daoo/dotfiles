@@ -15,7 +15,6 @@ require('lazy').setup({
   'kana/vim-altr',
   'kshenoy/vim-signature',
   'lewis6991/gitsigns.nvim',
-  'machakann/vim-highlightedyank',
   'hrsh7th/cmp-buffer',
   'hrsh7th/cmp-cmdline',
   'hrsh7th/cmp-nvim-lsp',
@@ -89,6 +88,11 @@ function clangformat(first, last)
 end
 
 vim.cmd("command! -range=% ClangFormat call luaeval('clangformat(_A[1], _A[2])', [expand('<line1>'), expand('<line2>')])")
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function(ev)
+    vim.highlight.on_yank({higroup='Visual', timeout=500})
+  end
+})
 -- }}}
 -- {{{ Disable non-vim movement keys
 -- Arrow keys
