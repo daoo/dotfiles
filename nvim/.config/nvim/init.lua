@@ -82,9 +82,6 @@ require('gruvbox').setup({
 })
 vim.opt.background = 'dark'
 vim.cmd.colorscheme('gruvbox')
--- }}}
--- {{{ Commands
-
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function(ev)
     vim.highlight.on_yank({higroup='Visual', timeout=500})
@@ -209,8 +206,8 @@ require('lualine').setup {
   }
 }
 -- }}}
--- {{{ nvim-cmp
-local cmp = require'cmp'
+-- {{{ LSP
+local cmp = require('cmp')
 
 cmp.setup({
   snippet = {
@@ -245,8 +242,7 @@ cmp.setup.cmdline(':', {
 })
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- }}}
--- {{{ LSP client
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
