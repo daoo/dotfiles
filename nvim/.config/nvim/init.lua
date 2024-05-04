@@ -26,13 +26,7 @@ require('lazy').setup({
       vim.cmd.colorscheme('gruvbox')
     end
   },
-  {
-    'lewis6991/gitsigns.nvim',
-    event = 'VeryLazy',
-    config = function()
-      require('gitsigns').setup()
-    end
-  },
+  { 'lewis6991/gitsigns.nvim', event = {'BufReadPre', 'BufNewFile'}, config = true },
   {
     'nvim-lualine/lualine.nvim',
     event = 'VeryLazy',
