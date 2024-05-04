@@ -4,35 +4,67 @@ vim.g.maplocalleader = " "
 
 vim.opt.rtp:prepend(vim.fn.stdpath('data') .. '/lazy/lazy.nvim')
 require('lazy').setup({
-  'aklt/plantuml-syntax',
-  'christoomey/vim-sort-motion',
-  'ellisonleao/gruvbox.nvim',
-  'j-hui/fidget.nvim',
-  'junegunn/gv.vim',
-  'kana/vim-altr',
-  'lewis6991/gitsigns.nvim',
-  'hrsh7th/cmp-buffer',
-  'hrsh7th/cmp-cmdline',
-  'hrsh7th/cmp-nvim-lsp',
-  'hrsh7th/cmp-path',
-  'hrsh7th/nvim-cmp',
-  'hrsh7th/cmp-vsnip',
-  'hrsh7th/vim-vsnip',
-  'neovim/nvim-lspconfig',
-  'nvim-lualine/lualine.nvim',
-  't9md/vim-quickhl',
-  'tpope/vim-commentary',
-  'tpope/vim-eunuch',
-  'tpope/vim-fugitive',
-  'tpope/vim-repeat',
-  'tpope/vim-surround',
-  'tpope/vim-unimpaired',
-  'wellle/targets.vim',
+  -- Editing
+  { 'christoomey/vim-sort-motion', event = 'VeryLazy' },
+  { 'tpope/vim-commentary', event = 'VeryLazy' },
+  { 'tpope/vim-repeat', event = 'VeryLazy' },
+  { 'tpope/vim-surround', event = 'VeryLazy' },
+  { 'tpope/vim-unimpaired', event = "VeryLazy" },
+  { 'wellle/targets.vim', event = 'VeryLazy' },
 
+  -- Looks
+  { 'aklt/plantuml-syntax', event = 'VeryLazy' },
+  { 'nvim-lualine/lualine.nvim', event = 'VeryLazy' },
+  { 't9md/vim-quickhl', event = 'VeryLazy' },
   {
-    'ibhagwan/fzf-lua',
-    cmd = 'FzfLua'
+    'ellisonleao/gruvbox.nvim',
+    config = function()
+      require('gruvbox').setup({
+        italic = { strings = false, comments = false, folds = false },
+        contrast = 'hard'
+      })
+      vim.opt.background = 'dark'
+      vim.cmd.colorscheme('gruvbox')
+    end
   },
+  {
+    'lewis6991/gitsigns.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('gitsigns').setup()
+    end
+  },
+
+  -- File Navigation
+  { 'ibhagwan/fzf-lua', cmd = 'FzfLua' },
+  { 'kana/vim-altr', event = 'VeryLazy' },
+  { 'tpope/vim-eunuch', event = 'VeryLazy' },
+
+  -- Git
+  { 'junegunn/gv.vim', cmd = 'GV' },
+  { 'tpope/vim-fugitive', event = 'VeryLazy' },
+
+  -- LSP
+  { 'neovim/nvim-lspconfig' },
+  {
+    'j-hui/fidget.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('fidget').setup()
+    end
+  },
+  {
+    'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
+    dependencies = {
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-vsnip',
+      'hrsh7th/vim-vsnip',
+    }
+  }
 })
 -- }}}
 -- {{{ Settings
@@ -73,12 +105,6 @@ vim.opt.softtabstop = 2
 
 vim.opt.grepprg = 'rg --vimgrep'
 
-require('gruvbox').setup({
-  italic = { strings = false, comments = false, folds = false },
-  contrast = 'hard'
-})
-vim.opt.background = 'dark'
-vim.cmd.colorscheme('gruvbox')
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function(ev)
     vim.highlight.on_yank({higroup='Visual', timeout=500})
@@ -176,7 +202,6 @@ local function lualine_diff()
   return ''
 end
 
-require('fidget').setup {}
 require('lualine').setup {
   options = {
     icons_enabled = false,
@@ -282,7 +307,4 @@ end
 require('lspconfig').rust_analyzer.setup {
   capabilities = capabilities
 }
--- }}}
--- {{{ git signs
-require('gitsigns').setup()
 -- }}}
