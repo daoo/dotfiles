@@ -10,7 +10,6 @@ require('lazy').setup({
   'j-hui/fidget.nvim',
   'junegunn/gv.vim',
   'kana/vim-altr',
-  'kshenoy/vim-signature',
   'lewis6991/gitsigns.nvim',
   'hrsh7th/cmp-buffer',
   'hrsh7th/cmp-cmdline',
