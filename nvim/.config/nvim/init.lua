@@ -132,6 +132,11 @@ require('lazy').setup({
       local cmp = require('cmp')
 
       cmp.setup({
+        snippet = {
+          expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body)
+          end,
+        },
         mapping = cmp.mapping.preset.insert({
           ['<c-b>'] = cmp.mapping.scroll_docs(-4),
           ['<c-f>'] = cmp.mapping.scroll_docs(4),
@@ -140,7 +145,7 @@ require('lazy').setup({
           ['<cr>'] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources(
-          {{name = 'nvim_lsp'}},
+          {{name = 'nvim_lsp'}, {name = 'vsnip'}},
           {{name = 'buffer'}}
         )
       })
