@@ -85,7 +85,6 @@ require('lazy').setup({
     dependencies = {
       'j-hui/fidget.nvim',
       'hrsh7th/cmp-nvim-lsp',
-      'kosayoda/nvim-lightbulb',
     },
     config = function()
       local lspconfig = require('lspconfig')
@@ -106,17 +105,6 @@ require('lazy').setup({
     end
   },
   { 'j-hui/fidget.nvim', lazy = true, config = true },
-  {
-    'kosayoda/nvim-lightbulb',
-    lazy = true,
-    config = function()
-      require('nvim-lightbulb').setup({
-        autocmd = { enabled = true },
-        sign = { enabled = false },
-        virtual_text = { enabled = true, text = "\u{2605}" },
-      })
-    end
-  },
   {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
