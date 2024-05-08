@@ -119,6 +119,44 @@ require('lazy').setup({
     config = function()
       local cmp = require('cmp')
 
+      local has_words_before = function()
+        unpack = unpack or table.unpack
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      end
+
+      local tab_complete = function(_)
+        if cmp.visible() then
+          if #cmp.get_entries() == 1 then
+            cmp.confirm({ select = true })
+          else
+            cmp.select_next_item()
+          end
+        else
+          cmp.complete()
+          if #cmp.get_entries() == 1 then
+            cmp.confirm({ select = true })
+          end
+        end
+      end
+
+      local code_complete = function(fallback)
+        if cmp.visible() then
+          if #cmp.get_entries() == 1 then
+            cmp.confirm({select = true})
+          else
+            cmp.complete()
+          end
+        elseif has_words_before() then
+          cmp.complete()
+          if #cmp.get_entries() == 1 then
+            cmp.confirm({select = true})
+          end
+        else
+          fallback()
+        end
+      end
+
       cmp.setup({
         snippet = {
           expand = function(args)
@@ -126,10 +164,9 @@ require('lazy').setup({
           end,
         },
         mapping = cmp.mapping.preset.insert({
-          ['<c-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<c-f>'] = cmp.mapping.scroll_docs(4),
-          ['<c-space>'] = cmp.mapping.complete(),
-          ['<c-e>'] = cmp.mapping.abort(),
+          ['<c-u>'] = cmp.mapping.scroll_docs(-4),
+          ['<c-d>'] = cmp.mapping.scroll_docs(4),
+          ['<c-space>'] = cmp.mapping(code_complete, {"i", "s"}),
           ['<cr>'] = cmp.mapping.confirm({select = true}),
         }),
         sources = cmp.config.sources(
@@ -139,12 +176,16 @@ require('lazy').setup({
       })
 
       cmp.setup.cmdline({'/', '?'}, {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = cmp.mapping.preset.cmdline({
+          ['<tab>'] = cmp.mapping(tab_complete, {"c"}),
+        }),
         sources = {{name = 'buffer'}}
       })
 
       cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = cmp.mapping.preset.cmdline({
+          ['<tab>'] = cmp.mapping(tab_complete, {"c"}),
+        }),
         sources = cmp.config.sources({{name = 'path'}}, {{name = 'cmdline'}}),
         matching = {disallow_symbol_nonprefix_matching = false}
       })
