@@ -19,7 +19,7 @@ require('lazy').setup({
     'ellisonleao/gruvbox.nvim',
     config = function()
       require('gruvbox').setup({
-        italic = { strings = false, comments = false, folds = false },
+        italic = {strings = false, comments = false, folds = false},
         contrast = 'hard'
       })
       vim.opt.background = 'dark'
@@ -46,8 +46,8 @@ require('lazy').setup({
       require('lualine').setup({
         options = {
           icons_enabled = false,
-          component_separators = { left = '', right = '|'},
-          section_separators = { left = '', right = ''},
+          component_separators = {left = '', right = '|'},
+          section_separators = {left = '', right = ''},
         },
         sections = {
           lualine_a = {'mode'},
@@ -81,7 +81,7 @@ require('lazy').setup({
   -- LSP
   {
     'neovim/nvim-lspconfig',
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = {'BufReadPre', 'BufNewFile'},
     dependencies = {
       'j-hui/fidget.nvim',
       'hrsh7th/cmp-nvim-lsp',
@@ -89,7 +89,7 @@ require('lazy').setup({
     config = function()
       local lspconfig = require('lspconfig')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local opts = { capabilities = capabilities }
+      local opts = {capabilities = capabilities}
 
       lspconfig.hls.setup({
         filetypes={'haskell', 'lhaskell', 'cabal'},
@@ -107,7 +107,7 @@ require('lazy').setup({
   { 'j-hui/fidget.nvim', lazy = true, config = true },
   {
     'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
+    event = {'InsertEnter', 'CmdlineEnter'},
     dependencies = {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-cmdline',
@@ -130,7 +130,7 @@ require('lazy').setup({
           ['<c-f>'] = cmp.mapping.scroll_docs(4),
           ['<c-space>'] = cmp.mapping.complete(),
           ['<c-e>'] = cmp.mapping.abort(),
-          ['<cr>'] = cmp.mapping.confirm({ select = true }),
+          ['<cr>'] = cmp.mapping.confirm({select = true}),
         }),
         sources = cmp.config.sources(
           {{name = 'nvim_lsp'}, {name = 'vsnip'}},
@@ -138,15 +138,15 @@ require('lazy').setup({
         )
       })
 
-      cmp.setup.cmdline({ '/', '?' }, {
+      cmp.setup.cmdline({'/', '?'}, {
         mapping = cmp.mapping.preset.cmdline(),
-        sources = {{ name = 'buffer' }}
+        sources = {{name = 'buffer'}}
       })
 
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({{ name = 'path' }}, {{ name = 'cmdline' }}),
-        matching = { disallow_symbol_nonprefix_matching = false }
+        sources = cmp.config.sources({{name = 'path'}}, {{name = 'cmdline'}}),
+        matching = {disallow_symbol_nonprefix_matching = false}
       })
     end
   }
