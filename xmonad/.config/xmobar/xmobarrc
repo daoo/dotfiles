@@ -16,7 +16,7 @@ Config
       [ Run Date "%a %b %d %H:%M" "date" 50
       , Run DiskU [("/", "<usedp>%")] [] 50
       , Run DynNetwork ["--template", "<icon=net_up.xbm/><icon=net_down.xbm/> <tx> <rx>", "-S", "True"] 50
-      , Run Kbd []
+      , Run Kbd [("dvoormak", "dvoormak"), ("usaswe", "usaswe")]
       , Run Memory ["--template", "<usedratio>%"] 50
       , Run MultiCoreTemp ["-t", "<avg>C"] 50
       , Run StdinReader
