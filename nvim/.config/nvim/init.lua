@@ -6,27 +6,27 @@ vim.opt.rtp:prepend(vim.fn.stdpath('data') .. '/lazy/lazy.nvim')
 require('lazy').setup({
   -- Editing
   { 'christoomey/vim-sort-motion', event = 'VeryLazy' },
-  { 'tpope/vim-commentary', event = 'VeryLazy' },
-  { 'tpope/vim-repeat', event = 'VeryLazy' },
-  { 'tpope/vim-surround', event = 'VeryLazy' },
-  { 'tpope/vim-unimpaired', event = "VeryLazy" },
-  { 'wellle/targets.vim', event = 'VeryLazy' },
+  { 'tpope/vim-commentary',        event = 'VeryLazy' },
+  { 'tpope/vim-repeat',            event = 'VeryLazy' },
+  { 'tpope/vim-surround',          event = 'VeryLazy' },
+  { 'tpope/vim-unimpaired',        event = "VeryLazy" },
+  { 'wellle/targets.vim',          event = 'VeryLazy' },
 
   -- Looks
-  { 'aklt/plantuml-syntax', event = 'VeryLazy' },
-  { 't9md/vim-quickhl', event = 'VeryLazy' },
+  { 'aklt/plantuml-syntax',        event = 'VeryLazy' },
+  { 't9md/vim-quickhl',            event = 'VeryLazy' },
   {
     'ellisonleao/gruvbox.nvim',
     config = function()
       require('gruvbox').setup({
-        italic = {strings = false, comments = false, folds = false},
+        italic = { strings = false, comments = false, folds = false },
         contrast = 'hard'
       })
       vim.opt.background = 'dark'
       vim.cmd.colorscheme('gruvbox')
     end
   },
-  { 'lewis6991/gitsigns.nvim', event = {'BufReadPre', 'BufNewFile'}, config = true },
+  { 'lewis6991/gitsigns.nvim', event = { 'BufReadPre', 'BufNewFile' }, config = true },
   {
     'nvim-lualine/lualine.nvim',
     event = 'VeryLazy',
@@ -46,22 +46,22 @@ require('lazy').setup({
       require('lualine').setup({
         options = {
           icons_enabled = false,
-          component_separators = {left = '', right = '|'},
-          section_separators = {left = '', right = ''},
+          component_separators = { left = '', right = '|' },
+          section_separators = { left = '', right = '' },
         },
         sections = {
-          lualine_a = {'mode'},
-          lualine_b = {'b:gitsigns_head', {'diff', sources = lualine_diff}, 'diagnostics'},
-          lualine_c = {{'filename', filestatus = true, path = 1}},
-          lualine_x = {'encoding', 'fileformat', 'filetype', lualine_spell},
-          lualine_y = {'progress'},
-          lualine_z = {'location'}
+          lualine_a = { 'mode' },
+          lualine_b = { 'b:gitsigns_head', { 'diff', sources = lualine_diff }, 'diagnostics' },
+          lualine_c = { { 'filename', filestatus = true, path = 1 } },
+          lualine_x = { 'encoding', 'fileformat', 'filetype', lualine_spell },
+          lualine_y = { 'progress' },
+          lualine_z = { 'location' }
         },
         inactive_sections = {
           lualine_a = {},
           lualine_b = {},
-          lualine_c = {{'filename', filestatus = true, path = 1}},
-          lualine_x = {'location'},
+          lualine_c = { { 'filename', filestatus = true, path = 1 } },
+          lualine_x = { 'location' },
           lualine_y = {},
           lualine_z = {}
         }
@@ -70,18 +70,18 @@ require('lazy').setup({
   },
 
   -- File Navigation
-  { 'ibhagwan/fzf-lua', cmd = 'FzfLua' },
-  { 'kana/vim-altr', event = 'VeryLazy' },
-  { 'tpope/vim-eunuch', event = 'VeryLazy' },
+  { 'ibhagwan/fzf-lua',        cmd = 'FzfLua' },
+  { 'kana/vim-altr',           event = 'VeryLazy' },
+  { 'tpope/vim-eunuch',        event = 'VeryLazy' },
 
   -- Git
-  { 'junegunn/gv.vim', cmd = 'GV' },
-  { 'tpope/vim-fugitive', event = 'VeryLazy' },
+  { 'junegunn/gv.vim',         cmd = 'GV' },
+  { 'tpope/vim-fugitive',      event = 'VeryLazy' },
 
   -- LSP
   {
     'neovim/nvim-lspconfig',
-    event = {'BufReadPre', 'BufNewFile'},
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'j-hui/fidget.nvim',
       'hrsh7th/cmp-nvim-lsp',
@@ -89,10 +89,10 @@ require('lazy').setup({
     config = function()
       local lspconfig = require('lspconfig')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local opts = {capabilities = capabilities}
+      local opts = { capabilities = capabilities }
 
       lspconfig.hls.setup({
-        filetypes={'haskell', 'lhaskell', 'cabal'},
+        filetypes = { 'haskell', 'lhaskell', 'cabal' },
         capabilities = capabilities
       })
       if vim.fn.executable('ruff-lsp') == 1 then
@@ -107,7 +107,7 @@ require('lazy').setup({
   { 'j-hui/fidget.nvim', lazy = true, config = true },
   {
     'hrsh7th/nvim-cmp',
-    event = {'InsertEnter', 'CmdlineEnter'},
+    event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-cmdline',
@@ -143,14 +143,14 @@ require('lazy').setup({
       local code_complete = function(fallback)
         if cmp.visible() then
           if #cmp.get_entries() == 1 then
-            cmp.confirm({select = true})
+            cmp.confirm({ select = true })
           else
             cmp.complete()
           end
         elseif has_words_before() then
           cmp.complete()
           if #cmp.get_entries() == 1 then
-            cmp.confirm({select = true})
+            cmp.confirm({ select = true })
           end
         else
           fallback()
@@ -166,28 +166,28 @@ require('lazy').setup({
         mapping = cmp.mapping.preset.insert({
           ['<c-u>'] = cmp.mapping.scroll_docs(-4),
           ['<c-d>'] = cmp.mapping.scroll_docs(4),
-          ['<c-space>'] = cmp.mapping(code_complete, {"i", "s"}),
-          ['<cr>'] = cmp.mapping.confirm({select = true}),
+          ['<c-space>'] = cmp.mapping(code_complete, { "i", "s" }),
+          ['<cr>'] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources(
-          {{name = 'nvim_lsp'}, {name = 'vsnip'}},
-          {{name = 'buffer'}}
+          { { name = 'nvim_lsp' }, { name = 'vsnip' } },
+          { { name = 'buffer' } }
         )
       })
 
-      cmp.setup.cmdline({'/', '?'}, {
+      cmp.setup.cmdline({ '/', '?' }, {
         mapping = cmp.mapping.preset.cmdline({
-          ['<tab>'] = cmp.mapping(tab_complete, {"c"}),
+          ['<tab>'] = cmp.mapping(tab_complete, { "c" }),
         }),
-        sources = {{name = 'buffer'}}
+        sources = { { name = 'buffer' } }
       })
 
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline({
-          ['<tab>'] = cmp.mapping(tab_complete, {"c"}),
+          ['<tab>'] = cmp.mapping(tab_complete, { "c" }),
         }),
-        sources = cmp.config.sources({{name = 'path'}}, {{name = 'cmdline'}}),
-        matching = {disallow_symbol_nonprefix_matching = false}
+        sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } }),
+        matching = { disallow_symbol_nonprefix_matching = false }
       })
     end
   }
@@ -233,26 +233,26 @@ vim.opt.grepprg = 'rg --vimgrep'
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup("TextYankHighlight", { clear = true }),
-  callback = function(ev)
-    vim.highlight.on_yank({higroup='Visual', timeout=500})
+  callback = function(_)
+    vim.highlight.on_yank({ higroup = 'Visual', timeout = 500 })
   end
 })
 -- }}}
 -- {{{ Disable non-vim movement keys
 -- Arrow keys
-vim.keymap.set({'i', 'n'}, '<down>', '<nop>')
-vim.keymap.set({'i', 'n'}, '<left>', '<nop>')
-vim.keymap.set({'i', 'n'}, '<right>', '<nop>')
-vim.keymap.set({'i', 'n'}, '<up>', '<nop>')
-vim.keymap.set({'i', 'n'}, '<c-left>', '<nop>')
-vim.keymap.set({'i', 'n'}, '<c-right>', '<nop>')
+vim.keymap.set({ 'i', 'n' }, '<down>', '<nop>')
+vim.keymap.set({ 'i', 'n' }, '<left>', '<nop>')
+vim.keymap.set({ 'i', 'n' }, '<right>', '<nop>')
+vim.keymap.set({ 'i', 'n' }, '<up>', '<nop>')
+vim.keymap.set({ 'i', 'n' }, '<c-left>', '<nop>')
+vim.keymap.set({ 'i', 'n' }, '<c-right>', '<nop>')
 
 -- Above arrow keys
-vim.keymap.set({'i', 'n'}, '<del>', '<nop>')
-vim.keymap.set({'i', 'n'}, '<end>', '<nop>')
-vim.keymap.set({'i', 'n'}, '<home>', '<nop>')
-vim.keymap.set({'i', 'n'}, '<pagedown>', '<nop>')
-vim.keymap.set({'i', 'n'}, '<pageup>', '<nop>')
+vim.keymap.set({ 'i', 'n' }, '<del>', '<nop>')
+vim.keymap.set({ 'i', 'n' }, '<end>', '<nop>')
+vim.keymap.set({ 'i', 'n' }, '<home>', '<nop>')
+vim.keymap.set({ 'i', 'n' }, '<pagedown>', '<nop>')
+vim.keymap.set({ 'i', 'n' }, '<pageup>', '<nop>')
 -- }}}
 -- {{{ Key bindings
 -- Leader mappings
@@ -267,8 +267,8 @@ vim.keymap.set('n', '<leader>evs', ':source $MYVIMRC<cr>')
 vim.keymap.set('n', '<leader>en', '<Plug>(altr-forward)')
 vim.keymap.set('n', '<leader>eb', '<Plug>(altr-backward)')
 
-vim.keymap.set({'n', 'v'}, '<leader>M', '<plug>(quickhl-manual-reset)')
-vim.keymap.set({'n', 'v'}, '<leader>m', '<plug>(quickhl-manual-this)')
+vim.keymap.set({ 'n', 'v' }, '<leader>M', '<plug>(quickhl-manual-reset)')
+vim.keymap.set({ 'n', 'v' }, '<leader>m', '<plug>(quickhl-manual-this)')
 
 vim.keymap.set('n', '<leader>se', ':setlocal spelllang=en<cr>')
 vim.keymap.set('n', '<leader>ss', ':setlocal spelllang=sv<cr>')
@@ -276,16 +276,16 @@ vim.keymap.set('n', '<leader>ss', ':setlocal spelllang=sv<cr>')
 -- Window navigation
 vim.keymap.set('n', '<c-left>', '<c-w>5>')
 vim.keymap.set('n', '<c-down>', '<c-w>5-')
-vim.keymap.set('n', '<c-up>',   '<c-w>5+')
-vim.keymap.set('n', '<c-right>','<c-w>5<')
-vim.keymap.set('n', '<c-h>',    '<c-w>h')
-vim.keymap.set('n', '<c-j>',    '<c-w>j')
-vim.keymap.set('n', '<c-k>',    '<c-w>k')
-vim.keymap.set('n', '<c-l>',    '<c-w>l')
-vim.keymap.set('n', '<m-h>',    '<c-w>v')
-vim.keymap.set('n', '<m-j>',    '<c-w>s<c-w>j')
-vim.keymap.set('n', '<m-k>',    '<c-w>s')
-vim.keymap.set('n', '<m-l>',    '<c-w>v<c-w>l')
+vim.keymap.set('n', '<c-up>', '<c-w>5+')
+vim.keymap.set('n', '<c-right>', '<c-w>5<')
+vim.keymap.set('n', '<c-h>', '<c-w>h')
+vim.keymap.set('n', '<c-j>', '<c-w>j')
+vim.keymap.set('n', '<c-k>', '<c-w>k')
+vim.keymap.set('n', '<c-l>', '<c-w>l')
+vim.keymap.set('n', '<m-h>', '<c-w>v')
+vim.keymap.set('n', '<m-j>', '<c-w>s<c-w>j')
+vim.keymap.set('n', '<m-k>', '<c-w>s')
+vim.keymap.set('n', '<m-l>', '<c-w>v<c-w>l')
 
 -- File handling
 vim.keymap.set('i', '<c-s>', '<c-o>:write<cr>')
@@ -300,7 +300,7 @@ vim.keymap.set('n', '<leader>og', ':FzfLua git_status<cr>')
 vim.keymap.set('n', '<leader>ol', ':FzfLua blines<cr>')
 vim.keymap.set('n', '<leader>om', ':FzfLua marks<cr>')
 vim.keymap.set('n', '<leader>ot', ':FzfLua btags<cr>')
-vim.keymap.set({'n', 'v'}, '<a-cr>', ':FzfLua lsp_code_actions<cr>')
+vim.keymap.set({ 'n', 'v' }, '<a-cr>', ':FzfLua lsp_code_actions<cr>')
 
 -- Center matches when searching
 vim.keymap.set('n', 'N', 'Nzz')
@@ -315,7 +315,7 @@ vim.keymap.set('n', 'Q', 'q:')
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
-    local opts = { buffer = ev.buf, noremap=true, silent=true }
+    local opts = { buffer = ev.buf, noremap = true, silent = true }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
