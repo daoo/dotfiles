@@ -101,6 +101,9 @@ require('lazy').setup({
       if vim.fn.executable('pyright') == 1 then
         lspconfig.pyright.setup(opts)
       end
+      if vim.fn.executable('lua-language-server') == 1 then
+        lspconfig.lua_ls.setup(opts)
+      end
       lspconfig.rust_analyzer.setup(opts)
     end
   },
