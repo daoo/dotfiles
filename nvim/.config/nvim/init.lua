@@ -262,7 +262,6 @@ vim.keymap.set({ 'i', 'n' }, '<pageup>', '<nop>')
 -- }}}
 -- {{{ Key bindings
 -- Leader mappings
-vim.keymap.set('n', '<leader>ac', ':ClangFormat<cr>')
 vim.keymap.set('n', '<leader>as', ':let @"=@/<cr>:%s/\\s\\+$//<cr>:let @/=@"<cr>')
 vim.keymap.set('v', '<leader>ax', 'c<c-r>=<c-r>"<cr><esc>')
 
