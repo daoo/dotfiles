@@ -6,7 +6,6 @@ vim.opt.rtp:prepend(vim.fn.stdpath('data') .. '/lazy/lazy.nvim')
 require('lazy').setup({
   -- Editing
   { 'christoomey/vim-sort-motion', event = 'VeryLazy' },
-  { 'tpope/vim-commentary',        event = 'VeryLazy' },
   { 'tpope/vim-repeat',            event = 'VeryLazy' },
   { 'tpope/vim-surround',          event = 'VeryLazy' },
   { 'tpope/vim-unimpaired',        event = "VeryLazy" },
