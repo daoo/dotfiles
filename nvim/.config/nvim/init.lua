@@ -309,9 +309,6 @@ vim.keymap.set({ 'n', 'v' }, '<a-cr>', ':FzfLua lsp_code_actions<cr>')
 vim.keymap.set('n', 'N', 'Nzz')
 vim.keymap.set('n', 'n', 'nzz')
 
--- Make K match behaviour of J
-vim.keymap.set('n', 'K', 'kJ')
-
 vim.keymap.set('n', 'Q', 'q:')
 
 -- LSP
@@ -323,16 +320,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', '<leader>d', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', '<leader>k', vim.lsp.buf.signature_help, opts)
     vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, opts)
     vim.keymap.set('n', '<leader>af', vim.lsp.buf.format, opts)
+    vim.keymap.set('n', '<leader>h', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end)
   end
 })
-
-vim.keymap.set('n', '<leader>i', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 -- }}}
