@@ -8,7 +8,7 @@ require('lazy').setup({
   { 'christoomey/vim-sort-motion', event = 'VeryLazy' },
   { 'tpope/vim-repeat',            event = 'VeryLazy' },
   { 'tpope/vim-surround',          event = 'VeryLazy' },
-  { 'tpope/vim-unimpaired',        event = "VeryLazy" },
+  { 'tpope/vim-unimpaired',        event = 'VeryLazy' },
   { 'wellle/targets.vim',          event = 'VeryLazy' },
 
   -- Looks
@@ -232,8 +232,6 @@ vim.opt.joinspaces = false
 vim.opt.shiftround = true
 vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
-
-vim.opt.grepprg = 'rg --vimgrep'
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup("TextYankHighlight", { clear = true }),
