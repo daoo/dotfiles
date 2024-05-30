@@ -262,16 +262,21 @@ vim.keymap.set('n', '<m-l>', '<c-w>v<c-w>l')
 vim.keymap.set('i', '<c-s>', '<c-o>:write<cr>')
 vim.keymap.set('n', '<c-s>', ':write<cr>')
 
--- FzfLua
+-- Search
+vim.keymap.set('n', '<leader>gc', ':FzfLua grep_cword<cr>')
+vim.keymap.set('n', '<leader>gl', ':FzfLua live_grep<cr>')
+vim.keymap.set('v', '<leader>gc', ':FzfLua grep_visual<cr>')
+
+-- Navigation
 vim.keymap.set('n', '<c-p>', ':FzfLua git_files<cr>')
 vim.keymap.set('n', '<leader>ob', ':FzfLua buffers<cr>')
 vim.keymap.set('n', '<leader>od', ':FzfLua files cwd=%:p:h<cr>')
 vim.keymap.set('n', '<leader>of', ':FzfLua files<cr>')
 vim.keymap.set('n', '<leader>og', ':FzfLua git_status<cr>')
+vim.keymap.set('n', '<leader>ok', ':FzfLua<cr>')
 vim.keymap.set('n', '<leader>ol', ':FzfLua blines<cr>')
 vim.keymap.set('n', '<leader>om', ':FzfLua marks<cr>')
 vim.keymap.set('n', '<leader>ot', ':FzfLua btags<cr>')
-vim.keymap.set({ 'n', 'v' }, '<a-cr>', ':FzfLua lsp_code_actions<cr>')
 
 -- Center matches when searching
 vim.keymap.set('n', 'N', 'Nzz')
@@ -292,6 +297,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, opts)
     vim.keymap.set('n', '<leader>af', vim.lsp.buf.format, opts)
     vim.keymap.set('n', '<leader>h', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end)
+    vim.keymap.set({ 'n', 'v' }, '<a-cr>', ':FzfLua lsp_code_actions<cr>')
   end
 })
 -- }}}
