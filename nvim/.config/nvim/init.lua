@@ -276,7 +276,9 @@ vim.keymap.set('n', '<leader>og', ':FzfLua git_status<cr>')
 vim.keymap.set('n', '<leader>ok', ':FzfLua<cr>')
 vim.keymap.set('n', '<leader>ol', ':FzfLua blines<cr>')
 vim.keymap.set('n', '<leader>om', ':FzfLua marks<cr>')
+vim.keymap.set('n', '<leader>os', ':FzfLua lsp_document_symbols<cr>')
 vim.keymap.set('n', '<leader>ot', ':FzfLua btags<cr>')
+vim.keymap.set('n', '<leader>ow', ':FzfLua lsp_workspace_symbols<cr>')
 
 -- Center matches when searching
 vim.keymap.set('n', 'N', 'Nzz')
