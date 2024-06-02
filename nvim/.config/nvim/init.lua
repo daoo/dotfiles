@@ -34,7 +34,6 @@ require('lazy').setup({
       vim.cmd.colorscheme('gruvbox')
     end
   },
-  { 'lewis6991/gitsigns.nvim', event = { 'BufReadPre', 'BufNewFile' }, config = true },
   {
     'nvim-lualine/lualine.nvim',
     event = 'VeryLazy',
@@ -83,8 +82,10 @@ require('lazy').setup({
   { 'tpope/vim-eunuch',        event = 'VeryLazy' },
 
   -- Git
+  { 'sgeb/vim-diff-fold' },
   { 'junegunn/gv.vim',         cmd = 'GV' },
   { 'tpope/vim-fugitive',      event = 'VeryLazy' },
+  { 'lewis6991/gitsigns.nvim', event = { 'BufReadPre', 'BufNewFile' }, config = true },
 
   -- LSP
   {
