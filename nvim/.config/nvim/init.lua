@@ -10,10 +10,19 @@ require('lazy').setup({
   { 'tpope/vim-surround',          event = 'VeryLazy' },
   { 'tpope/vim-unimpaired',        event = 'VeryLazy' },
   { 'wellle/targets.vim',          event = 'VeryLazy' },
+  {
+    'gabrielpoca/replacer.nvim',
+    cmd = 'Replacer',
+    config = function()
+      vim.api.nvim_create_user_command('Replacer', function()
+        require('replacer').run()
+      end, {})
+    end
+  },
 
   -- Looks
-  { 'aklt/plantuml-syntax',        event = 'VeryLazy' },
-  { 't9md/vim-quickhl',            event = 'VeryLazy' },
+  { 'aklt/plantuml-syntax', event = 'VeryLazy' },
+  { 't9md/vim-quickhl',     event = 'VeryLazy' },
   {
     'ellisonleao/gruvbox.nvim',
     config = function()
