@@ -114,6 +114,7 @@ require('lazy').setup({
         lspconfig.lua_ls.setup(opts)
       end
       lspconfig.rust_analyzer.setup(opts)
+      lspconfig.asm_lsp.setup(opts)
     end
   },
   { 'j-hui/fidget.nvim', lazy = true, config = true },
