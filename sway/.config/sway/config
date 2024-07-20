@@ -1,27 +1,38 @@
 set $mod Mod4
 set $term alacritty
-set $menu rofi -show run -run-command 'echo -n {cmd}' | xargs swaymsg exec --
+set $menu kupfer
 
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1366x768.png fill
+output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output DP-1 mode 1920x1080
 
-input * xkb_layout "dvoormak,usaswe"
+input type:keyboard {
+  xkb_layout dvoormak,usaswe
+}
+input type:mouse {
+  natural_scroll enabled
+}
 
-bindsym $mod+Return exec $term
-bindsym $mod+Shift+c kill
-bindsym $mod+p exec $menu
 floating_modifier $mod normal
-bindsym $mod+q reload
-bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
+bindsym $mod+return exec $term
+bindsym $mod+shift+c kill
+bindsym $mod+p exec $menu
+bindsym $mod+q reload
+bindsym $mod+shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+bindsym $mod+shift+tab focus parent
+bindsym $mod+tab focus child
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindsym $mod+shift+h move left
+bindsym $mod+shift+j move down
+bindsym $mod+shift+k move up
+bindsym $mod+shift+l move right
+
+bindsym $mod+o workspace back_and_forth
 
 bindsym $mod+ampersand workspace number 1
 bindsym $mod+bracketleft workspace number 2
@@ -33,37 +44,30 @@ bindsym $mod+asterisk workspace number 7
 bindsym $mod+parenright workspace number 8
 bindsym $mod+plus workspace number 9
 bindsym $mod+bracketright workspace number 10
-bindsym $mod+Shift+ampersand move container to workspace number 1
-bindsym $mod+Shift+bracketleft move container to workspace number 2
-bindsym $mod+Shift+braceleft move container to workspace number 3
-bindsym $mod+Shift+braceright move container to workspace number 4
-bindsym $mod+Shift+parenleft move container to workspace number 5
-bindsym $mod+Shift+equal move container to workspace number 6
-bindsym $mod+Shift+asterisk move container to workspace number 7
-bindsym $mod+Shift+parenright move container to workspace number 8
-bindsym $mod+Shift+plus move container to workspace number 9
-bindsym $mod+Shift+bracketright move container to workspace number 10
+bindsym $mod+shift+ampersand move container to workspace number 1
+bindsym $mod+shift+bracketleft move container to workspace number 2
+bindsym $mod+shift+braceleft move container to workspace number 3
+bindsym $mod+shift+braceright move container to workspace number 4
+bindsym $mod+shift+parenleft move container to workspace number 5
+bindsym $mod+shift+equal move container to workspace number 6
+bindsym $mod+shift+asterisk move container to workspace number 7
+bindsym $mod+shift+parenright move container to workspace number 8
+bindsym $mod+shift+plus move container to workspace number 9
+bindsym $mod+shift+bracketright move container to workspace number 10
 
-bindsym $mod+b splith
-bindsym $mod+v splitv
-
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
+bindsym $mod+shift+space layout default
+bindsym $mod+space layout toggle all
 bindsym $mod+f fullscreen
+bindsym $mod+t floating disable
 
-bindsym $mod+Shift+space floating toggle
-bindsym $mod+space focus mode_toggle
-bindsym $mod+a focus parent
-bindsym $mod+Shift+minus move scratchpad
-bindsym $mod+minus scratchpad show
+bindsym $mod+i scratchpad show
+bindsym $mod+shift+i move scratchpad
 
 mode "resize" {
-    bindsym h resize shrink width 10px
-    bindsym j resize grow height 10px
-    bindsym k resize shrink height 10px
-    bindsym l resize grow width 10px
+    bindsym h resize shrink width 20px
+    bindsym j resize grow height 20px
+    bindsym k resize shrink height 20px
+    bindsym l resize grow width 20px
 
     bindsym Return mode "default"
     bindsym Escape mode "default"

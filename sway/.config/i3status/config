@@ -11,38 +11,45 @@ general {
         interval = 5
 }
 
+order += "volume master"
 order += "wireless _first_"
 order += "ethernet _first_"
 order += "battery all"
 order += "disk /"
-order += "load"
+order += "cpu_usage"
 order += "memory"
 order += "tztime local"
 
+volume master {
+        format = "V %volume"
+        format_muted = "V muted (%volume)"
+}
+
 wireless _first_ {
-        format_up = "W: (%quality at %essid) %ip"
-        format_down = "W: down"
+        format_up = "W (%quality at %essid) %ip"
+        format_down = ""
 }
 
 ethernet _first_ {
-        format_up = "E: %ip (%speed)"
-        format_down = "E: down"
+        format_up = "E %ip"
+        format_down = "E down"
 }
 
 battery all {
-        format = "%status %percentage %remaining"
+        format = "B %status %percentage %remaining"
+        format_down = ""
 }
 
 disk "/" {
-        format = "%avail"
+        format = "S %avail"
 }
 
-load {
-        format = "%1min"
+cpu_usage {
+        format = "C %usage"
 }
 
 memory {
-        format = "%used"
+        format = "M %used"
 }
 
 tztime local {
