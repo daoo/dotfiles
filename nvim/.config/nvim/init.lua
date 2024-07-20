@@ -123,6 +123,7 @@ require('lazy').setup({
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
       'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-calc',
       'hrsh7th/cmp-cmdline',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
@@ -148,7 +149,10 @@ require('lazy').setup({
           ['<cr>'] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources(
-          { { name = 'nvim_lsp' }, { name = 'vsnip' } },
+          { { name = 'calc' } },
+          { { name = 'nvim_lsp' } },
+          { { name = 'vsnip' } },
+          { { name = 'path' } },
           { { name = 'buffer' } }
         )
       })
