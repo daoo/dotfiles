@@ -94,17 +94,7 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-bar {
-    position bottom
-
-    status_command i3status
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
-}
+bar swaybar_command waybar
 
 exec kupfer --no-splash
 exec workrave --display=$DISPLAY

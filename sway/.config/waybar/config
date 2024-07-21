@@ -1,0 +1,40 @@
+{
+  "layer": "top",
+  "position": "bottom",
+  "modules-left": ["sway/workspaces", "sway/mode"],
+  "modules-center": ["sway/window"],
+  "modules-right": ["wireplumber", "cpu", "memory", "disk", "network", "bluetooth", "battery", "clock", "tray"],
+  "bluetooth": {
+    "format": "  {status}",
+    "format-disabled": "",
+    "format-off": "  ",
+    "format-on": "  on ",
+    "format-connected": "  {device_alias} {device_battery_percentage}% ",
+    "tooltip-format": "{controller_alias}\t{controller_address}\t{status}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\t{status}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+  },
+  "cpu": {
+    "format": " {usage}%"
+  },
+  "clock": {
+    "format": "{:%a, %d. %b  %H:%M}"
+  },
+  "disk": {
+    "format": " {percentage_used}%",
+    "path": "/"
+  },
+  "memory": {
+    "format": " {percentage}%",
+    "tooltip-format": "{used}GiB used out of {total}GiB ({percentage}%)"
+  },
+  "network": {
+    "format-ethernet": " {bandwidthDownBytes} / {bandwidthUpBytes}",
+    "format-wifi": " {essid} ({signalStrength} {frequency})",
+    "tooltip-format": "Interface:\t{ifname}\nAddress:\t{ipaddr}\nGateway:\t{gwaddr}"
+  },
+  "wireplumber": {
+    "format": " {volume}%"
+  }
+}
