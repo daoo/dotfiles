@@ -96,4 +96,8 @@ bar {
     }
 }
 
+exec kupfer --no-splash
+# exec workrave --display=:0
+exec nextcloud
+
 include /etc/sway/config.d/*
