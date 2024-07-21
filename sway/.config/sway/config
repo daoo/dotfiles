@@ -3,7 +3,6 @@ set $term alacritty
 set $menu kupfer
 
 output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output DP-1 mode 1920x1080
 
 input type:keyboard {
   xkb_layout dvoormak,usaswe
