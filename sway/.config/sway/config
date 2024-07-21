@@ -11,6 +11,7 @@ input type:mouse {
   natural_scroll enabled
 }
 
+focus_wrapping no
 floating_modifier $mod normal
 
 bindsym $mod+return exec $term
