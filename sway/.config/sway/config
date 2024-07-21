@@ -5,7 +5,7 @@ set $menu kupfer
 output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
 input type:keyboard {
-  xkb_layout dvoormak,usaswe
+  xkb_layout dvoormak
 }
 input type:mouse {
   natural_scroll enabled
@@ -64,6 +64,13 @@ bindsym $mod+shift+i move scratchpad
 bindsym $mod+return exec $term
 bindsym $mod+p exec $menu
 bindsym $mod+shift+s exec flameshot gui
+
+bindsym $mod+apostrophe \
+  exec notify-send "Keymap" "Keymap changed to usaswe" -h "string:image-path:${icon}"; \
+  input type:keyboard xkb_layout usaswe
+bindsym $mod+z \
+  exec notify-send "Keymap" "Keymap changed to dvoormak" -h "string:image-path:${icon}"; \
+  input type:keyboard xkb_layout dvoormak
 
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
