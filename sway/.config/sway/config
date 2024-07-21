@@ -14,9 +14,7 @@ input type:mouse {
 focus_wrapping no
 floating_modifier $mod normal
 
-bindsym $mod+return exec $term
 bindsym $mod+shift+c kill
-bindsym $mod+p exec $menu
 bindsym $mod+q reload
 bindsym $mod+shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
@@ -62,6 +60,10 @@ bindsym $mod+t floating disable
 
 bindsym $mod+i scratchpad show
 bindsym $mod+shift+i move scratchpad
+
+bindsym $mod+return exec $term
+bindsym $mod+p exec $menu
+bindsym $mod+shift+s exec flameshot gui
 
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
