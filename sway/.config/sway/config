@@ -58,6 +58,7 @@ bindsym $mod+shift+space layout default
 bindsym $mod+space layout toggle all
 bindsym $mod+f fullscreen
 bindsym $mod+t floating disable
+bindsym $mod+s split vertical
 
 bindsym $mod+i scratchpad show
 bindsym $mod+shift+i move scratchpad
