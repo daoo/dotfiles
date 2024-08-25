@@ -196,6 +196,7 @@ main = do
   safeSpawn "setxkbmap" ["dvoormak"]
   safeSpawn "kupfer" ["--no-splash"]
   safeSpawnProg "nextcloud"
+  safeSpawnProg "workrave"
   hxmobar <- spawnPipe "xmobar .config/xmobar/xmobarrc"
 
   xmonad $ docks $ withUrgencyHook NoUrgencyHook def
