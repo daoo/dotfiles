@@ -193,6 +193,7 @@ main :: IO ()
 main = do
   safeSpawn "feh" ["--no-fehbg", "--bg-tile", "media/wallpaper"]
   safeSpawn "xsetroot" ["-cursor_name", "left_ptr"]
+  safeSpawn "setxkbmap" ["dvoormak"]
   safeSpawn "kupfer" ["--no-splash"]
   safeSpawnProg "nextcloud"
   hxmobar <- spawnPipe "xmobar .config/xmobar/xmobarrc"
