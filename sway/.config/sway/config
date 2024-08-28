@@ -97,7 +97,7 @@ bindsym $mod+r mode "resize"
 
 bar swaybar_command waybar
 
-exec kupfer --no-splash
+# exec kupfer --no-splash
 exec workrave --display=$DISPLAY
 exec nextcloud
 
