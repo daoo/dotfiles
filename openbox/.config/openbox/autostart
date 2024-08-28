@@ -1,2 +1,0 @@
-feh --no-fehbg --bg-tile ~/media/wallpaper &
-XDG_SESSION_TYPE=x11 plank &
