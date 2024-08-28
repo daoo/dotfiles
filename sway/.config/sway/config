@@ -65,7 +65,7 @@ bindsym $mod+shift+i move scratchpad
 
 bindsym $mod+return exec $term
 bindsym $mod+p exec $menu
-bindsym $mod+shift+s exec flameshot gui
+bindsym $mod+shift+s exec XDG_CURRENT_DESKTOP=sway flameshot gui
 
 bindsym $mod+apostrophe \
   exec notify-send "Keymap" "Keymap changed to usaswe" -h "string:image-path:${icon}"; \
