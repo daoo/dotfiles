@@ -28,4 +28,24 @@ alias g='git'
 # [[[ Binds
 bind -m vi
 # ]]]
+# [[[ Prompt
+prompt_daoo() {
+    printf -v date '%(%Y-%m-%d)T' -1
+    printf -v time '%(%H:%M:%S)T' -1
+    local pwd="$PWD"
+    if [[ $pwd/ = "$HOME"/* ]]; then pwd=\~${pwd#$HOME}; fi
+    local ch="\033[1;35m"
+    local cg="\033[1;90m"
+    local cr="\033[0m"
+    local pl="$cg($cr"
+    local pr="$cg)$cr"
+    local left="-$pl$ch$pwd$pr-"
+    local right="-$pl$?$pr-$pl$date$cg|$cr$time$pr-$pl$USERNAME$cg@$cr$HOSTNAME$pr-"
+    compensate=136
+    local right=$(printf "%*s" "$(($(tput cols)+$compensate))" "$right")
+    local right=${right// /-}
+    PS1=$(printf "%s\r%s\n--> " "$right" "$left")
+}
+PROMPT_COMMAND=prompt_daoo
+# ]]]
 # vim: foldmarker=[[[,]]] fdm=marker :
