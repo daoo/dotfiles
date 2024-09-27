@@ -112,8 +112,6 @@ myKeyMaps = fromList
   -- Focus and swapping
   , xK_Tab # windows W.focusDown
   , xK_Tab ! windows W.focusUp
-  , xK_m   # windows W.focusMaster
-  , xK_m   ! windows W.swapMaster
 
   , xK_h # windowGo L False
   , xK_l # windowGo R False
@@ -125,10 +123,12 @@ myKeyMaps = fromList
   , xK_k ! windowSwap U False
 
   -- Multiple screens
-  , xK_w # screenWorkspace 0 >>= flip whenJust (windows . W.view)
-  , xK_e # screenWorkspace 1 >>= flip whenJust (windows . W.view)
-  , xK_w ! screenWorkspace 0 >>= flip whenJust (windows . W.shift)
-  , xK_e ! screenWorkspace 1 >>= flip whenJust (windows . W.shift)
+  , xK_m # screenWorkspace 0 >>= flip whenJust (windows . W.view)
+  , xK_w # screenWorkspace 1 >>= flip whenJust (windows . W.view)
+  , xK_v # screenWorkspace 2 >>= flip whenJust (windows . W.view)
+  , xK_m ! screenWorkspace 0 >>= flip whenJust (windows . W.shift)
+  , xK_w ! screenWorkspace 1 >>= flip whenJust (windows . W.shift)
+  , xK_v ! screenWorkspace 2 >>= flip whenJust (windows . W.shift)
 
   -- Workspace toggling
   , xK_o # toggleWorkspace
