@@ -104,8 +104,8 @@ require('lazy').setup({
         filetypes = { 'haskell', 'lhaskell', 'cabal' },
         capabilities = capabilities
       })
-      if vim.fn.executable('ruff-lsp') == 1 then
-        lspconfig.ruff_lsp.setup(opts)
+      if vim.fn.executable('ruff') then
+        lspconfig.ruff.setup(opts)
       end
       if vim.fn.executable('pyright') == 1 then
         lspconfig.pyright.setup(opts)
