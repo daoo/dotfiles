@@ -160,7 +160,7 @@ myKeyMaps = fromList
   , xK_q ! io exitSuccess
 
   -- Screen locker
-  , xK_b # safeSpawn "physlock" ["-m"]
+  , xK_b # safeSpawnProg "slock"
 
   -- Setting keyboard layout
   -- Note: z and apostrophe is the same physical key in both layouts
