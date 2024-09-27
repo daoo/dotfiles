@@ -209,7 +209,6 @@ main = do
   safeSpawn "feh" ["--no-fehbg", "--bg-tile", "media/wallpaper"]
   safeSpawn "xsetroot" ["-cursor_name", "left_ptr"]
   safeSpawn "setxkbmap" ["dvoormak"]
-  safeSpawnProg "nextcloud"
   safeSpawnProg "workrave"
   hxmobar <- spawnPipe "xmobar .config/xmobar/xmobarrc"
 
