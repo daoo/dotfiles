@@ -27,7 +27,7 @@ zle -N edit-command-line
 # [[[ History
 HISTFILE="$HOME/.zhistory" # TODO: Move according to XDG
 HISTSIZE=100000
-HISTORY_IGNORE="(cd|l|ls|ll|la|lla|fc|fh|fg|bg|..)"
+HISTORY_IGNORE="(cd|l|ls|ll|la|lla|fc|fh|fg|bg|..|g st|g lg|g ap|g ci|g df|g dc)"
 SAVEHIST=100000
 setopt hist_fcntl_lock
 setopt hist_find_no_dups
