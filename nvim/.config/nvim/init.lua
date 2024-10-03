@@ -115,6 +115,7 @@ require('lazy').setup({
       end
       lspconfig.rust_analyzer.setup(opts)
       lspconfig.asm_lsp.setup(opts)
+      lspconfig.bashls.setup(opts)
       lspconfig.omnisharp.setup({ cmd = { 'omnisharp' } })
     end
   },
