@@ -100,11 +100,13 @@ require('lazy').setup({
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
       local opts = { capabilities = capabilities }
 
-      lspconfig.hls.setup({
-        filetypes = { 'haskell', 'lhaskell', 'cabal' },
-        capabilities = capabilities
-      })
-      if vim.fn.executable('ruff') then
+      if vim.fn.executable('haskell-languge-server-wrapper') == 1 then
+        lspconfig.hls.setup({
+          filetypes = { 'haskell', 'lhaskell', 'cabal' },
+          capabilities = capabilities
+        })
+      end
+      if vim.fn.executable('ruff') == 1 then
         lspconfig.ruff.setup(opts)
       end
       if vim.fn.executable('pyright') == 1 then
@@ -113,10 +115,18 @@ require('lazy').setup({
       if vim.fn.executable('lua-language-server') == 1 then
         lspconfig.lua_ls.setup(opts)
       end
-      lspconfig.rust_analyzer.setup(opts)
-      lspconfig.asm_lsp.setup(opts)
-      lspconfig.bashls.setup(opts)
-      lspconfig.omnisharp.setup({ cmd = { 'omnisharp' } })
+      if vim.fn.executable('rust-analyzer') == 1 then
+        lspconfig.rust_analyzer.setup(opts)
+      end
+      if vim.fn.executable('asm-lsp') == 1 then
+        lspconfig.asm_lsp.setup(opts)
+      end
+      if vim.fn.executable('bash-language-server') == 1 then
+        lspconfig.bashls.setup(opts)
+      end
+      if vim.fn.executable('omnisharp') == 1 then
+        lspconfig.omnisharp.setup({ cmd = { 'omnisharp' } } + opts)
+      end
     end
   },
   { 'j-hui/fidget.nvim', lazy = true, config = true },
