@@ -27,7 +27,7 @@ parse_browser_download_url() {
 }
 
 url="$(fetch_latest_release | parse_browser_download_url)"
-filename="${url/*\/}"
+filename="${url/*\//}"
 dirname="${filename/.tar.gz/}"
 dirpath="${toolsdir}/${dirname}"
 

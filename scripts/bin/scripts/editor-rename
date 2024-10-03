@@ -32,14 +32,14 @@ def list_dir(top, include_dirs, include_files):
 
 
 def interact(editor, old_paths):
-    fwrite = tempfile.NamedTemporaryFile(mode='w', delete=False)
+    fwrite = tempfile.NamedTemporaryFile(mode="w", delete=False)
     tmp_path = fwrite.name
     fwrite.write("\n".join(old_paths))
     fwrite.close()
 
     subprocess.call([editor, tmp_path])
 
-    fread = open(tmp_path, 'r')
+    fread = open(tmp_path, "r")
     new_paths = fread.read().splitlines()
     fread.close()
 
@@ -54,15 +54,14 @@ def rename(old_names, new_names, parents):
         if old == new:
             continue
 
-        sys.stdout.write(str.format("Moving \"{}\" to \"{}\".\n", old, new))
+        sys.stdout.write(str.format('Moving "{}" to "{}".\n', old, new))
         if not os.path.exists(new):
             if parents:
                 os.renames(old, new)
             else:
                 os.rename(old, new)
         else:
-            sys.stderr.write(
-                str.format("Warning: file {} already exists.\n", new))
+            sys.stderr.write(str.format("Warning: file {} already exists.\n", new))
 
 
 def read_from_stdin():
@@ -76,7 +75,7 @@ def read_from_paths(args):
 
 
 def program(args):
-    old_names = read_from_stdin() if args.paths == ['-'] else read_from_paths(args)
+    old_names = read_from_stdin() if args.paths == ["-"] else read_from_paths(args)
     new_names = interact(args.editor, old_names)
 
     if len(new_names) == 0:
@@ -93,52 +92,55 @@ def program(args):
 def main():
     parser = argparse.ArgumentParser(
         description="Interactively rename files.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
 
     parser.add_argument(
         "paths",
-        nargs='+',
-        default='.',
-        help="directory to rename files in, specify - to read from standard input")
+        nargs="+",
+        default=".",
+        help="directory to rename files in, specify - to read from standard input",
+    )
 
     parser.add_argument(
-        "-p", "--parents",
-        action="store_true",
-        help="make parent directories as needed")
+        "-p", "--parents", action="store_true", help="make parent directories as needed"
+    )
 
     parser.add_argument(
-        "-e", "--editor",
+        "-e",
+        "--editor",
         action="store",
         help="the editor to use",
-        default=os.environ["EDITOR"])
+        default=os.environ["EDITOR"],
+    )
 
     parser.add_argument(
-        "-r", "--recursive",
+        "-r",
+        "--recursive",
         action="store_true",
-        help="recurseivly rename in sub-directories")
+        help="recurseivly rename in sub-directories",
+    )
 
     parser.add_argument(
-        "--files",
-        dest="files",
-        action="store_true",
-        help="rename files")
+        "--files", dest="files", action="store_true", help="rename files"
+    )
     parser.add_argument(
-        "--no-files",
-        dest="files",
-        action="store_false",
-        help="do not rename files")
+        "--no-files", dest="files", action="store_false", help="do not rename files"
+    )
     parser.set_defaults(files=True)
 
     parser.add_argument(
         "--directories",
         dest="directories",
         action="store_true",
-        help="rename directories")
+        help="rename directories",
+    )
     parser.add_argument(
         "--no-directories",
         dest="directories",
         action="store_false",
-        help="do not rename directories")
+        help="do not rename directories",
+    )
     parser.set_defaults(directories=True)
 
     sys.exit(program(parser.parse_args()))

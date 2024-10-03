@@ -23,14 +23,14 @@ def git_branches():
 
 
 def edit(lines):
-    fwrite = tempfile.NamedTemporaryFile(mode='w', delete=False)
+    fwrite = tempfile.NamedTemporaryFile(mode="w", delete=False)
     tmp_path = fwrite.name
     fwrite.write(lines)
     fwrite.close()
 
     subprocess.check_call([os.environ["EDITOR"], tmp_path])
 
-    fread = open(tmp_path, 'r')
+    fread = open(tmp_path, "r")
     commands = fread.read()
     fread.close()
 

@@ -81,7 +81,6 @@ def loop(server):
         state = server_state(query(server))
 
         if state.status == Status.OK:
-
             if state.player_count != player_count:
                 current_players = set(state.player_names)
 
@@ -90,10 +89,10 @@ def loop(server):
 
                 notify_args = ["-i", "info", "Quake"]
                 if leaved:
-                    message = "%s left %s" % (', '.join(leaved), state.name)
+                    message = "%s left %s" % (", ".join(leaved), state.name)
                     notify_send(notify_args + [message])
                 if joined:
-                    message = "%s joined %s" % (', '.join(joined), state.name)
+                    message = "%s joined %s" % (", ".join(joined), state.name)
                     notify_send(notify_args + [message])
 
                 player_names = set(state.player_names)

@@ -2,9 +2,8 @@
 
 set -eu
 
-function check()
-{
-  if read -r content 2>/dev/null < "$1"; then
+function check() {
+  if read -r content 2>/dev/null <"$1"; then
     printf "%s: %s\\n" "$1" "$content"
   fi
 }

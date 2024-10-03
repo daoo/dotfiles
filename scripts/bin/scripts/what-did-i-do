@@ -17,9 +17,7 @@ PACMAN_CONF_PATH = "/etc/pacman.conf"
 def get_owning_package(path):
     try:
         return subprocess.check_output(
-            ["pacman", "-Qoq", path],
-            universal_newlines=True,
-            stderr=subprocess.DEVNULL
+            ["pacman", "-Qoq", path], universal_newlines=True, stderr=subprocess.DEVNULL
         ).strip()
     except subprocess.CalledProcessError:
         pass
@@ -27,8 +25,7 @@ def get_owning_package(path):
 
 def get_package_download_url(name):
     return subprocess.check_output(
-        ["pacman", "-Sp", name],
-        universal_newlines=True
+        ["pacman", "-Sp", name], universal_newlines=True
     ).strip()
 
 
@@ -39,32 +36,33 @@ def download_package(name, path):
 
 
 def get_pacman_cache_path():
-    config = configparser.ConfigParser(
-        allow_no_value=True,
-        strict=False)
+    config = configparser.ConfigParser(allow_no_value=True, strict=False)
     config.read(PACMAN_CONF_PATH)
-    return config.get(
-        "options",
-        "CacheDir",
-        fallback=DEFAULT_PACMAN_CACHE_PATH)
+    return config.get("options", "CacheDir", fallback=DEFAULT_PACMAN_CACHE_PATH)
 
 
 def get_package_path(package):
     return os.path.join(
-        get_pacman_cache_path(),
-        posixpath.basename(get_package_download_url(package)))
+        get_pacman_cache_path(), posixpath.basename(get_package_download_url(package))
+    )
+
 
 def extract_file(path, package_path):
     member_path = os.path.relpath(path, "/")
     file = tempfile.NamedTemporaryFile()
-    subprocess.check_call([
-        'tar',
-        '--extract',
-        '--to-stdout',
-        '--use-compress-program=zstd',
-        '--file=' + package_path,
-        member_path], stdout=file)
+    subprocess.check_call(
+        [
+            "tar",
+            "--extract",
+            "--to-stdout",
+            "--use-compress-program=zstd",
+            "--file=" + package_path,
+            member_path,
+        ],
+        stdout=file,
+    )
     return file
+
 
 def main(diffprog, path):
     if os.path.isdir(path):
@@ -95,10 +93,10 @@ def main(diffprog, path):
 
 
 if __name__ == "__main__":
-    diffprog = shlex.split(os.getenv('DIFFPROG', 'nvim -d'))
+    diffprog = shlex.split(os.getenv("DIFFPROG", "nvim -d"))
 
     if len(sys.argv) <= 1:
-        print('Usage: {0} path [path...]'.format(sys.argv[0]))
+        print("Usage: {0} path [path...]".format(sys.argv[0]))
         sys.exit(1)
 
     for path in sys.argv[1:]:

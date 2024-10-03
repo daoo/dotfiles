@@ -7,8 +7,8 @@ if [[ $# -ne 1 ]]; then
   exit 1
 fi
 
-read key_file < ~/.config/pw/keyfile
-read database < ~/.config/pw/database
+read -r key_file <~/.config/pw/keyfile
+read -r database <~/.config/pw/database
 
 pw-list() {
   keepassxc-cli ls \
@@ -51,8 +51,8 @@ if [ -z "$selection" ]; then
 fi
 
 case "$1" in
-  "copy") pw-copy "$selection" ;;
-  "show") pw-show "$selection" ;;
-  "qr") pw-print "$selection" | qrencode -t ANSI256 ;;
-  "print") pw-print "$selection" ;;
+"copy") pw-copy "$selection" ;;
+"show") pw-show "$selection" ;;
+"qr") pw-print "$selection" | qrencode -t ANSI256 ;;
+"print") pw-print "$selection" ;;
 esac

@@ -5,31 +5,29 @@ import subprocess
 
 
 def list_branches(remote):
-    arg_remote = ['--remote'] if remote else []
-    command = ['git', 'branch', '--verbose'] + arg_remote
+    arg_remote = ["--remote"] if remote else []
+    command = ["git", "branch", "--verbose"] + arg_remote
     output = subprocess.check_output(command)
     return [line[2:] for line in output.splitlines()]
 
 
 def select_branch(remote, branches):
     try:
-        line = subprocess.check_output(
-            ['fzf', '--nth=1'],
-            input=b'\n'.join(branches))
+        line = subprocess.check_output(["fzf", "--nth=1"], input=b"\n".join(branches))
         if not line:
             return None
         branch = line.split()[0]
         if remote:
-            i = branch.index(b'/')
-            return branch[i + 1:]
+            i = branch.index(b"/")
+            return branch[i + 1 :]
         return branch
     except subprocess.CalledProcessError:
         return None
 
 
 def checkout(branch):
-    command = ['git', 'checkout', branch.decode('utf-8')]
-    print(' '.join(command))
+    command = ["git", "checkout", branch.decode("utf-8")]
+    print(" ".join(command))
     subprocess.check_call(command)
 
 
@@ -42,8 +40,9 @@ def main(args):
 
 parser = argparse.ArgumentParser(
     description="Interactively change git branch.",
-    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+)
 parser.add_argument(
-    '-r', '--remote', action='store_true',
-    help='List remote branches instead of local.')
+    "-r", "--remote", action="store_true", help="List remote branches instead of local."
+)
 main(parser.parse_args())

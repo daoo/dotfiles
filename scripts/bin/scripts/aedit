@@ -3,7 +3,7 @@
 set -eu
 
 function md5sum_dir() {
-  tar c "$1" 2> /dev/null | md5sum | cut -d ' ' -f 1
+  tar c "$1" 2>/dev/null | md5sum | cut -d ' ' -f 1
 }
 
 function shell_in_dir() {
@@ -12,7 +12,7 @@ function shell_in_dir() {
 }
 
 # Check for atool
-if ! command -v atool &> /dev/null; then
+if ! command -v atool &>/dev/null; then
   echo "atool not found" >&2
   exit 1
 fi
@@ -20,15 +20,15 @@ fi
 # Check parameters
 dry=0
 file=""
-while (( "$#" )); do
+while (("$#")); do
   case "$1" in
-    "-d") dry=1 ;;
-    *) file="$1"
+  "-d") dry=1 ;;
+  *) file="$1" ;;
   esac
   shift
 done
 
-if [[ -a "$file" ]]; then
+if [[ -e "$file" ]]; then
   # Some basic information about the archive
   name="$(basename "$file")"
   archive="$(readlink -f "$file")"
@@ -37,7 +37,7 @@ if [[ -a "$file" ]]; then
   # Extract to a tmp dir
   echo "Extracting..."
   working_dir="$(mktemp -d "/tmp/aedit-XXXXXXXX")"
-  atool --extract-to="$working_dir" "$file" &> /dev/null
+  atool --extract-to="$working_dir" "$file" &>/dev/null
 
   if [[ $dry -eq 0 ]]; then
     old_checksum="$(md5sum_dir "$working_dir")"
@@ -57,7 +57,7 @@ if [[ -a "$file" ]]; then
       backupfile="$(mktemp "/tmp/$name-XXXXXXXX")"
       mv "$archive" "$backupfile"
 
-      atool -a -f "$archive" "$(ls -b "$working_dir")" &> /dev/null
+      atool -a -f "$archive" "$(ls -b "$working_dir")" &>/dev/null
     fi
   else
     # Start a new shell in the tmp directory
