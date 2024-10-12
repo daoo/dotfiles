@@ -100,7 +100,7 @@ require('lazy').setup({
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
       local opts = { capabilities = capabilities }
 
-      if vim.fn.executable('haskell-languge-server-wrapper') == 1 then
+      if vim.fn.executable('haskell-language-server-wrapper') == 1 then
         lspconfig.hls.setup({
           filetypes = { 'haskell', 'lhaskell', 'cabal' },
           capabilities = capabilities
