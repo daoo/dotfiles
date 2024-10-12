@@ -125,7 +125,10 @@ require('lazy').setup({
         lspconfig.bashls.setup(opts)
       end
       if vim.fn.executable('omnisharp') == 1 then
-        lspconfig.omnisharp.setup({ cmd = { 'omnisharp' } } + opts)
+        lspconfig.omnisharp.setup({
+          cmd = { 'omnisharp' },
+          capabilities = capabilities
+        })
       end
     end
   },
