@@ -80,7 +80,6 @@ export FZF_DEFAULT_COMMAND='rg --files'
 bindkey '' history-search-backward
 bindkey '' history-search-forward
 bindkey '' history-incremental-search-backward
-bindkey '' history-incremental-search-forward
 bindkey '' push-line
 bindkey '' edit-command-line
 # ]]]

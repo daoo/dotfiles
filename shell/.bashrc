@@ -5,11 +5,18 @@
 # [[[ Config
 export EDITOR='nvim'
 export PAGER="nvim -R -c silent!%sm/\\e.\\{-\\}m//g -"
+
+# Disable ctrl-q and ctrl-s
+stty -ixon
+
+# Use bash-completion, if available
+[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
+    . /usr/share/bash-completion/bash_completion
 # ]]]
 # [[[ History
 HISTSIZE=100000
 HISTFILESIZE=1000000
-HISTCONTROL=ignoreboth
+HISTCONTROL='erasedups:ignoreboth'
 HISTIGNORE='cd:l:ls:ll:la:lla:fc:fh:fg:bg:g st:g lg:g ap:g ci:g df:..:history'
 PROMPT_COMMAND='history -a; history -n'
 shopt -s histappend
@@ -24,9 +31,6 @@ alias lla='ls -l --almost-all'
 alias '..'='cd ..'
 
 alias g='git'
-# ]]]
-# [[[ Binds
-bind -m vi
 # ]]]
 # [[[ Prompt
 prompt_daoo() {

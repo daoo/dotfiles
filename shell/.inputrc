@@ -1,1 +1,17 @@
 set editing-mode vi
+set show-mode-in-prompt on
+set vi-ins-mode-string \1\e[6 q\2
+set vi-cmd-mode-string \1\e[2 q\2
+
+set show-all-if-unmodified on
+set colored-stats on
+set visible-stats on
+set mark-symlinked-directories on
+set colored-completion-prefix on
+set menu-complete-display-prefix on
+set page-completions off
+
+"\C-n": history-search-forward
+"\C-p": history-search-backward
+"\C-q": kill-whole-line
+"\C-r": reverse-search-history
