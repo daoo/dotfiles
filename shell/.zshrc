@@ -75,7 +75,6 @@ alias uctl='systemctl --user'
 alias units="units --history '${XDG_DATA_HOME}/units_history'"
 
 export FZF_DEFAULT_COMMAND='rg --files'
-export RANGER_LOAD_DEFAULT_RC=FALSE
 # ]]]
 # [[[ Binds
 bindkey '' history-search-backward
