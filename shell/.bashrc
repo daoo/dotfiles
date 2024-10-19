@@ -33,6 +33,10 @@ alias '..'='cd ..'
 alias g='git'
 # ]]]
 # [[[ Prompt
+prompt_title() {
+  echo -ne "\033]0;${PWD/#$HOME/\~}\007"
+}
+
 prompt_daoo() {
   printf -v date '%(%y-%m-%d)T' -1
   printf -v time '%(%H:%M:%S)T' -1
@@ -55,6 +59,6 @@ prompt_daoo() {
   local right_aligned_spaces=${right_aligned_spaces// /-}
   PS1=$(printf "%s\r%s\n--> " "$right_aligned_spaces" "$left")
 }
-PROMPT_COMMAND=prompt_daoo
+PROMPT_COMMAND="prompt_title; prompt_daoo"
 # ]]]
 # vim: foldmarker=[[[,]]] fdm=marker :
