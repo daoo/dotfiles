@@ -205,6 +205,7 @@ require('lazy').setup({
 vim.opt.autoread = true
 vim.opt.autowrite = true
 vim.opt.hidden = true
+vim.opt.title = true
 
 -- Entirely disable backups and swap.
 vim.opt.backupdir = '/tmp'
