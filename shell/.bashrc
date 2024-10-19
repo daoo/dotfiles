@@ -5,13 +5,15 @@
 # [[[ Config
 export EDITOR='nvim'
 export PAGER="nvim -R -c silent!%sm/\\e.\\{-\\}m//g -"
+export MANPAGER="nvim +Man!"
+export FZF_DEFAULT_COMMAND='rg --files'
 
 # Disable ctrl-q and ctrl-s
 stty -ixon
 
 # Use bash-completion, if available
-[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
-    . /usr/share/bash-completion/bash_completion
+[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] &&
+  . /usr/share/bash-completion/bash_completion
 # ]]]
 # [[[ History
 HISTSIZE=100000
@@ -31,6 +33,11 @@ alias lla='ls -l --almost-all'
 alias '..'='cd ..'
 
 alias g='git'
+alias p="${commands[paru]:-sudo pacman}"
+
+alias ctl='systemctl'
+alias sctl='sudo systemctl'
+alias uctl='systemctl --user'
 # ]]]
 # [[[ Prompt
 prompt_title() {
@@ -59,6 +66,6 @@ prompt_daoo() {
   local right_aligned_spaces=${right_aligned_spaces// /-}
   PS1=$(printf "%s\r%s\n--> " "$right_aligned_spaces" "$left")
 }
-PROMPT_COMMAND="prompt_title; prompt_daoo"
+PROMPT_COMMAND="${PROMPT_COMMAND}; prompt_title; prompt_daoo"
 # ]]]
 # vim: foldmarker=[[[,]]] fdm=marker :

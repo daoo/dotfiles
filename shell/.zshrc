@@ -17,6 +17,7 @@ unsetopt check_jobs
 export EDITOR='nvim'
 export PAGER="nvim -R -c silent!%sm/\\e.\\{-\\}m//g -"
 export MANPAGER="nvim +Man!"
+export FZF_DEFAULT_COMMAND='rg --files'
 
 # Disable ctrl-q and ctrl-s
 stty -ixon
@@ -70,11 +71,6 @@ alias p="${commands[paru]:-sudo pacman}"
 alias ctl='systemctl'
 alias sctl='sudo systemctl'
 alias uctl='systemctl --user'
-# ]]]
-# [[[ Program settings
-alias units="units --history '${XDG_DATA_HOME}/units_history'"
-
-export FZF_DEFAULT_COMMAND='rg --files'
 # ]]]
 # [[[ Binds
 bindkey '' history-search-backward
