@@ -50,21 +50,35 @@ prompt_daoo() {
   local directory="${PWD/#$HOME/\~}"
   local hostname="${HOSTNAME/.lan/}"
 
-  local ch="\033[1;35m"
-  local cg="\033[1;90m"
-  local cr="\033[0m"
-  local pl="${cg}(${cr}"
-  local pr="${cg})${cr}"
-  local bl="${cg}[${cr}"
-  local br="${cg}]${cr}"
-  local left="-$pl$ch$directory$pr-"
-  local right="-$pl$?$pr-$bl$date$cg|$cr$time$br-$pl$USERNAME$cg@$cr$hostname$pr-"
-  local right_length_minus_codes=136
+  local color="${BASH_COLOR:-235;219;178}"
+  local c_prompt="\033[1;38;2;${color}m"
+  local c_directory="\033[1;35m"
+  local c_separator="\033[1;90m"
+  local c_white="\033[0m"
+
+  local l_bracket="${c_separator}["
+  local r_bracket="${c_separator}]"
+  local l_paren="${c_separator}("
+  local r_paren="${c_separator})"
+  local at_char="${c_separator}@"
+  local pipe="${c_separator}|"
+
+  local left_1="${l_paren}${c_directory}${directory}${r_paren}"
+  local left="${c_prompt}-${left_1}${c_prompt}-"
+
+  local right_1="${l_paren}${c_white}${?}${pipe}${c_white}b${r_paren}"
+  local right_2="${l_bracket}${c_white}${date}${pipe}${c_white}${time}${r_bracket}"
+  local right_3="${l_paren}${c_white}${USERNAME}${at_char}${c_white}${hostname}${r_paren}"
+  local right="${c_prompt}-${right_1}${c_prompt}-${right_2}${c_prompt}-${right_3}${c_prompt}-"
+
+  local entry="${c_prompt}--${c_white}>"
+
+  local right_length_minus_codes=224
   local dash_count=$(($(tput cols) + right_length_minus_codes))
   local right_aligned_spaces
   right_aligned_spaces=$(printf "%*s" "$dash_count" "$right")
-  local right_aligned_spaces=${right_aligned_spaces// /-}
-  PS1=$(printf "%s\r%s\n--> " "$right_aligned_spaces" "$left")
+  local right_aligned_hyphens=${right_aligned_spaces// /-}
+  PS1=$(printf "%s\r%s\n%s " "${c_prompt}${right_aligned_hyphens}" "$left" "$entry")
 }
 PROMPT_COMMAND="${PROMPT_COMMAND}; prompt_title; prompt_daoo"
 # ]]]
