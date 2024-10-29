@@ -58,7 +58,7 @@ require('lazy').setup({
         },
         sections = {
           lualine_a = { 'mode' },
-          lualine_b = { 'b:gitsigns_head', { 'diff', sources = lualine_diff }, 'diagnostics' },
+          lualine_b = { { 'diff', sources = lualine_diff }, 'diagnostics' },
           lualine_c = { { 'filename', filestatus = true, path = 1 } },
           lualine_x = { 'encoding', 'fileformat', 'filetype', lualine_spell },
           lualine_y = { 'progress' },
