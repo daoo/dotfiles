@@ -21,7 +21,7 @@ function DiffFile($file1, $file2)
     Write-Host $file2 up to date
 }
 
-DiffFile "alacritty\.config\alacritty\alacritty.toml" "$HOME\AppData\Romaing\Alacritty\alacritty.toml"
+DiffFile "alacritty\.config\alacritty\alacritty.toml" "$HOME\AppData\Roaming\Alacritty\alacritty.toml"
 DiffFile "git\.config\git\config" "$HOME\.gitconfig"
 DiffFile "nvim\.config\nvim\ftplugin\cpp.vim" "$HOME\AppData\Local\nvim\ftplugin\cpp.vim"
 DiffFile "nvim\.config\nvim\ftplugin\git.vim" "$HOME\AppData\Local\nvim\ftplugin\git.vim"
