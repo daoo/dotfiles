@@ -165,8 +165,9 @@ require('lazy').setup({
     dependencies = {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-calc',
-      'hrsh7th/cmp-cmdline',
       'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
+      'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-vsnip',
       'hrsh7th/vim-vsnip',
@@ -190,10 +191,13 @@ require('lazy').setup({
           ['<cr>'] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources(
-          { { name = 'calc' } },
-          { { name = 'nvim_lsp' } },
-          { { name = 'vsnip' } },
           { { name = 'path' } },
+          {
+            { name = 'calc' },
+            { name = 'nvim_lsp' },
+            { name = 'nvim_lsp_signature_help' },
+            { name = 'vsnip' },
+          },
           { { name = 'buffer' } }
         )
       })
@@ -224,11 +228,9 @@ vim.opt.number = false
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 1
 vim.opt.sidescrolloff = 5
-vim.opt.shortmess:append "F"
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.inccommand = 'nosplit'
 
 vim.opt.expandtab = true
 vim.opt.formatoptions:append 'ron'
@@ -236,6 +238,9 @@ vim.opt.joinspaces = false
 vim.opt.shiftround = true
 vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
+
+vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
+vim.opt.shortmess:append 'c'
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup("TextYankHighlight", { clear = true }),
@@ -263,7 +268,6 @@ vim.keymap.set({ 'i', 'n' }, '<pageup>', '<nop>')
 -- {{{ Key bindings
 -- Leader mappings
 vim.keymap.set('n', '<leader>as', ':let @"=@/<cr>:%s/\\s\\+$//<cr>:let @/=@"<cr>')
-vim.keymap.set('v', '<leader>ax', 'c<c-r>=<c-r>"<cr><esc>')
 
 vim.keymap.set('n', '<leader>ef', ':e %<cr>')
 vim.keymap.set('n', '<leader>eF', ':e! %<cr>')
