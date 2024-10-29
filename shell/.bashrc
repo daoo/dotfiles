@@ -73,8 +73,11 @@ prompt_daoo() {
 
   local entry="${c_prompt}--${c_white}>"
 
-  local right_length_minus_codes=224
-  local dash_count=$(($(tput cols) + right_length_minus_codes))
+  # local right_no_control
+  # right_no_control=$(echo -n "$right" | sed 's@\\033\[[0-9;]\+m@@g')
+  # local control_count=$((${#right} - ${#right_no_control}))
+  local control_count=224
+  local dash_count=$(($(tput cols) + control_count))
   local right_aligned_spaces
   right_aligned_spaces=$(printf "%*s" "$dash_count" "$right")
   local right_aligned_hyphens=${right_aligned_spaces// /-}
