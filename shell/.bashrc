@@ -1,7 +1,5 @@
 #!/usr/bin/bash
 
-[[ ! $- =~ i ]] && return
-
 # [[[ Config
 export EDITOR='nvim'
 export PAGER="nvim -R -c silent!%sm/\\e.\\{-\\}m//g -"
