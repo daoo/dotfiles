@@ -30,7 +30,11 @@ alias lla='ls -l --almost-all'
 alias '..'='cd ..'
 
 alias g='git'
-alias p="${commands[paru]:-sudo pacman}"
+if command -v paru >/dev/null 2>&1; then
+  alias p='paru'
+else
+  alias p='sudo pacman'
+fi
 
 alias ctl='systemctl'
 alias sctl='sudo systemctl'
