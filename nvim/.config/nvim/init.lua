@@ -161,7 +161,7 @@ require('lazy').setup({
   { 'j-hui/fidget.nvim', lazy = true, config = true },
   {
     'hrsh7th/nvim-cmp',
-    event = { 'InsertEnter', 'CmdlineEnter' },
+    event = { 'InsertEnter' },
     dependencies = {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-calc',
