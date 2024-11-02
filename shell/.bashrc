@@ -23,7 +23,6 @@ shopt -s histappend
 # ]]]
 # [[[ Aliases
 alias ls='ls --classify --si --color=auto --group-directories-first --time-style=long-iso'
-alias l='ls'
 alias ll='ls -l'
 alias la='ls --almost-all'
 alias lla='ls -l --almost-all'

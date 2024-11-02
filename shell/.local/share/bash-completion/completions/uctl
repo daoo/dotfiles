@@ -1,0 +1,3 @@
+source /usr/share/bash-completion/completions/systemctl
+
+complete -F _systemctl uctl
