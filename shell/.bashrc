@@ -69,7 +69,7 @@ prompt_daoo() {
 
   local right_1="${l_paren}${c_white}${?}${pipe}${c_white}b${r_paren}"
   local right_2="${l_bracket}${c_white}${date}${pipe}${c_white}${time}${r_bracket}"
-  local right_3="${l_paren}${c_white}${USERNAME}${at_char}${c_white}${hostname}${r_paren}"
+  local right_3="${l_paren}${c_white}${USER}${at_char}${c_white}${hostname}${r_paren}"
   local right="${c_prompt}-${right_1}${c_prompt}-${right_2}${c_prompt}-${right_3}${c_prompt}-"
 
   local entry="${c_prompt}--${c_white}>"
