@@ -50,6 +50,7 @@ prompt_daoo() {
   printf -v time '%(%H:%M:%S)T' -1
   local directory="${PWD/#$HOME/\~}"
   local hostname="${HOSTNAME/.lan/}"
+  local env="${BASH:+b}${TMUX:+t}${SSH_CLIENT:+s}"
 
   local color="${BASH_COLOR:-235;219;178}"
   local c_prompt="\033[1;38;2;${color}m"
@@ -67,7 +68,7 @@ prompt_daoo() {
   local left_1="${l_paren}${c_directory}${directory}${r_paren}"
   local left="${c_prompt}-${left_1}${c_prompt}-"
 
-  local right_1="${l_paren}${c_white}${?}${pipe}${c_white}b${r_paren}"
+  local right_1="${l_paren}${c_white}${?}${pipe}${c_white}${env}${r_paren}"
   local right_2="${l_bracket}${c_white}${date}${pipe}${c_white}${time}${r_bracket}"
   local right_3="${l_paren}${c_white}${USER}${at_char}${c_white}${hostname}${r_paren}"
   local right="${c_prompt}-${right_1}${c_prompt}-${right_2}${c_prompt}-${right_3}${c_prompt}-"
