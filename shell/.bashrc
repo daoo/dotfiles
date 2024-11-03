@@ -20,6 +20,7 @@ HISTCONTROL='erasedups:ignoreboth'
 HISTIGNORE='cd:l:ls:ll:la:lla:fc:fh:fg:bg:g st:g lg:g ap:g ci:g df:..:history'
 PROMPT_COMMAND='history -a; history -n'
 shopt -s histappend
+shopt -s histverify
 # ]]]
 # [[[ Aliases
 alias ls='ls --classify --si --color=auto --group-directories-first --time-style=long-iso'
