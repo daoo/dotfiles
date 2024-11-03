@@ -53,10 +53,10 @@ prompt_daoo() {
   local env="${BASH:+b}${TMUX:+t}${SSH_CLIENT:+s}"
 
   local color="${BASH_COLOR:-235;219;178}"
-  local c_prompt="\033[1;38;2;${color}m"
-  local c_directory="\033[1;35m"
-  local c_separator="\033[1;90m"
-  local c_white="\033[0m"
+  local c_prompt="\001\033[1;38;2;${color}m\002"
+  local c_directory="\001\033[1;35m\002"
+  local c_separator="\001\033[1;90m\002"
+  local c_white="\001\033[0m\002"
 
   local l_bracket="${c_separator}["
   local r_bracket="${c_separator}]"
@@ -71,23 +71,23 @@ prompt_daoo() {
   local right_1="${l_paren}${c_white}${?}${pipe}${c_white}${env}${r_paren}"
   local right_2="${l_bracket}${c_white}${date}${pipe}${c_white}${time}${r_bracket}"
   local right_3="${l_paren}${c_white}${USER}${at_char}${c_white}${hostname}${r_paren}"
-  local right="${c_prompt}-${right_1}${c_prompt}-${right_2}${c_prompt}-${right_3}${c_prompt}-"
+  local right="-${right_1}${c_prompt}-${right_2}${c_prompt}-${right_3}${c_prompt}-"
 
   local entry="${c_prompt}--${c_white}> "
 
   # local right_no_control
-  # right_no_control=$(echo -n "$right" | sed 's@\\033\[[0-9;]\+m@@g')
+  # right_no_control=$(echo -n "$right" | sed 's@\\001\\033\[[0-9;]\+m\\002@@g')
   # local left_no_control
-  # left_no_control=$(echo -n "$left" | sed 's@\\033\[[0-9;]\+m@@g')
+  # left_no_control=$(echo -n "$left" | sed 's@\\001\\033\[[0-9;]\+m\\002@@g')
   # echo $((${#right} - ${#right_no_control}))
   # echo $((${#left} - ${#left_no_control}))
-  local left_char_count=$((${#left} - 76))
-  local right_char_count=$((${#right} - 224))
+  local left_char_count=$((${#left} - 116))
+  local right_char_count=$((${#right} - 345))
   local padding_length=$(($(tput cols) - left_char_count - right_char_count))
   local padding
   padding=$(printf "%*s" "$padding_length" "")
   padding=${padding// /-}
-  PS1="${left}${c_prompt}${padding}${right}${entry}"
+  PS1="${left}${padding}${right}\n${entry}"
 }
 PROMPT_COMMAND="${PROMPT_COMMAND}; prompt_title; prompt_daoo"
 # ]]]
