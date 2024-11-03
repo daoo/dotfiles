@@ -72,17 +72,21 @@ prompt_daoo() {
   local right_3="${l_paren}${c_white}${USER}${at_char}${c_white}${hostname}${r_paren}"
   local right="${c_prompt}-${right_1}${c_prompt}-${right_2}${c_prompt}-${right_3}${c_prompt}-"
 
-  local entry="${c_prompt}--${c_white}>"
+  local entry="${c_prompt}--${c_white}> "
 
   # local right_no_control
   # right_no_control=$(echo -n "$right" | sed 's@\\033\[[0-9;]\+m@@g')
-  # local control_count=$((${#right} - ${#right_no_control}))
-  local control_count=224
-  local dash_count=$(($(tput cols) + control_count))
-  local right_aligned_spaces
-  right_aligned_spaces=$(printf "%*s" "$dash_count" "$right")
-  local right_aligned_hyphens=${right_aligned_spaces// /-}
-  PS1=$(printf "%s\r%s\n%s " "${c_prompt}${right_aligned_hyphens}" "$left" "$entry")
+  # local left_no_control
+  # left_no_control=$(echo -n "$left" | sed 's@\\033\[[0-9;]\+m@@g')
+  # echo $((${#right} - ${#right_no_control}))
+  # echo $((${#left} - ${#left_no_control}))
+  local left_char_count=$((${#left} - 76))
+  local right_char_count=$((${#right} - 224))
+  local padding_length=$(($(tput cols) - left_char_count - right_char_count))
+  local padding
+  padding=$(printf "%*s" "$padding_length" "")
+  padding=${padding// /-}
+  PS1="${left}${c_prompt}${padding}${right}${entry}"
 }
 PROMPT_COMMAND="${PROMPT_COMMAND}; prompt_title; prompt_daoo"
 # ]]]
