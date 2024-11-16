@@ -46,12 +46,14 @@ prompt_title() {
   echo -ne "\033]0;${PWD/#$HOME/\~}\007"
 }
 
+export BASH_LEVEL="${BASH_LEVEL:-}b"
+
 prompt_daoo() {
   printf -v date '%(%y-%m-%d)T' -1
   printf -v time '%(%H:%M:%S)T' -1
   local directory="${PWD/#$HOME/\~}"
   local hostname="${HOSTNAME/.lan/}"
-  local env="${BASH:+b}${TMUX:+t}${SSH_CLIENT:+s}"
+  local env="b${#BASH_LEVEL}${TMUX:+t}${SSH_CLIENT:+s}"
 
   local color="${BASH_COLOR:-235;219;178}"
   local c_prompt="\001\033[1;38;2;${color}m\002"
