@@ -53,7 +53,9 @@ prompt_daoo() {
   printf -v time '%(%H:%M:%S)T' -1
   local directory="${PWD/#$HOME/\~}"
   local hostname="${HOSTNAME/.lan/}"
-  local env="b${#BASH_LEVEL}${TMUX:+t}${SSH_CLIENT:+s}"
+  local haskell_env
+  haskell_env=$([[ $PATH = *.cabal/bin* ]] && echo "h")
+  local env="b${#BASH_LEVEL}${TMUX:+t}${SSH_CLIENT:+s}${haskell_env}"
 
   local color="${BASH_COLOR:-235;219;178}"
   local c_prompt="\001\033[1;38;2;${color}m\002"
