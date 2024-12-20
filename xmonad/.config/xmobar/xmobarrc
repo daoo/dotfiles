@@ -1,7 +1,7 @@
 Config
   { font = "Liberation Mono 10"
-  , bgColor = "#1d2021"
-  , fgColor = "#fbf1c7"
+  , bgColor = "#1e1e2e"
+  , fgColor = "#cdd6f4"
   , alpha = 255
   , position = Bottom
   , border = NoBorder
