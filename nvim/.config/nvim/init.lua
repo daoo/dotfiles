@@ -24,14 +24,15 @@ require('lazy').setup({
   { 'aklt/plantuml-syntax', event = 'VeryLazy' },
   { 't9md/vim-quickhl',     event = 'VeryLazy' },
   {
-    'ellisonleao/gruvbox.nvim',
+    "catppuccin/nvim",
     config = function()
-      require('gruvbox').setup({
-        italic = { strings = false, comments = false, folds = false },
-        contrast = 'hard'
+      require('catppuccin').setup({
+        integrations = {
+          blink_cmp = true,
+          fidget = true,
+        }
       })
-      vim.opt.background = 'dark'
-      vim.cmd.colorscheme('gruvbox')
+      vim.cmd.colorscheme('catppuccin-mocha')
     end
   },
   {
