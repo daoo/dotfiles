@@ -94,12 +94,11 @@ require('lazy').setup({
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'j-hui/fidget.nvim',
-      'hrsh7th/cmp-nvim-lsp',
+      'saghen/blink.cmp',
     },
     config = function()
       local lspconfig = require('lspconfig')
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local opts = { capabilities = capabilities }
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       local function detect_python_venv()
         local venv_path = vim.fs.dirname(vim.fn.fnamemodify('.venv', ':p'))
@@ -140,16 +139,16 @@ require('lazy').setup({
         })
       end
       if vim.fn.executable('lua-language-server') == 1 then
-        lspconfig.lua_ls.setup(opts)
+        lspconfig.lua_ls.setup({ capabilities = capabilities })
       end
       if vim.fn.executable('rust-analyzer') == 1 then
-        lspconfig.rust_analyzer.setup(opts)
+        lspconfig.rust_analyzer.setup({ capabilities = capabilities })
       end
       if vim.fn.executable('asm-lsp') == 1 then
-        lspconfig.asm_lsp.setup(opts)
+        lspconfig.asm_lsp.setup({ capabilities = capabilities })
       end
       if vim.fn.executable('bash-language-server') == 1 then
-        lspconfig.bashls.setup(opts)
+        lspconfig.bashls.setup({ capabilities = capabilities })
       end
       if vim.fn.executable('omnisharp') == 1 then
         lspconfig.omnisharp.setup({
@@ -161,48 +160,12 @@ require('lazy').setup({
   },
   { 'j-hui/fidget.nvim', lazy = true, config = true },
   {
-    'hrsh7th/nvim-cmp',
-    event = { 'InsertEnter' },
-    dependencies = {
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-calc',
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-nvim-lsp-signature-help',
-      'hrsh7th/cmp-nvim-lua',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-vsnip',
-      'hrsh7th/vim-vsnip',
-    },
-    config = function()
-      local cmp = require('cmp')
-
-      cmp.setup({
-        completion = {
-          autocomplete = false
-        },
-        snippet = {
-          expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body)
-          end,
-        },
-        mapping = cmp.mapping.preset.insert({
-          ['<c-u>'] = cmp.mapping.scroll_docs(-4),
-          ['<c-d>'] = cmp.mapping.scroll_docs(4),
-          ['<c-space>'] = cmp.mapping.complete(),
-          ['<cr>'] = cmp.mapping.confirm({ select = true }),
-        }),
-        sources = cmp.config.sources(
-          { { name = 'path' } },
-          {
-            { name = 'calc' },
-            { name = 'nvim_lsp' },
-            { name = 'nvim_lsp_signature_help' },
-            { name = 'vsnip' },
-          },
-          { { name = 'buffer' } }
-        )
-      })
-    end
+    'saghen/blink.cmp',
+    version = 'v0.*',
+    lazy = false,
+    opts = {
+      keymap = { preset = 'super-tab' },
+    }
   },
   {
     'saecki/crates.nvim',
