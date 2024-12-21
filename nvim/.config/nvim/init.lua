@@ -26,11 +26,6 @@ require('lazy').setup({
   {
     'ellisonleao/gruvbox.nvim',
     config = function()
-      require('gruvbox').setup({
-        italic = { strings = false, comments = false, folds = false },
-        contrast = 'hard'
-      })
-      vim.opt.background = 'dark'
       vim.cmd.colorscheme('gruvbox')
     end
   },
