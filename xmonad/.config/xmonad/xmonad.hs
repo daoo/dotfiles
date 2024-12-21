@@ -47,28 +47,26 @@ myLayoutHook = onWorkspace "7" fullScreen normal
     fullScreen = noBorders Full
     tall = Tall 1 (3%100) (1%2)
 
-colorRed, colorLavender, colorBlue, colorMauve :: String
-colorRed      = "#f38ba8"
-colorLavender = "#b4befe"
-colorBlue     = "#89b4fa"
-colorMauve    = "#cba6f7"
+colorRed, colorGreen, colorBlue, colorPurple :: String
+colorRed    = "#cc241d"
+colorGreen  = "#b8bb26"
+colorBlue   = "#458588"
+colorPurple = "#b16286"
 
-colorBase, colorText, colorCrust, colorSubtext0, colorOverlay1 :: String
-colorBase     = "#1e1e2e"
-colorText     = "#cdd6f4"
-colorCrust    = "#11111b"
-colorSubtext0 = "#a6adc8"
-colorOverlay1 = "#7f849c"
+colorBackground, colorForeground, colorForegroundDark :: String
+colorBackground     = "#1d2021"
+colorForeground     = "#fbf1c7"
+colorForegroundDark = "#757575"
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "NSP"]
 
 myPP :: Handle -> PP
 myPP handle = filterOutWsPP ["NSP"] def
-  { ppCurrent = xmobarColor colorCrust colorBlue . wrapWS
-  , ppHiddenNoWindows = xmobarColor colorOverlay1 colorBase . wrapWS
-  , ppUrgent = xmobarColor colorCrust colorRed . wrapWS
-  , ppVisible = xmobarColor colorCrust colorMauve . wrapWS
+  { ppCurrent = xmobarColor colorForeground colorBlue . wrapWS
+  , ppHiddenNoWindows = xmobarColor colorForegroundDark colorBackground . wrapWS
+  , ppUrgent = xmobarColor colorForeground colorRed . wrapWS
+  , ppVisible = xmobarColor colorForeground colorPurple . wrapWS
   , ppHidden = wrapWS
   , ppTitle = wrap " " ""
   , ppLayout = wrapWS
@@ -206,8 +204,8 @@ main = do
     , workspaces         = myWorkspaces
     , layoutHook         = myLayoutHook
     , terminal           = "alacritty"
-    , normalBorderColor  = colorOverlay1
-    , focusedBorderColor = colorLavender
+    , normalBorderColor  = colorBackground
+    , focusedBorderColor = colorGreen
     , modMask            = myModKey
     , keys               = const myKeyMaps
     , logHook            = dynamicLogWithPP (myPP hxmobar)
