@@ -18,7 +18,7 @@ HISTSIZE=100000
 HISTFILESIZE=1000000
 HISTCONTROL='erasedups:ignoreboth'
 HISTIGNORE='cd:l:ls:ll:la:lla:fc:fh:fg:bg:g st:g lg:g ap:g ci:g df:..:history'
-PROMPT_COMMAND='history -a; history -n'
+PROMPT_COMMAND='history -a'
 shopt -s histappend
 shopt -s histverify
 # ]]]
