@@ -36,14 +36,5 @@ yellow = "#d79921"
 background = "#1d2021"
 foreground = "#ebdbb2"
 
-[font.bold]
-family = "Inconsolata"
-
-[font.bold_italic]
-family = "Inconsolata"
-
-[font.italic]
-family = "Inconsolata"
-
-[font.normal]
-family = "Inconsolata"
+[font]
+normal = { family = "Inconsolata" }
