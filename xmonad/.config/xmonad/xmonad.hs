@@ -209,6 +209,7 @@ main = do
   safeSpawn "feh" ["--no-fehbg", "--bg-tile", "media/wallpaper"]
   safeSpawn "xsetroot" ["-cursor_name", "left_ptr"]
   safeSpawn "setxkbmap" ["dvoormak"]
+  safeSpawn "xinput" ["set-prop", "11", "Coordinate Transformation Matrix", "0.5 0 0  0 0.5 0  0 0 1"]
   safeSpawnProg "workrave"
   hxmobar <- spawnPipe "xmobar .config/xmobar/xmobarrc"
 
