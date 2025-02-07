@@ -150,6 +150,18 @@ require('lazy').setup({
           capabilities = capabilities
         })
       end
+      if vim.fn.executable('vscode-json-language-server') == 1 then
+        lspconfig.jsonls.setup({ capabilities = capabilities })
+      end
+      if vim.fn.executable('vscode-html-language-server') == 1 then
+        lspconfig.html.setup({ capabilities = capabilities })
+      end
+      if vim.fn.executable('vscode-css-language-server') == 1 then
+        lspconfig.cssls.setup({ capabilities = capabilities })
+      end
+      if vim.fn.executable('vscode-eslint-language-server') == 1 then
+        lspconfig.eslint.setup({ capabilities = capabilities })
+      end
     end
   },
   { 'j-hui/fidget.nvim', lazy = true, config = true },
