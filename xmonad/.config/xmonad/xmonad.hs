@@ -206,6 +206,7 @@ myKeyMaps = fromList
 
 main :: IO ()
 main = do
+  safeSpawn "autorandr" ["--change"]
   safeSpawn "feh" ["--no-fehbg", "--bg-tile", "media/wallpaper"]
   safeSpawn "xsetroot" ["-cursor_name", "left_ptr"]
   safeSpawn "setxkbmap" ["dvoormak"]
