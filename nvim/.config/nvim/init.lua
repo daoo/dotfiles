@@ -94,48 +94,26 @@ require('lazy').setup({
       local lspconfig = require('lspconfig')
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      if vim.fn.executable('ruff') == 1 then
-        lspconfig.ruff.setup({ capabilities = capabilities })
+      local checked_setup = function(exe, server, extra)
+        if vim.fn.executable(exe) == 1 then
+          local default = { capabilities = capabilities }
+          local args = extra ~= nil and vim.tbl_extend('error', default, extra) or default
+          server.setup(args)
+        end
       end
-      if vim.fn.executable('pyright') == 1 then
-        lspconfig.pyright.setup({ capabilities = capabilities })
-      end
-      if vim.fn.executable('haskell-language-server-wrapper') == 1 then
-        lspconfig.hls.setup({
-          filetypes = { 'haskell', 'lhaskell', 'cabal' },
-          capabilities = capabilities
-        })
-      end
-      if vim.fn.executable('lua-language-server') == 1 then
-        lspconfig.lua_ls.setup({ capabilities = capabilities })
-      end
-      if vim.fn.executable('rust-analyzer') == 1 then
-        lspconfig.rust_analyzer.setup({ capabilities = capabilities })
-      end
-      if vim.fn.executable('asm-lsp') == 1 then
-        lspconfig.asm_lsp.setup({ capabilities = capabilities })
-      end
-      if vim.fn.executable('bash-language-server') == 1 then
-        lspconfig.bashls.setup({ capabilities = capabilities })
-      end
-      if vim.fn.executable('omnisharp') == 1 then
-        lspconfig.omnisharp.setup({
-          cmd = { 'omnisharp' },
-          capabilities = capabilities
-        })
-      end
-      if vim.fn.executable('vscode-json-language-server') == 1 then
-        lspconfig.jsonls.setup({ capabilities = capabilities })
-      end
-      if vim.fn.executable('vscode-html-language-server') == 1 then
-        lspconfig.html.setup({ capabilities = capabilities })
-      end
-      if vim.fn.executable('vscode-css-language-server') == 1 then
-        lspconfig.cssls.setup({ capabilities = capabilities })
-      end
-      if vim.fn.executable('vscode-eslint-language-server') == 1 then
-        lspconfig.eslint.setup({ capabilities = capabilities })
-      end
+
+      checked_setup('asm-lsp', lspconfig.asm_lsp)
+      checked_setup('bash-language-server', lspconfig.bashls)
+      checked_setup('eslint', lspconfig.eslint)
+      checked_setup('haskell-language-server-wrapper', lspconfig.hls, { filetypes = { 'haskell', 'lhaskell', 'cabal' } })
+      checked_setup('lua-language-server', lspconfig.lua_ls)
+      checked_setup('omnisharp', lspconfig.omnisharp, { cmd = { 'omnisharp' } })
+      checked_setup('pyright', lspconfig.pyright)
+      checked_setup('ruff', lspconfig.ruff)
+      checked_setup('rust-analyzer', lspconfig.rust_analyzer)
+      checked_setup('vscode-cssls-language-server', lspconfig.cssls)
+      checked_setup('vscode-html-language-server', lspconfig.html)
+      checked_setup('vscode-json-language-server', lspconfig.jsonls)
     end
   },
   { 'j-hui/fidget.nvim', lazy = true, config = true },
