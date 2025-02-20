@@ -104,6 +104,7 @@ require('lazy').setup({
 
       checked_setup('asm-lsp', lspconfig.asm_lsp)
       checked_setup('bash-language-server', lspconfig.bashls)
+      checked_setup('clangd', lspconfig.clangd)
       checked_setup('eslint', lspconfig.eslint)
       checked_setup('haskell-language-server-wrapper', lspconfig.hls, { filetypes = { 'haskell', 'lhaskell', 'cabal' } })
       checked_setup('lua-language-server', lspconfig.lua_ls)
