@@ -94,38 +94,12 @@ require('lazy').setup({
       local lspconfig = require('lspconfig')
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      local function detect_python_venv()
-        local venv_path = vim.fs.dirname(vim.fn.fnamemodify('.venv', ':p'))
-        if not vim.fn.isdirectory(venv_path) then
-          return nil
-        end
-        local bin_dir = vim.fn.has('win64') == 1 and 'Scripts' or 'bin'
-        local bin_path = vim.fs.joinpath(venv_path, bin_dir)
-        local path = vim.fn.getenv('PATH')
-        local root = vim.fs.basename(vim.fs.dirname(venv_path))
-        if not string.find(path, bin_path) then
-          local path_sep = vim.fn.has('win64') == 1 and ';' or ':'
-          path = bin_path .. path_sep .. path
-        end
-
-        return {
-          PATH = path,
-          VIRTUAL_ENV = venv_path,
-          VIRTUAL_ENV_BIN = bin_path,
-          VIRTUAL_ENV_PROMPT = root,
-        }
+      if vim.fn.executable('ruff') == 1 then
+        lspconfig.ruff.setup({ capabilities = capabilities })
       end
-
-      local venv_env = detect_python_venv()
-      if venv_env ~= nil then
-        if vim.fn.executable(vim.fs.joinpath(venv_env['VIRTUAL_ENV_BIN'], 'ruff')) == 1 then
-          lspconfig.ruff.setup({ cmd_env = venv_env, capabilities = capabilities })
-        end
-        if vim.fn.executable(vim.fs.joinpath(venv_env['VIRTUAL_ENV_BIN'], 'pyright')) == 1 then
-          lspconfig.pyright.setup({ cmd_env = venv_env, capabilities = capabilities })
-        end
+      if vim.fn.executable('pyright') == 1 then
+        lspconfig.pyright.setup({ capabilities = capabilities })
       end
-
       if vim.fn.executable('haskell-language-server-wrapper') == 1 then
         lspconfig.hls.setup({
           filetypes = { 'haskell', 'lhaskell', 'cabal' },
