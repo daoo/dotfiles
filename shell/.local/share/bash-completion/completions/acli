@@ -1,0 +1,3 @@
+source /usr/share/bash-completion/completions/_arduino-cli arduino-cli
+
+complete -F __start_arduino-cli acli

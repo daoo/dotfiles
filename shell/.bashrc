@@ -37,6 +37,8 @@ else
   alias p='sudo pacman'
 fi
 
+alias acli='arduino-cli'
+
 alias ctl='systemctl'
 alias sctl='sudo systemctl'
 alias uctl='systemctl --user'
