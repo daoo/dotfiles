@@ -6,6 +6,10 @@ export PAGER="nvim -R -c silent!%sm/\\e.\\{-\\}m//g -"
 export MANPAGER="nvim +Man!"
 export FZF_DEFAULT_COMMAND='rg --files'
 
+GPG_TTY=$(tty)
+export GPG_TTY
+gpg-connect-agent updatestartuptty /bye >/dev/null
+
 # Disable ctrl-q and ctrl-s
 stty -ixon
 
