@@ -112,6 +112,7 @@ require('lazy').setup({
       checked_setup('pyright', lspconfig.pyright)
       checked_setup('ruff', lspconfig.ruff)
       checked_setup('rust-analyzer', lspconfig.rust_analyzer)
+      checked_setup('systemd-language-server', lspconfig.systemd_ls)
       checked_setup('vscode-css-language-server', lspconfig.cssls)
       checked_setup('vscode-html-language-server', lspconfig.html)
       checked_setup('vscode-json-language-server', lspconfig.jsonls)
