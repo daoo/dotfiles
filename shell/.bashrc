@@ -13,9 +13,11 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 # Disable ctrl-q and ctrl-s
 stty -ixon
 
-# Use bash-completion, if available
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] &&
-  . /usr/share/bash-completion/bash_completion
+  source /usr/share/bash-completion/bash_completion
+
+[[ $PS1 && -f /usr/share/fzf/key-bindings.bash ]] &&
+  source /usr/share/fzf/key-bindings.bash
 # ]]]
 # [[[ History
 HISTSIZE=100000
