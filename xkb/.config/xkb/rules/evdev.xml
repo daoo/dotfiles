@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xkbConfigRegistry SYSTEM "xkb.dtd">
+<xkbConfigRegistry version="1.1">
+  <layoutList>
+    <layout>
+      <configItem>
+        <name>dvoormak</name>
+        <shortDescription>dvmk</shortDescription>
+        <description>Dvoormak</description>
+      </configItem>
+    </layout>
+    <layout>
+      <configItem>
+        <name>usswe</name>
+        <shortDescription>uswe</shortDescription>
+        <description>US-Swedish Hybrid Layout</description>
+      </configItem>
+    </layout>
+  </layoutList>
+</xkbConfigRegistry>
