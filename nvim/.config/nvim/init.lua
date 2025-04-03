@@ -130,6 +130,7 @@ require('lazy').setup({
       checked_setup('vscode-css-language-server', lspconfig.cssls)
       checked_setup('vscode-html-language-server', lspconfig.html)
       checked_setup('vscode-json-language-server', lspconfig.jsonls)
+      checked_setup('yaml-language-server', lspconfig.yamlls)
     end
   },
   { 'j-hui/fidget.nvim', lazy = true, config = true },
