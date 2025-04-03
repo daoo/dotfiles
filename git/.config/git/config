@@ -40,26 +40,11 @@
 
 [color]
   pager = false
-  ui = true
 
-[push]
-  default = simple
-
-[diff]
-  tool = nvim -d
-
-[merge]
-  tool = nvim -d
-
-[difftool]
-  prompt = false
+[init]
+  defaultBranch = main
 
 [pager]
   log = nvim -R -
   show = nvim -R -
   diff = nvim -R -
-
-[interactive]
-  diffFilter = /usr/share/git/diff-highlight/diff-highlight
-[init]
-	defaultBranch = main
