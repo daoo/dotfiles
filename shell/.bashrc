@@ -63,7 +63,7 @@ prompt_daoo() {
   local hostname="${HOSTNAME/.lan/}"
   local haskell_env
   haskell_env=$([[ $PATH = *.cabal/bin* ]] && echo "h")
-  local env="b${#BASH_LEVEL}${TMUX:+t}${SSH_CLIENT:+s}${haskell_env}"
+  local env="b${#BASH_LEVEL}${TMUX:+t}${SSH_CLIENT:+s}${LF_LEVEL:+l}${haskell_env}"
 
   local color="${BASH_COLOR:-235;219;178}"
   local c_prompt="\001\033[1;38;2;${color}m\002"
