@@ -177,11 +177,12 @@ vim.opt.cursorline = true
 vim.opt.foldenable = false
 vim.opt.list = true
 vim.opt.mouse = ''
-vim.opt.wrap = false
 vim.opt.number = false
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 1
 vim.opt.sidescrolloff = 5
+vim.opt.winborder = 'single'
+vim.opt.wrap = false
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
