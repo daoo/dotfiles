@@ -136,7 +136,7 @@ require('lazy').setup({
   { 'j-hui/fidget.nvim', lazy = true, config = true },
   {
     'saghen/blink.cmp',
-    version = 'v0.*',
+    version = 'v1.*',
     lazy = false,
     opts = {
       keymap = { preset = 'super-tab' },
