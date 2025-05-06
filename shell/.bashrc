@@ -2,9 +2,10 @@
 
 # [[[ Config
 export EDITOR='nvim'
-export PAGER="nvim -R -c silent!%sm/\\e.\\{-\\}m//g -"
+export PAGER="less"
 export MANPAGER="nvim +Man!"
 export FZF_DEFAULT_COMMAND='rg --files'
+export LESS="-F -R -M -i -j5"
 
 GPG_TTY=$(tty)
 export GPG_TTY
