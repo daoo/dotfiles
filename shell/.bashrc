@@ -19,6 +19,9 @@ stty -ixon
 
 [[ $PS1 && -f /usr/share/fzf/key-bindings.bash ]] &&
   source /usr/share/fzf/key-bindings.bash
+
+[[ -f /home/daniel/.local/bin/mise ]] &&
+  eval "$(/home/daniel/.local/bin/mise activate bash)"
 # ]]]
 # [[[ History
 HISTSIZE=100000

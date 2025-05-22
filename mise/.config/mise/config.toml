@@ -1,0 +1,24 @@
+[tools]
+bun = "latest"
+"cargo:cargo-show-asm" = "latest"
+lua-language-server = "latest"
+node = "latest"
+"npm:bash-language-server" = "latest"
+"npm:vscode-langservers-extracted" = "latest"
+"npm:yaml-language-server" = "latest"
+"pipx:pyright" = "latest"
+"pipx:ruff" = "latest"
+"pipx:systemd-language-server" = "latest"
+python = "latest"
+shellcheck = "latest"
+shfmt = "latest"
+usage = "latest"
+uv = "latest"
+
+[settings]
+
+[settings.npm]
+bun = true
+
+[settings.pipx]
+uvx = true
