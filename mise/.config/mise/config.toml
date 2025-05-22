@@ -1,5 +1,6 @@
 [tools]
 bun = "latest"
+"cargo:asm-lsp" = "latest"
 "cargo:cargo-show-asm" = "latest"
 lua-language-server = "latest"
 node = "latest"
@@ -14,6 +15,7 @@ shellcheck = "latest"
 shfmt = "latest"
 usage = "latest"
 uv = "latest"
+watchexec = "latest"
 
 [settings]
 
