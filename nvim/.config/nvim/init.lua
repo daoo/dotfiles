@@ -33,6 +33,24 @@ require('lazy').setup({
       end, {})
     end
   },
+  {
+    "christoomey/vim-tmux-navigator",
+    cmd = {
+      "TmuxNavigateLeft",
+      "TmuxNavigateDown",
+      "TmuxNavigateUp",
+      "TmuxNavigateRight",
+      "TmuxNavigatePrevious",
+      "TmuxNavigatorProcessList",
+    },
+    keys = {
+      { "<c-h>",  "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<c-j>",  "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<c-k>",  "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<c-l>",  "<cmd><C-U>TmuxNavigateRight<cr>" },
+      { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+    },
+  },
 
   -- Looks
   { 'aklt/plantuml-syntax', event = 'VeryLazy' },
@@ -236,20 +254,6 @@ vim.keymap.set({ 'n', 'v' }, '<leader>m', '<plug>(quickhl-manual-this)')
 
 vim.keymap.set('n', '<leader>se', ':setlocal spelllang=en<cr>')
 vim.keymap.set('n', '<leader>ss', ':setlocal spelllang=sv<cr>')
-
--- Window navigation
-vim.keymap.set('n', '<c-left>', '<c-w>5>')
-vim.keymap.set('n', '<c-down>', '<c-w>5-')
-vim.keymap.set('n', '<c-up>', '<c-w>5+')
-vim.keymap.set('n', '<c-right>', '<c-w>5<')
-vim.keymap.set('n', '<c-h>', '<c-w>h')
-vim.keymap.set('n', '<c-j>', '<c-w>j')
-vim.keymap.set('n', '<c-k>', '<c-w>k')
-vim.keymap.set('n', '<c-l>', '<c-w>l')
-vim.keymap.set('n', '<m-h>', '<c-w>v')
-vim.keymap.set('n', '<m-j>', '<c-w>s<c-w>j')
-vim.keymap.set('n', '<m-k>', '<c-w>s')
-vim.keymap.set('n', '<m-l>', '<c-w>v<c-w>l')
 
 -- File handling
 vim.keymap.set('i', '<c-s>', '<c-o>:write<cr>')
