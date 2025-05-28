@@ -1,4 +1,5 @@
 [tools]
+bat = "latest"
 bun = "latest"
 "cargo:asm-lsp" = "latest"
 "cargo:cargo-show-asm" = "latest"
