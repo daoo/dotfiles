@@ -27,7 +27,7 @@ stty -ixon
 HISTSIZE=100000
 HISTFILESIZE=1000000
 HISTCONTROL='erasedups:ignoreboth'
-HISTIGNORE='cd:l:ls:ll:la:lla:fc:fh:fg:bg:g st:g lg:g ap:g ci:g df:..:history'
+HISTIGNORE='cd:l:ls:ll:la:lla:fc:fh:fg:bg:g st:g lg:g ap:g ci:g df:..:history:ctl poweroff'
 PROMPT_COMMAND='history -a'
 shopt -s histappend
 shopt -s histverify
