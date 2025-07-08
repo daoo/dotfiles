@@ -124,44 +124,29 @@ require('lazy').setup({
   {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPre', 'BufNewFile' },
-    dependencies = {
-      'j-hui/fidget.nvim',
-      'saghen/blink.cmp',
-    },
+    dependencies = { 'j-hui/fidget.nvim' },
     config = function()
-      local lspconfig = require('lspconfig')
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
-
-      local checked_setup = function(exe, server, extra)
-        if vim.fn.executable(exe) == 1 then
-          local default = { capabilities = capabilities }
-          local args = extra ~= nil and vim.tbl_extend('error', default, extra) or default
-          server.setup(args)
-        end
-      end
-
-      checked_setup('asm-lsp', lspconfig.asm_lsp)
-      checked_setup('bash-language-server', lspconfig.bashls)
-      checked_setup('clangd', lspconfig.clangd)
-      checked_setup('haskell-language-server-wrapper', lspconfig.hls, { filetypes = { 'haskell', 'lhaskell', 'cabal' } })
-      checked_setup('lua-language-server', lspconfig.lua_ls)
-      checked_setup('omnisharp', lspconfig.omnisharp, { cmd = { 'omnisharp' } })
-      checked_setup('pyright', lspconfig.pyright)
-      checked_setup('ruff', lspconfig.ruff)
-      checked_setup('rust-analyzer', lspconfig.rust_analyzer)
-      checked_setup('systemd-language-server', lspconfig.systemd_ls)
-      checked_setup('vscode-css-language-server', lspconfig.cssls)
-      checked_setup('vscode-eslint-language-server', lspconfig.eslint)
-      checked_setup('vscode-html-language-server', lspconfig.html)
-      checked_setup('vscode-json-language-server', lspconfig.jsonls)
-      checked_setup('yaml-language-server', lspconfig.yamlls)
+      vim.lsp.enable('asm_lsp')
+      vim.lsp.enable('bashls')
+      vim.lsp.enable('clangd')
+      vim.lsp.enable('hls')
+      vim.lsp.enable('lua_ls')
+      vim.lsp.enable('omnisharp')
+      vim.lsp.enable('pyright')
+      vim.lsp.enable('ruff')
+      vim.lsp.enable('rust_analyzer')
+      vim.lsp.enable('systemd_ls')
+      vim.lsp.enable('cssls')
+      vim.lsp.enable('eslint')
+      vim.lsp.enable('html')
+      vim.lsp.enable('jsonls')
+      vim.lsp.enable('yamlls')
     end
   },
   { 'j-hui/fidget.nvim', lazy = true, config = true },
   {
     'saghen/blink.cmp',
     version = 'v1.*',
-    lazy = false,
     opts = {
       keymap = { preset = 'super-tab' },
     }
