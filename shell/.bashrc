@@ -5,6 +5,7 @@ export EDITOR='nvim'
 export PAGER="less"
 export MANPAGER="nvim +Man!"
 export FZF_DEFAULT_COMMAND='rg --files'
+export FZF_CTRL_R_OPTS='--bind "ctrl-x:execute-silent(echo {2..} >> ~/.bash_history_filter)"'
 export LESS="-F -R -M -i -j5"
 
 GPG_TTY=$(tty)
@@ -24,10 +25,17 @@ stty -ixon
   eval "$(/home/daniel/.local/bin/mise activate bash)"
 # ]]]
 # [[[ History
-HISTSIZE=100000
+HISTSIZE=1000000
 HISTFILESIZE=1000000
-HISTCONTROL='erasedups:ignoreboth'
-HISTIGNORE='cd:l:ls:ll:la:lla:fc:fh:fg:bg:g st:g lg:g ap:g ci:g df:..:history:ctl poweroff'
+HISTCONTROL='erasedups:ignorespace'
+HISTIGNORE='cd:l:ls:ll:la:lla:fc:fh:fg:bg:g st:g lg:g ap:g ci:g df:..:history:*poweroff:*reboot'
+filter_history() {
+  history -a
+  content="$(rg --file="$HOME/.bash_history_filter" --invert-match "$HOME/.bash_history")"
+  echo "$content" >~/.bash_history
+  history -c
+  history -r
+}
 PROMPT_COMMAND='history -a'
 shopt -s histappend
 shopt -s histverify
