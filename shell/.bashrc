@@ -28,10 +28,10 @@ stty -ixon
 HISTSIZE=1000000
 HISTFILESIZE=1000000
 HISTCONTROL='erasedups:ignorespace'
-HISTIGNORE='cd:l:ls:ll:la:lla:fc:fh:fg:bg:g st:g lg:g ap:g ci:g df:..:history:*poweroff:*reboot'
+HISTIGNORE='..:cd:l:la:ll:lla:ls:fc:fg:bg:g a .:g ap:g ci:g dc:g df:g fetch:g lg:g p:g pf:g pom:g re .:g st:history:p -Syu:*poweroff:*reboot:lf:nvim:tmux:'
 filter_history() {
   history -a
-  content="$(rg --file="$HOME/.bash_history_filter" --invert-match "$HOME/.bash_history")"
+  content="$(rg --line-regexp --fixed-strings --file="$HOME/.bash_history_filter" --invert-match "$HOME/.bash_history")"
   echo "$content" >~/.bash_history
   history -c
   history -r
