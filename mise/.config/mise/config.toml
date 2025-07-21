@@ -23,6 +23,7 @@ uv = "latest"
 watchexec = "latest"
 
 [settings]
+idiomatic_version_file_enable_tools = []
 
 [settings.npm]
 bun = true
