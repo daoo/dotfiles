@@ -1,11 +1,6 @@
 [tools]
 bat = "latest"
 bun = "latest"
-"cargo:asm-lsp" = "latest"
-"cargo:cargo-edit" = "latest"
-"cargo:cargo-show-asm" = "latest"
-"cargo:counts" = "latest"
-"cargo:flamegraph" = "latest"
 lua-language-server = "latest"
 node = "latest"
 "npm:bash-language-server" = "latest"
