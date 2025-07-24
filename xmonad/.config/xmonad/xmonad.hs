@@ -64,7 +64,7 @@ myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "NSP"]
 myPP :: Handle -> PP
 myPP handle = filterOutWsPP ["NSP"] def
   { ppCurrent = xmobarColor colorForeground colorBlue . wrapWS
-  , ppHiddenNoWindows = xmobarColor colorForegroundDark colorBackground . wrapWS
+  , ppHiddenNoWindows = const ""
   , ppUrgent = xmobarColor colorForeground colorRed . wrapWS
   , ppVisible = xmobarColor colorForeground colorPurple . wrapWS
   , ppHidden = wrapWS
