@@ -8,7 +8,7 @@ if ! systemctl is-active --quiet bluetooth.service; then
   sleep 1
 fi
 
-device="$(bluetoothctl devices | fzf)"
+device="$(bluetoothctl devices | grep "^Device [a-fA-F0-9:]\+" | fzf)"
 if [[ -n "$device" ]]; then
   name="$(cut -d' ' -f 3- <<<"$device")"
   address="$(cut -d' ' -f 2 <<<"$device")"
