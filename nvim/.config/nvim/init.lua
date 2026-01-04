@@ -149,7 +149,7 @@ require('lazy').setup({
       vim.lsp.enable('pyright')
       vim.lsp.enable('ruff')
       vim.lsp.enable('rust_analyzer')
-      vim.lsp.enable('systemd_ls')
+      vim.lsp.enable('systemd_lsp')
       vim.lsp.enable('cssls')
       vim.lsp.enable('eslint')
       vim.lsp.enable('html')
