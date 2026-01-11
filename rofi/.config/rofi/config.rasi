@@ -1,0 +1,7 @@
+configuration {
+    font: "Inconsolata 18";
+    show-icons: true;
+    matching: "fuzzy";
+    terminal: "alacritty";
+}
+@theme "/usr/share/rofi/themes/gruvbox-dark.rasi"

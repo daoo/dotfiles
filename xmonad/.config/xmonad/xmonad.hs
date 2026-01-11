@@ -89,7 +89,7 @@ myKeyMaps :: Map (KeyMask, KeySym) (X ())
 myKeyMaps = fromList
   -- Launching and killing programs
   [ xK_c      ! kill
-  , xK_p      # safeSpawnProg "kupfer"
+  , xK_p      # safeSpawn "rofi" ["-show", "drun"]
   , xK_i      # NS.namedScratchpadAction [scratchpad] (NS.name scratchpad)
   , xK_Return # safeSpawnProg "alacritty"
 
@@ -194,7 +194,6 @@ main = do
   safeSpawn "feh" ["--no-fehbg", "--bg-tile", "media/wallpaper"]
   safeSpawn "xsetroot" ["-cursor_name", "left_ptr"]
   safeSpawn "setxkbmap" ["dvoormak"]
-  safeSpawn "kupfer" ["--no-splash"]
   safeSpawnProg "nextcloud"
   safeSpawnProg "workrave"
   hxmobar <- spawnPipe "xmobar .config/xmobar/xmobarrc"
