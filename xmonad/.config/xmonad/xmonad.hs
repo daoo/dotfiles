@@ -85,6 +85,12 @@ xf86AudioLower = 0x1008ff11
 xf86AudioMute  = 0x1008ff12
 xf86AudioRaise = 0x1008ff13
 
+xf86AudioPlay, xf86AudioStop, xf86AudioPrev, xf86AudioNext :: KeySym
+xf86AudioPlay  = 0x1008ff14
+xf86AudioStop  = 0x1008ff15
+xf86AudioPrev  = 0x1008ff16
+xf86AudioNext  = 0x1008ff17
+
 myKeyMaps :: Map (KeyMask, KeySym) (X ())
 myKeyMaps = fromList
   -- Launching and killing programs
@@ -172,6 +178,12 @@ myKeyMaps = fromList
   , xf86AudioLower & wpctl ["set-volume", "@DEFAULT_AUDIO_SINK@", "5%-"]
   , xf86AudioRaise & wpctl ["set-volume", "@DEFAULT_AUDIO_SINK@", "5%+"]
 
+  -- Playback
+  , xf86AudioNext & playerctl ["next"]
+  , xf86AudioPlay & playerctl ["play-pause"]
+  , xf86AudioPrev & playerctl ["previous"]
+  , xf86AudioStop & playerctl ["stop"]
+
   -- Screenshots
   , xK_s ! safeSpawn "flameshot" ["gui"]
   ]
@@ -188,6 +200,7 @@ myKeyMaps = fromList
 
     keymap = safeSpawn "keymap" . (:[])
     wpctl = safeSpawn "wpctl"
+    playerctl = safeSpawn "playerctl"
 
 main :: IO ()
 main = do
