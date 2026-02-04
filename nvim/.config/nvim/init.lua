@@ -146,7 +146,7 @@ require('lazy').setup({
       vim.lsp.enable('hls')
       vim.lsp.enable('lua_ls')
       vim.lsp.enable('omnisharp')
-      vim.lsp.enable('pyright')
+      vim.lsp.enable('ty')
       vim.lsp.enable('ruff')
       vim.lsp.enable('rust_analyzer')
       vim.lsp.enable('systemd_lsp')
