@@ -55,6 +55,8 @@ else
   alias p='sudo pacman'
 fi
 
+alias pip='pip --require-virtualenv'
+
 alias acli='arduino-cli'
 
 alias ctl='systemctl'
