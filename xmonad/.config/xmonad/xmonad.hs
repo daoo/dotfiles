@@ -215,7 +215,7 @@ main = do
   hxmobar <- spawnPipe "xmobar .config/xmobar/xmobarrc"
 
   xmonad $ docks $ withUrgencyHook NoUrgencyHook def
-    { borderWidth        = 1
+    { borderWidth        = 3
     , workspaces         = myWorkspaces
     , layoutHook         = myLayoutHook
     , terminal           = "alacritty"
