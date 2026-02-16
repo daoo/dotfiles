@@ -28,11 +28,13 @@ myManageHook =
   (isNextcloud --> doShift "1") <>
   (isFirefox --> doShift "2") <>
   (isSteam --> doShift "6") <>
+  (isWorkrave --> doShift "0") <>
   (isGimpDialog --> doFloat) <>
   (isGnomeKeyring --> doCenterFloat) <>
   NS.namedScratchpadManageHook [scratchpad] <>
   manageDocks
   where
+    isWorkrave = className =? "Workrave"
     isNextcloud = className =? "Nextcloud"
     isFirefox = appName =? "Navigator"
     isGimpDialog = className =? "Gimp" <&&> not <$> windowRole =? "gimp-image-window"
