@@ -287,8 +287,6 @@ vim.keymap.set('n', '<leader>ow', ':FzfLua lsp_workspace_symbols<cr>')
 vim.keymap.set('n', 'N', 'Nzz')
 vim.keymap.set('n', 'n', 'nzz')
 
-vim.keymap.set('n', 'Q', 'q:')
-
 -- LSP
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
