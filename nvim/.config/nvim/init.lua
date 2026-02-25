@@ -256,43 +256,43 @@ vim.keymap.set({ 'i', 'n' }, '<pageup>', '<nop>')
 -- }}}
 -- {{{ Key bindings
 -- Leader mappings
-vim.keymap.set('n', '<leader>as', ':let @"=@/<cr>:%s/\\s\\+$//<cr>:let @/=@"<cr>')
+vim.keymap.set('n', '<leader>as', '<cmd>let @"=@/<cr>:%s/\\s\\+$//<cr>:let @/=@"<cr>')
 
-vim.keymap.set('n', '<leader>ef', ':e %<cr>')
-vim.keymap.set('n', '<leader>eF', ':e! %<cr>')
-vim.keymap.set('n', '<leader>eve', ':e $MYVIMRC<cr>')
-vim.keymap.set('n', '<leader>evs', ':source $MYVIMRC<cr>')
+vim.keymap.set('n', '<leader>ef', '<cmd>e %<cr>')
+vim.keymap.set('n', '<leader>eF', '<cmd>e! %<cr>')
+vim.keymap.set('n', '<leader>eve', '<cmd>e $MYVIMRC<cr>')
+vim.keymap.set('n', '<leader>evs', '<cmd>source $MYVIMRC<cr>')
 vim.keymap.set('n', '<leader>en', '<Plug>(altr-forward)')
 vim.keymap.set('n', '<leader>eb', '<Plug>(altr-backward)')
 
 vim.keymap.set({ 'n', 'v' }, '<leader>M', '<plug>(quickhl-manual-reset)')
 vim.keymap.set({ 'n', 'v' }, '<leader>m', '<plug>(quickhl-manual-this)')
 
-vim.keymap.set('n', '<leader>se', ':setlocal spelllang=en<cr>')
-vim.keymap.set('n', '<leader>ss', ':setlocal spelllang=sv<cr>')
+vim.keymap.set('n', '<leader>se', '<cmd>setlocal spelllang=en<cr>')
+vim.keymap.set('n', '<leader>ss', '<cmd>setlocal spelllang=sv<cr>')
 
 -- File handling
 vim.keymap.set('i', '<c-s>', '<c-o>:write<cr>')
-vim.keymap.set('n', '<c-s>', ':write<cr>')
+vim.keymap.set('n', '<c-s>', '<cmd>write<cr>')
 
 -- Search
-vim.keymap.set('n', '<leader>gc', ':FzfLua grep_cword<cr>')
-vim.keymap.set('n', '<leader>gl', ':FzfLua live_grep<cr>')
-vim.keymap.set('v', '<leader>gc', ':FzfLua grep_visual<cr>')
+vim.keymap.set('n', '<leader>gc', '<cmd>FzfLua grep_cword<cr>')
+vim.keymap.set('n', '<leader>gl', '<cmd>FzfLua live_grep<cr>')
+vim.keymap.set('v', '<leader>gc', '<cmd>FzfLua grep_visual<cr>')
 
 -- Navigation
-vim.keymap.set('n', '<c-p>', ':FzfLua git_files<cr>')
-vim.keymap.set('n', '<leader>ob', ':FzfLua buffers<cr>')
-vim.keymap.set('n', '<leader>od', ':FzfLua files cwd=%:p:h<cr>')
-vim.keymap.set('n', '<leader>oe', ':FzfLua lsp_workspace_diagnostics<cr>')
-vim.keymap.set('n', '<leader>of', ':FzfLua files<cr>')
-vim.keymap.set('n', '<leader>og', ':FzfLua git_status<cr>')
-vim.keymap.set('n', '<leader>ok', ':FzfLua<cr>')
-vim.keymap.set('n', '<leader>ol', ':FzfLua blines<cr>')
-vim.keymap.set('n', '<leader>om', ':FzfLua marks<cr>')
-vim.keymap.set('n', '<leader>os', ':FzfLua lsp_document_symbols<cr>')
-vim.keymap.set('n', '<leader>ot', ':FzfLua btags<cr>')
-vim.keymap.set('n', '<leader>ow', ':FzfLua lsp_workspace_symbols<cr>')
+vim.keymap.set('n', '<c-p>', '<cmd>FzfLua git_files<cr>')
+vim.keymap.set('n', '<leader>ob', '<cmd>FzfLua buffers<cr>')
+vim.keymap.set('n', '<leader>od', '<cmd>FzfLua files cwd=%:p:h<cr>')
+vim.keymap.set('n', '<leader>oe', '<cmd>FzfLua lsp_workspace_diagnostics<cr>')
+vim.keymap.set('n', '<leader>of', '<cmd>FzfLua files<cr>')
+vim.keymap.set('n', '<leader>og', '<cmd>FzfLua git_status<cr>')
+vim.keymap.set('n', '<leader>ok', '<cmd>FzfLua<cr>')
+vim.keymap.set('n', '<leader>ol', '<cmd>FzfLua blines<cr>')
+vim.keymap.set('n', '<leader>om', '<cmd>FzfLua marks<cr>')
+vim.keymap.set('n', '<leader>os', '<cmd>FzfLua lsp_document_symbols<cr>')
+vim.keymap.set('n', '<leader>ot', '<cmd>FzfLua btags<cr>')
+vim.keymap.set('n', '<leader>ow', '<cmd>FzfLua lsp_workspace_symbols<cr>')
 
 -- Center matches when searching
 vim.keymap.set('n', 'N', 'Nzz')
