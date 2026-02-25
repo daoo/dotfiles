@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+[[ $- != *i* ]] && return
+
 # [[[ Config
 export EDITOR='nvim'
 export PAGER="less"
