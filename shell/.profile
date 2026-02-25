@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export PATH="$HOME/bin:$HOME/bin/scripts:$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/bin:$HOME/bin/scripts:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.local/share/mise/shims:$PATH"
 
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
