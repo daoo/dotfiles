@@ -33,7 +33,7 @@ filter_history() {
   history -c
   history -r
 }
-PROMPT_COMMAND='history -a'
+PROMPT_COMMAND=('history -a')
 shopt -s histappend
 shopt -s histverify
 # ]]]
@@ -113,6 +113,7 @@ prompt_daoo() {
   padding=${padding// /-}
   PS1="${left}${padding}${right}\n${entry}"
 }
-PROMPT_COMMAND="${PROMPT_COMMAND}; prompt_title; prompt_daoo"
+PROMPT_COMMAND+=(prompt_title)
+PROMPT_COMMAND+=(prompt_daoo)
 # ]]]
 # vim: foldmarker=[[[,]]] fdm=marker :
