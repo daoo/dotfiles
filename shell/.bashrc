@@ -28,10 +28,11 @@ HISTCONTROL='erasedups:ignorespace'
 HISTIGNORE='..:cd:l:la:ll:lla:ls:fc:fg:bg:g ap:g dc:g df:g lg:g st:history:poweroff:reboot:ctl poweroff:sctl poweroff:ctl reboot:sctl poweroff'
 filter_history() {
   history -a
-  content="$(rg --line-regexp --fixed-strings --file="$HOME/.bash_history_filter" --invert-match "$HOME/.bash_history")"
-  echo "$content" >~/.bash_history
-  history -c
-  history -r
+  tmp=$(mktemp)
+  if rg --line-regexp --fixed-strings --file="$HOME/.bash_history_filter" --invert-match "$HOME/.bash_history" >"$tmp"; then
+    mv "$tmp" ~/.bash_history
+    history -c && history -r
+  fi
 }
 PROMPT_COMMAND=('history -a')
 shopt -s histappend
