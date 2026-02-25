@@ -68,16 +68,12 @@ prompt_title() {
   echo -ne "\033]0;${PWD/#$HOME/\~}\007"
 }
 
-export BASH_LEVEL="${BASH_LEVEL:-}b"
-
 prompt_daoo() {
-  printf -v date '%(%y-%m-%d)T' -1
-  printf -v time '%(%H:%M:%S)T' -1
+  printf -v timestamp '%(%y-%m-%dT%H:%M:%S)T' -1
   local directory="${PWD/#$HOME/\~}"
   local hostname="${HOSTNAME/.lan/}"
-  local haskell_env
-  haskell_env=$([[ $PATH = *.cabal/bin* ]] && echo "h")
-  local env="b${#BASH_LEVEL}${TMUX:+t}${SSH_CLIENT:+s}${LF_LEVEL:+l}${haskell_env}${VIRTUAL_ENV:+p}"
+  local env="b${SHLVL}${TMUX:+t}${SSH_CLIENT:+s}${LF_LEVEL:+l}${VIRTUAL_ENV:+p}"
+  [[ "$PATH" == *".cabal/bin"* ]] && env+="h"
 
   local color="${BASH_COLOR:-235;219;178}"
   local c_prompt="\001\033[1;38;2;${color}m\002"
@@ -96,7 +92,7 @@ prompt_daoo() {
   local left="${c_prompt}-${left_1}${c_prompt}-"
 
   local right_1="${l_paren}${c_white}${?}${pipe}${c_white}${env}${r_paren}"
-  local right_2="${l_bracket}${c_white}${date}${pipe}${c_white}${time}${r_bracket}"
+  local right_2="${l_bracket}${c_white}${timestamp}${r_bracket}"
   local right_3="${l_paren}${c_white}${USER}${at_char}${c_white}${hostname}${r_paren}"
   local right="-${right_1}${c_prompt}-${right_2}${c_prompt}-${right_3}${c_prompt}-"
 
@@ -109,7 +105,7 @@ prompt_daoo() {
   # echo $((${#right} - ${#right_no_control}))
   # echo $((${#left} - ${#left_no_control}))
   local left_char_count=$((${#left} - 118))
-  local right_char_count=$((${#right} - 348))
+  local right_char_count=$((${#right} - 315))
   local padding_length=$((COLUMNS - left_char_count - right_char_count))
   local padding
   padding=$(printf "%*s" "$padding_length" "")
