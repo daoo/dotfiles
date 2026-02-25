@@ -10,7 +10,9 @@ export LESS="-F -R -M -i -j5"
 
 GPG_TTY=$(tty)
 export GPG_TTY
-gpg-connect-agent updatestartuptty /bye >/dev/null
+if [[ -t 0 ]]; then
+  gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
+fi
 
 # Disable ctrl-q and ctrl-s
 stty -ixon
