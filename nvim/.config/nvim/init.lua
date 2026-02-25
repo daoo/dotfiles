@@ -274,22 +274,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end
 })
 -- }}}
--- {{{ Disable non-vim movement keys
--- Arrow keys
-vim.keymap.set({ 'i', 'n' }, '<down>', '<nop>')
-vim.keymap.set({ 'i', 'n' }, '<left>', '<nop>')
-vim.keymap.set({ 'i', 'n' }, '<right>', '<nop>')
-vim.keymap.set({ 'i', 'n' }, '<up>', '<nop>')
-vim.keymap.set({ 'i', 'n' }, '<c-left>', '<nop>')
-vim.keymap.set({ 'i', 'n' }, '<c-right>', '<nop>')
-
--- Above arrow keys
-vim.keymap.set({ 'i', 'n' }, '<del>', '<nop>')
-vim.keymap.set({ 'i', 'n' }, '<end>', '<nop>')
-vim.keymap.set({ 'i', 'n' }, '<home>', '<nop>')
-vim.keymap.set({ 'i', 'n' }, '<pagedown>', '<nop>')
-vim.keymap.set({ 'i', 'n' }, '<pageup>', '<nop>')
--- }}}
 -- {{{ Key bindings
 -- Leader mappings
 vim.keymap.set('n', '<leader>as', '<cmd>let @"=@/<cr>:%s/\\s\\+$//<cr>:let @/=@"<cr>')
