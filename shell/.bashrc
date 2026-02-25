@@ -109,7 +109,7 @@ prompt_daoo() {
   # echo $((${#left} - ${#left_no_control}))
   local left_char_count=$((${#left} - 118))
   local right_char_count=$((${#right} - 348))
-  local padding_length=$(($(tput cols) - left_char_count - right_char_count))
+  local padding_length=$((COLUMNS - left_char_count - right_char_count))
   local padding
   padding=$(printf "%*s" "$padding_length" "")
   padding=${padding// /-}
