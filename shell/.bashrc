@@ -68,7 +68,12 @@ prompt_title() {
   echo -ne "\033]0;${PWD/#$HOME/\~}\007"
 }
 
+_prompt_dashes=$(printf '%*s' 500 "")
+_prompt_dashes=${_prompt_dashes// /-}
+
 prompt_daoo() {
+  local last_status=$?
+
   printf -v timestamp '%(%y-%m-%dT%H:%M:%S)T' -1
   local directory="${PWD/#$HOME/\~}"
   local hostname="${HOSTNAME/.lan/}"
@@ -91,7 +96,7 @@ prompt_daoo() {
   local left_1="${l_paren}${c_directory}${directory}${r_paren}"
   local left="${c_prompt}-${left_1}${c_prompt}-"
 
-  local right_1="${l_paren}${c_white}${?}${pipe}${c_white}${env}${r_paren}"
+  local right_1="${l_paren}${c_white}${last_status}${pipe}${c_white}${env}${r_paren}"
   local right_2="${l_bracket}${c_white}${timestamp}${r_bracket}"
   local right_3="${l_paren}${c_white}${USER}${at_char}${c_white}${hostname}${r_paren}"
   local right="-${right_1}${c_prompt}-${right_2}${c_prompt}-${right_3}${c_prompt}-"
@@ -107,9 +112,7 @@ prompt_daoo() {
   local left_char_count=$((${#left} - 118))
   local right_char_count=$((${#right} - 315))
   local padding_length=$((COLUMNS - left_char_count - right_char_count))
-  local padding
-  padding=$(printf "%*s" "$padding_length" "")
-  padding=${padding// /-}
+  local padding="${_prompt_dashes:0:$padding_length}"
   PS1="${left}${padding}${right}\n${entry}"
 }
 PROMPT_COMMAND+=(prompt_title)
