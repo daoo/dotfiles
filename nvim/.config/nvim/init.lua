@@ -107,6 +107,42 @@ require('lazy').setup({
       })
     end
   },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    event = { "BufReadPost", "BufNewFile" },
+    build = ":TSUpdate",
+    opts = {
+      ensure_installed = {
+        "bash",
+        "c",
+        "cpp",
+        "css",
+        "haskell",
+        "html",
+        "javascript",
+        "json",
+        "lua",
+        "markdown",
+        "python",
+        "rust",
+        "toml",
+        "vim",
+        "yaml",
+      },
+
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+      },
+
+      indent = {
+        enable = true,
+      },
+    },
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+    end,
+  },
 
   -- File Navigation
   { 'kana/vim-altr',    event = 'VeryLazy' },
