@@ -82,15 +82,6 @@ require('lazy').setup({
       local function lualine_spell()
         return vim.o.spell and vim.o.spelllang or ''
       end
-      local function lualine_diff()
-        local gitsigns = vim.b.gitsigns_status_dict
-        return gitsigns and {
-          added = gitsigns.added,
-          modified = gitsigns.changed,
-          removed = gitsigns.removed
-        } or ''
-      end
-
       require('lualine').setup({
         options = {
           icons_enabled = false,
@@ -99,7 +90,7 @@ require('lazy').setup({
         },
         sections = {
           lualine_a = { 'mode' },
-          lualine_b = { { 'diff', sources = lualine_diff }, 'diagnostics' },
+          lualine_b = { { 'diff' }, 'diagnostics' },
           lualine_c = { { 'filename', filestatus = true, path = 1 } },
           lualine_x = { 'encoding', 'fileformat', 'filetype', lualine_spell },
           lualine_y = { 'progress' },
