@@ -274,62 +274,90 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 -- }}}
 -- {{{ Key bindings
--- Leader mappings
-vim.keymap.set('n', '<leader>as', '<cmd>let @"=@/<cr>:%s/\\s\\+$//<cr>:let @/=@"<cr>')
+local wk = require("which-key")
 
-vim.keymap.set('n', '<leader>ef', '<cmd>e %<cr>')
-vim.keymap.set('n', '<leader>eF', '<cmd>e! %<cr>')
-vim.keymap.set('n', '<leader>eve', '<cmd>e $MYVIMRC<cr>')
-vim.keymap.set('n', '<leader>evs', '<cmd>source $MYVIMRC<cr>')
-vim.keymap.set('n', '<leader>en', '<Plug>(altr-forward)')
-vim.keymap.set('n', '<leader>eb', '<Plug>(altr-backward)')
+wk.add({
+  -- EDITING / QUALITY OF LIFE
+  { "<leader>w",  '<cmd>%s/\\s\\+$//<cr>',                     desc = "Trim trailing whitespace", },
+  { "<c-s>",      "<cmd>write<cr>",                            desc = "Save file",                     mode = "n" },
+  { "<c-s>",      "<c-o>:write<cr>",                           desc = "Save file (insert)",            mode = "i" },
+  { "n",          "nzz",                                       desc = "Next search result (centered)", mode = "n" },
+  { "N",          "Nzz",                                       desc = "Prev search result (centered)", mode = "n" },
 
-vim.keymap.set({ 'n', 'v' }, '<leader>M', '<plug>(quickhl-manual-reset)')
-vim.keymap.set({ 'n', 'v' }, '<leader>m', '<plug>(quickhl-manual-this)')
+  -- FILE / CONFIG
+  { "<leader>e",  group = "Edit/File" },
 
-vim.keymap.set('n', '<leader>se', '<cmd>setlocal spelllang=en<cr>')
-vim.keymap.set('n', '<leader>ss', '<cmd>setlocal spelllang=sv<cr>')
+  { "<leader>ef", "<cmd>e %<cr>",                              desc = "Edit current file" },
+  { "<leader>eF", "<cmd>e! %<cr>",                             desc = "Revert current file" },
+  { "<leader>ev", "<cmd>e $MYVIMRC<cr>",                       desc = "Edit config" },
+  { "<leader>es", "<cmd>source $MYVIMRC<cr>",                  desc = "Source config" },
 
--- File handling
-vim.keymap.set('i', '<c-s>', '<c-o>:write<cr>')
-vim.keymap.set('n', '<c-s>', '<cmd>write<cr>')
+  { "<leader>en", "<Plug>(altr-forward)",                      desc = "Alternate forward" },
+  { "<leader>eb", "<Plug>(altr-backward)",                     desc = "Alternate backward" },
 
--- Search
-vim.keymap.set('n', '<leader>gc', '<cmd>FzfLua grep_cword<cr>')
-vim.keymap.set('n', '<leader>gl', '<cmd>FzfLua live_grep<cr>')
-vim.keymap.set('v', '<leader>gc', '<cmd>FzfLua grep_visual<cr>')
+  -- SPELLING
+  { "<leader>s",  group = "Spelling" },
+  { "<leader>se", "<cmd>setlocal spelllang=en<cr>",            desc = "English" },
+  { "<leader>ss", "<cmd>setlocal spelllang=sv<cr>",            desc = "Swedish" },
 
--- Navigation
-vim.keymap.set('n', '<c-p>', '<cmd>FzfLua git_files<cr>')
-vim.keymap.set('n', '<leader>ob', '<cmd>FzfLua buffers<cr>')
-vim.keymap.set('n', '<leader>od', '<cmd>FzfLua files cwd=%:p:h<cr>')
-vim.keymap.set('n', '<leader>oe', '<cmd>FzfLua lsp_workspace_diagnostics<cr>')
-vim.keymap.set('n', '<leader>of', '<cmd>FzfLua files<cr>')
-vim.keymap.set('n', '<leader>og', '<cmd>FzfLua git_status<cr>')
-vim.keymap.set('n', '<leader>ok', '<cmd>FzfLua<cr>')
-vim.keymap.set('n', '<leader>ol', '<cmd>FzfLua blines<cr>')
-vim.keymap.set('n', '<leader>om', '<cmd>FzfLua marks<cr>')
-vim.keymap.set('n', '<leader>os', '<cmd>FzfLua lsp_document_symbols<cr>')
-vim.keymap.set('n', '<leader>ot', '<cmd>FzfLua btags<cr>')
-vim.keymap.set('n', '<leader>ow', '<cmd>FzfLua lsp_workspace_symbols<cr>')
+  -- NAVIGATION / OPEN (FzfLua)
+  { "<leader>o",  group = "Open" },
+  { "<c-p>",      "<cmd>FzfLua git_files<cr>",                 desc = "Git files" },
+  { "<leader>o?", "<cmd>FzfLua<cr>",                           desc = "Builtin picker" },
+  { "<leader>ob", "<cmd>FzfLua buffers<cr>",                   desc = "Buffers" },
+  { "<leader>od", "<cmd>FzfLua files cwd=%:p:h<cr>",           desc = "Files (file dir)" },
+  { "<leader>of", "<cmd>FzfLua files<cr>",                     desc = "Files" },
+  { "<leader>ol", "<cmd>FzfLua blines<cr>",                    desc = "Buffer lines" },
+  { "<leader>om", "<cmd>FzfLua marks<cr>",                     desc = "Marks" },
+  { "<leader>ot", "<cmd>FzfLua btags<cr>",                     desc = "Buffer tags" },
 
--- Center matches when searching
-vim.keymap.set('n', 'N', 'Nzz')
-vim.keymap.set('n', 'n', 'nzz')
+  -- SEARCH
+  { "<leader>f",  group = "Find/Search" },
+  { "<leader>fw", "<cmd>FzfLua grep_cword<cr>",                desc = "Grep word" },
+  { "<leader>fv", "<cmd>FzfLua grep_visual<cr>",               desc = "Grep selection",                mode = "v" },
+  { "<leader>fl", "<cmd>FzfLua live_grep<cr>",                 desc = "Live grep" },
+  { "<leader>m",  "<Plug>(quickhl-manual-this)",               desc = "Highlight",                     mode = { "n", "v" } },
+  { "<leader>M",  "<Plug>(quickhl-manual-reset)",              desc = "Clear highlights",              mode = { "n", "v" } },
+
+  -- GIT
+  { "<leader>g",  group = "Git" },
+  { "<leader>gs", "<cmd>FzfLua git_status<cr>",                desc = "Status" },
+  { "<leader>gb", "<cmd>Git blame<cr>",                        desc = "Blame" },
+  { "<leader>gd", "<cmd>Gvdiffsplit<cr>",                      desc = "Diff split" },
+  { "<leader>gl", "<cmd>GV<cr>",                               desc = "Log" },
+
+  -- LSP PICKERS
+  { "<leader>l",  group = "LSP" },
+  { "<leader>ld", "<cmd>FzfLua lsp_workspace_diagnostics<cr>", desc = "Diagnostics" },
+  { "<leader>ls", "<cmd>FzfLua lsp_document_symbols<cr>",      desc = "Document symbols" },
+  { "<leader>lw", "<cmd>FzfLua lsp_workspace_symbols<cr>",     desc = "Workspace symbols" },
+})
 
 -- LSP
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
   callback = function(ev)
-    local opts = { buffer = ev.buf, noremap = true, silent = true }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', '<leader>k', vim.lsp.buf.signature_help, opts)
-    vim.keymap.set('n', '<f2>', vim.lsp.buf.rename, opts)
-    vim.keymap.set('n', '<leader>af', vim.lsp.buf.format, opts)
-    vim.keymap.set('n', '<leader>h', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end, opts)
-    vim.keymap.set({ 'n', 'v' }, '<a-cr>', '<cmd>FzfLua lsp_code_actions<cr>', opts)
-  end
+    local opts = { buffer = ev.buf, silent = true }
+
+    -- LSP NAVIGATION
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "LSP: go to declaration" }))
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "LSP: go to definition" }))
+
+    -- LSP ACTIONS
+    vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "LSP: rename symbol" }))
+    vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, vim.tbl_extend("force", opts, { desc = "LSP: format buffer" }))
+    vim.keymap.set("n", "<leader>lh", vim.lsp.buf.signature_help,
+      vim.tbl_extend("force", opts, { desc = "LSP: signature help" }))
+
+    -- LSP CODE ACTIONS
+    vim.keymap.set({ "n", "v" }, "<a-cr>", "<cmd>FzfLua lsp_code_actions<cr>",
+      vim.tbl_extend("force", opts, { desc = "LSP: code actions" }))
+
+    -- LSP TOGGLES
+    vim.keymap.set(
+      "n", "<leader>li",
+      function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
+      vim.tbl_extend("force", opts, { desc = "LSP: toggle inlay hints" }))
+  end,
 })
 -- }}}
