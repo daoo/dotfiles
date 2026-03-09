@@ -22,6 +22,9 @@ stty -ixon
 
 [[ $PS1 && -f /usr/share/fzf/key-bindings.bash ]] &&
   source /usr/share/fzf/key-bindings.bash
+
+[[ $PS1 && -f /usr/share/doc/fzf/examples/key-bindings.bash ]] &&
+  source /usr/share/doc/fzf/examples/key-bindings.bash
 # ]]]
 # [[[ History
 HISTSIZE=1000000
