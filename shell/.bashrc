@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 [[ $- != *i* ]] && return
 
 # [[[ Config
@@ -17,12 +18,15 @@ fi
 # Disable ctrl-q and ctrl-s
 stty -ixon
 
+# shellcheck disable=SC1091
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] &&
   source /usr/share/bash-completion/bash_completion
 
+# shellcheck disable=SC1091
 [[ $PS1 && -f /usr/share/fzf/key-bindings.bash ]] &&
   source /usr/share/fzf/key-bindings.bash
 
+# shellcheck disable=SC1091
 [[ $PS1 && -f /usr/share/doc/fzf/examples/key-bindings.bash ]] &&
   source /usr/share/doc/fzf/examples/key-bindings.bash
 # ]]]
