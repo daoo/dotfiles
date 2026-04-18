@@ -1,6 +1,6 @@
 return {
   { 'aklt/plantuml-syntax', event = 'VeryLazy' },
-  { 't9md/vim-quickhl', event = 'VeryLazy' },
+  { 't9md/vim-quickhl',     event = 'VeryLazy' },
 
   {
     'ellisonleao/gruvbox.nvim',
@@ -41,22 +41,5 @@ return {
         }
       })
     end
-  },
-
-  {
-    "nvim-treesitter/nvim-treesitter",
-    event = { "BufReadPost", "BufNewFile" },
-    build = ":TSUpdate",
-    opts = {
-      ensure_installed = {
-        "bash","c","cpp","css","haskell","html","javascript","json","lua",
-        "markdown","python","rust","toml","vim","yaml",
-      },
-      highlight = { enable = true },
-      indent = { enable = true },
-    },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-    end,
   },
 }

@@ -6,7 +6,6 @@ return {
       'nvim-lua/plenary.nvim',
       'nvim-neotest/neotest-python',
       'nvim-neotest/nvim-nio',
-      'nvim-treesitter/nvim-treesitter'
     },
     config = function()
       require('neotest').setup({
