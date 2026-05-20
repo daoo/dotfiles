@@ -10,29 +10,51 @@ fi
 read -r key_file <~/.config/pw/keyfile
 read -r database <~/.config/pw/database
 
+if [[ ! -r "$key_file" ]]; then
+  echo "Error: key file is not readable: $key_file" >&2
+  exit 1
+fi
+
+if [[ ! -r "$database" ]]; then
+  echo "Error: database is not readable: $database" >&2
+  exit 1
+fi
+
+IFS= read -r -s -p "Database password: " database_password </dev/tty
+printf "\n" >/dev/tty
+trap 'unset database_password' EXIT
+
+pw-keepassxc() {
+  printf "%s\n" "$database_password" | keepassxc-cli "$@"
+}
+
 pw-list() {
-  keepassxc-cli ls \
+  pw-keepassxc ls \
+    --quiet \
     --key-file "$key_file" \
     --flatten --recursive \
     "$database"
 }
 
 pw-show() {
-  keepassxc-cli show \
+  pw-keepassxc show \
+    --quiet \
     --key-file "$key_file" \
     "$database" \
     "$1"
 }
 
 pw-copy() {
-  keepassxc-cli clip \
+  pw-keepassxc clip \
+    --quiet \
     --key-file "$key_file" \
     "$database" \
     "$1"
 }
 
 pw-print() {
-  keepassxc-cli show \
+  pw-keepassxc show \
+    --quiet \
     --key-file "$key_file" \
     --attributes password \
     --show-protected \
