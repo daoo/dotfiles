@@ -1,7 +1,13 @@
 local wk = require("which-key")
 
+local function trim_trailing_whitespace()
+  local view = vim.fn.winsaveview()
+  vim.cmd([[silent keepjumps keeppatterns %s/\s\+$//e]])
+  vim.fn.winrestview(view)
+end
+
 wk.add({
-  { "<leader>w",  '<cmd>%s/\\s\\+$//<cr>', desc = "Trim trailing whitespace" },
+  { "<leader>w", trim_trailing_whitespace, desc = "Trim trailing whitespace" },
   { "<c-s>", "<cmd>write<cr>", desc = "Save file", mode = "n" },
   { "<c-s>", "<c-o>:write<cr>", desc = "Save file (insert)", mode = "i" },
   { "n", "nzz", desc = "Next search result (centered)", mode = "n" },
