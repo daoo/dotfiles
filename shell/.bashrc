@@ -127,6 +127,7 @@ prompt_daoo() {
   local left_char_count=$((${#left} - 118))
   local right_char_count=$((${#right} - 315))
   local padding_length=$((COLUMNS - left_char_count - right_char_count))
+  ((padding_length < 0)) && padding_length=0
   local padding="${_prompt_dashes:0:$padding_length}"
   PS1="${left}${padding}${right}\n${entry}"
 }
