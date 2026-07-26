@@ -22,13 +22,15 @@ stty -ixon
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] &&
   source /usr/share/bash-completion/bash_completion
 
-# shellcheck disable=SC1091
-[[ $PS1 && -f /usr/share/fzf/key-bindings.bash ]] &&
-  source /usr/share/fzf/key-bindings.bash
-
-# shellcheck disable=SC1091
-[[ $PS1 && -f /usr/share/doc/fzf/examples/key-bindings.bash ]] &&
-  source /usr/share/doc/fzf/examples/key-bindings.bash
+if [[ $PS1 ]]; then
+  if [[ -f /usr/share/fzf/key-bindings.bash ]]; then
+    # shellcheck disable=SC1091
+    source /usr/share/fzf/key-bindings.bash
+  elif [[ -f /usr/share/doc/fzf/examples/key-bindings.bash ]]; then
+    # shellcheck disable=SC1091
+    source /usr/share/doc/fzf/examples/key-bindings.bash
+  fi
+fi
 # ]]]
 # [[[ History
 HISTSIZE=1000000
