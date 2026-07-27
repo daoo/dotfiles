@@ -10,14 +10,21 @@ fi
 read -r key_file <~/.config/pw/keyfile
 read -r database <~/.config/pw/database
 
-if [[ ! -r "$key_file" ]]; then
-  echo "Error: key file is not readable: $key_file" >&2
+die() {
+  echo "Error: $*" >&2
   exit 1
+}
+
+log() {
+  echo "pw: $*" >&2
+}
+
+if [[ ! -r "$key_file" ]]; then
+  die "key file is not readable: $key_file"
 fi
 
 if [[ ! -r "$database" ]]; then
-  echo "Error: database is not readable: $database" >&2
-  exit 1
+  die "database is not readable: $database"
 fi
 
 IFS= read -r -s -p "Database password: " database_password </dev/tty
@@ -44,12 +51,64 @@ pw-show() {
     "$1"
 }
 
+pw-clipboard-copy() {
+  local value
+  value="$1"
+
+  if [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
+    command -v wl-copy >/dev/null 2>&1 || die "wayland active but wl-copy not found"
+    printf "%s" "$value" | wl-copy || die "wayland active but wl-copy failed"
+    log "copied password to clipboard via wl-copy"
+    log "waiting 15 seconds before clearing clipboard"
+    sleep 15
+    wl-copy --clear || die "wayland active but failed to clear clipboard with wl-copy"
+    log "cleared clipboard via wl-copy"
+    return
+  fi
+
+  if [[ -n "${DISPLAY:-}" ]]; then
+    if command -v xclip >/dev/null 2>&1; then
+      printf "%s" "$value" | xclip -selection clipboard || die "x11 active but xclip failed"
+      log "copied password to clipboard via xclip"
+      log "waiting 15 seconds before clearing clipboard"
+      sleep 15
+      printf "" | xclip -selection clipboard || die "x11 active but failed to clear clipboard with xclip"
+      log "cleared clipboard via xclip"
+      return
+    fi
+
+    if command -v xsel >/dev/null 2>&1; then
+      printf "%s" "$value" | xsel --clipboard --input || die "x11 active but xsel failed"
+      log "copied password to clipboard via xsel"
+      log "waiting 15 seconds before clearing clipboard"
+      sleep 15
+      printf "" | xsel --clipboard --input || die "x11 active but failed to clear clipboard with xsel"
+      log "cleared clipboard via xsel"
+      return
+    fi
+
+    die "x11 active but neither xclip nor xsel found"
+  fi
+
+  if [[ -n "${TMUX:-}" ]]; then
+    command -v tmux >/dev/null 2>&1 || die "tmux active but tmux not found"
+    printf "%s" "$value" | tmux load-buffer -w - || die "tmux active but tmux load-buffer -w failed"
+    log "copied password to clipboard via tmux"
+    log "waiting 15 seconds before clearing clipboard"
+    sleep 15
+    tmux set-buffer -w -- "[cleared]" || die "tmux active but tmux set-buffer -w failed to clear clipboard"
+    log "cleared clipboard via tmux"
+    return
+  fi
+
+  die "no supported clipboard environment detected"
+}
+
 pw-copy() {
-  pw-keepassxc clip \
-    --quiet \
-    --key-file "$key_file" \
-    "$database" \
-    "$1"
+  local password
+  password="$(pw-print "$1")"
+
+  pw-clipboard-copy "$password"
 }
 
 pw-print() {
@@ -63,8 +122,7 @@ pw-print() {
 }
 
 if ! list="$(pw-list)"; then
-  echo "Error: failed to list passwords." >&2
-  exit 1
+  die "failed to list passwords"
 fi
 
 selection="$(echo "$list" | fzf)"
@@ -77,4 +135,5 @@ case "$1" in
 "show") pw-show "$selection" ;;
 "qr") pw-print "$selection" | qrencode -t ANSI256 ;;
 "print") pw-print "$selection" ;;
+*) die "invalid command: $1" ;;
 esac
