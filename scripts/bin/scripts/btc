@@ -8,12 +8,49 @@ if ! systemctl is-active --quiet bluetooth.service; then
   sleep 1
 fi
 
-device="$(bluetoothctl devices | grep "^Device [a-fA-F0-9:]\+" | fzf)"
-if [[ -n "$device" ]]; then
-  name="$(cut -d' ' -f 3- <<<"$device")"
-  address="$(cut -d' ' -f 2 <<<"$device")"
-  echo "Powering on bluetooth..."
-  bluetoothctl power on
-  echo "Connecting to $name"
-  bluetoothctl connect "$address"
+build_device_list() {
+  while IFS= read -r line; do
+    [[ "$line" =~ ^Device[[:space:]]+[a-fA-F0-9:]+[[:space:]]+ ]] || continue
+    rest="${line#Device }"
+    address="${rest%% *}"
+    name="${rest#* }"
+    info="$(bluetoothctl info "$address" 2>/dev/null || true)"
+    icon="?"
+    status=""
+
+    if [[ "$info" =~ Icon:[[:space:]]*([^[:space:]]+) ]]; then
+      case "${BASH_REMATCH[1]}" in
+        audio-headset|audio-headphones) icon=$'\U0001F3A7' ;;
+        audio-card|audio-speakers) icon=$'\U0001F508' ;;
+        input-mouse) icon=$'\U0001F5B1' ;;
+        input-keyboard) icon=$'\u2328' ;;
+        phone) icon=$'\U0001F4F1' ;;
+        computer) icon=$'\U0001F4BB' ;;
+      esac
+    fi
+
+    [[ "$info" == *"Connected: yes"* ]] && status+="connected "
+    [[ "$info" == *"Paired: yes"* ]] && status+="paired "
+    [[ "$info" == *"Trusted: yes"* ]] && status+="trusted "
+
+    status="${status% }"
+    [[ -z "$status" ]] && status="-"
+
+    printf -v display '%-2s  %-33.33s  %-22.22s  %-17s' "$icon" "$name" "$status" "$address"
+    printf '%s\t%s\t%s\t%s\n' "$address" "$name" "$status" "$display"
+  done < <(bluetoothctl devices)
+}
+
+device="$(build_device_list | fzf --prompt="Bluetooth device: " --delimiter='\t' --with-nth=4 --header='I   NAME                               STATE                    MAC')"
+
+if [[ -z "$device" ]]; then
+  exit 0
 fi
+
+IFS=$'\t' read -r address name _ <<<"$device"
+
+echo "Powering on bluetooth..."
+bluetoothctl power on >/dev/null
+
+echo "Connecting to $name"
+bluetoothctl connect "$address"
