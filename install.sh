@@ -90,6 +90,16 @@ link_path() {
       log "up to date: $target"
       return 0
     fi
+
+    if [[ $target -ef $source ]]; then
+      if ! ln -sfn "$source" "$target"; then
+        warn "failed to relink equivalent symlink: $target"
+        return 0
+      fi
+      log "updated equivalent symlink: $target"
+      return 0
+    fi
+
     warn "refusing to replace existing symlink: $target -> $existing"
     return 0
   elif [[ -e $target ]]; then
