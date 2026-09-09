@@ -97,7 +97,7 @@ prompt_daoo() {
 
   printf -v timestamp '%(%y-%m-%dT%H:%M:%S)T' -1
   local directory="${PWD/#$HOME/\~}"
-  local hostname="${HOSTNAME/.lan/}"
+  local hostname="${HOSTNAME%%.*}"
   local env="b${SHLVL}${TMUX:+t}${SSH_CLIENT:+s}${LF_LEVEL:+l}${VIRTUAL_ENV:+p}"
   [[ "$PATH" == *".cabal/bin"* ]] && env+="h"
 
