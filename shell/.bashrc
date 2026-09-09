@@ -85,10 +85,6 @@ alias uctl='systemctl --user'
 # substitutions embedded in directory names.
 shopt -u promptvars
 
-prompt_title() {
-  echo -ne "\033]0;${PWD/#$HOME/\~}\007"
-}
-
 _prompt_dashes=$(printf '%*s' 500 "")
 _prompt_dashes=${_prompt_dashes// /-}
 
@@ -133,9 +129,10 @@ prompt_daoo() {
     _prompt_dashes=${_prompt_dashes// /-}
   fi
   local padding="${_prompt_dashes:0:$padding_length}"
-  PS1="${left}${padding}${right}\n${entry}"
+  # \001..\002 keeps readline from counting the title escape as visible width.
+  local title="\001\033]0;${directory}\007\002"
+  PS1="${title}${left}${padding}${right}\n${entry}"
 }
-PROMPT_COMMAND+=(prompt_title)
 PROMPT_COMMAND+=(prompt_daoo)
 # ]]]
 # vim: foldmarker=[[[,]]] fdm=marker :
