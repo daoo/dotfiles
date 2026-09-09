@@ -58,6 +58,7 @@ filter_history() {
 PROMPT_COMMAND=('history -a')
 shopt -s histappend
 shopt -s histverify
+shopt -s histreedit
 # ]]]
 # [[[ Aliases
 alias ls='ls --classify --si --color=auto --group-directories-first --time-style=long-iso'
