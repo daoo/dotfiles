@@ -81,6 +81,10 @@ alias sctl='sudo systemctl'
 alias uctl='systemctl --user'
 # ]]]
 # [[[ Prompt
+# PS1 is built fully expanded below; re-expanding it would run command
+# substitutions embedded in directory names.
+shopt -u promptvars
+
 prompt_title() {
   echo -ne "\033]0;${PWD/#$HOME/\~}\007"
 }
