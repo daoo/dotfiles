@@ -92,6 +92,7 @@ shopt -u promptvars
 prompt_daoo() {
   local last_status=$?
 
+  local timestamp
   printf -v timestamp '%(%y-%m-%dT%H:%M:%S)T' -1
   local directory="${PWD/#$HOME/\~}"
   local hostname="${HOSTNAME%%.*}"
