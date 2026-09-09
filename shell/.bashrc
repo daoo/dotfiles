@@ -17,6 +17,8 @@ if [[ -t 0 ]]; then
   stty -ixon
 fi
 
+shopt -s globstar no_empty_cmd_completion
+
 # shellcheck disable=SC1091
 [[ -f /usr/share/bash-completion/bash_completion ]] &&
   source /usr/share/bash-completion/bash_completion
