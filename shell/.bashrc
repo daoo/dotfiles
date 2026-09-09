@@ -18,17 +18,15 @@ if [[ -t 0 ]]; then
 fi
 
 # shellcheck disable=SC1091
-[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] &&
+[[ -f /usr/share/bash-completion/bash_completion ]] &&
   source /usr/share/bash-completion/bash_completion
 
-if [[ $PS1 ]]; then
-  if [[ -f /usr/share/fzf/key-bindings.bash ]]; then
-    # shellcheck disable=SC1091
-    source /usr/share/fzf/key-bindings.bash
-  elif [[ -f /usr/share/doc/fzf/examples/key-bindings.bash ]]; then
-    # shellcheck disable=SC1091
-    source /usr/share/doc/fzf/examples/key-bindings.bash
-  fi
+if [[ -f /usr/share/fzf/key-bindings.bash ]]; then
+  # shellcheck disable=SC1091
+  source /usr/share/fzf/key-bindings.bash
+elif [[ -f /usr/share/doc/fzf/examples/key-bindings.bash ]]; then
+  # shellcheck disable=SC1091
+  source /usr/share/doc/fzf/examples/key-bindings.bash
 fi
 # ]]]
 # [[[ History
