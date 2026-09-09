@@ -124,16 +124,14 @@ prompt_daoo() {
 
   local entry="${c_prompt}--${c_white}> "
 
-  # local right_no_control
-  # right_no_control=$(echo -n "$right" | sed 's@\\001\\033\[[0-9;]\+m\\002@@g')
-  # local left_no_control
-  # left_no_control=$(echo -n "$left" | sed 's@\\001\\033\[[0-9;]\+m\\002@@g')
-  # echo $((${#right} - ${#right_no_control}))
-  # echo $((${#left} - ${#left_no_control}))
-  local left_char_count=$((${#left} - 118))
-  local right_char_count=$((${#right} - 315))
+  # Visible width: the literal -()[]@| plus the variable parts
+  local left_char_count=$((4 + ${#directory}))
+  local right_char_count=$((12 + ${#last_status} + ${#env} + ${#timestamp} + ${#USER} + ${#hostname}))
   local padding_length=$((COLUMNS - left_char_count - right_char_count))
-  ((padding_length < 0)) && padding_length=0
+  if ((padding_length > ${#_prompt_dashes})); then
+    printf -v _prompt_dashes '%*s' "$padding_length" ''
+    _prompt_dashes=${_prompt_dashes// /-}
+  fi
   local padding="${_prompt_dashes:0:$padding_length}"
   PS1="${left}${padding}${right}\n${entry}"
 }
