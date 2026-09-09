@@ -14,4 +14,3 @@ set page-completions off
 "\C-n": history-search-forward
 "\C-p": history-search-backward
 "\C-q": kill-whole-line
-"\C-r": reverse-search-history
