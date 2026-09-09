@@ -8,6 +8,7 @@ export MANPAGER="nvim +Man!"
 export FZF_DEFAULT_COMMAND='rg --files'
 export FZF_CTRL_R_OPTS='--bind "ctrl-x:execute-silent(echo {2..} >> ~/.bash_history_filter)"'
 export LESS="-F -R -M -i -j5"
+export LESSHISTFILE=-
 
 if [[ -t 0 ]]; then
   GPG_TTY=$(tty)
