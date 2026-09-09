@@ -89,9 +89,6 @@ alias uctl='systemctl --user'
 # substitutions embedded in directory names.
 shopt -u promptvars
 
-_prompt_dashes=$(printf '%*s' 500 "")
-_prompt_dashes=${_prompt_dashes// /-}
-
 prompt_daoo() {
   local last_status=$?
 
@@ -128,11 +125,9 @@ prompt_daoo() {
   local left_char_count=$((4 + ${#directory}))
   local right_char_count=$((12 + ${#last_status} + ${#env} + ${#timestamp} + ${#USER} + ${#hostname}))
   local padding_length=$((COLUMNS - left_char_count - right_char_count))
-  if ((padding_length > ${#_prompt_dashes})); then
-    printf -v _prompt_dashes '%*s' "$padding_length" ''
-    _prompt_dashes=${_prompt_dashes// /-}
-  fi
-  local padding="${_prompt_dashes:0:$padding_length}"
+  local padding
+  printf -v padding '%*s' "$padding_length" ''
+  padding=${padding// /-}
   # \001..\002 keeps readline from counting the title escape as visible width.
   local title="\001\033]0;${directory}\007\002"
   PS1="${title}${left}${padding}${right}\n${entry}"
