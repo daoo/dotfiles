@@ -37,16 +37,19 @@ HISTIGNORE='..:cd:l:la:ll:lla:ls:fc:fg:bg:g ap:g dc:g df:g lg:g st:history:power
 filter_history() {
   history -a
   local tmp status
-  tmp=$(mktemp) || return
-  [[ -f "$HOME/.bash_history_filter" ]] || : >"$HOME/.bash_history_filter"
+  local file="${HISTFILE:-$HOME/.bash_history}"
+  local filter="$HOME/.bash_history_filter"
 
-  rg --line-regexp --fixed-strings --file="$HOME/.bash_history_filter" --invert-match "$HOME/.bash_history" >"$tmp"
+  [[ -f $filter ]] || return 0           # nothing to filter: never touch history
+  tmp=$(mktemp "$file.XXXXXX") || return # same fs -> atomic rename
+
+  rg --text --line-regexp --fixed-strings --file="$filter" --invert-match "$file" >"$tmp"
   status=$?
 
-  if ((status == 0 || status == 1)); then
-    mv "$tmp" "$HOME/.bash_history" && history -c && history -r
+  if ((status == 0 || status == 1)) && [[ -s $tmp ]]; then
+    mv -- "$tmp" "$HOME/.bash_history" && history -c && history -r
   else
-    rm -f "$tmp"
+    rm -f -- "$tmp"
     return "$status"
   fi
 }
