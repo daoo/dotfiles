@@ -31,7 +31,7 @@ fi
 # ]]]
 # [[[ History
 HISTSIZE=1000000
-HISTFILESIZE=1000000
+HISTFILESIZE=200000
 HISTCONTROL='erasedups:ignorespace'
 HISTIGNORE='..:cd:l:la:ll:lla:ls:fc:fg:bg:g ap:g dc:g df:g lg:g st:history:poweroff:reboot:ctl poweroff:ctl reboot:sctl poweroff:sctl reboot'
 filter_history() {
