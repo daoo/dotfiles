@@ -9,14 +9,13 @@ export FZF_DEFAULT_COMMAND='rg --files'
 export FZF_CTRL_R_OPTS='--bind "ctrl-x:execute-silent(echo {2..} >> ~/.bash_history_filter)"'
 export LESS="-F -R -M -i -j5"
 
-GPG_TTY=$(tty)
-export GPG_TTY
 if [[ -t 0 ]]; then
+  GPG_TTY=$(tty)
+  export GPG_TTY
   gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
+  # Disable ctrl-q and ctrl-s
+  stty -ixon
 fi
-
-# Disable ctrl-q and ctrl-s
-stty -ixon
 
 # shellcheck disable=SC1091
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] &&
