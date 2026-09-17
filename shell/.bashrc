@@ -85,9 +85,9 @@ alias sctl='sudo systemctl'
 alias uctl='systemctl --user'
 # ]]]
 # [[[ Prompt
-# PS1 is built fully expanded below; re-expanding it would run command
-# substitutions embedded in directory names.
-shopt -u promptvars
+# Keep promptvars enabled so /usr/lib/systemd/profile.d/80-systemd-osc-context.sh
+# can expand PS0 hooks; accepted trade-off: prompt strings are re-expanded.
+shopt -s promptvars
 
 prompt_daoo() {
   local last_status=$?
