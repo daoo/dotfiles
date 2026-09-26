@@ -6,7 +6,6 @@ export EDITOR='nvim'
 export PAGER="less"
 export MANPAGER="nvim +Man!"
 export FZF_DEFAULT_COMMAND='rg --files'
-export FZF_CTRL_R_OPTS='--bind "ctrl-x:execute-silent(echo {2..} >> ~/.bash_history_filter)"'
 export LESS="-F -R -M -i -j5"
 export LESSHISTFILE=-
 
@@ -38,24 +37,45 @@ HISTFILESIZE=200000
 HISTCONTROL='erasedups:ignorespace'
 HISTIGNORE='..:cd:l:la:ll:lla:ls:fc:fg:bg:g ap:g dc:g df:g lg:g st:history:poweroff:reboot:ctl poweroff:ctl reboot:sctl poweroff:sctl reboot'
 filter_history() {
-  history -a
-  local tmp status
   local file="${HISTFILE:-$HOME/.bash_history}"
   local filter="$HOME/.bash_history_filter"
+  [[ -r $file ]] || return 0
 
-  [[ -f $filter ]] || return 0           # nothing to filter: never touch history
-  tmp=$(mktemp "$file.XXXXXX") || return # same fs -> atomic rename
-
-  rg --text --line-regexp --fixed-strings --file="$filter" --invert-match "$file" >"$tmp"
-  status=$?
-
-  if ((status == 0 || status == 1)) && [[ -s $tmp ]]; then
-    mv -- "$tmp" "$HOME/.bash_history" && history -c && history -r
-  else
-    rm -f -- "$tmp"
-    return "$status"
-  fi
+  tac -- "$file" | awk -v filter="$filter" '
+    BEGIN {
+      while ((getline line < filter) > 0) {
+        sub(/[[:blank:]]+$/, "", line)
+        hidden[line] = 1
+      }
+      close(filter)
+    }
+    { sub(/[[:blank:]]+$/, "") }
+    !hidden[$0] && !($0 ~ /^#[0-9]+$/ && length($0) >= 11) && !seen[$0]++
+  '
 }
+
+history_search() {
+  local selected
+  history -a
+  selected=$(
+    export -f filter_history
+    export HISTFILE="${HISTFILE:-$HOME/.bash_history}"
+    # shellcheck disable=SC2016 # fzf expands {} and its child shell expands $HOME
+    FZF_DEFAULT_COMMAND='bash -c filter_history' fzf --height 40% --reverse --no-sort \
+      --bind 'ctrl-x:execute-silent(
+        printf "%s\n" {} >> "$HOME/.bash_history_filter" &&
+        sed -i "s/[[:blank:]]*$//" "$HOME/.bash_history_filter" &&
+        sort -u -o "$HOME/.bash_history_filter" "$HOME/.bash_history_filter"
+      )+reload(bash -c filter_history)' \
+      --query "$READLINE_LINE"
+  ) || return 0
+  [[ -n $selected ]] || return 0
+  READLINE_LINE=$selected
+  READLINE_POINT=${#READLINE_LINE}
+}
+bind -m emacs-standard -x '"\C-r": history_search'
+bind -m vi-command -x '"\C-r": history_search'
+bind -m vi-insert -x '"\C-r": history_search'
 PROMPT_COMMAND=('history -a')
 shopt -s histappend
 shopt -s histverify
