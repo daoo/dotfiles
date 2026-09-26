@@ -92,11 +92,16 @@ pw-clipboard-copy() {
 
   if [[ -n "${TMUX:-}" ]]; then
     command -v tmux >/dev/null 2>&1 || die "tmux active but tmux not found"
-    printf "%s" "$value" | tmux load-buffer -w - || die "tmux active but tmux load-buffer -w failed"
+    local buffer_name="pw-${BASHPID}-${RANDOM}-${RANDOM}"
+    printf "%s" "$value" | tmux load-buffer -w -b "$buffer_name" - || die "tmux active but tmux load-buffer -w failed"
     log "copied password to clipboard via tmux"
     log "waiting 15 seconds before clearing clipboard"
     sleep 15
-    tmux set-buffer -w -- "[cleared]" || die "tmux active but tmux set-buffer -w failed to clear clipboard"
+    if ! tmux set-buffer -w -b "$buffer_name" -- "[cleared]"; then
+      tmux delete-buffer -b "$buffer_name" || true
+      die "tmux active but tmux set-buffer -w failed to clear clipboard"
+    fi
+    tmux delete-buffer -b "$buffer_name" || die "tmux active but tmux delete-buffer failed"
     log "cleared clipboard via tmux"
     return
   fi
