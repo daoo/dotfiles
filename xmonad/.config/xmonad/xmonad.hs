@@ -204,6 +204,7 @@ myKeyMaps = fromList
 
 main :: IO ()
 main = do
+  spawn "xkbcomp -I$HOME/.config/xkb ~/.config/xkb/symbols/myswap $DISPLAY"
   safeSpawn "feh" ["--no-fehbg", "--bg-tile", "media/wallpaper"]
   safeSpawn "xsetroot" ["-cursor_name", "left_ptr"]
   safeSpawn "setxkbmap" ["dvoormak"]
