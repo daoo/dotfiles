@@ -38,3 +38,4 @@ foreground = "#ebdbb2"
 
 [font]
 normal = { family = "Inconsolata" }
+size = 13
