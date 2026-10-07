@@ -57,7 +57,7 @@ bindsym $mod+shift+0 move container to workspace number 10
 bindsym $mod+shift+space layout default
 bindsym $mod+space layout toggle all
 bindsym $mod+f fullscreen
-bindsym $mod+t floating disable
+bindsym $mod+t floating toggle
 bindsym $mod+s split vertical
 
 bindsym $mod+i scratchpad show
