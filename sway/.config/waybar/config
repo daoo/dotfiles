@@ -1,15 +1,48 @@
 {
   "layer": "top",
   "position": "bottom",
-  "modules-left": ["sway/workspaces", "sway/mode"],
-  "modules-center": ["sway/window"],
-  "modules-right": ["wireplumber", "cpu", "memory", "disk", "network", "bluetooth", "battery", "clock", "tray"],
+  "modules-left": [
+    "sway/workspaces",
+    "sway/mode"
+  ],
+  "modules-center": [
+    "sway/window"
+  ],
+  "modules-right": [
+    "wireplumber",
+    "cpu",
+    "memory",
+    "disk",
+    "network",
+    "bluetooth",
+    "battery",
+    "clock",
+    "tray"
+  ],
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-alt": "{icon} {time}",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
   "bluetooth": {
     "format": "  {status}",
     "format-disabled": "",
-    "format-off": "  ",
-    "format-on": "  on ",
-    "format-connected": "  {device_alias} {device_battery_percentage}% ",
+    "format-off": "",
+    "format-on": "  on",
+    "format-connected": "  {device_alias}",
+    "format-connected-battery": "  {device_alias} {device_battery_percentage}%",
     "tooltip-format": "{controller_alias}\t{controller_address}\t{status}\n\n{num_connections} connected",
     "tooltip-format-connected": "{controller_alias}\t{controller_address}\t{status}\n\n{num_connections} connected\n\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
@@ -30,11 +63,17 @@
     "tooltip-format": "{used}GiB used out of {total}GiB ({percentage}%)"
   },
   "network": {
-    "format-ethernet": " {bandwidthDownBytes} / {bandwidthUpBytes}",
+    "interval": 10,
+    "format-ethernet": " {bandwidthTotalBytes}",
     "format-wifi": " {essid} ({signalStrength} {frequency})",
-    "tooltip-format": "Interface:\t{ifname}\nAddress:\t{ipaddr}\nGateway:\t{gwaddr}"
+    "tooltip-format": "Interface:\t{ifname}\nAddress:\t{ipaddr}\nGateway:\t{gwaddr}\nNetmask:\t{netmask}"
+  },
+  "tray": {
+    "icon-size": 21,
+    "spacing": 10
   },
   "wireplumber": {
-    "format": " {volume}%"
+    "format": " {volume}%",
+    "format-muted": " Muted"
   }
 }
