@@ -16,7 +16,7 @@ focus_wrapping no
 floating_modifier $mod normal
 
 bindsym $mod+shift+c kill
-bindsym $mod+q reload
+bindsym $mod+q exec swaymsg reload && notify-send "Sway" "Configuration reloaded"
 bindsym $mod+shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
 bindsym $mod+shift+tab focus parent
