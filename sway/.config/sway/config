@@ -15,6 +15,7 @@ default_border pixel
 focus_wrapping no
 floating_modifier $mod normal
 
+bindsym $mod+b exec swaylock --daemonize
 bindsym $mod+shift+c kill
 bindsym $mod+q exec swaymsg reload && notify-send "Sway" "Configuration reloaded"
 bindsym $mod+shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
@@ -97,6 +98,11 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 bar swaybar_command waybar
+
+exec swayidle -w \
+  timeout 6000 'swaylock --daemonize' \
+  timeout 600 'swaymsg "output * power off"' \
+      resume 'swaymsg "output * power on"'
 
 exec workrave
 exec nextcloud
