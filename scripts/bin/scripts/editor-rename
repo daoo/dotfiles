@@ -6,13 +6,18 @@ import os
 import subprocess
 import sys
 import tempfile
+from collections.abc import Generator, Iterable
+from pathlib import Path
+from typing import Any
 
 
-def concat(iterable):
+def concat[T](iterable: Iterable[Iterable[T]]) -> Iterable[T]:
     return list(itertools.chain.from_iterable(iterable))
 
 
-def recursive_list_dir(top, include_dirs, include_files):
+def recursive_list_dir(
+    top: str, include_dirs: bool, include_files: bool
+) -> Generator[str]:
     for root, dirs, files in os.walk(top):
         if include_files:
             for path in files:
@@ -22,7 +27,7 @@ def recursive_list_dir(top, include_dirs, include_files):
                 yield os.path.join(root, path)
 
 
-def list_dir(top, include_dirs, include_files):
+def list_dir(top: str, include_dirs: bool, include_files: bool) -> Generator[str]:
     for entry in os.scandir(top):
         if entry.is_file() and include_files:
             yield os.path.join(top, entry.name)
@@ -31,50 +36,57 @@ def list_dir(top, include_dirs, include_files):
             yield os.path.join(top, entry.name)
 
 
-def interact(editor, old_paths):
-    fwrite = tempfile.NamedTemporaryFile(mode="w", delete=False)
-    tmp_path = fwrite.name
-    fwrite.write("\n".join(old_paths))
-    fwrite.close()
-
-    subprocess.call([editor, tmp_path])
-
-    fread = open(tmp_path, "r")
-    new_paths = fread.read().splitlines()
-    fread.close()
-
-    os.remove(tmp_path)
-    return new_paths
+def write_temporary(content: str) -> str:
+    with tempfile.NamedTemporaryFile(mode="w", delete=False) as fobj:
+        fobj.write(content)
+        return fobj.name
 
 
-def rename(old_names, new_names, parents):
+def read_file_lines(path: str) -> list[str]:
+    with open(path, "r") as fobj:
+        return fobj.read().splitlines()
+
+
+def interact(editor: str, old_paths: list[str]) -> list[str]:
+    tmp_path = write_temporary("\n".join(old_paths))
+    try:
+        subprocess.call([editor, tmp_path])
+        new_paths = read_file_lines(tmp_path)
+        return new_paths
+    finally:
+        os.remove(tmp_path)
+
+
+def rename(old_names: list[str], new_names: list[str], parents: bool) -> None:
     assert len(old_names) == len(new_names)
-    for old, new in zip(old_names, new_names):
+    for old, new in zip(old_names, new_names, strict=True):
         # Don't rename if the name is unchanged
         if old == new:
             continue
 
-        sys.stdout.write(str.format('Moving "{}" to "{}".\n', old, new))
+        sys.stdout.write(f'Moving "{old}" to "{new}".\n')
         if not os.path.exists(new):
             if parents:
                 os.renames(old, new)
             else:
                 os.rename(old, new)
         else:
-            sys.stderr.write(str.format("Warning: file {} already exists.\n", new))
+            sys.stderr.write(f"Warning: file {new} already exists.\n")
 
 
-def read_from_stdin():
-    return sorted((path.strip() for path in sys.stdin.readlines()))
+def read_from_stdin() -> list[str]:
+    return sorted(path.strip() for path in sys.stdin.readlines())
 
 
-def read_from_paths(args):
+def read_from_paths(args: Any) -> list[str]:
     list_func = recursive_list_dir if args.recursive else list_dir
-    paths = (list_func(path, args.directories, args.files) for path in args.paths)
-    return sorted(concat(paths))
+    paths = concat(list_func(path, args.directories, args.files) for path in args.paths)
+    # Negate part number to get deeper paths first so they get
+    # renamed before their parent.
+    return sorted(paths, key=lambda path: (-len(Path(path).parts), path))
 
 
-def program(args):
+def program(args: Any) -> int:
     old_names = read_from_stdin() if args.paths == ["-"] else read_from_paths(args)
     new_names = interact(args.editor, old_names)
 
@@ -82,14 +94,19 @@ def program(args):
         sys.stderr.write("Aborting rename due to empty input.\n")
         return 1
 
-    if len(new_names) != len(old_names):
-        sys.stderr.write("Error: number of lines have changed, exiting.\n")
+    new_count = len(new_names)
+    old_count = len(old_names)
+    if new_count != old_count:
+        sys.stderr.write(
+            f"Error: number of lines have changed from {old_count} to {new_count}, exiting.\n"
+        )
         return 1
 
     rename(old_names, new_names, args.parents)
+    return 0
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Interactively rename files.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
