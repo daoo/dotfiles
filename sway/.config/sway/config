@@ -17,7 +17,7 @@ floating_modifier $mod normal
 
 bindsym $mod+b exec swaylock --daemonize
 bindsym $mod+shift+c kill
-bindsym $mod+q exec swaymsg reload && notify-send "Sway" "Configuration reloaded"
+bindsym $mod+q exec swaymsg reload && notify-send --expire-time=5000 "Sway" "Configuration reloaded"
 bindsym $mod+shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
 bindsym $mod+shift+tab focus parent
@@ -69,10 +69,10 @@ bindsym $mod+p exec $menu
 bindsym $mod+shift+s exec flameshot gui
 
 bindsym $mod+apostrophe \
-  exec notify-send "Keymap" "Keymap changed to usaswe" -h "string:image-path:${icon}"; \
-  input type:keyboard xkb_layout usaswe
+  exec notify-send --expire-time=5000 "Keymap" "Keymap changed to usswe" -h "string:image-path:${icon}"; \
+  input type:keyboard xkb_layout usswe
 bindsym $mod+z \
-  exec notify-send "Keymap" "Keymap changed to dvoormak" -h "string:image-path:${icon}"; \
+  exec notify-send --expire-time=5000 "Keymap" "Keymap changed to dvoormak" -h "string:image-path:${icon}"; \
   input type:keyboard xkb_layout dvoormak
 
 bindsym XF86AudioRaiseVolume exec wpctl set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ 5%+
