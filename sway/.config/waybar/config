@@ -84,6 +84,7 @@
     "spacing": 10
   },
   "wireplumber": {
+    "scroll-step": 5,
     "format": " {volume}%",
     "format-muted": " Muted"
   }
