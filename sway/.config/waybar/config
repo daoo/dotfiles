@@ -70,7 +70,9 @@
     "format-wifi": " {essid} ({signalStrength}%, {frequency} GHz)",
     "format-disconnected": "󰖪 Disconnected",
     "format-disabled": "󰖪 Wi-Fi off",
-    "tooltip-format": "Interface:\t{ifname}\nAddress:\t{ipaddr}\nGateway:\t{gwaddr}\nNetmask:\t{netmask}"
+    "tooltip-format": "Interface:\t{ifname}\nAddress:\t{ipaddr}\nGateway:\t{gwaddr}\nNetmask:\t{netmask}",
+    "tooltip-format-disconnected": "Network disconnected",
+    "tooltip-format-disabled": "Wi-Fi disabled"
   },
   "tray": {
     "icon-size": 21,
