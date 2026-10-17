@@ -83,6 +83,14 @@ button {
     background-color: #64727D;
 }
 
+#battery.discharging.warning {
+    color: #f1c40f;
+}
+
+#battery.discharging.critical {
+    background-color: #eb4d4b;
+}
+
 label:focus {
     background-color: #000000;
 }
