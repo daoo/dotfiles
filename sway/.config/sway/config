@@ -17,6 +17,10 @@ hide_edge_borders smart
 focus_wrapping no
 floating_modifier $mod normal
 
+# Enable floating for specific window types and roles
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+
 bindsym $mod+b exec swaylock --daemonize
 bindsym $mod+shift+c kill
 bindsym $mod+q exec swaymsg reload && notify-send --expire-time=5000 "Sway" "Configuration reloaded"
