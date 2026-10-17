@@ -37,6 +37,7 @@
     ]
   },
   "bluetooth": {
+    "max-length": 25,
     "format": "  {status}",
     "format-disabled": "",
     "format-off": "",
@@ -63,6 +64,7 @@
     "tooltip-format": "{used}GiB used out of {total}GiB ({percentage}%)"
   },
   "network": {
+    "max-length": 36,
     "interval": 10,
     "format-ethernet": " {bandwidthTotalBytes}",
     "format-wifi": " {essid} ({signalStrength}%, {frequency} GHz)",
