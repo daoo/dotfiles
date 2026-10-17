@@ -67,6 +67,8 @@ bindsym $mod+f fullscreen
 bindsym $mod+t floating toggle
 bindsym $mod+s split vertical
 
+exec $term --class=scratchpad
+for_window [app_id="scratchpad"] move scratchpad
 bindsym $mod+i scratchpad show
 bindsym $mod+shift+i move scratchpad
 
