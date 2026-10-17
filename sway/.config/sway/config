@@ -12,6 +12,8 @@ input type:mouse {
 }
 
 default_border pixel
+smart_borders on
+hide_edge_borders smart
 focus_wrapping no
 floating_modifier $mod normal
 
