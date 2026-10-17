@@ -30,7 +30,7 @@
       "critical": 15
     },
     "format": "{icon} {capacity}%",
-    "format-charging": " {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
     "format-plugged": " {capacity}%",
     "format-alt": "{icon} {time}",
     "format-icons": [
@@ -70,15 +70,15 @@
     "tooltip-format": "{path}: {used} used of {total} ({percentage_used}%)\n{free} available"
   },
   "memory": {
-    "format": " {percentage}%",
+    "format": "󰍛 {percentage}%",
     "tooltip-format": "{used}GiB used out of {total}GiB ({percentage}%)\n{avail}GiB available"
   },
   "network": {
     "max-length": 36,
     "interval": 10,
-    "format-ethernet": " {bandwidthTotalBytes}",
+    "format-ethernet": "󰈀 {bandwidthTotalBytes}",
     "format-wifi": " {essid} ({signalStrength}%, {frequency} GHz)",
-    "format-disconnected": "󰖪 Disconnected",
+    "format-disconnected": "󱚵 Disconnected",
     "format-disabled": "󰖪 Wi-Fi off",
     "tooltip-format": "Interface:\t{ifname}\nAddress:\t{ipaddr}\nGateway:\t{gwaddr}\nNetmask:\t{netmask}\nDownload:\t{bandwidthDownBytes}\nUpload:\t{bandwidthUpBytes}",
     "tooltip-format-disconnected": "Network disconnected",
@@ -92,7 +92,7 @@
     "scroll-step": 5,
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "format": " {volume}%",
-    "format-muted": " Muted",
+    "format-muted": "󰖁 Muted",
     "tooltip-format": "Output: {node_name}\nVolume: {volume}%"
   }
 }

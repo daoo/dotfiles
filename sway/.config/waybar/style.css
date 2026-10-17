@@ -1,6 +1,6 @@
 * {
-    /* `otf-font-awesome` is required to be installed for icons */
-    font-family: Liberation Mono;
+    /* Inconsolata Nerd Font Mono provides the bar icons */
+    font-family: "Liberation Mono", "Inconsolata Nerd Font Mono";
     font-size: 12px;
 }
 
