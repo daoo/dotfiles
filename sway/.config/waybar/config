@@ -67,7 +67,7 @@
   },
   "memory": {
     "format": " {percentage}%",
-    "tooltip-format": "{used}GiB used out of {total}GiB ({percentage}%)"
+    "tooltip-format": "{used}GiB used out of {total}GiB ({percentage}%)\n{avail}GiB available"
   },
   "network": {
     "max-length": 36,
