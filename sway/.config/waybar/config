@@ -3,7 +3,8 @@
   "position": "bottom",
   "modules-left": [
     "sway/workspaces",
-    "sway/mode"
+    "sway/mode",
+    "sway/scratchpad"
   ],
   "modules-center": [
     "sway/window"
@@ -19,6 +20,10 @@
     "clock",
     "tray"
   ],
+  "sway/scratchpad": {
+    "format": " {count}",
+    "show-empty": false
+  },
   "battery": {
     "states": {
       "warning": 30,
