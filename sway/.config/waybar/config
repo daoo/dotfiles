@@ -62,7 +62,8 @@
   },
   "disk": {
     "format": " {percentage_used}%",
-    "path": "/"
+    "path": "/",
+    "tooltip-format": "{path}: {free} free of {total} ({percentage_used}% used)"
   },
   "memory": {
     "format": " {percentage}%",
