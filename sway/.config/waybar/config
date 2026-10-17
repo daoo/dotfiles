@@ -85,6 +85,7 @@
   },
   "wireplumber": {
     "scroll-step": 5,
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "format": " {volume}%",
     "format-muted": " Muted"
   }
