@@ -31,3 +31,6 @@ bun = true
 
 [settings.pipx]
 uvx = true
+
+[settings.self_update]
+auto = true
