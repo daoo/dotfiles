@@ -115,10 +115,26 @@ prompt_daoo() {
   local timestamp
   printf -v timestamp '%(%y-%m-%dT%H:%M:%S)T' -1
   local directory="${PWD/#$HOME/\~}"
-  local safe_directory=${directory//\\/\\\\}
   local hostname="${HOSTNAME%%.*}"
   local env="b${SHLVL}${TMUX:+t}${SSH_CLIENT:+s}${LF_LEVEL:+l}${VIRTUAL_ENV:+p}"
   [[ "$PATH" == *".cabal/bin"* ]] && env+="h"
+
+  local display_directory=${directory}
+  display_directory="${display_directory//$'\n'/\\x0A}"
+  display_directory="${display_directory//$'\r'/\\x0D}"
+  display_directory="${display_directory//$'\t'/\\x09}"
+  display_directory="${display_directory//$'\033'/\\x1B}"
+  display_directory="${display_directory//$'\007'/\\x07}"
+  display_directory="${display_directory//$'\001'/\\x01}"
+  display_directory="${display_directory//$'\177'/\\x7F}"
+
+  local prompt_directory=${display_directory}
+  prompt_directory="${prompt_directory//\\/\\\\\\\\}"
+  prompt_directory="${prompt_directory//\$/\\\$}"
+  prompt_directory="${prompt_directory//\`/\\\`}"
+
+  local title_directory=${prompt_directory}
+  title_directory="${title_directory//[$'\001'-$'\037'$'\177']/}"
 
   local color="${BASH_COLOR:-235;219;178}"
   local c_prompt="\001\033[1;38;2;${color}m\002"
@@ -133,7 +149,7 @@ prompt_daoo() {
   local at_char="${c_separator}@"
   local pipe="${c_separator}|"
 
-  local left_1="${l_paren}${c_directory}${safe_directory}${r_paren}"
+  local left_1="${l_paren}${c_directory}${prompt_directory}${r_paren}"
   local left="${c_prompt}-${left_1}${c_prompt}-"
 
   local right_1="${l_paren}${c_white}${last_status}${pipe}${c_white}${env}${r_paren}"
@@ -144,7 +160,7 @@ prompt_daoo() {
   local entry="${c_prompt}--${c_white}> "
 
   # Visible width: the literal -()[]@| plus the variable parts
-  local left_char_count=$((4 + ${#directory}))
+  local left_char_count=$((4 + ${#display_directory}))
   local right_char_count=$((12 + ${#last_status} + ${#env} + ${#timestamp} + ${#USER} + ${#hostname}))
   local padding_length=$((COLUMNS - left_char_count - right_char_count))
   local padding=""
@@ -153,7 +169,7 @@ prompt_daoo() {
     padding=${padding// /-}
   fi
   # \001..\002 keeps readline from counting the title escape as visible width.
-  local title="\001\033]0;${safe_directory}\007\002"
+  local title="\001\033]0;${title_directory}\007\002"
   PS1="${title}${left}${padding}${right}\n${entry}"
 }
 PROMPT_COMMAND+=(prompt_daoo)
