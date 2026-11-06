@@ -115,6 +115,7 @@ prompt_daoo() {
   local timestamp
   printf -v timestamp '%(%y-%m-%dT%H:%M:%S)T' -1
   local directory="${PWD/#$HOME/\~}"
+  local safe_directory=${directory//\\/\\\\}
   local hostname="${HOSTNAME%%.*}"
   local env="b${SHLVL}${TMUX:+t}${SSH_CLIENT:+s}${LF_LEVEL:+l}${VIRTUAL_ENV:+p}"
   [[ "$PATH" == *".cabal/bin"* ]] && env+="h"
@@ -132,7 +133,7 @@ prompt_daoo() {
   local at_char="${c_separator}@"
   local pipe="${c_separator}|"
 
-  local left_1="${l_paren}${c_directory}${directory}${r_paren}"
+  local left_1="${l_paren}${c_directory}${safe_directory}${r_paren}"
   local left="${c_prompt}-${left_1}${c_prompt}-"
 
   local right_1="${l_paren}${c_white}${last_status}${pipe}${c_white}${env}${r_paren}"
@@ -152,7 +153,7 @@ prompt_daoo() {
     padding=${padding// /-}
   fi
   # \001..\002 keeps readline from counting the title escape as visible width.
-  local title="\001\033]0;${directory}\007\002"
+  local title="\001\033]0;${safe_directory}\007\002"
   PS1="${title}${left}${padding}${right}\n${entry}"
 }
 PROMPT_COMMAND+=(prompt_daoo)
