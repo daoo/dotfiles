@@ -146,9 +146,11 @@ prompt_daoo() {
   local left_char_count=$((4 + ${#directory}))
   local right_char_count=$((12 + ${#last_status} + ${#env} + ${#timestamp} + ${#USER} + ${#hostname}))
   local padding_length=$((COLUMNS - left_char_count - right_char_count))
-  local padding
-  printf -v padding '%*s' "$padding_length" ''
-  padding=${padding// /-}
+  local padding=""
+  if [ $padding_length -gt 0 ]; then
+    printf -v padding '%*s' "$padding_length" ''
+    padding=${padding// /-}
+  fi
   # \001..\002 keeps readline from counting the title escape as visible width.
   local title="\001\033]0;${directory}\007\002"
   PS1="${title}${left}${padding}${right}\n${entry}"
