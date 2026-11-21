@@ -21,6 +21,7 @@ shfmt = "latest"
 usage = "latest"
 uv = "latest"
 watchexec = "latest"
+bun = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []
@@ -30,3 +31,6 @@ uvx = true
 
 [settings.self_update]
 auto = true
+
+[settings.npm]
+bun = true
