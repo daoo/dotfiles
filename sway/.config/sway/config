@@ -67,9 +67,13 @@ bindsym $mod+f fullscreen
 bindsym $mod+t floating toggle
 bindsym $mod+s split vertical
 
-exec $term --class=scratchpad
-for_window [app_id="scratchpad"] move scratchpad
-bindsym $mod+i scratchpad show
+for_window [app_id="scratchpad"] {
+    move to scratchpad
+    scratchpad show
+    resize set 60 ppt 40 ppt
+    move position center
+}
+bindsym $mod+i exec sh -c 'swaymsg "[app_id=scratchpad] scratchpad show" || $term --class=scratchpad'
 bindsym $mod+shift+i move scratchpad
 
 bindsym $mod+return exec $term
