@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
 import os
+import shlex
 import subprocess
+import sys
 import tempfile
 
 
-def git_branches():
+def git_branches() -> tuple[str | None, list[str]]:
     command = ["git", "branch"]
     output = subprocess.check_output(command)
     raw_branches = output.decode("utf-8").splitlines()
@@ -22,23 +24,28 @@ def git_branches():
     return (current_name, branches)
 
 
-def edit(lines):
-    fwrite = tempfile.NamedTemporaryFile(mode="w", delete=False)
-    tmp_path = fwrite.name
-    fwrite.write(lines)
-    fwrite.close()
+def write_retained_temporary_file(lines: str) -> str:
+    with tempfile.NamedTemporaryFile(mode="w", delete=False) as fwrite:
+        fwrite.write(lines)
+        return fwrite.name
 
-    subprocess.check_call([os.environ["EDITOR"], tmp_path])
 
-    fread = open(tmp_path, "r")
-    commands = fread.read()
-    fread.close()
+def read_file(path: str) -> str:
+    with open(path, "r") as fread:
+        return fread.read()
 
-    os.remove(tmp_path)
+
+def edit(lines: str) -> str:
+    try:
+        tmp_path = write_retained_temporary_file(lines)
+        subprocess.check_call(shlex.split(os.environ["EDITOR"]) + [tmp_path])
+        commands = read_file(tmp_path)
+    finally:
+        os.remove(tmp_path)
     return commands
 
 
-def format_output(current, branches):
+def format_output(current: str | None, branches: list[str]) -> str:
     documentation = """
 # git-branch-editor
 #
@@ -60,11 +67,11 @@ def format_output(current, branches):
         else:
             return branch
 
-    branches = "\n".join(map(f, sorted(branches)))
-    return branches + "\n" + documentation
+    branches_text = "\n".join(map(f, sorted(branches)))
+    return branches_text + "\n" + documentation
 
 
-def parse_command(old_branch, string):
+def parse_command(old_branch: str, string: str) -> None | list[str]:
     match string.split():
         case ["*", _]:
             return None  # ignore current branch
@@ -86,17 +93,17 @@ def parse_command(old_branch, string):
     return None
 
 
-def is_command(line):
+def is_command(line: str) -> bool:
     stripped = line.strip()
-    return stripped and not stripped.startswith("#")
+    return len(stripped) > 0 and not stripped.startswith("#")
 
 
-def execute(old_branches, string, dry_run):
+def execute(old_branches: list[str], string: str, dry_run: bool) -> None:
     new_branches = list(filter(is_command, string.splitlines()))
     if len(old_branches) != len(new_branches):
-        return False
+        sys.exit("Error: number of branch lines changed, nothing done.")
 
-    for i in range(0, len(new_branches)):
+    for i in range(len(new_branches)):
         command = parse_command(old_branches[i], new_branches[i])
         if command:
             print(" ".join(command))
@@ -104,7 +111,7 @@ def execute(old_branches, string, dry_run):
                 subprocess.call(command)
 
 
-def main():
+def main() -> None:
     (current, local) = git_branches()
     execute(local, edit(format_output(current, local)), dry_run=False)
 
