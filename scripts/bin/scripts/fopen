@@ -7,9 +7,9 @@ set -eu
 directory="${1-.}"
 
 if [[ ! -d "$directory" ]]; then
-  echo "Error: ${directory} not a directory." 2>&1
-  echo "" 2>&1
-  echo "Usage: $0 DIRECTORY" 2>&1
+  echo "Error: ${directory} not a directory." >&2
+  echo "" >&2
+  echo "Usage: $0 DIRECTORY" >&2
   exit 1
 fi
 
