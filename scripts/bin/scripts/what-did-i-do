@@ -9,12 +9,13 @@ import subprocess
 import sys
 import tempfile
 import urllib.request
+from typing import IO
 
 DEFAULT_PACMAN_CACHE_PATH = "/var/cache/pacman/pkg"
 PACMAN_CONF_PATH = "/etc/pacman.conf"
 
 
-def get_owning_package(path):
+def get_owning_package(path: str) -> None | str:
     try:
         return subprocess.check_output(
             ["pacman", "-Qoq", path], universal_newlines=True, stderr=subprocess.DEVNULL
@@ -23,33 +24,32 @@ def get_owning_package(path):
         pass
 
 
-def get_package_download_url(name):
+def get_package_download_url(name: str) -> str:
     return subprocess.check_output(
         ["pacman", "-Sp", name], universal_newlines=True
     ).strip()
 
 
-def download_package(name, path):
+def download_package(name: str, path: str) -> None:
     url = get_package_download_url(name)
     with urllib.request.urlopen(url) as response, open(path, "wb") as file:
         file.write(response.read())
 
 
-def get_pacman_cache_path():
+def get_pacman_cache_path() -> str:
     config = configparser.ConfigParser(allow_no_value=True, strict=False)
     config.read(PACMAN_CONF_PATH)
     return config.get("options", "CacheDir", fallback=DEFAULT_PACMAN_CACHE_PATH)
 
 
-def get_package_path(package):
+def get_package_path(package: str) -> str:
     return os.path.join(
         get_pacman_cache_path(), posixpath.basename(get_package_download_url(package))
     )
 
 
-def extract_file(path, package_path):
+def extract_file(path: str, package_path: str, target_path: IO[bytes]):
     member_path = os.path.relpath(path, "/")
-    file = tempfile.NamedTemporaryFile()
     subprocess.check_call(
         [
             "tar",
@@ -59,44 +59,44 @@ def extract_file(path, package_path):
             "--file=" + package_path,
             member_path,
         ],
-        stdout=file,
+        stdout=target_path,
     )
-    return file
 
 
-def main(diffprog, path):
+def main(diffprog: list[str], path: str) -> None:
     if os.path.isdir(path):
-        sys.stderr.write("{} is a directory.\n".format(path))
+        sys.stderr.write(f"{path} is a directory.\n")
         return
 
     package = get_owning_package(path)
     if not package:
-        sys.stderr.write("{} has no owning package.\n".format(path))
+        sys.stderr.write(f"{path} has no owning package.\n")
         return
 
     # Get path to package if cached, otherwise download it
     package_path = get_package_path(package)
     if not os.path.exists(package_path):
         print("Package not found in cache, downloading...")
-        package_path = tempfile.mkstemp()[1]
-        download_package(package, package_path)
+        with tempfile.NamedTemporaryFile() as package_file:
+            download_package(package, package_file.name)
 
     # Extract target member to temporary directory
-    with extract_file(path, package_path) as file:
+    with tempfile.NamedTemporaryFile() as member_file:
+        extract_file(path, package_path, member_file)
         try:
-            if filecmp.cmp(file.name, path):
-                print("{} is not modified.".format(path))
+            if filecmp.cmp(member_file.name, path):
+                print(f"{path} is not modified.")
             else:
-                subprocess.run(diffprog + [file.name, path])
-        except IOError:
-            sys.stderr.write("{} error occourd when reading.\n".format(path))
+                subprocess.check_call(diffprog + [member_file.name, path])
+        except OSError:
+            sys.stderr.write(f"{path} error occourd when reading.\n")
 
 
 if __name__ == "__main__":
     diffprog = shlex.split(os.getenv("DIFFPROG", "nvim -d"))
 
     if len(sys.argv) <= 1:
-        print("Usage: {0} path [path...]".format(sys.argv[0]))
+        print(f"Usage: {sys.argv[0]} path [path...]")
         sys.exit(1)
 
     for path in sys.argv[1:]:
